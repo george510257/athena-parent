@@ -24,9 +24,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.28</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
@@ -39,10 +45,6 @@
             <artifactId>easyexcel-core</artifactId>
             <version>3.3.4</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
         </dependency>
     </dependencies>
 
