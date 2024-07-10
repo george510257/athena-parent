@@ -14,29 +14,29 @@ import java.util.Map;
  * 阿里云oss客户端配置
  */
 @AutoConfiguration
-public class ClientConfig {
+public class OssClientConfig {
     /**
      * ossClient 配置
      *
-     * @param clientProperties oss配置
+     * @param ossClientProperties oss配置
      * @return ossClient
      */
     @Bean
     @ConditionalOnMissingBean
-    public OSS ossClient(ClientProperties clientProperties) {
-        if (clientProperties.getMode() == ClientProperties.Mode.AK_SK) {
+    public OSS ossClient(OssClientProperties ossClientProperties) {
+        if (ossClientProperties.getMode() == OssClientProperties.Mode.AK_SK) {
             return new OSSClientBuilder()
-                    .build(clientProperties.getEndpoint(),
-                            clientProperties.getToken().getAccessKeyId(),
-                            clientProperties.getToken().getAccessKeySecret(),
-                            clientProperties.getConfig());
-        } else if (clientProperties.getMode() == ClientProperties.Mode.STS) {
+                    .build(ossClientProperties.getEndpoint(),
+                            ossClientProperties.getToken().getAccessKeyId(),
+                            ossClientProperties.getToken().getAccessKeySecret(),
+                            ossClientProperties.getConfig());
+        } else if (ossClientProperties.getMode() == OssClientProperties.Mode.STS) {
             return new OSSClientBuilder()
-                    .build(clientProperties.getEndpoint(),
-                            clientProperties.getStsToken().getAccessKeyId(),
-                            clientProperties.getStsToken().getAccessKeySecret(),
-                            clientProperties.getStsToken().getSecurityToken(),
-                            clientProperties.getConfig());
+                    .build(ossClientProperties.getEndpoint(),
+                            ossClientProperties.getStsToken().getAccessKeyId(),
+                            ossClientProperties.getStsToken().getAccessKeySecret(),
+                            ossClientProperties.getStsToken().getSecurityToken(),
+                            ossClientProperties.getConfig());
         } else {
             throw new IllegalArgumentException("Unknown auth mode.");
         }

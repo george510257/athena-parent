@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun.oss.client")
-public class ClientProperties extends BaseProperties {
+public class OssClientProperties extends BaseProperties {
     /**
      * 阿里云OSS服务的Endpoint
      */

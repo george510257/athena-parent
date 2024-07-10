@@ -1,6 +1,6 @@
 package com.athena.starter.aliyun.oss;
 
-import com.athena.starter.aliyun.oss.client.ClientProperties;
+import com.athena.starter.aliyun.oss.client.OssClientProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan
-@EnableConfigurationProperties({ClientProperties.class})
+@EnableConfigurationProperties({OssClientProperties.class})
 public class AliyunOssAutoConfig {
 }
