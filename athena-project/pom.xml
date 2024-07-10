@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>athena-common</module>
+        <module>athena-starter</module>
     </modules>
 
     <properties>

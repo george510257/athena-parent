@@ -5,32 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.athena</groupId>
-        <artifactId>athena-parent</artifactId>
+        <artifactId>athena-project</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>athena-bom</artifactId>
+    <groupId>com.athena.starter</groupId>
+    <artifactId>athena-starter</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>athena-starter-core</module>
+        <module>athena-starter-aliyun-oss</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.athena.common.bean</groupId>
-                <artifactId>athena-common-bean</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.athena.common.core</groupId>
-                <artifactId>athena-common-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
 </project>
