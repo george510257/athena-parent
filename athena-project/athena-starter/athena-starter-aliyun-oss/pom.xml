@@ -12,5 +12,10 @@
     <groupId>com.athena.starter.aliyun.oss</groupId>
     <artifactId>athena-starter-aliyun-oss</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+    </dependencies>
 </project>
