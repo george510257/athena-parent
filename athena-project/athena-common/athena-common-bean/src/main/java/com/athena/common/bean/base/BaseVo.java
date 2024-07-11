@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @Schema(title = "基础实体", description = "基础实体")
-public class BaseVo implements IDomain {
+public abstract class BaseVo implements IDomain {
     /**
      * 主键
      */

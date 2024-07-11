@@ -1,5 +1,6 @@
 package com.athena.common.core.base;
 
+import com.athena.common.bean.page.PageRequest;
 import com.athena.common.bean.page.PageResponse;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InheritInverseConfiguration;
@@ -60,13 +61,13 @@ public interface IConverter<S, T> {
      * @param sourcePage 源分页
      * @return 目标分页
      */
-    default PageResponse<T> convertPage(PageResponse<S> sourcePage) {
-        return new PageResponse<T>()
+    default PageRequest<T> convertPage(PageRequest<S> sourcePage) {
+        return new PageRequest<T>()
                 .setPage(sourcePage.getPage())
                 .setSize(sourcePage.getSize())
-                .setTotal(sourcePage.getTotal())
-                .setPages(sourcePage.getPages())
-                .setData(convertList(sourcePage.getData()));
+                .setSort(sourcePage.getSort())
+                .setOrder(sourcePage.getOrder())
+                .setParams(convert(sourcePage.getParams()));
     }
 
     /**
