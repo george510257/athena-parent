@@ -16,6 +16,7 @@
         <module>athena-starter-core</module>
         <module>athena-starter-aliyun-oss</module>
         <module>athena-starter-data-jpa</module>
+        <module>athena-starter-data-redis</module>
     </modules>
 
     <dependencies>

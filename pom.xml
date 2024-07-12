@@ -51,6 +51,7 @@
         <swagger.version>2.2.22</swagger.version>
         <easyexcel.version>4.0.1</easyexcel.version>
         <aliyun-sdk-oss.version>3.18.0</aliyun-sdk-oss.version>
+        <redisson.version>3.32.0</redisson.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -161,6 +162,11 @@
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun-sdk-oss.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
