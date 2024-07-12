@@ -52,6 +52,7 @@
         <easyexcel.version>4.0.1</easyexcel.version>
         <aliyun-sdk-oss.version>3.18.0</aliyun-sdk-oss.version>
         <redisson.version>3.32.0</redisson.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -167,6 +168,11 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
