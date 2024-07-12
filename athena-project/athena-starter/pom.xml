@@ -18,6 +18,7 @@
         <module>athena-starter-data-jpa</module>
         <module>athena-starter-data-redis</module>
         <module>athena-starter-dynamic-datasource</module>
+        <module>athena-starter-excel</module>
     </modules>
 
     <dependencies>
