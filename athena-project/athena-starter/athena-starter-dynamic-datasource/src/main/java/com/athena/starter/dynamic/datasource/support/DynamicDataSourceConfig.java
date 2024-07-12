@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
  * 动态数据源配置
  */
 @AutoConfiguration
-public class DynamicDatasourceConfig {
+public class DynamicDataSourceConfig {
 
     /**
      * 默认数据源提供者

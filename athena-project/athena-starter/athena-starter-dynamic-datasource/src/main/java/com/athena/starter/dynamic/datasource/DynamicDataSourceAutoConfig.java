@@ -11,5 +11,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan
 @EnableConfigurationProperties({DynamicDataSourceProperties.class})
-public class DynamicDatasourceAutoConfig {
+public class DynamicDataSourceAutoConfig {
 }
