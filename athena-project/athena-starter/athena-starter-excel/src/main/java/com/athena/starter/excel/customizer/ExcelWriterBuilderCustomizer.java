@@ -1,20 +1,52 @@
 package com.athena.starter.excel.customizer;
 
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
-import com.athena.common.core.base.ICustomizer;
 import com.athena.starter.excel.annotation.ExcelResponse;
+import com.athena.starter.excel.annotation.ExcelSheet;
 
-public class ExcelWriterBuilderCustomizer implements ICustomizer<ExcelWriterBuilder> {
+import java.nio.charset.Charset;
+import java.util.List;
 
-    private ExcelResponse excelResponse;
+public class ExcelWriterBuilderCustomizer extends BaseExcelWriterBuilderCustomizer<ExcelWriterBuilder> {
+
+    private final ExcelResponse excelResponse;
+
+    public ExcelWriterBuilderCustomizer(ExcelResponse excelResponse, List<?> data) {
+        super(excelResponse.parameter(), data);
+        this.excelResponse = excelResponse;
+    }
 
     @Override
-    public void customize(ExcelWriterBuilder excelWriterBuilder) {
-        // 自动关闭流
-        excelWriterBuilder.autoCloseStream(excelResponse.autoCloseStream());
-        excelWriterBuilder.password(excelResponse.password());
-        excelWriterBuilder.inMemory(excelResponse.inMemory());
-        excelWriterBuilder.writeExcelOnException(excelResponse.writeExcelOnException());
-        excelWriterBuilder.excelType(excelResponse.excelType());
+    public void customize(ExcelWriterBuilder builder) {
+        // 调用父类方法
+        super.customize(builder);
+        // 自动关闭写入的流。
+        builder.autoCloseStream(excelResponse.autoCloseStream());
+        // 读取文件的密码
+        builder.password(excelResponse.password());
+        // 是否在内存处理，默认会生成临时文件以节约内存。内存模式效率会更好，但是容易OOM
+        builder.inMemory(excelResponse.inMemory());
+        // 写入过程中抛出异常了，是否尝试把数据写入到excel
+        builder.writeExcelOnException(excelResponse.writeExcelOnException());
+        // 当前excel的类型,支持XLS、XLSX、CSV
+        builder.excelType(excelResponse.excelType());
+        // 只有csv文件有用，写入文件的时候使用的编码
+        builder.charset(Charset.forName(excelResponse.charset()));
+        // 只有csv文件有用，是否添加bom头
+        builder.withBom(excelResponse.withBom());
+        // 模板路径
+        builder.withTemplate(excelResponse.template());
+
+        // 设置sheet
+        for (ExcelSheet sheet : excelResponse.sheets()) {
+            List<?> data;
+            if (excelResponse.sheets().length == 1) {
+                data = getData();
+            } else {
+                data = (List<?>) getData().get(sheet.sheetNo());
+            }
+            ExcelWriterSheetBuilderCustomizer sheetBuilderCustomizer = new ExcelWriterSheetBuilderCustomizer(sheet, data);
+            sheetBuilderCustomizer.customize(builder.sheet());
+        }
     }
 }
