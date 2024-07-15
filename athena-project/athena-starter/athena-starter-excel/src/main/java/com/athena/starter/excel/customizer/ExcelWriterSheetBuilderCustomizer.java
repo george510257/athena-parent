@@ -7,10 +7,21 @@ import com.athena.starter.excel.annotation.ExcelTable;
 
 import java.util.List;
 
+/**
+ * Excel写入Sheet构建器自定义器
+ */
 public class ExcelWriterSheetBuilderCustomizer extends BaseExcelWriterBuilderCustomizer<ExcelWriterSheetBuilder> {
-
+    /**
+     * ExcelSheet
+     */
     private final ExcelSheet excelSheet;
 
+    /**
+     * 构造函数
+     *
+     * @param excelSheet ExcelSheet
+     * @param data       数据
+     */
     public ExcelWriterSheetBuilderCustomizer(ExcelSheet excelSheet, List<?> data) {
         super(excelSheet.parameter(), data);
         this.excelSheet = excelSheet;

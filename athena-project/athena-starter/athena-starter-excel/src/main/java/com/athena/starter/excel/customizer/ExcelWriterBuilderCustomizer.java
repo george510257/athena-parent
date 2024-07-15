@@ -1,5 +1,6 @@
 package com.athena.starter.excel.customizer;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.athena.starter.excel.annotation.ExcelResponse;
 import com.athena.starter.excel.annotation.ExcelSheet;
@@ -7,10 +8,22 @@ import com.athena.starter.excel.annotation.ExcelSheet;
 import java.nio.charset.Charset;
 import java.util.List;
 
+/**
+ * Excel写入构建器自定义器
+ */
 public class ExcelWriterBuilderCustomizer extends BaseExcelWriterBuilderCustomizer<ExcelWriterBuilder> {
 
+    /**
+     * Excel响应
+     */
     private final ExcelResponse excelResponse;
 
+    /**
+     * 构造函数
+     *
+     * @param excelResponse Excel响应
+     * @param data          数据
+     */
     public ExcelWriterBuilderCustomizer(ExcelResponse excelResponse, List<?> data) {
         super(excelResponse.parameter(), data);
         this.excelResponse = excelResponse;
@@ -23,19 +36,27 @@ public class ExcelWriterBuilderCustomizer extends BaseExcelWriterBuilderCustomiz
         // 自动关闭写入的流。
         builder.autoCloseStream(excelResponse.autoCloseStream());
         // 读取文件的密码
-        builder.password(excelResponse.password());
+        if (StrUtil.isNotEmpty(excelResponse.password())) {
+            builder.password(excelResponse.password());
+        }
         // 是否在内存处理，默认会生成临时文件以节约内存。内存模式效率会更好，但是容易OOM
         builder.inMemory(excelResponse.inMemory());
         // 写入过程中抛出异常了，是否尝试把数据写入到excel
         builder.writeExcelOnException(excelResponse.writeExcelOnException());
         // 当前excel的类型,支持XLS、XLSX、CSV
-        builder.excelType(excelResponse.excelType());
+        if (excelResponse.excelType() != null) {
+            builder.excelType(excelResponse.excelType());
+        }
         // 只有csv文件有用，写入文件的时候使用的编码
-        builder.charset(Charset.forName(excelResponse.charset()));
+        if (StrUtil.isNotEmpty(excelResponse.charset())) {
+            builder.charset(Charset.forName(excelResponse.charset()));
+        }
         // 只有csv文件有用，是否添加bom头
         builder.withBom(excelResponse.withBom());
         // 模板路径
-        builder.withTemplate(excelResponse.template());
+        if (StrUtil.isNotEmpty(excelResponse.template())) {
+            builder.withTemplate(excelResponse.template());
+        }
 
         // 设置sheet
         for (ExcelSheet sheet : excelResponse.sheets()) {

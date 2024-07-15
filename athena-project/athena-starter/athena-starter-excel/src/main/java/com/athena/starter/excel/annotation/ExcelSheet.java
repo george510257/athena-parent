@@ -13,8 +13,18 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelSheet {
 
+    /**
+     * 参数
+     *
+     * @return 默认参数
+     */
     ExcelParameter parameter() default @ExcelParameter;
 
+    /**
+     * sheet编号
+     *
+     * @return 默认0
+     */
     int sheetNo();
 
     /**
@@ -24,5 +34,10 @@ public @interface ExcelSheet {
      */
     String sheetName() default "sheet1";
 
+    /**
+     * excel表格
+     *
+     * @return 默认空
+     */
     ExcelTable[] tables() default {};
 }

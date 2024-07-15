@@ -15,13 +15,31 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+/**
+ * Excel响应处理器
+ */
 public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
 
+    /**
+     * 是否支持返回类型
+     *
+     * @param returnType 返回类型
+     * @return 是否支持
+     */
     @Override
     public boolean supportsReturnType(MethodParameter returnType) {
         return returnType.hasMethodAnnotation(ExcelResponse.class);
     }
 
+    /**
+     * 处理返回值
+     *
+     * @param returnValue  返回值
+     * @param returnType   返回类型
+     * @param mavContainer 模型视图容器
+     * @param webRequest   web请求
+     * @throws Exception 异常
+     */
     @Override
     public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
         // 获取返回值类型
@@ -52,6 +70,12 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
         mavContainer.setRequestHandled(true);
     }
 
+    /**
+     * 获取Excel响应注解
+     *
+     * @param returnType 返回类型
+     * @return Excel响应注解
+     */
     private ExcelResponse getExcelResponse(MethodParameter returnType) {
         ExcelResponse excelResponse = returnType.getMethodAnnotation(ExcelResponse.class);
         if (excelResponse == null) {
@@ -60,6 +84,14 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
         return excelResponse;
     }
 
+    /**
+     * 获取OutputStream
+     *
+     * @param webRequest    web请求
+     * @param excelResponse Excel响应
+     * @return OutputStream
+     * @throws IOException IO异常
+     */
     private OutputStream getOutputStream(NativeWebRequest webRequest, ExcelResponse excelResponse) throws IOException {
         HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
         if (response == null) {
