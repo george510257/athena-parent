@@ -53,6 +53,7 @@
         <aliyun-sdk-oss.version>3.18.0</aliyun-sdk-oss.version>
         <redisson.version>3.32.0</redisson.version>
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
+        <mybatis-plus.version>3.5.7</mybatis-plus.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -173,6 +174,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
