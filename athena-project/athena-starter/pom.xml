@@ -19,6 +19,7 @@
         <module>athena-starter-data-redis</module>
         <module>athena-starter-dynamic-datasource</module>
         <module>athena-starter-excel</module>
+        <module>athena-starter-json</module>
     </modules>
 
     <dependencies>
