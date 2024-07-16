@@ -1,6 +1,6 @@
 package com.athena.starter.swagger.config;
 
-import com.athena.starter.swagger.converter.OpenApiConverter;
+import com.athena.starter.swagger.converter.OpenAPIConverter;
 import io.swagger.v3.oas.models.OpenAPI;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -11,14 +11,19 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SwaggerConfig {
-    @Resource
-    private SwaggerProperties swaggerProperties;
-
-    @Resource
-    private OpenApiConverter openApiConverter;
-
     /**
      * Swagger配置
+     */
+    @Resource
+    private SwaggerProperties swaggerProperties;
+    /**
+     * openApi转换器
+     */
+    @Resource
+    private OpenAPIConverter openApiConverter;
+
+    /**
+     * openAPI
      */
     @Bean
     public OpenAPI openAPI() {

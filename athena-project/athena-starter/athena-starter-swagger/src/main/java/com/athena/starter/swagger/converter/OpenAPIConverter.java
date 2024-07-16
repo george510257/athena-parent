@@ -7,8 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+/**
+ * OpenApi转换器
+ */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = {OpenApiPathsConverter.class})
-public interface OpenApiConverter extends IConverter<OpenApi, OpenAPI> {
+        uses = {SecurityRequirementConverter.class, PathsConverter.class})
+public interface OpenAPIConverter extends IConverter<OpenApi, OpenAPI> {
 }
