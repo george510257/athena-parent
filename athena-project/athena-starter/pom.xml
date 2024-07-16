@@ -21,6 +21,7 @@
         <module>athena-starter-excel</module>
         <module>athena-starter-json</module>
         <module>athena-starter-mybatis</module>
+        <module>athena-starter-swagger</module>
     </modules>
 
     <dependencies>
