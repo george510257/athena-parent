@@ -23,5 +23,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.athena.starter.excel</groupId>
+            <artifactId>athena-starter-excel</artifactId>
+        </dependency>
     </dependencies>
 </project>

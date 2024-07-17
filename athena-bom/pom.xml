@@ -25,6 +25,12 @@
                 <artifactId>athena-common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.athena.starter.excel</groupId>
+                <artifactId>athena-starter-excel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
