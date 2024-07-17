@@ -22,31 +22,30 @@ public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
     @Override
     public V insert(V vo) {
         E entity = converter.convert(vo);
-        baseMapper.insert(entity);
+        save(entity);
         return converter.reverse(entity);
     }
 
     @Override
     public V update(V vo) {
         E entity = converter.convert(vo);
-        baseMapper.updateById(entity);
+        updateById(entity);
         return converter.reverse(entity);
     }
 
     @Override
     public Boolean delete(Long id) {
-        int count = baseMapper.deleteById(id);
-        return count > 0;
+        return removeById(id);
     }
 
     @Override
     public V get(Long id) {
-        return converter.reverse(baseMapper.selectById(id));
+        return converter.reverse(getById(id));
     }
 
     @Override
     public List<V> list(V vo) {
-        return converter.reverseList(baseMapper.selectList(new QueryWrapper<>(converter.convert(vo))));
+        return converter.reverseList(list(new QueryWrapper<>(converter.convert(vo))));
     }
 
     @Override
