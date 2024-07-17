@@ -12,6 +12,11 @@ import java.util.List;
  * @param <P> 权限类型
  */
 public interface IRole<P extends IPermission> extends GrantedAuthority, ITreeNode, IDomain {
+    /**
+     * 获取角色编码
+     *
+     * @return 角色编码
+     */
     @Override
     default String getAuthority() {
         return this.getCode();

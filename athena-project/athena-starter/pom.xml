@@ -22,6 +22,7 @@
         <module>athena-starter-json</module>
         <module>athena-starter-mybatis</module>
         <module>athena-starter-swagger</module>
+        <module>athena-starter-web</module>
     </modules>
 
     <dependencies>

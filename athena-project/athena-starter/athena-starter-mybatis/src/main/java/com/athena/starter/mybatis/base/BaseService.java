@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class BaseService<V extends BaseVo, E extends BaseEntity,
+public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         C extends IConverter<V, E>, M extends IMapper<E>>
         extends ServiceImpl<M, E> implements IService<V> {
 
