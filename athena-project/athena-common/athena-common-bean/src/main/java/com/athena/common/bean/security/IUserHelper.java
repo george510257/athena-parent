@@ -13,6 +13,16 @@ import java.util.TimeZone;
  * 用户帮助类
  */
 public interface IUserHelper {
+
+    /**
+     * 默认用户帮助类
+     *
+     * @return 默认用户帮助类
+     */
+    static IUserHelper withDefaults() {
+        return Optional::empty;
+    }
+
     /**
      * 获取当前用户
      *

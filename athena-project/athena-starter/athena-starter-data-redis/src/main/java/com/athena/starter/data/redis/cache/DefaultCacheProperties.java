@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +21,7 @@ public class DefaultCacheProperties extends BaseProperties {
     /**
      * 缓存过期时间
      */
-    private Map<String, CacheExpire> expires;
+    private Map<String, CacheExpire> expires = new HashMap<>();
 
     /**
      * 缓存过期配置

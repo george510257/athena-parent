@@ -11,6 +11,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,41 +29,42 @@ public class OpenApi implements Serializable {
      * 信息
      */
     @NestedConfigurationProperty
-    private Info info = null;
+    private Info info = new Info();
     /**
      * 外部文档
      */
     @NestedConfigurationProperty
-    private ExternalDocumentation externalDocs = null;
+    private ExternalDocumentation externalDocs = new ExternalDocumentation();
     /**
      * 服务器
      */
     @NestedConfigurationProperty
-    private List<Server> servers = null;
+    private List<Server> servers = new ArrayList<>();
     /**
      * 安全
      */
     @NestedConfigurationProperty
-    private List<Map<String, List<String>>> security = null;
+    private List<Map<String, List<String>>> security = new ArrayList<>();
     /**
      * 标签
      */
     @NestedConfigurationProperty
-    private List<Tag> tags = null;
+    private List<Tag> tags = new ArrayList<>();
     /**
      * 路径
      */
     @NestedConfigurationProperty
-    private Map<String, PathItem> paths = null;
+    private Map<String, PathItem> paths = new HashMap<>();
     /**
      * 组件
      */
     @NestedConfigurationProperty
-    private Components components = null;
+    private Components components = new Components();
     /**
      * 扩展
      */
-    private Map<String, Object> extensions = null;
+    @NestedConfigurationProperty
+    private Map<String, Object> extensions = new HashMap<>();
     /**
      * json schema方言
      */
@@ -74,5 +77,5 @@ public class OpenApi implements Serializable {
      * webhooks
      */
     @NestedConfigurationProperty
-    private Map<String, PathItem> webhooks = null;
+    private Map<String, PathItem> webhooks = new HashMap<>();
 }

@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: athena-upms
+  profiles:
+    active: dev
+    include: common
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://docker-server:3306/athena_upms?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+  data:
+    redis:
+      host: docker-server
+      port: 6379
+      database: 7
+      timeout: 10000
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      key-prefix: "gemini:upms:cache:"
+      time-to-live: 1000000
+server:
+  port: 8083
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
