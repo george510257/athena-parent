@@ -187,8 +187,10 @@
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <artifactId>springdoc-openapi</artifactId>
                 <version>${springdoc-openapi.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.xuxueli</groupId>
