@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: ${nacos.host:docker-server}:${nacos.port:8848}
+      discovery:
+        group: ${nacos.group:athena}
+        namespace: ${nacos.namespace:8cc83cec-b3d6-4e53-93da-0f5ffd39966b}
+      config:
+        group: ${nacos.group:athena}
+        namespace: ${nacos.namespace:8cc83cec-b3d6-4e53-93da-0f5ffd39966b}
+  config:
+    import:
+      - optional:nacos:application-${spring.profiles.active:dev}.yml?refresh=true
+      - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yml?refresh=true
