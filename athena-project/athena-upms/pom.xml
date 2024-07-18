@@ -9,12 +9,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.common</groupId>
-    <artifactId>athena-common</artifactId>
+    <groupId>com.athena.upms</groupId>
+    <artifactId>athena-upms</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>athena-common-core</module>
-        <module>athena-common-bean</module>
+        <module>athena-upms-boot</module>
+        <module>athena-upms-sdk</module>
     </modules>
 
 </project>

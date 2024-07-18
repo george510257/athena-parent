@@ -12,7 +12,6 @@
     <groupId>com.athena.starter.web</groupId>
     <artifactId>athena-starter-web</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

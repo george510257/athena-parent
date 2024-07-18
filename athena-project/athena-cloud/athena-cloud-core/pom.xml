@@ -4,17 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena</groupId>
-        <artifactId>athena-project</artifactId>
+        <groupId>com.athena.cloud</groupId>
+        <artifactId>athena-cloud</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.common</groupId>
-    <artifactId>athena-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>athena-common-core</module>
-        <module>athena-common-bean</module>
-    </modules>
+    <groupId>com.athena.cloud.core</groupId>
+    <artifactId>athena-cloud-core</artifactId>
 
 </project>

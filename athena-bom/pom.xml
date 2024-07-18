@@ -12,7 +12,6 @@
     <artifactId>athena-bom</artifactId>
     <packaging>pom</packaging>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -29,6 +28,22 @@
             <dependency>
                 <groupId>com.athena.starter.excel</groupId>
                 <artifactId>athena-starter-excel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.athena.cloud.boot</groupId>
+                <artifactId>athena-cloud-boot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.athena.cloud.core</groupId>
+                <artifactId>athena-cloud-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.athena.cloud.sdk</groupId>
+                <artifactId>athena-cloud-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

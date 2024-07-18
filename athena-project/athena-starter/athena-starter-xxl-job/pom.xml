@@ -12,7 +12,6 @@
     <groupId>com.athena.starter.xxl.job</groupId>
     <artifactId>athena-starter-xxl-job</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.xuxueli</groupId>

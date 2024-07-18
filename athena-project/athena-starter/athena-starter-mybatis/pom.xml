@@ -12,7 +12,6 @@
     <groupId>com.athena.starter.mybatis</groupId>
     <artifactId>athena-starter-mybatis</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.baomidou</groupId>

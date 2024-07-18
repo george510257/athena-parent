@@ -12,7 +12,6 @@
     <groupId>com.athena.starter.json</groupId>
     <artifactId>athena-starter-json</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

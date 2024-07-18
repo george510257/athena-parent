@@ -12,7 +12,6 @@
     <groupId>com.athena.common.bean</groupId>
     <artifactId>athena-common-bean</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.security</groupId>

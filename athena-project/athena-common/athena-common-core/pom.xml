@@ -12,7 +12,6 @@
     <groupId>com.athena.common.core</groupId>
     <artifactId>athena-common-core</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.athena.common.bean</groupId>

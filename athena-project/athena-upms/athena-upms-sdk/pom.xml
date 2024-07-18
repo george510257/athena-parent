@@ -4,18 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena.starter</groupId>
-        <artifactId>athena-starter</artifactId>
+        <groupId>com.athena.upms</groupId>
+        <artifactId>athena-upms</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.starter.swagger</groupId>
-    <artifactId>athena-starter-swagger</artifactId>
+    <groupId>com.athena.upms.sdk</groupId>
+    <artifactId>athena-upms-sdk</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <groupId>com.athena.cloud.sdk</groupId>
+            <artifactId>athena-cloud-sdk</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -14,8 +14,9 @@
     <modules>
         <module>athena-common</module>
         <module>athena-starter</module>
+        <module>athena-cloud</module>
+        <module>athena-upms</module>
     </modules>
-
 
     <dependencies>
         <dependency>

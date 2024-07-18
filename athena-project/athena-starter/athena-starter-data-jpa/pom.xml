@@ -12,7 +12,6 @@
     <groupId>com.athena.starter.data.jpa</groupId>
     <artifactId>athena-starter-data-jpa</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
