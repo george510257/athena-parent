@@ -56,6 +56,7 @@
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <springdoc-openapi.version>2.6.0</springdoc-openapi.version>
         <xxl-job.version>2.4.1</xxl-job.version>
+        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -193,6 +194,13 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
