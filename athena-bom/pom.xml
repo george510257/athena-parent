@@ -97,6 +97,12 @@
                 <artifactId>athena-starter-xxl-job</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.athena.upms.sdk</groupId>
+                <artifactId>athena-upms-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

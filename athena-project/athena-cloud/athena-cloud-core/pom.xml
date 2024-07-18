@@ -12,4 +12,22 @@
     <groupId>com.athena.cloud.core</groupId>
     <artifactId>athena-cloud-core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.athena.cloud.sdk</groupId>
+            <artifactId>athena-cloud-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.athena.starter.web</groupId>
+            <artifactId>athena-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.athena.starter.mybatis</groupId>
+            <artifactId>athena-starter-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.athena.starter.data.redis</groupId>
+            <artifactId>athena-starter-data-redis</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -12,4 +12,23 @@
     <groupId>com.athena.upms.boot</groupId>
     <artifactId>athena-upms-boot</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.athena.upms.sdk</groupId>
+            <artifactId>athena-upms-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.athena.cloud.boot</groupId>
+            <artifactId>athena-cloud-boot</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
