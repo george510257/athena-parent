@@ -2,12 +2,15 @@ package com.athena.starter.excel.config;
 
 import com.athena.starter.excel.handler.ExcelRequestHandler;
 import com.athena.starter.excel.handler.ExcelResponseHandler;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,25 +18,27 @@ import java.util.List;
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class ExcelConfig implements WebMvcConfigurer {
+public class ExcelConfig {
 
-    /**
-     * 添加参数解析器
-     *
-     * @param resolvers initially an empty list
-     */
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new ExcelRequestHandler());
-    }
+    @Resource
+    private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
 
-    /**
-     * 添加返回值处理器
-     *
-     * @param handlers initially an empty list
-     */
-    @Override
-    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> handlers) {
-        handlers.add(new ExcelResponseHandler());
+    @PostConstruct
+    public void init() {
+        // 添加参数解析器
+        List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>();
+        argumentResolvers.add(new ExcelRequestHandler());
+        if (requestMappingHandlerAdapter.getArgumentResolvers() != null) {
+            argumentResolvers.addAll(requestMappingHandlerAdapter.getArgumentResolvers());
+        }
+        requestMappingHandlerAdapter.setArgumentResolvers(argumentResolvers);
+
+        // 添加返回值处理器
+        List<HandlerMethodReturnValueHandler> returnValueHandlers = new ArrayList<>();
+        returnValueHandlers.add(new ExcelResponseHandler());
+        if (requestMappingHandlerAdapter.getReturnValueHandlers() != null) {
+            returnValueHandlers.addAll(requestMappingHandlerAdapter.getReturnValueHandlers());
+        }
+        requestMappingHandlerAdapter.setReturnValueHandlers(returnValueHandlers);
     }
 }

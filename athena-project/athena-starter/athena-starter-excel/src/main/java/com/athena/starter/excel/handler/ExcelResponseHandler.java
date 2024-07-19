@@ -1,10 +1,12 @@
 package com.athena.starter.excel.handler;
 
+import cn.hutool.core.util.URLUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.athena.starter.excel.annotation.ExcelResponse;
 import com.athena.starter.excel.customizer.ExcelWriterBuilderCustomizer;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -13,11 +15,13 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
  * Excel响应处理器
  */
+@Slf4j
 public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
 
     /**
@@ -28,6 +32,7 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
      */
     @Override
     public boolean supportsReturnType(MethodParameter returnType) {
+        log.info("returnType: {}", returnType);
         return returnType.hasMethodAnnotation(ExcelResponse.class);
     }
 
@@ -42,6 +47,7 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
      */
     @Override
     public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
+        log.info("returnValue: {}, returnType: {}", returnValue, returnType);
         // 获取返回值类型
         Class<?> returnTypeClass = returnType.getParameterType();
         // 如果不是List类型, 则抛出异常
@@ -100,7 +106,7 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
         // 设置响应头
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + excelResponse.filename() + excelResponse.excelType().getValue());
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLUtil.encode(excelResponse.filename(), StandardCharsets.UTF_8) + excelResponse.excelType().getValue());
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
         // 获取OutputStream
         return response.getOutputStream();

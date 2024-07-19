@@ -29,5 +29,6 @@ create table t_demo
 ) engine = InnoDB
   default charset = utf8mb4 comment 'demo表';
 
-insert into t_demo (name, description, status, tenant_id, version, deleted, create_user_id, create_user_name, update_user_id, update_user_name)
+insert into t_demo (name, description, status, tenant_id, version, deleted, create_user_id, create_user_name,
+                    update_user_id, update_user_name)
 values ('demo', 'demo', 1, 0, 0, 0, 0, 'admin', 0, 'admin');
