@@ -18,8 +18,8 @@
             <artifactId>athena-upms-sdk</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.cloud.boot</groupId>
-            <artifactId>athena-cloud-boot</artifactId>
+            <groupId>com.athena.cloud.core</groupId>
+            <artifactId>athena-cloud-core</artifactId>
         </dependency>
     </dependencies>
 
