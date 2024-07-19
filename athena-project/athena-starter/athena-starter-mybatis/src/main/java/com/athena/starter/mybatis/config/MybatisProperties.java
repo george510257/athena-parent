@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -42,5 +43,5 @@ public class MybatisProperties extends BaseProperties {
     /**
      * 忽略租户字段的表
      */
-    private List<String> ignoreTenantTable;
+    private List<String> ignoreTenantTable = new ArrayList<>();
 }
