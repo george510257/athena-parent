@@ -83,11 +83,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.swagger</groupId>
-                <artifactId>athena-starter-swagger</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.athena.starter.web</groupId>
                 <artifactId>athena-starter-web</artifactId>
                 <version>${project.version}</version>
