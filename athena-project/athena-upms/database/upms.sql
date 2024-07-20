@@ -1,5 +1,5 @@
 # 1. 创建数据库
-drop database if exists upms;
+drop database if exists athena_upms;
 
 create database athena_upms default character set utf8mb4 collate utf8mb4_general_ci;
 
