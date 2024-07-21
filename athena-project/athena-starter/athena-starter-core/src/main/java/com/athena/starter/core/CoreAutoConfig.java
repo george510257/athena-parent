@@ -16,6 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({ThreadPoolTaskProperties.class})
 public class CoreAutoConfig {
 
+    /**
+     * 用户助手
+     * @return IUserHelper 用户助手
+     */
     @Bean
     @ConditionalOnMissingBean
     public IUserHelper userHelper() {

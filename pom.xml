@@ -58,6 +58,7 @@
         <springdoc-openapi.version>2.6.0</springdoc-openapi.version>
         <xxl-job.version>2.4.1</xxl-job.version>
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
+        <commons-io.version>2.16.1</commons-io.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -204,6 +205,11 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
