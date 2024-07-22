@@ -90,7 +90,16 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
         mavContainer.setRequestHandled(true);
     }
 
+    /**
+     * 写入数据
+     *
+     * @param excelWriter    ExcelWriter
+     * @param writeSheetList WriteSheet列表
+     * @param writeTableMap  WriteTableMap
+     * @param data           数据
+     */
     private void writeData(ExcelWriter excelWriter, List<WriteSheet> writeSheetList, Map<Integer, List<WriteTable>> writeTableMap, List<?> data) {
+        // 写入数据
         for (WriteSheet writeSheet : writeSheetList) {
             List<?> sheetData;
             if (writeSheetList.size() == 1) {
@@ -98,13 +107,17 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
             } else {
                 sheetData = (List<?>) data.get(writeSheet.getSheetNo());
             }
+
             List<WriteTable> writeTableList = writeTableMap.get(writeSheet.getSheetNo());
+
             if (CollUtil.isNotEmpty(writeTableList)) {
                 for (WriteTable writeTable : writeTableList) {
                     List<?> tableData = (List<?>) sheetData.get(writeTable.getTableNo());
+                    writeTable.setClazz(tableData.getFirst().getClass());
                     excelWriter.write(tableData, writeSheet, writeTable);
                 }
             } else {
+                writeSheet.setClazz(sheetData.getFirst().getClass());
                 excelWriter.write(sheetData, writeSheet);
             }
         }
