@@ -3,10 +3,8 @@ package com.athena.starter.excel.customizer;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.athena.starter.excel.annotation.ExcelResponse;
-import com.athena.starter.excel.annotation.ExcelSheet;
 
 import java.nio.charset.Charset;
-import java.util.List;
 
 /**
  * Excel写入构建器自定义器
@@ -22,10 +20,9 @@ public class ExcelWriterBuilderCustomizer extends BaseExcelWriterBuilderCustomiz
      * 构造函数
      *
      * @param excelResponse Excel响应
-     * @param data          数据
      */
-    public ExcelWriterBuilderCustomizer(ExcelResponse excelResponse, List<?> data) {
-        super(excelResponse.parameter(), data);
+    public ExcelWriterBuilderCustomizer(ExcelResponse excelResponse) {
+        super(excelResponse.parameter());
         this.excelResponse = excelResponse;
     }
 
@@ -56,18 +53,6 @@ public class ExcelWriterBuilderCustomizer extends BaseExcelWriterBuilderCustomiz
         // 模板路径
         if (StrUtil.isNotEmpty(excelResponse.template())) {
             builder.withTemplate(excelResponse.template());
-        }
-
-        // 设置sheet
-        for (ExcelSheet sheet : excelResponse.sheets()) {
-            List<?> data;
-            if (excelResponse.sheets().length == 1) {
-                data = getData();
-            } else {
-                data = (List<?>) getData().get(sheet.sheetNo());
-            }
-            ExcelWriterSheetBuilderCustomizer sheetBuilderCustomizer = new ExcelWriterSheetBuilderCustomizer(sheet, data);
-            sheetBuilderCustomizer.customize(builder.sheet());
         }
     }
 }

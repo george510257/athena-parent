@@ -1,10 +1,19 @@
 package com.athena.starter.excel.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.URLUtil;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
+import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
+import com.alibaba.excel.write.builder.ExcelWriterTableBuilder;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.metadata.WriteTable;
 import com.athena.starter.excel.annotation.ExcelResponse;
+import com.athena.starter.excel.annotation.ExcelSheet;
 import com.athena.starter.excel.customizer.ExcelWriterBuilderCustomizer;
+import com.athena.starter.excel.customizer.ExcelWriterSheetBuilderCustomizer;
+import com.athena.starter.excel.customizer.ExcelWriterTableBuilderCustomizer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -16,7 +25,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Excel响应处理器
@@ -63,17 +75,83 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
         // 获取OutputStream
         OutputStream outputStream = getOutputStream(webRequest, excelResponse);
 
-        // 创建ExcelWriterBuilder对象
-        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(outputStream);
-
-        // 创建ExcelWriterBuilderCustomizer对象
-        ExcelWriterBuilderCustomizer excelWriterBuilderCustomizer = new ExcelWriterBuilderCustomizer(excelResponse, data);
-
-        // 自定义ExcelWriterBuilder
-        excelWriterBuilderCustomizer.customize(excelWriterBuilder);
+        // 创建ExcelWriter
+        ExcelWriter excelWriter = getExcelWriter(outputStream, excelResponse);
+        // 获取Sheet
+        List<WriteSheet> writeSheetList = getExcelWriterSheet(excelResponse);
+        // 获取Table
+        Map<Integer, List<WriteTable>> writeTableMap = getExcelWriterTable(excelResponse);
+        // 写入数据
+        writeData(excelWriter, writeSheetList, writeTableMap, data);
+        // 完成
+        excelWriter.finish();
 
         // 设置请求已处理
         mavContainer.setRequestHandled(true);
+    }
+
+    private void writeData(ExcelWriter excelWriter, List<WriteSheet> writeSheetList, Map<Integer, List<WriteTable>> writeTableMap, List<?> data) {
+        for (WriteSheet writeSheet : writeSheetList) {
+            List<?> sheetData;
+            if (writeSheetList.size() == 1) {
+                sheetData = data;
+            } else {
+                sheetData = (List<?>) data.get(writeSheet.getSheetNo());
+            }
+            List<WriteTable> writeTableList = writeTableMap.get(writeSheet.getSheetNo());
+            if (CollUtil.isNotEmpty(writeTableList)) {
+                for (WriteTable writeTable : writeTableList) {
+                    List<?> tableData = (List<?>) sheetData.get(writeTable.getTableNo());
+                    excelWriter.write(tableData, writeSheet, writeTable);
+                }
+            } else {
+                excelWriter.write(sheetData, writeSheet);
+            }
+        }
+    }
+
+    /**
+     * 获取ExcelWriterTable
+     *
+     * @param excelResponse Excel响应
+     */
+    private Map<Integer, List<WriteTable>> getExcelWriterTable(ExcelResponse excelResponse) {
+        return Arrays.stream(excelResponse.sheets()).collect(Collectors.toMap(ExcelSheet::sheetNo, excelSheet -> Arrays.stream(excelSheet.tables()).map(excelTable -> {
+            ExcelWriterTableBuilder excelWriterTableBuilder = EasyExcel.writerTable(excelTable.tableNo());
+            ExcelWriterTableBuilderCustomizer excelWriterTableBuilderCustomizer = new ExcelWriterTableBuilderCustomizer(excelTable);
+            excelWriterTableBuilderCustomizer.customize(excelWriterTableBuilder);
+            return excelWriterTableBuilder.build();
+        }).toList()));
+    }
+
+    /**
+     * 获取ExcelWriterSheet
+     *
+     * @param excelResponse Excel响应
+     * @return ExcelWriterSheet
+     */
+    private List<WriteSheet> getExcelWriterSheet(ExcelResponse excelResponse) {
+        return Arrays.stream(excelResponse.sheets()).map(excelSheet -> {
+            ExcelWriterSheetBuilder excelWriterSheetBuilder = EasyExcel.writerSheet(excelSheet.sheetNo(), excelSheet.sheetName());
+            ExcelWriterSheetBuilderCustomizer excelWriterSheetBuilderCustomizer = new ExcelWriterSheetBuilderCustomizer(excelSheet);
+            excelWriterSheetBuilderCustomizer.customize(excelWriterSheetBuilder);
+            return excelWriterSheetBuilder.build();
+        }).toList();
+
+    }
+
+    /**
+     * 获取ExcelWriter
+     *
+     * @param outputStream  输出流
+     * @param excelResponse Excel响应
+     * @return ExcelWriter
+     */
+    private ExcelWriter getExcelWriter(OutputStream outputStream, ExcelResponse excelResponse) {
+        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(outputStream);
+        ExcelWriterBuilderCustomizer excelWriterBuilderCustomizer = new ExcelWriterBuilderCustomizer(excelResponse);
+        excelWriterBuilderCustomizer.customize(excelWriterBuilder);
+        return excelWriterBuilder.build();
     }
 
     /**

@@ -12,7 +12,6 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -28,15 +27,10 @@ public class BaseExcelWriterBuilderCustomizer<B extends AbstractExcelWriterParam
      */
     private final ExcelParameter excelParameter;
 
-    /**
-     * 数据
-     */
-    private final List<?> data;
-
     @Override
     public void customize(B builder) {
         // 表头
-        if (ObjUtil.isNotEmpty(excelParameter.head())) {
+        if (ObjUtil.isNotEmpty(excelParameter.head()) && Object.class != excelParameter.head()) {
             builder.head(excelParameter.head());
         }
         // 注册转换器

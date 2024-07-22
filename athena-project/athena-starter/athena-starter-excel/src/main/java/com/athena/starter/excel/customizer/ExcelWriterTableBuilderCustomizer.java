@@ -3,8 +3,6 @@ package com.athena.starter.excel.customizer;
 import com.alibaba.excel.write.builder.ExcelWriterTableBuilder;
 import com.athena.starter.excel.annotation.ExcelTable;
 
-import java.util.List;
-
 /**
  * Excel写入Table构建器自定义器
  */
@@ -18,10 +16,9 @@ public class ExcelWriterTableBuilderCustomizer extends BaseExcelWriterBuilderCus
      * 构造函数
      *
      * @param excelTable ExcelTable
-     * @param data       数据
      */
-    public ExcelWriterTableBuilderCustomizer(ExcelTable excelTable, List<?> data) {
-        super(excelTable.parameter(), data);
+    public ExcelWriterTableBuilderCustomizer(ExcelTable excelTable) {
+        super(excelTable.parameter());
         this.excelTable = excelTable;
     }
 
@@ -35,7 +32,5 @@ public class ExcelWriterTableBuilderCustomizer extends BaseExcelWriterBuilderCus
         super.customize(builder);
         // tableNo
         builder.tableNo(excelTable.tableNo());
-        // 写入数据
-        builder.doWrite(getData());
     }
 }

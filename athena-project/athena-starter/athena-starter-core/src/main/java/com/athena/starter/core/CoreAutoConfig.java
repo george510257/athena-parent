@@ -18,6 +18,7 @@ public class CoreAutoConfig {
 
     /**
      * 用户助手
+     *
      * @return IUserHelper 用户助手
      */
     @Bean
