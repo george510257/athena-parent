@@ -20,7 +20,7 @@ public @interface ExcelParameter {
      *
      * @return 默认空
      */
-    Class<?> head() default Object.class;
+    String[] head() default {};
 
     /**
      * 转换器

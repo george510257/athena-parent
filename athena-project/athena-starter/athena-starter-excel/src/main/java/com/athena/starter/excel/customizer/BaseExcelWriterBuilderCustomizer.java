@@ -30,8 +30,9 @@ public class BaseExcelWriterBuilderCustomizer<B extends AbstractExcelWriterParam
     @Override
     public void customize(B builder) {
         // 表头
-        if (ObjUtil.isNotEmpty(excelParameter.head()) && Object.class != excelParameter.head()) {
-            builder.head(excelParameter.head());
+        if (ObjUtil.isNotEmpty(excelParameter.head())) {
+            builder.head(Arrays.stream(excelParameter.head())
+                    .map(head -> StrUtil.split(head, StrUtil.COMMA)).toList());
         }
         // 注册转换器
         if (excelParameter.converter() != null) {
