@@ -44,7 +44,6 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
      */
     @Override
     public boolean supportsReturnType(MethodParameter returnType) {
-        log.info("returnType: {}", returnType);
         return returnType.hasMethodAnnotation(ExcelResponse.class);
     }
 
@@ -59,7 +58,6 @@ public class ExcelResponseHandler implements HandlerMethodReturnValueHandler {
      */
     @Override
     public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
-        log.info("returnValue: {}, returnType: {}", returnValue, returnType);
         // 获取返回值类型
         Class<?> returnTypeClass = returnType.getParameterType();
         // 如果不是List类型, 则抛出异常
