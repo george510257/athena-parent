@@ -12,8 +12,8 @@
     <artifactId>athena-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>athena-parent</name>
-    <description>athena-parent</description>
+    <name>Athena Parent</name>
+    <description>基础工具包</description>
     <url/>
     <licenses>
         <license/>
