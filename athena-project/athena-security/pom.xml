@@ -23,5 +23,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.athena.common.core</groupId>
+            <artifactId>athena-common-core</artifactId>
+        </dependency>
     </dependencies>
 </project>

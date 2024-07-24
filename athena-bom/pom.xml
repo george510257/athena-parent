@@ -97,15 +97,20 @@
                 <artifactId>athena-starter-xxl-job</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- Athena SDK -->
+            <!-- Athena Security -->
             <dependency>
-                <groupId>com.athena.generator.sdk</groupId>
-                <artifactId>athena-generator-sdk</artifactId>
+                <groupId>com.athena.security.core</groupId>
+                <artifactId>athena-security-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.upms.sdk</groupId>
-                <artifactId>athena-upms-sdk</artifactId>
+                <groupId>com.athena.security.resource</groupId>
+                <artifactId>athena-security-resource</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.athena.security.authorization</groupId>
+                <artifactId>athena-security-authorization</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
