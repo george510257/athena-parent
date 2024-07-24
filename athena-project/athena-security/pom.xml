@@ -16,6 +16,7 @@
         <module>athena-security-core</module>
         <module>athena-security-resource</module>
         <module>athena-security-authorization</module>
+        <module>athena-security-client</module>
     </modules>
 
     <dependencies>

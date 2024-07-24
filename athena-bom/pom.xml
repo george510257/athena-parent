@@ -104,6 +104,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.athena.security.client</groupId>
+                <artifactId>athena-security-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.athena.security.resource</groupId>
                 <artifactId>athena-security-resource</artifactId>
                 <version>${project.version}</version>
