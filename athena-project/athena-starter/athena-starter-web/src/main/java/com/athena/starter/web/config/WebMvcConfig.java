@@ -54,16 +54,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         // 移除默认的Jackson消息转换器
         converters.removeIf(converter -> converter instanceof AbstractJackson2HttpMessageConverter);
-        // 添加自定义的Jackson消息转换器
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build();
+        // 创建Long类型序列化为String的模块
         SimpleModule simpleModule = new SimpleModule();
         // Long类型序列化为String
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
-        objectMapper.registerModule(simpleModule);
-        converter.setObjectMapper(objectMapper);
+        // 创建ObjectMapper
+        ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build().registerModule(simpleModule);
+        // 添加自定义的Jackson消息转换器
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
         converter.setDefaultCharset(StandardCharsets.UTF_8);
+        // 添加到消息转换器列表
         converters.add(converter);
     }
 }
