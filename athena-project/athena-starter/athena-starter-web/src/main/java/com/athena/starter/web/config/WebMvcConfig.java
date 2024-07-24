@@ -1,6 +1,9 @@
 package com.athena.starter.web.config;
 
 import cn.hutool.core.date.DatePattern;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -52,7 +55,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 移除默认的Jackson消息转换器
         converters.removeIf(converter -> converter instanceof AbstractJackson2HttpMessageConverter);
         // 添加自定义的Jackson消息转换器
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(jackson2ObjectMapperBuilder.build());
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build();
+        SimpleModule simpleModule = new SimpleModule();
+        // Long类型序列化为String
+        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+        objectMapper.registerModule(simpleModule);
+        converter.setObjectMapper(objectMapper);
         converter.setDefaultCharset(StandardCharsets.UTF_8);
         converters.add(converter);
     }

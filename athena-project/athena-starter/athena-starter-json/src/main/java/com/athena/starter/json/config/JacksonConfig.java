@@ -3,7 +3,6 @@ package com.athena.starter.json.config;
 import cn.hutool.core.date.DatePattern;
 import com.athena.starter.json.support.DefaultDateFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -62,8 +61,7 @@ public class JacksonConfig {
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DatePattern.NORM_DATE_FORMATTER));
         // HH:mm:ss
         javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DatePattern.NORM_TIME_FORMATTER));
-        // Long 类型转换为 String 类型
-        javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
+
         // ======================= 时间反序列化规则 ==============================
         // yyyy-MM-dd HH:mm:ss
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DatePattern.NORM_DATETIME_FORMATTER));
