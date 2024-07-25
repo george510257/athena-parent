@@ -50,6 +50,11 @@ public class JacksonConfig {
         };
     }
 
+    /**
+     * Java 8 时间序列化与反序列化规则
+     *
+     * @return JavaTimeModule
+     */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public JavaTimeModule javaTimeModule() {
