@@ -17,6 +17,9 @@ import java.util.Date;
 @Component
 public class BaseEntityHandler implements MetaObjectHandler {
 
+    /**
+     * 用户帮助类
+     */
     @Resource
     private IUserHelper userHelper;
 

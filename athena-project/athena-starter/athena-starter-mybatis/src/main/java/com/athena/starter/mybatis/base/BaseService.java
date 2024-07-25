@@ -12,6 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 基础服务类
+ *
+ * @param <V> 视图对象
+ * @param <E> 实体对象
+ * @param <C> 转换器
+ * @param <M> Mapper
+ */
 public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         C extends IConverter<V, E>, M extends IMapper<E>>
         extends ServiceImpl<M, E> implements IService<V> {

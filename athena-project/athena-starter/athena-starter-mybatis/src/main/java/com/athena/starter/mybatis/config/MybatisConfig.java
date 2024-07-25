@@ -14,6 +14,9 @@ import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
+/**
+ * Mybatis配置
+ */
 @AutoConfiguration
 public class MybatisConfig {
 

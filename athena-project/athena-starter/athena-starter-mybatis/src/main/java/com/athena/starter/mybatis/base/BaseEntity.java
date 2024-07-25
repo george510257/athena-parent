@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 基础实体类
+ */
 @Data
 public abstract class BaseEntity implements IDomain {
 

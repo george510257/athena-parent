@@ -7,6 +7,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Mybatis自动配置
+ */
 @Configuration
 @ComponentScan
 @MapperScan(basePackages = BaseConstants.BASE_PACKAGE_PREFIX + ".**.mapper")

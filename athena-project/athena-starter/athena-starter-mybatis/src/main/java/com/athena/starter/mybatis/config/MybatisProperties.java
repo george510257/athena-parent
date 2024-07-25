@@ -10,6 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mybatis配置
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".mybatis.tenant")
