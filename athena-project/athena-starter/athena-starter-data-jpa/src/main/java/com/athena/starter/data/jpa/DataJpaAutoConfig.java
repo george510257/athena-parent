@@ -6,6 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+/**
+ * JPA自动配置类
+ */
 @Configuration
 @ComponentScan
 @EntityScan(basePackages = BaseConstants.BASE_PACKAGE_PREFIX + ".**.entity")

@@ -17,12 +17,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 结果通知
+ */
 @RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)
 public class ResultAdvice implements ResponseBodyAdvice<Object> {
 
+    /**
+     * Web属性
+     */
     @Resource
     private WebProperties webProperties;
 
+    /**
+     * 是否支持
+     *
+     * @param returnType    返回类型
+     * @param converterType 转换器类型
+     * @return 是否支持
+     */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         List<String> returnTypeList = webProperties.getResultIgnore().getReturnType();
@@ -36,6 +49,17 @@ public class ResultAdvice implements ResponseBodyAdvice<Object> {
         return true;
     }
 
+    /**
+     * 在写入响应体之前调用
+     *
+     * @param body                  返回值
+     * @param returnType            返回类型
+     * @param selectedContentType   上下文类型
+     * @param selectedConverterType 转换器类型
+     * @param request               请求
+     * @param response              响应
+     * @return 返回值
+     */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // 判断客户端类型 是否是feign调用

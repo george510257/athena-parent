@@ -10,18 +10,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * web配置类
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".web")
 public class WebProperties extends BaseProperties {
-
+    /**
+     * 结果忽略
+     */
     private ResultIgnore resultIgnore = new ResultIgnore();
 
+    /**
+     * 结果忽略
+     */
     @Data
     public static class ResultIgnore implements Serializable {
-
+        /**
+         * 返回类型
+         */
         List<String> returnType = new ArrayList<>();
-
+        /**
+         * 转换器类型
+         */
         List<String> converterType = new ArrayList<>();
     }
 }

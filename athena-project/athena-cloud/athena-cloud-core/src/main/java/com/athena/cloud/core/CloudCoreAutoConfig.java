@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * cloud core auto config
+ * 云服务核心自动配置
  */
 @Configuration
 @ComponentScan

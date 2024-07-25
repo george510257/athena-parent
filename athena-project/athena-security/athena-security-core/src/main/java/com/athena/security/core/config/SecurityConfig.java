@@ -6,9 +6,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * 安全配置
+ */
 @AutoConfiguration
 public class SecurityConfig {
 
+    /**
+     * 密码编码器
+     *
+     * @return 密码编码器
+     */
     @Bean
     @ConditionalOnMissingBean
     public PasswordEncoder passwordEncoder() {
