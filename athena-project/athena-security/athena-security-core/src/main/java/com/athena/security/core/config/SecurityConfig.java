@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.jackson2.WebJackson2Module;
 
 @AutoConfiguration
 public class SecurityConfig {
@@ -16,9 +15,4 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public WebJackson2Module webJackson2Module() {
-        return new WebJackson2Module();
-    }
 }

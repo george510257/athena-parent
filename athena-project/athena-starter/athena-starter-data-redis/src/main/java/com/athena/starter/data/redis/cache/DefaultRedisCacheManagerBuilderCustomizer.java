@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
@@ -32,7 +31,7 @@ public class DefaultRedisCacheManagerBuilderCustomizer implements RedisCacheMana
      * 缓存过期注解处理器
      */
     @Resource
-    private Jackson2JsonRedisSerializer<Object> jsonRedisSerializer;
+    private RedisSerializer<Object> jsonRedisSerializer;
     /**
      * 缓存过期注解处理器
      */

@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
@@ -17,7 +16,7 @@ public class RedisConfig {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Resource
-    private Jackson2JsonRedisSerializer<Object> jsonRedisSerializer;
+    private RedisSerializer<Object> jsonRedisSerializer;
 
     /**
      * RedisTemplate 配置

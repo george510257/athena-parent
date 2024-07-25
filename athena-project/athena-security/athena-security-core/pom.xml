@@ -12,4 +12,11 @@
     <groupId>com.athena.security.core</groupId>
     <artifactId>athena-security-core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.athena.starter.json</groupId>
+            <artifactId>athena-starter-json</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
