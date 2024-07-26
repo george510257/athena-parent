@@ -1,4 +1,4 @@
-package com.athena.security.core.servlet.customizer;
+package com.athena.security.core.customizer.servlet;
 
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
