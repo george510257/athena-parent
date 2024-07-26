@@ -12,6 +12,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * 资源配置
+ */
 @AutoConfiguration
 public class ResourceConfig {
 
