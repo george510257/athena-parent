@@ -1,23 +1,22 @@
-package com.athena.security.resource.config;
+package com.athena.security.resource.servlet;
 
-import com.athena.security.core.customizer.servlet.AuthorizeHttpRequestsCustomizer;
-import com.athena.security.core.customizer.servlet.CsrfCustomizer;
-import com.athena.security.core.customizer.servlet.ExceptionHandlingCustomizer;
-import com.athena.security.core.customizer.servlet.SessionManagementCustomizer;
-import com.athena.security.resource.customizer.servlet.OAuth2ResourceServerCustomizer;
+import com.athena.security.core.servlet.customizer.AuthorizeHttpRequestsCustomizer;
+import com.athena.security.core.servlet.customizer.CsrfCustomizer;
+import com.athena.security.core.servlet.customizer.ExceptionHandlingCustomizer;
+import com.athena.security.core.servlet.customizer.SessionManagementCustomizer;
+import com.athena.security.resource.servlet.customizer.OAuth2ResourceServerCustomizer;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-/**
- * 资源配置
- */
+@ComponentScan
 @AutoConfiguration
-public class ResourceConfig {
-
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+public class ServletResourceConfig {
     /**
      * 资源安全过滤器链
      *
@@ -32,7 +31,6 @@ public class ResourceConfig {
      */
     @Bean
     @Order(100)
-    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
     public SecurityFilterChain resourceSecurityFilterChain(HttpSecurity http,
                                                            OAuth2ResourceServerCustomizer oauth2ResourceServerCustomizer,
                                                            AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,

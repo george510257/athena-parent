@@ -1,9 +1,9 @@
 package com.athena.security.authorization.config;
 
 import com.athena.security.authorization.customizer.OAuth2AuthorizationServerCustomizer;
-import com.athena.security.core.customizer.servlet.AuthorizeHttpRequestsCustomizer;
-import com.athena.security.core.customizer.servlet.CsrfCustomizer;
-import com.athena.security.core.customizer.servlet.ExceptionHandlingCustomizer;
+import com.athena.security.core.servlet.customizer.AuthorizeHttpRequestsCustomizer;
+import com.athena.security.core.servlet.customizer.CsrfCustomizer;
+import com.athena.security.core.servlet.customizer.ExceptionHandlingCustomizer;
 import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

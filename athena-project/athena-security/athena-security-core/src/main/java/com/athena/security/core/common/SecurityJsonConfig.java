@@ -1,15 +1,15 @@
-package com.athena.security.core.config;
+package com.athena.security.core.common;
 
 import org.springframework.beans.factory.BeanClassLoaderAware;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 
 /**
  * 安全JSON配置
  */
-@AutoConfiguration
+@Configuration
 public class SecurityJsonConfig implements BeanClassLoaderAware {
 
     /**

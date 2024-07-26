@@ -1,4 +1,4 @@
-package com.athena.security.resource.customizer.servlet;
+package com.athena.security.resource.servlet.customizer;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.Customizer;
