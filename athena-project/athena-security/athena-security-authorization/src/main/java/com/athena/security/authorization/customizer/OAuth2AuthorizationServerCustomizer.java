@@ -1,5 +1,6 @@
 package com.athena.security.authorization.customizer;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
@@ -7,29 +8,56 @@ import org.springframework.stereotype.Component;
 
 /**
  * OAuth2授权服务器自定义器
- *
- * @param clientAuthenticationCustomizer                客户端认证自定义器
- * @param authorizationServerMetadataEndpointCustomizer 授权服务器元数据端点自定义器
- * @param authorizationEndpointCustomizer               授权端点自定义器
- * @param tokenEndpointCustomizer                       令牌端点自定义器
- * @param tokenIntrospectionEndpointCustomizer          令牌验证端点自定义器
- * @param tokenRevocationEndpointCustomizer             令牌撤销端点自定义器
- * @param deviceAuthorizationEndpointCustomizer         设备授权端点自定义器
- * @param deviceVerificationEndpointCustomizer          设备验证端点自定义器
- * @param oidcCustomizer                                OpenID Connect自定义器
  */
 @Component
-public record OAuth2AuthorizationServerCustomizer(
-        ObjectProvider<ClientAuthenticationCustomizer> clientAuthenticationCustomizer,
-        ObjectProvider<AuthorizationServerMetadataEndpointCustomizer> authorizationServerMetadataEndpointCustomizer,
-        ObjectProvider<AuthorizationEndpointCustomizer> authorizationEndpointCustomizer,
-        ObjectProvider<TokenEndpointCustomizer> tokenEndpointCustomizer,
-        ObjectProvider<TokenIntrospectionEndpointCustomizer> tokenIntrospectionEndpointCustomizer,
-        ObjectProvider<TokenRevocationEndpointCustomizer> tokenRevocationEndpointCustomizer,
-        ObjectProvider<DeviceAuthorizationEndpointCustomizer> deviceAuthorizationEndpointCustomizer,
-        ObjectProvider<DeviceVerificationEndpointCustomizer> deviceVerificationEndpointCustomizer,
-        ObjectProvider<OidcCustomizer> oidcCustomizer)
-        implements Customizer<OAuth2AuthorizationServerConfigurer> {
+public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2AuthorizationServerConfigurer> {
+
+    /**
+     * 客户端认证自定义器
+     */
+    @Resource
+    private ObjectProvider<ClientAuthenticationCustomizer> clientAuthenticationCustomizer;
+    /**
+     * 授权服务器元数据端点自定义器
+     */
+    @Resource
+    private ObjectProvider<AuthorizationServerMetadataEndpointCustomizer> authorizationServerMetadataEndpointCustomizer;
+    /**
+     * 授权端点自定义器
+     */
+    @Resource
+    private ObjectProvider<AuthorizationEndpointCustomizer> authorizationEndpointCustomizer;
+    /**
+     * 令牌端点自定义器
+     */
+    @Resource
+    private ObjectProvider<TokenEndpointCustomizer> tokenEndpointCustomizer;
+    /**
+     * 令牌验证端点自定义器
+     */
+    @Resource
+    private ObjectProvider<TokenIntrospectionEndpointCustomizer> tokenIntrospectionEndpointCustomizer;
+    /**
+     * 令牌撤销端点自定义器
+     */
+    @Resource
+    private ObjectProvider<TokenRevocationEndpointCustomizer> tokenRevocationEndpointCustomizer;
+    /**
+     * 设备授权端点自定义器
+     */
+    @Resource
+    private ObjectProvider<DeviceAuthorizationEndpointCustomizer> deviceAuthorizationEndpointCustomizer;
+    /**
+     * 设备验证端点自定义器
+     */
+    @Resource
+    private ObjectProvider<DeviceVerificationEndpointCustomizer> deviceVerificationEndpointCustomizer;
+    /**
+     * OpenID Connect自定义器
+     */
+    @Resource
+    private ObjectProvider<OidcCustomizer> oidcCustomizer;
+
     /**
      * 自定义
      *

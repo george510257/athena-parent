@@ -1,5 +1,6 @@
 package com.athena.security.resource.servlet.customizer;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,10 +11,18 @@ import org.springframework.stereotype.Component;
  * OAuth2资源服务器自定义器
  */
 @Component
-public record OAuth2ResourceServerCustomizer(
-        ObjectProvider<JwtCustomizer> jwtCustomizer,
-        ObjectProvider<OpaqueTokenCustomizer> opaqueTokenCustomizer)
-        implements Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> {
+public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> {
+
+    /**
+     * jwt自定义器
+     */
+    @Resource
+    private ObjectProvider<JwtCustomizer> jwtCustomizer;
+    /**
+     * 不透明令牌自定义器
+     */
+    @Resource
+    private ObjectProvider<OpaqueTokenCustomizer> opaqueTokenCustomizer;
 
     /**
      * 自定义
