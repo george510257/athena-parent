@@ -36,11 +36,16 @@ public class ResourceConfig {
                                                            CsrfCustomizer csrfCustomizer,
                                                            SessionManagementCustomizer sessionManagementCustomizer,
                                                            ExceptionHandlingCustomizer exceptionHandlingCustomizer) throws Exception {
-        return http.oauth2ResourceServer(oauth2ResourceServerCustomizer)
-                .authorizeHttpRequests(authorizeHttpRequestsCustomizer)
-                .csrf(csrfCustomizer)
-                .sessionManagement(sessionManagementCustomizer)
-                .exceptionHandling(exceptionHandlingCustomizer)
-                .build();
+        // 配置资源服务器
+        http.oauth2ResourceServer(oauth2ResourceServerCustomizer);
+        // 配置请求授权
+        http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
+        // 关闭csrf
+        http.csrf(csrfCustomizer);
+        // 配置session管理
+        http.sessionManagement(sessionManagementCustomizer);
+        // 配置异常处理
+        http.exceptionHandling(exceptionHandlingCustomizer);
+        return http.build();
     }
 }

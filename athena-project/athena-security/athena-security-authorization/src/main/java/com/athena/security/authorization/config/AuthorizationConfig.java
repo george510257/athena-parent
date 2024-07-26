@@ -14,8 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Optional;
-
 /**
  * 授权配置
  */
@@ -38,19 +36,19 @@ public class AuthorizationConfig {
     @ConditionalOnBean({HttpSecurity.class, OAuth2AuthorizationServerCustomizer.class})
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity http,
                                                                 OAuth2AuthorizationServerCustomizer authorizationServerCustomizer,
-                                                                Optional<AuthorizeHttpRequestsCustomizer> authorizeHttpRequestsCustomizer,
-                                                                Optional<ExceptionHandlingCustomizer> exceptionHandlingCustomizer,
-                                                                Optional<CsrfCustomizer> csrfCustomizer) {
+                                                                AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
+                                                                ExceptionHandlingCustomizer exceptionHandlingCustomizer,
+                                                                CsrfCustomizer csrfCustomizer) {
         // OAuth2认证服务器配置器
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
         http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
                 .with(authorizationServerConfigurer, authorizationServerCustomizer);
         // 自定义授权请求
-        authorizeHttpRequestsCustomizer.ifPresent(http::authorizeHttpRequests);
+        http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // 自定义异常处理
-        exceptionHandlingCustomizer.ifPresent(http::exceptionHandling);
+        http.exceptionHandling(exceptionHandlingCustomizer);
         // 自定义CSRF
-        csrfCustomizer.ifPresent(http::csrf);
+        http.csrf(csrfCustomizer);
         return http.build();
     }
 }
