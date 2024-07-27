@@ -1,11 +1,12 @@
 package com.athena.security.resource.servlet.customizer;
 
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * OAuth2资源服务器自定义器
@@ -17,12 +18,12 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
      * jwt自定义器
      */
     @Resource
-    private ObjectProvider<JwtCustomizer> jwtCustomizer;
+    private Optional<JwtCustomizer> jwtCustomizer;
     /**
      * 不透明令牌自定义器
      */
     @Resource
-    private ObjectProvider<OpaqueTokenCustomizer> opaqueTokenCustomizer;
+    private Optional<OpaqueTokenCustomizer> opaqueTokenCustomizer;
 
     /**
      * 自定义
@@ -32,8 +33,8 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
     @Override
     public void customize(OAuth2ResourceServerConfigurer<HttpSecurity> configurer) {
         // 配置jwt
-        jwtCustomizer.ifAvailable(configurer::jwt);
+        jwtCustomizer.ifPresent(configurer::jwt);
         // 配置不透明令牌
-        opaqueTokenCustomizer.ifAvailable(configurer::opaqueToken);
+        opaqueTokenCustomizer.ifPresent(configurer::opaqueToken);
     }
 }

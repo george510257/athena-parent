@@ -1,10 +1,11 @@
 package com.athena.security.authorization.customizer;
 
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * OAuth2授权服务器自定义器
@@ -16,47 +17,47 @@ public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2Aut
      * 客户端认证自定义器
      */
     @Resource
-    private ObjectProvider<ClientAuthenticationCustomizer> clientAuthenticationCustomizer;
+    private Optional<ClientAuthenticationCustomizer> clientAuthenticationCustomizer;
     /**
      * 授权服务器元数据端点自定义器
      */
     @Resource
-    private ObjectProvider<AuthorizationServerMetadataEndpointCustomizer> authorizationServerMetadataEndpointCustomizer;
+    private Optional<AuthorizationServerMetadataEndpointCustomizer> authorizationServerMetadataEndpointCustomizer;
     /**
      * 授权端点自定义器
      */
     @Resource
-    private ObjectProvider<AuthorizationEndpointCustomizer> authorizationEndpointCustomizer;
+    private Optional<AuthorizationEndpointCustomizer> authorizationEndpointCustomizer;
     /**
      * 令牌端点自定义器
      */
     @Resource
-    private ObjectProvider<TokenEndpointCustomizer> tokenEndpointCustomizer;
+    private Optional<TokenEndpointCustomizer> tokenEndpointCustomizer;
     /**
      * 令牌验证端点自定义器
      */
     @Resource
-    private ObjectProvider<TokenIntrospectionEndpointCustomizer> tokenIntrospectionEndpointCustomizer;
+    private Optional<TokenIntrospectionEndpointCustomizer> tokenIntrospectionEndpointCustomizer;
     /**
      * 令牌撤销端点自定义器
      */
     @Resource
-    private ObjectProvider<TokenRevocationEndpointCustomizer> tokenRevocationEndpointCustomizer;
+    private Optional<TokenRevocationEndpointCustomizer> tokenRevocationEndpointCustomizer;
     /**
      * 设备授权端点自定义器
      */
     @Resource
-    private ObjectProvider<DeviceAuthorizationEndpointCustomizer> deviceAuthorizationEndpointCustomizer;
+    private Optional<DeviceAuthorizationEndpointCustomizer> deviceAuthorizationEndpointCustomizer;
     /**
      * 设备验证端点自定义器
      */
     @Resource
-    private ObjectProvider<DeviceVerificationEndpointCustomizer> deviceVerificationEndpointCustomizer;
+    private Optional<DeviceVerificationEndpointCustomizer> deviceVerificationEndpointCustomizer;
     /**
      * OpenID Connect自定义器
      */
     @Resource
-    private ObjectProvider<OidcCustomizer> oidcCustomizer;
+    private Optional<OidcCustomizer> oidcCustomizer;
 
     /**
      * 自定义
@@ -66,22 +67,22 @@ public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2Aut
     @Override
     public void customize(OAuth2AuthorizationServerConfigurer configurer) {
         // 定制OAuth2客户端认证
-        clientAuthenticationCustomizer.ifAvailable(configurer::clientAuthentication);
+        clientAuthenticationCustomizer.ifPresent(configurer::clientAuthentication);
         // 定制授权服务器元数据端点
-        authorizationServerMetadataEndpointCustomizer.ifAvailable(configurer::authorizationServerMetadataEndpoint);
+        authorizationServerMetadataEndpointCustomizer.ifPresent(configurer::authorizationServerMetadataEndpoint);
         // 定制授权端点
-        authorizationEndpointCustomizer.ifAvailable(configurer::authorizationEndpoint);
+        authorizationEndpointCustomizer.ifPresent(configurer::authorizationEndpoint);
         // 定制令牌端点
-        tokenEndpointCustomizer.ifAvailable(configurer::tokenEndpoint);
+        tokenEndpointCustomizer.ifPresent(configurer::tokenEndpoint);
         // 定制令牌验证端点
-        tokenIntrospectionEndpointCustomizer.ifAvailable(configurer::tokenIntrospectionEndpoint);
+        tokenIntrospectionEndpointCustomizer.ifPresent(configurer::tokenIntrospectionEndpoint);
         // 定制令牌撤销端点
-        tokenRevocationEndpointCustomizer.ifAvailable(configurer::tokenRevocationEndpoint);
+        tokenRevocationEndpointCustomizer.ifPresent(configurer::tokenRevocationEndpoint);
         // 定制设备授权端点
-        deviceAuthorizationEndpointCustomizer.ifAvailable(configurer::deviceAuthorizationEndpoint);
+        deviceAuthorizationEndpointCustomizer.ifPresent(configurer::deviceAuthorizationEndpoint);
         // 定制设备验证端点
-        deviceVerificationEndpointCustomizer.ifAvailable(configurer::deviceVerificationEndpoint);
+        deviceVerificationEndpointCustomizer.ifPresent(configurer::deviceVerificationEndpoint);
         // 定制OpenID Connect
-        oidcCustomizer.ifAvailable(configurer::oidc);
+        oidcCustomizer.ifPresent(configurer::oidc);
     }
 }

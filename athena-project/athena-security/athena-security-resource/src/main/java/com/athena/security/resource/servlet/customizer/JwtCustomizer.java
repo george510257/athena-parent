@@ -2,11 +2,12 @@ package com.athena.security.resource.servlet.customizer;
 
 import com.athena.security.resource.servlet.converter.JwtAuthenticationConverter;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * JWT自定义器
@@ -17,7 +18,7 @@ public class JwtCustomizer implements Customizer<OAuth2ResourceServerConfigurer<
      * jwt认证转换器
      */
     @Resource
-    private ObjectProvider<JwtAuthenticationConverter> jwtAuthenticationConverter;
+    private Optional<JwtAuthenticationConverter> jwtAuthenticationConverter;
 
     /**
      * 自定义
@@ -27,6 +28,6 @@ public class JwtCustomizer implements Customizer<OAuth2ResourceServerConfigurer<
     @Override
     public void customize(OAuth2ResourceServerConfigurer<HttpSecurity>.JwtConfigurer jwtConfigurer) {
         // 配置jwt认证转换器
-        jwtAuthenticationConverter.ifAvailable(jwtConfigurer::jwtAuthenticationConverter);
+        jwtAuthenticationConverter.ifPresent(jwtConfigurer::jwtAuthenticationConverter);
     }
 }
