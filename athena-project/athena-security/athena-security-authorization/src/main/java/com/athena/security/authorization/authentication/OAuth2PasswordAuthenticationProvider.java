@@ -202,6 +202,12 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
                 registeredClient, clientPrincipal, accessToken, refreshToken, additionalParameters);
     }
 
+    /**
+     * 获取用户名密码认证令牌
+     *
+     * @param token 令牌
+     * @return 用户名密码认证令牌
+     */
     private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2PasswordAuthenticationToken token) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken.unauthenticated(token.getUsername(), token.getPassword());
         return (UsernamePasswordAuthenticationToken) authenticationManager.authenticate(usernamePasswordAuthenticationToken);
