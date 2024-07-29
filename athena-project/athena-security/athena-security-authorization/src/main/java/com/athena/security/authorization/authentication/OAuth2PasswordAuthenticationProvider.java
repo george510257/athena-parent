@@ -3,9 +3,9 @@ package com.athena.security.authorization.authentication;
 import com.athena.security.authorization.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.*;
@@ -23,7 +23,6 @@ import org.springframework.security.oauth2.server.authorization.context.Authoriz
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -35,7 +34,6 @@ import java.util.Set;
  * OAuth2 密码认证提供者
  */
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvider {
     /**
@@ -49,7 +47,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
     /**
      * 用户详情认证提供者
      */
-    private final AbstractUserDetailsAuthenticationProvider userDetailsAuthenticationProvider;
+    private final AuthenticationManager authenticationManager;
     /**
      * 授权服务
      */
@@ -120,9 +118,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
         OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
         OAuth2Token generatedAccessToken = this.tokenGenerator.generate(tokenContext);
         if (generatedAccessToken == null) {
-            OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR,
-                    "The token generator failed to generate the access token.", ERROR_URI);
-            throw new OAuth2AuthenticationException(error);
+            AuthUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the access token.", ERROR_URI);
         }
 
         if (log.isTraceEnabled()) {
@@ -146,9 +142,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
             OAuth2Token generatedRefreshToken = this.tokenGenerator.generate(tokenContext);
             if (generatedRefreshToken != null) {
                 if (!(generatedRefreshToken instanceof OAuth2RefreshToken)) {
-                    OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR,
-                            "The token generator failed to generate a valid refresh token.", ERROR_URI);
-                    throw new OAuth2AuthenticationException(error);
+                    AuthUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate a valid refresh token.", ERROR_URI);
                 }
 
                 if (log.isTraceEnabled()) {
@@ -171,9 +165,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
             // @formatter:on
             OAuth2Token generatedIdToken = this.tokenGenerator.generate(tokenContext);
             if (!(generatedIdToken instanceof Jwt)) {
-                OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR,
-                        "The token generator failed to generate the ID token.", ERROR_URI);
-                throw new OAuth2AuthenticationException(error);
+                AuthUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the ID token.", ERROR_URI);
             }
 
             if (log.isTraceEnabled()) {
@@ -212,7 +204,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
 
     private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2PasswordAuthenticationToken token) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken.unauthenticated(token.getUsername(), token.getPassword());
-        return (UsernamePasswordAuthenticationToken) userDetailsAuthenticationProvider.authenticate(usernamePasswordAuthenticationToken);
+        return (UsernamePasswordAuthenticationToken) authenticationManager.authenticate(usernamePasswordAuthenticationToken);
     }
 
     /**
