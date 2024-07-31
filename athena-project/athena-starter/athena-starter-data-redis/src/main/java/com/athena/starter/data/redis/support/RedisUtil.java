@@ -396,8 +396,7 @@ public class RedisUtil {
      * @return RedisTemplate 操作模板
      */
     private RedisTemplate<String, Object> getRedisTemplate() {
-        return SpringUtil.getBean(new TypeReference<>() {
-        });
+        return SpringUtil.getBean("redisTemplate");
     }
 
     /**
