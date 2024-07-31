@@ -17,11 +17,23 @@ import java.util.Optional;
  */
 @Configuration
 public class TokenConfig {
+    /**
+     * JWT自定义器
+     */
     @Resource
     private Optional<OAuth2TokenCustomizer<JwtEncodingContext>> jwtCustomizer;
+    /**
+     * 访问令牌自定义器
+     */
     @Resource
     private Optional<OAuth2TokenCustomizer<OAuth2TokenClaimsContext>> accessTokenCustomizer;
 
+    /**
+     * OAuth2令牌生成器
+     *
+     * @param jwtEncoder JWT编码器
+     * @return OAuth2令牌生成器
+     */
     @Bean
     public OAuth2TokenGenerator<? extends OAuth2Token> oauth2TokenGenerator(JwtEncoder jwtEncoder) {
         // JWT生成器
@@ -36,6 +48,12 @@ public class TokenConfig {
         return new DelegatingOAuth2TokenGenerator(jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
     }
 
+    /**
+     * JWT编码器
+     *
+     * @param jwkSource JWK源
+     * @return JWT编码器
+     */
     @Bean
     public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);

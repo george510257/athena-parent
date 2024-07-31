@@ -22,7 +22,9 @@ import java.util.stream.Collectors;
  * OAuth2 密码认证转换器
  */
 public class OAuth2PasswordAuthenticationConverter implements AuthenticationConverter {
-
+    /**
+     * 错误 URI
+     */
     private static final String ERROR_URI = "https://tools.ietf.org/html/rfc6749#section-4.3.2";
 
     /**
