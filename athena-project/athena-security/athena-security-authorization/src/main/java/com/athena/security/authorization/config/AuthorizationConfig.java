@@ -27,8 +27,11 @@ public class AuthorizationConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity http,
                                                                 OAuth2AuthorizationServerCustomizer authorizationServerCustomizer) throws Exception {
+        // 默认安全配置
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        // 自定义安全配置
         authorizationServerCustomizer.customize(http.getConfigurer(OAuth2AuthorizationServerConfigurer.class));
+        // 构建
         return http.build();
     }
 }
