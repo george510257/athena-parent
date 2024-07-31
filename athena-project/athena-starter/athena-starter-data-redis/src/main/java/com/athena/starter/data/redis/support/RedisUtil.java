@@ -7,6 +7,9 @@ import lombok.experimental.UtilityClass;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * Redis 工具类
  */
@@ -98,6 +101,50 @@ public class RedisUtil {
     public <T> T getCacheValue(String key, TypeReference<T> typeReference) {
         Object value = getCacheValue(key);
         return convertValue(value, typeReference);
+    }
+
+    /**
+     * 获取所有缓存值
+     *
+     * @param cacheName 缓存名称
+     * @return 缓存值列表
+     */
+    public List<Object> getCacheValueList(String cacheName) {
+        Set<String> keys = getRedisTemplate().keys(getCacheKey(cacheName, "*"));
+        if (keys == null) {
+            return null;
+        }
+        return getRedisTemplate().opsForValue().multiGet(keys);
+    }
+
+    /**
+     * 获取所有缓存值
+     *
+     * @param cacheName 缓存名称
+     * @param clazz     类型
+     * @return 缓存值列表
+     */
+    public <T> List<T> getCacheValueList(String cacheName, Class<T> clazz) {
+        List<Object> values = getCacheValueList(cacheName);
+        if (values == null) {
+            return null;
+        }
+        return values.stream().map(value -> convertValue(value, clazz)).toList();
+    }
+
+    /**
+     * 获取所有缓存值
+     *
+     * @param cacheName     缓存名称
+     * @param typeReference 类型
+     * @return 缓存值列表
+     */
+    public <T> List<T> getCacheValueList(String cacheName, TypeReference<T> typeReference) {
+        List<Object> values = getCacheValueList(cacheName);
+        if (values == null) {
+            return null;
+        }
+        return values.stream().map(value -> convertValue(value, typeReference)).toList();
     }
 
     /**

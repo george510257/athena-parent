@@ -31,7 +31,7 @@ public class TokenEndpointCustomizer implements Customizer<OAuth2TokenEndpointCo
      * 令牌生成器
      */
     @Resource
-    private OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+    private OAuth2TokenGenerator<? extends OAuth2Token> oauth2TokenGenerator;
 
     /**
      * 自定义
@@ -42,7 +42,7 @@ public class TokenEndpointCustomizer implements Customizer<OAuth2TokenEndpointCo
     public void customize(OAuth2TokenEndpointConfigurer configurer) {
 
         // 添加密码模式
-        configurer.authenticationProvider(new OAuth2PasswordAuthenticationProvider(authenticationManager, authorizationService, tokenGenerator));
+        configurer.authenticationProvider(new OAuth2PasswordAuthenticationProvider(authenticationManager, authorizationService, oauth2TokenGenerator));
         configurer.accessTokenRequestConverter(new OAuth2PasswordAuthenticationConverter());
     }
 }

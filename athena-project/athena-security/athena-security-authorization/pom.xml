@@ -21,5 +21,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.athena.starter.data.redis</groupId>
+            <artifactId>athena-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
 </project>
