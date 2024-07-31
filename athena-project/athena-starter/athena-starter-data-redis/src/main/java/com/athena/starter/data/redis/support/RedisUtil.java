@@ -18,19 +18,19 @@ public class RedisUtil {
     /**
      * 锁前缀
      */
-    private static final String LOCK_PREFIX = "athena:lock:";
+    public static final String LOCK_PREFIX = "athena:lock:";
     /**
      * 缓存前缀
      */
-    private static final String CACHE_PREFIX = "athena:cache:";
+    public static final String CACHE_PREFIX = "athena:cache:";
     /**
      * 计数器前缀
      */
-    private static final String COUNTER_PREFIX = "athena:counter:";
+    public static final String COUNTER_PREFIX = "athena:counter:";
     /**
      * 分隔符
      */
-    private static final String SEPARATOR = ":";
+    public static final String SEPARATOR = ":";
 
     /**
      * 获取缓存值

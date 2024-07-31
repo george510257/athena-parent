@@ -1,16 +1,21 @@
 package com.athena.security.authorization.config;
 
 import com.athena.security.authorization.customizer.OAuth2AuthorizationServerCustomizer;
+import com.athena.security.authorization.support.RedisOAuth2AuthorizationConsentService;
+import com.athena.security.authorization.support.RedisOAuth2AuthorizationService;
 import com.athena.security.core.servlet.customizer.AuthorizeHttpRequestsCustomizer;
 import com.athena.security.core.servlet.customizer.CsrfCustomizer;
 import com.athena.security.core.servlet.customizer.ExceptionHandlingCustomizer;
 import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -50,5 +55,17 @@ public class AuthorizationConfig {
         // 自定义CSRF
         http.csrf(csrfCustomizer);
         return http.build();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public OAuth2AuthorizationService authorizationService() {
+        return new RedisOAuth2AuthorizationService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public OAuth2AuthorizationConsentService authorizationConsentService() {
+        return new RedisOAuth2AuthorizationConsentService();
     }
 }

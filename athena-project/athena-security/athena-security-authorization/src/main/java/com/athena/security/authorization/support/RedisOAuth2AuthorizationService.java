@@ -1,7 +1,6 @@
 package com.athena.security.authorization.support;
 
 import com.athena.starter.data.redis.support.RedisUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2DeviceCode;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
@@ -13,15 +12,12 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationCode;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Redis OAuth2授权服务
  */
-@Service
-@ConditionalOnBean(OAuth2AuthorizationService.class)
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
     /**
