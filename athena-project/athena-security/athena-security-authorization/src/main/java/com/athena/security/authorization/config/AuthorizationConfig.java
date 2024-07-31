@@ -14,10 +14,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.UUID;
 
 /**
  * 授权配置
@@ -67,5 +79,40 @@ public class AuthorizationConfig {
     @ConditionalOnMissingBean
     public OAuth2AuthorizationConsentService authorizationConsentService() {
         return new RedisOAuth2AuthorizationConsentService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.withUsername("admin")
+                .password("{noop}admin")
+                .authorities("ROLE_ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RegisteredClientRepository registeredClientRepository() {
+        RegisteredClient messagingClient = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("messaging-client")
+                .clientSecret("{noop}secret")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .authorizationGrantType(AuthorizationGrantType.PASSWORD)
+                .redirectUri("http://localhost:8080/login/oauth2/code/messaging-client-oidc")
+                .redirectUri("http://localhost:8080/authorized")
+                .redirectUri("https://www.baidu.com")
+                .postLogoutRedirectUri("http://localhost:8080/logged-out")
+                .scope("openid")
+                .scope("profile")
+                .scope("message.read")
+                .scope("message.write")
+                .scope("user.read")
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .build();
+        return new InMemoryRegisteredClientRepository(messagingClient);
     }
 }
