@@ -1,6 +1,7 @@
 package com.athena.security.authorization.support;
 
 import com.athena.starter.data.redis.support.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2DeviceCode;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * Redis OAuth2授权服务
  */
+@Slf4j
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
     /**
@@ -32,6 +34,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
      */
     @Override
     public void save(OAuth2Authorization authorization) {
+        log.debug("保存授权: {}", authorization);
         RedisUtil.setCacheValue(CACHE_NAME, authorization.getId(), authorization);
     }
 
@@ -42,6 +45,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
      */
     @Override
     public void remove(OAuth2Authorization authorization) {
+        log.debug("删除授权: {}", authorization);
         RedisUtil.deleteCacheValue(CACHE_NAME, authorization.getId());
     }
 
@@ -53,6 +57,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
      */
     @Override
     public OAuth2Authorization findById(String id) {
+        log.debug("根据id查找授权: {}", id);
         return RedisUtil.getCacheValue(CACHE_NAME, id, OAuth2Authorization.class);
     }
 
@@ -65,6 +70,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
      */
     @Override
     public OAuth2Authorization findByToken(String token, OAuth2TokenType tokenType) {
+        log.debug("根据token查找授权: {}, {}", token, tokenType);
         List<OAuth2Authorization> authorizations = RedisUtil.getCacheValueList(CACHE_NAME, OAuth2Authorization.class);
         return authorizations.stream()
                 .filter(authorization -> hasToken(authorization, token, tokenType))
@@ -81,6 +87,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
      * @return 是否有token
      */
     private boolean hasToken(OAuth2Authorization authorization, String token, OAuth2TokenType tokenType) {
+        log.debug("是否有token: {}, {}, {}", authorization, token, tokenType);
         if (tokenType == null) {
             return matchesState(authorization, token)
                     || matchesCode(authorization, token)

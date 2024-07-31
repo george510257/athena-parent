@@ -18,6 +18,6 @@ public class AuthorizeHttpRequestsCustomizer implements Customizer<AuthorizeHttp
      */
     @Override
     public void customize(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
-
+        registry.anyRequest().authenticated();
     }
 }

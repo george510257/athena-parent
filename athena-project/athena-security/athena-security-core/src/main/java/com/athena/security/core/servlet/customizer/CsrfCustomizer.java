@@ -17,6 +17,6 @@ public class CsrfCustomizer implements Customizer<CsrfConfigurer<HttpSecurity>> 
      */
     @Override
     public void customize(CsrfConfigurer<HttpSecurity> configurer) {
-
+        configurer.disable();
     }
 }
