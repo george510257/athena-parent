@@ -16,6 +16,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * oauth2授权同意混合
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = OAuth2AuthorizationConsentMixin.OAuth2AuthorizationConsentDeserializer.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,

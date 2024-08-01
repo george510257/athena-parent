@@ -6,6 +6,9 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import java.time.Instant;
 import java.util.Set;
 
+/**
+ * oauth2 access token mixin
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)

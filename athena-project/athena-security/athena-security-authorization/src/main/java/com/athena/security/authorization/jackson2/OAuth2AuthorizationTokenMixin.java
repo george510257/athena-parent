@@ -5,6 +5,11 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 
 import java.util.Map;
 
+/**
+ * OAuth2 授权令牌混合
+ *
+ * @param <T> OAuth2Token类型
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)

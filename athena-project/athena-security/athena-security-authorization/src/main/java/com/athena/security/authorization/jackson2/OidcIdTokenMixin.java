@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.*;
 import java.time.Instant;
 import java.util.Map;
 
+/**
+ * OAuth2 oidc id token mixin
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)

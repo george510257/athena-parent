@@ -21,27 +21,49 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.UUID;
 
+/**
+ * 默认认证配置
+ */
 @AutoConfiguration
 public class DefaultAuthConfig {
-
+    /**
+     * 注册客户端信息
+     *
+     * @return 注册客户端信息
+     */
     @Bean
     @ConditionalOnMissingBean
     public OAuth2AuthorizationServerJackson2Module oauth2AuthorizationServerJackson2Module() {
         return new OAuth2AuthorizationServerJackson2Module();
     }
 
+    /**
+     * oauth2授权服务
+     *
+     * @return oauth2授权服务
+     */
     @Bean
     @ConditionalOnMissingBean
     public OAuth2AuthorizationService authorizationService() {
         return new RedisOAuth2AuthorizationService();
     }
 
+    /**
+     * 授权同意服务
+     *
+     * @return 授权同意服务
+     */
     @Bean
     @ConditionalOnMissingBean
     public OAuth2AuthorizationConsentService authorizationConsentService() {
         return new RedisOAuth2AuthorizationConsentService();
     }
 
+    /**
+     * 默认用户信息
+     *
+     * @return 用户信息
+     */
     @Bean
     @ConditionalOnMissingBean
     public UserDetailsService userDetailsService() {
@@ -52,6 +74,11 @@ public class DefaultAuthConfig {
         return new InMemoryUserDetailsManager(user);
     }
 
+    /**
+     * 注册客户端信息
+     *
+     * @return 注册客户端信息
+     */
     @Bean
     @ConditionalOnMissingBean
     public RegisteredClientRepository registeredClientRepository() {
