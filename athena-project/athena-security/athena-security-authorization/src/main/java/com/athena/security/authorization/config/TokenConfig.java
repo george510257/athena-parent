@@ -3,6 +3,7 @@ package com.athena.security.authorization.config;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.annotation.Resource;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -35,6 +36,7 @@ public class TokenConfig {
      * @return OAuth2令牌生成器
      */
     @Bean
+    @ConditionalOnMissingBean
     public OAuth2TokenGenerator<? extends OAuth2Token> oauth2TokenGenerator(JwtEncoder jwtEncoder) {
         // JWT生成器
         JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
@@ -55,6 +57,7 @@ public class TokenConfig {
      * @return JWT编码器
      */
     @Bean
+    @ConditionalOnMissingBean
     public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);
     }
