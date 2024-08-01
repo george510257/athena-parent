@@ -3,6 +3,7 @@ package com.athena.security.core.servlet.customizer;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +18,6 @@ public class SessionManagementCustomizer implements Customizer<SessionManagement
      */
     @Override
     public void customize(SessionManagementConfigurer<HttpSecurity> configurer) {
-
+        configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }

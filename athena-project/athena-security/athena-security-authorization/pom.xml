@@ -24,6 +24,7 @@
         <dependency>
             <groupId>com.athena.starter.data.redis</groupId>
             <artifactId>athena-starter-data-redis</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

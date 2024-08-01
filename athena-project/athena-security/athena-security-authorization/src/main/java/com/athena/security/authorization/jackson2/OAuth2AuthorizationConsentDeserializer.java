@@ -17,7 +17,6 @@ import java.util.Set;
  */
 public class OAuth2AuthorizationConsentDeserializer extends JsonDeserializer<OAuth2AuthorizationConsent> {
 
-
     /**
      * 反序列化 OAuth2AuthorizationConsent 对象
      *

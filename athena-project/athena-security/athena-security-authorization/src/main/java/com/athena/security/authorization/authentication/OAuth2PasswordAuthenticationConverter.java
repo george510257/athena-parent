@@ -2,7 +2,7 @@ package com.athena.security.authorization.authentication;
 
 import cn.hutool.core.util.StrUtil;
 import com.athena.common.core.util.WebUtil;
-import com.athena.security.authorization.util.AuthUtil;
+import com.athena.security.authorization.util.AuthenticationUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,19 +47,19 @@ public class OAuth2PasswordAuthenticationConverter implements AuthenticationConv
         // 获取请求的范围
         String scope = parameterMap.getFirst(OAuth2ParameterNames.SCOPE);
         if (StrUtil.isNotBlank(scope) && parameterMap.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-            AuthUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.SCOPE, ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.SCOPE, ERROR_URI);
         }
         // 请求的范围
         Set<String> scopes = new HashSet<>(StrUtil.split(scope, ' '));
         // 用户名 (REQUIRED)
         String username = parameterMap.getFirst(OAuth2ParameterNames.USERNAME);
         if (StrUtil.isBlank(username) || parameterMap.get(OAuth2ParameterNames.USERNAME).size() != 1) {
-            AuthUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME, ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME, ERROR_URI);
         }
         // 密码 (REQUIRED)
         String password = parameterMap.getFirst(OAuth2ParameterNames.PASSWORD);
         if (StrUtil.isBlank(password) || parameterMap.get(OAuth2ParameterNames.PASSWORD).size() != 1) {
-            AuthUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD, ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD, ERROR_URI);
         }
         // 额外参数
         Map<String, Object> additionalParameters = WebUtil.getParameterMap(request).entrySet().stream()
