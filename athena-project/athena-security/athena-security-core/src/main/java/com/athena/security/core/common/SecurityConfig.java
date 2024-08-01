@@ -8,6 +8,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jackson2.CoreJackson2Module;
+import org.springframework.security.web.jackson2.WebServletJackson2Module;
 
 /**
  * 安全配置
@@ -40,4 +42,15 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public CoreJackson2Module coreJackson2Module() {
+        return new CoreJackson2Module();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public WebServletJackson2Module webServletJackson2Module() {
+        return new WebServletJackson2Module();
+    }
 }

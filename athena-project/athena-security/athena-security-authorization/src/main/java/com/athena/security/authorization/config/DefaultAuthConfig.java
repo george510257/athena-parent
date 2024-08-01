@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
@@ -22,6 +23,12 @@ import java.util.UUID;
 
 @AutoConfiguration
 public class DefaultAuthConfig {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public OAuth2AuthorizationServerJackson2Module oauth2AuthorizationServerJackson2Module() {
+        return new OAuth2AuthorizationServerJackson2Module();
+    }
 
     @Bean
     @ConditionalOnMissingBean
