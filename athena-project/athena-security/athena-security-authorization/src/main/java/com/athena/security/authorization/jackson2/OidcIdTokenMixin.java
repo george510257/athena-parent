@@ -9,7 +9,7 @@ import java.util.Map;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OidcIdTokenMixin {
+public abstract class OidcIdTokenMixin {
 
     @JsonCreator
     public OidcIdTokenMixin(@JsonProperty("tokenValue") String tokenValue,

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.*;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthorizationGrantTypeMixin {
+public abstract class AuthorizationGrantTypeMixin {
 
     @JsonCreator
     public AuthorizationGrantTypeMixin(@JsonProperty("value") String value) {

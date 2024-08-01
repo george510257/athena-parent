@@ -8,7 +8,7 @@ import java.time.Instant;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OAuth2DeviceCodeMixin {
+public abstract class OAuth2DeviceCodeMixin {
     @JsonCreator
     public OAuth2DeviceCodeMixin(@JsonProperty("tokenValue") String tokenValue,
                                  @JsonProperty("issuedAt") Instant issuedAt,
