@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.Set;
 
 /**
- * oauth2 access token mixin
+ * OAuth2 访问令牌混合
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
@@ -15,6 +15,15 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class OAuth2AccessTokenMixin {
 
+    /**
+     * 构造函数
+     *
+     * @param tokenType  令牌类型
+     * @param tokenValue 令牌值
+     * @param issuedAt   发布时间
+     * @param expiresAt  过期时间
+     * @param scopes     作用域
+     */
     @JsonCreator
     public OAuth2AccessTokenMixin(@JsonProperty("tokenType") OAuth2AccessToken.TokenType tokenType,
                                   @JsonProperty("tokenValue") String tokenValue,

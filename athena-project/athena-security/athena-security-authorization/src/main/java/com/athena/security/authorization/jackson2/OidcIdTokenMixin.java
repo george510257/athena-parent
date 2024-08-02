@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.Map;
 
 /**
- * OAuth2 oidc id token mixin
+ * OIDC ID 令牌混合
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
@@ -14,6 +14,14 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class OidcIdTokenMixin {
 
+    /**
+     * 构造函数
+     *
+     * @param tokenValue 令牌值
+     * @param issuedAt   发布时间
+     * @param expiresAt  过期时间
+     * @param claims     声明
+     */
     @JsonCreator
     public OidcIdTokenMixin(@JsonProperty("tokenValue") String tokenValue,
                             @JsonProperty("issuedAt") Instant issuedAt,

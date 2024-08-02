@@ -12,6 +12,13 @@ import java.time.Instant;
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class OAuth2UserCodeMixin {
+    /**
+     * 构造函数
+     *
+     * @param tokenValue 令牌值
+     * @param issuedAt   发布时间
+     * @param expiresAt  过期时间
+     */
     @JsonCreator
     public OAuth2UserCodeMixin(@JsonProperty("tokenValue") String tokenValue,
                                @JsonProperty("issuedAt") Instant issuedAt,

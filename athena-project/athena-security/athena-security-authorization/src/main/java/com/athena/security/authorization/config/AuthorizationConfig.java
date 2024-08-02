@@ -22,6 +22,7 @@ public class AuthorizationConfig {
      *
      * @param http                          Http安全
      * @param authorizationServerCustomizer 授权服务器自定义器
+     * @param resourceServerCustomizer      资源服务器自定义器
      * @return 授权安全过滤器链
      */
     @Bean

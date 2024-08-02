@@ -7,6 +7,9 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 
+/**
+ * 授权工具类
+ */
 @UtilityClass
 public class AuthenticationUtil {
     /**

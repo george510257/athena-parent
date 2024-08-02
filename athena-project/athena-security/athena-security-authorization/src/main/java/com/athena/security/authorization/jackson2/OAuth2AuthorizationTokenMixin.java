@@ -16,6 +16,12 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class OAuth2AuthorizationTokenMixin<T extends OAuth2Token> {
 
+    /**
+     * 构造函数
+     *
+     * @param token    令牌
+     * @param metadata 元数据
+     */
     @JsonCreator
     public OAuth2AuthorizationTokenMixin(@JsonProperty("token") T token,
                                          @JsonProperty("metadata") Map<String, Object> metadata) {
