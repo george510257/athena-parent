@@ -36,6 +36,11 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
     @Override
     public void save(OAuth2Authorization authorization) {
         log.debug("保存授权: {}", authorization);
+        List<OAuth2Authorization> authorizations = RedisUtil.getCacheValueList(CACHE_NAME, OAuth2Authorization.class);
+        authorizations.stream()
+                .filter(auth -> auth.getPrincipalName().equals(authorization.getPrincipalName())
+                        && auth.getRegisteredClientId().equals(authorization.getRegisteredClientId()))
+                .forEach(this::remove);
         RedisUtil.setCacheValue(CACHE_NAME, authorization.getId(), authorization);
     }
 
