@@ -1,6 +1,5 @@
 package com.athena.security.authorization.customizer;
 
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.stereotype.Component;
@@ -18,12 +17,12 @@ public class AccessTokenCustomizer implements OAuth2TokenCustomizer<OAuth2TokenC
      */
     @Override
     public void customize(OAuth2TokenClaimsContext context) {
-        // 客户端模式不设置用户信息
-        if (AuthorizationGrantType.CLIENT_CREDENTIALS.equals(context.getAuthorizationGrantType())) {
-            return;
-        }
-        // 设置用户信息
-        Object principal = context.getPrincipal().getPrincipal();
-        context.getClaims().claim("principal", principal);
+//        // 客户端模式不设置用户信息
+//        if (AuthorizationGrantType.CLIENT_CREDENTIALS.equals(context.getAuthorizationGrantType())) {
+//            return;
+//        }
+//        // 设置用户信息
+//        Object principal = context.getPrincipal().getPrincipal();
+//        context.getClaims().claim("principal", principal);
     }
 }
