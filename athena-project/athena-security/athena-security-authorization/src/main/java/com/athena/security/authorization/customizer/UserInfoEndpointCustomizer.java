@@ -39,6 +39,9 @@ public class UserInfoEndpointCustomizer implements Customizer<OidcUserInfoEndpoi
         OAuth2Authorization authentication = authenticationContext.getAuthorization();
         String username = authentication.getPrincipalName();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (userDetails == null) {
+            return null;
+        }
         return new OidcUserInfo(BeanUtil.beanToMap(userDetails));
     }
 }
