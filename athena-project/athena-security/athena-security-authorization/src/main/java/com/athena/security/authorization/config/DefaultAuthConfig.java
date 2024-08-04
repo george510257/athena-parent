@@ -17,6 +17,8 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.UUID;
@@ -100,6 +102,7 @@ public class DefaultAuthConfig {
                 .scope("message.write")
                 .scope("user.read")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .tokenSettings(TokenSettings.builder().accessTokenFormat(OAuth2TokenFormat.REFERENCE).build())
                 .build();
         return new InMemoryRegisteredClientRepository(messagingClient);
     }

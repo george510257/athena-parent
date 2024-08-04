@@ -3,10 +3,10 @@ package com.athena.security.authorization.customizer;
 import cn.hutool.core.bean.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OidcUserInfoEndpointConfigurer;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
 import org.springframework.stereotype.Component;
@@ -26,13 +26,19 @@ public class UserInfoEndpointCustomizer implements Customizer<OidcUserInfoEndpoi
      */
     @Override
     public void customize(OidcUserInfoEndpointConfigurer configurer) {
-        configurer.userInfoMapper(this::userInfo);
+        configurer.userInfoMapper(this::getUserInfo);
     }
 
-    private OidcUserInfo userInfo(OidcUserInfoAuthenticationContext context) {
-        Authentication authentication = context.getAuthentication();
-        String username = authentication.getName();
-        UserDetails principal = userDetailsService.loadUserByUsername(username);
-        return new OidcUserInfo(BeanUtil.beanToMap(principal));
+    /**
+     * 获取用户信息
+     *
+     * @param authenticationContext 上下文
+     * @return 用户信息
+     */
+    private OidcUserInfo getUserInfo(OidcUserInfoAuthenticationContext authenticationContext) {
+        OAuth2Authorization authentication = authenticationContext.getAuthorization();
+        String username = authentication.getPrincipalName();
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return new OidcUserInfo(BeanUtil.beanToMap(userDetails));
     }
 }

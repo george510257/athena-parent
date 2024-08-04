@@ -19,6 +19,6 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
     @Override
     public void customize(OAuth2ResourceServerConfigurer<HttpSecurity> configurer) {
         // 默认配置
-        configurer.jwt(Customizer.withDefaults());
+        configurer.opaqueToken(Customizer.withDefaults());
     }
 }
