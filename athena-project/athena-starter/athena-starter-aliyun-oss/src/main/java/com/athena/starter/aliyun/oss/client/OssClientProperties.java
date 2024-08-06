@@ -17,6 +17,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun.oss.client")
 public class OssClientProperties extends BaseProperties {
+
     /**
      * 阿里云OSS服务的Endpoint
      */
@@ -41,6 +42,10 @@ public class OssClientProperties extends BaseProperties {
      * stsToken
      */
     private StsToken stsToken = new StsToken();
+    /**
+     * acs
+     */
+    private Acs acs = new Acs();
     /**
      * 配置
      */
@@ -86,5 +91,33 @@ public class OssClientProperties extends BaseProperties {
          * 安全令牌
          */
         private String securityToken;
+    }
+
+    /**
+     * acs
+     */
+    @Data
+    @EqualsAndHashCode(callSuper = true)
+    public static class Acs extends Token {
+        /**
+         * regionId
+         */
+        private String regionId;
+        /**
+         * 临时凭证的有效时间，单位是秒
+         */
+        private Long durationSeconds;
+        /**
+         * 授权策略
+         */
+        private String policy;
+        /**
+         * 角色ARN
+         */
+        private String roleArn;
+        /**
+         * 角色会话名称
+         */
+        private String roleSessionName;
     }
 }

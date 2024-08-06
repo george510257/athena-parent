@@ -2,6 +2,9 @@ package com.athena.starter.aliyun.oss.client;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.profile.DefaultProfile;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +43,22 @@ public class OssClientConfig {
         } else {
             throw new IllegalArgumentException("Unknown auth mode.");
         }
+    }
+
+    /**
+     * acsClient 配置
+     *
+     * @param ossClientProperties oss配置
+     * @return acsClient
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public IAcsClient acsClient(OssClientProperties ossClientProperties) {
+        OssClientProperties.Acs acs = ossClientProperties.getAcs();
+        DefaultProfile profile = DefaultProfile.getProfile(acs.getRegionId(),
+                acs.getAccessKeyId(),
+                acs.getAccessKeySecret());
+        return new DefaultAcsClient(profile);
     }
 
     /**
