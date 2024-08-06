@@ -69,7 +69,7 @@ public abstract class OAuth2AuthorizationMixin {
             // 构建OAuth2Authorization对象
             OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(RegisteredClient.withId(registeredClientId)
                             .clientId("test-client-id")
-                            .authorizationGrantType(authorizationGrantType)
+                            .authorizationGrantType(AuthorizationGrantType.PASSWORD)
                             .build())
                     .id(id)
                     .principalName(principalName)

@@ -1,5 +1,6 @@
 package com.athena.security.core.common;
 
+import com.athena.security.core.jackson2.SecurityCoreModule;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -52,5 +53,11 @@ public class SecurityConfig {
     @ConditionalOnMissingBean
     public WebServletJackson2Module webServletJackson2Module() {
         return new WebServletJackson2Module();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SecurityCoreModule securityCoreModule() {
+        return new SecurityCoreModule();
     }
 }

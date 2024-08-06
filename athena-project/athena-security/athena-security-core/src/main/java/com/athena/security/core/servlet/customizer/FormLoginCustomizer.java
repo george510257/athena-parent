@@ -18,10 +18,5 @@ public class FormLoginCustomizer implements Customizer<FormLoginConfigurer<HttpS
      */
     @Override
     public void customize(FormLoginConfigurer<HttpSecurity> configurer) {
-        configurer.loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/index")
-                .failureUrl("/login?error")
-                .permitAll();
     }
 }

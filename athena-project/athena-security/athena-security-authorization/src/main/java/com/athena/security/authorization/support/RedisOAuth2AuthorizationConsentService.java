@@ -11,7 +11,7 @@ public class RedisOAuth2AuthorizationConsentService implements OAuth2Authorizati
     /**
      * 缓存名称
      */
-    private static final String CACHE_NAME = "authorization:consent";
+    private static final String CACHE_NAME = "authorization-consent";
 
     /**
      * 保存
