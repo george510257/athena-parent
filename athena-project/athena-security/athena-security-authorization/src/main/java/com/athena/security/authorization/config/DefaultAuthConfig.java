@@ -1,13 +1,15 @@
 package com.athena.security.authorization.config;
 
+import cn.hutool.core.collection.CollUtil;
+import com.athena.common.bean.security.Role;
+import com.athena.common.bean.security.User;
+import com.athena.security.authorization.support.InMemoryUserService;
 import com.athena.security.authorization.support.RedisOAuth2AuthorizationConsentService;
 import com.athena.security.authorization.support.RedisOAuth2AuthorizationService;
+import com.athena.security.authorization.support.UserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
@@ -19,7 +21,6 @@ import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2A
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.UUID;
 
@@ -68,12 +69,16 @@ public class DefaultAuthConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("admin")
-                .password("{noop}admin")
-                .authorities("ROLE_ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    public UserService userService() {
+        User user = new User();
+        user.setUsername("admin");
+        user.setPassword("{noop}admin");
+        user.setMobile("13800000000");
+        Role role = new Role();
+        role.setCode("admin");
+        role.setName("管理员");
+        user.setRoles(CollUtil.newArrayList(role));
+        return new InMemoryUserService(user);
     }
 
     /**
@@ -91,7 +96,8 @@ public class DefaultAuthConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .authorizationGrantType(AuthorizationGrantType.PASSWORD)
+                .authorizationGrantType(AuthorizationConstants.PASSWORD)
+                .authorizationGrantType(AuthorizationConstants.SMS)
                 .redirectUri("http://localhost:8080/login/oauth2/code/messaging-client-oidc")
                 .redirectUri("http://localhost:8080/authorized")
                 .redirectUri("https://www.baidu.com")

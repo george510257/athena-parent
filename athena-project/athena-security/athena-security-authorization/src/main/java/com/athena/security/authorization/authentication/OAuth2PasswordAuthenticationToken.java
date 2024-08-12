@@ -1,9 +1,8 @@
 package com.athena.security.authorization.authentication;
 
+import com.athena.security.authorization.config.AuthorizationConstants;
 import lombok.Getter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationGrantAuthenticationToken;
 
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +11,7 @@ import java.util.Set;
  * OAuth2 密码认证令牌
  */
 @Getter
-public class OAuth2PasswordAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
+public class OAuth2PasswordAuthenticationToken extends OAuth2BaseAuthenticationToken {
     /**
      * 用户名
      */
@@ -21,24 +20,19 @@ public class OAuth2PasswordAuthenticationToken extends OAuth2AuthorizationGrantA
      * 密码
      */
     private final String password;
-    /**
-     * 作用域
-     */
-    private final Set<String> scopes;
 
     /**
      * 构造函数
      *
-     * @param username             用户名
-     * @param password             密码
-     * @param scopes               作用域
      * @param clientPrincipal      客户端主体
      * @param additionalParameters 附加参数
+     * @param scopes               作用域
+     * @param username             用户名
+     * @param password             密码
      */
-    protected OAuth2PasswordAuthenticationToken(String username, String password, Set<String> scopes, Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-        super(AuthorizationGrantType.PASSWORD, clientPrincipal, additionalParameters);
+    public OAuth2PasswordAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String username, String password) {
+        super(AuthorizationConstants.PASSWORD, clientPrincipal, additionalParameters, scopes);
         this.username = username;
         this.password = password;
-        this.scopes = scopes;
     }
 }

@@ -1,5 +1,6 @@
 package com.athena.security.authorization.jackson2;
 
+import com.athena.security.authorization.config.AuthorizationConstants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -69,7 +70,7 @@ public abstract class OAuth2AuthorizationMixin {
             // 构建OAuth2Authorization对象
             OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(RegisteredClient.withId(registeredClientId)
                             .clientId("test-client-id")
-                            .authorizationGrantType(AuthorizationGrantType.PASSWORD)
+                            .authorizationGrantType(AuthorizationConstants.PASSWORD)
                             .build())
                     .id(id)
                     .principalName(principalName)
