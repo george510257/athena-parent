@@ -11,10 +11,10 @@ import java.util.List;
 public class VerificationCodeManager {
 
     @Resource
-    private List<VerificationCodeProvider> providers;
+    private List<VerificationCodeProvider<?, ?, ?>> providers;
 
-    public VerificationCodeProvider getProvider(ServletWebRequest request) {
-        for (VerificationCodeProvider provider : providers) {
+    public VerificationCodeProvider<?, ?, ?> getProvider(ServletWebRequest request) {
+        for (VerificationCodeProvider<?, ?, ?> provider : providers) {
             if (provider.support(request)) {
                 return provider;
             }

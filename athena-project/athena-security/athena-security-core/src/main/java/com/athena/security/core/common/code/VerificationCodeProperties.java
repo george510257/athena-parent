@@ -66,7 +66,7 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 图形验证码宽度
          */
-        private int width = 80;
+        private int width = 100;
         /**
          * 图形验证码高度
          */
@@ -74,11 +74,11 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 图形验证码干扰线数量
          */
-        private int lineCount = 40;
+        private int lineCount = 150;
         /**
          * 图形验证码字体大小
          */
-        private int fontSize = 20;
+        private float fontSize = 0.75f;
         /**
          * 验证码参数名
          */
@@ -86,7 +86,7 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 验证码key参数名
          */
-        private String targetParameterName = "imageCodeKey";
+        private String targetParameterName = "uuid";
         /**
          * 获取图形验证码url
          */
