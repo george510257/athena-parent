@@ -5,6 +5,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.web.servlet.filter.OrderedFilter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,7 +15,8 @@ import java.io.IOException;
 /**
  * 验证码过滤器
  */
-public class VerificationCodeFilter extends OncePerRequestFilter {
+@Component
+public class VerificationCodeFilter extends OncePerRequestFilter implements OrderedFilter {
 
     /**
      * 验证码管理器
@@ -56,4 +59,8 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    @Override
+    public int getOrder() {
+        return REQUEST_WRAPPER_FILTER_MAX_ORDER - 104;
+    }
 }

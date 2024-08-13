@@ -25,7 +25,7 @@ public class WebUtil {
     }
 
     public Optional<HttpServletRequest> getRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             return Optional.of(((ServletRequestAttributes) requestAttributes).getRequest());
         }
@@ -52,7 +52,7 @@ public class WebUtil {
     }
 
     public Optional<HttpServletResponse> getResponse() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             return Optional.ofNullable(((ServletRequestAttributes) requestAttributes).getResponse());
         }
