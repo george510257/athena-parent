@@ -1,10 +1,11 @@
 package com.athena.security.core.common.code.image;
 
 import com.athena.common.core.util.WebUtil;
+import com.athena.security.core.common.code.VerificationCodeException;
 import com.athena.security.core.common.code.base.VerificationCodeSender;
-import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -17,12 +18,15 @@ public class ImageCodeSender implements VerificationCodeSender<ImageCode> {
      * @param target 接收目标
      * @param code   验证码
      */
-    @SneakyThrows
     @Override
     public void send(String target, ImageCode code) {
-        // 获取response输出流
-        OutputStream out = WebUtil.getOutputStream();
-        // 将图片写到response.getOutputStream()中
-        ImageIO.write(code.getImage(), "JPEG", out);
+        try {
+            // 获取response输出流
+            OutputStream out = WebUtil.getOutputStream();
+            // 将图片写到response.getOutputStream()中
+            ImageIO.write(code.getImage(), "JPEG", out);
+        } catch (IOException e) {
+            throw new VerificationCodeException("图片验证码发送失败", e);
+        }
     }
 }

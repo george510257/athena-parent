@@ -44,18 +44,14 @@ public abstract class VerificationCodeProvider<VC extends VerificationCode> {
      * @param request 请求
      */
     public void send(ServletWebRequest request) {
-        try {
-            // 获取接收目标
-            String target = getTarget(request);
-            // 生成验证码
-            VC code = verificationCodeGenerator.generate();
-            // 保存验证码
-            verificationCodeRepository.save(target, code);
-            // 发送验证码
-            verificationCodeSender.send(target, code);
-        } catch (Exception e) {
-            throw new VerificationCodeException("验证码发送失败", e);
-        }
+        // 获取接收目标
+        String target = getTarget(request);
+        // 生成验证码
+        VC code = verificationCodeGenerator.generate();
+        // 保存验证码
+        verificationCodeRepository.save(target, code);
+        // 发送验证码
+        verificationCodeSender.send(target, code);
     }
 
     /**

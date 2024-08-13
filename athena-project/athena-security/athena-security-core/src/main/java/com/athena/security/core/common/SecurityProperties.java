@@ -48,11 +48,11 @@ public class SecurityProperties extends BaseProperties {
         /**
          * 验证码参数名
          */
-        private String parameterName = "smsCode";
+        private String codeParameterName = "smsCode";
         /**
          * 手机号参数名
          */
-        private String mobileParameterName = "mobile";
+        private String targetParameterName = "mobile";
         /**
          * 获取短信验证码url
          */
@@ -92,11 +92,11 @@ public class SecurityProperties extends BaseProperties {
         /**
          * 验证码参数名
          */
-        private String parameterName = "imageCode";
+        private String codeParameterName = "imageCode";
         /**
          * 验证码key参数名
          */
-        private String keyParameterName = "imageCodeKey";
+        private String targetParameterName = "imageCodeKey";
         /**
          * 获取图形验证码url
          */

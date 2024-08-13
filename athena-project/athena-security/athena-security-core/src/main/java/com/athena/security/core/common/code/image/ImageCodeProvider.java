@@ -1,6 +1,8 @@
 package com.athena.security.core.common.code.image;
 
+import cn.hutool.core.util.StrUtil;
 import com.athena.security.core.common.SecurityProperties;
+import com.athena.security.core.common.code.VerificationCodeException;
 import com.athena.security.core.common.code.base.VerificationCodeGenerator;
 import com.athena.security.core.common.code.base.VerificationCodeProvider;
 import com.athena.security.core.common.code.base.VerificationCodeSender;
@@ -71,7 +73,11 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     @Override
     public String getTarget(ServletWebRequest request) {
-        return request.getRequest().getParameter(imageProperties.getKeyParameterName());
+        String target = request.getRequest().getParameter(imageProperties.getTargetParameterName());
+        if (StrUtil.isNotBlank(target)) {
+            return target;
+        }
+        throw new VerificationCodeException("参数不能为空 parameterName: " + imageProperties.getTargetParameterName());
     }
 
     /**
@@ -82,7 +88,11 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     @Override
     public String getCode(ServletWebRequest request) {
-        return request.getRequest().getParameter(imageProperties.getParameterName());
+        String code = request.getRequest().getParameter(imageProperties.getCodeParameterName());
+        if (StrUtil.isNotBlank(code)) {
+            return code;
+        }
+        throw new VerificationCodeException("参数不能为空 parameterName: " + imageProperties.getCodeParameterName());
     }
 
 }
