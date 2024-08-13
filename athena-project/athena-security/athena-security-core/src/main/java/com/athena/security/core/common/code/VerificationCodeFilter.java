@@ -41,7 +41,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        VerificationCodeProvider<?> provider = verificationCodeManager.getProvider(servletWebRequest);
+        VerificationCodeProvider provider = verificationCodeManager.getProvider(servletWebRequest);
         if (provider != null) {
             if (provider.isSendRequest(servletWebRequest)) {
                 // 发送验证码请求

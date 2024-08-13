@@ -1,12 +1,9 @@
 package com.athena.security.core.common.code.image;
 
 import cn.hutool.core.util.StrUtil;
-import com.athena.security.core.common.SecurityProperties;
 import com.athena.security.core.common.code.VerificationCodeException;
-import com.athena.security.core.common.code.base.VerificationCodeGenerator;
+import com.athena.security.core.common.code.VerificationCodeProperties;
 import com.athena.security.core.common.code.base.VerificationCodeProvider;
-import com.athena.security.core.common.code.base.VerificationCodeSender;
-import com.athena.security.core.common.code.repository.VerificationCodeRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -17,26 +14,19 @@ import java.util.List;
  * 图片验证码提供器
  */
 @Component
-public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
+public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, ImageCodeGenerator, ImageCodeSender> {
     /**
      * 图片验证码配置
      */
-    private final SecurityProperties.Image imageProperties;
+    private final VerificationCodeProperties.Image imageProperties;
 
     /**
      * 构造函数
      *
-     * @param verificationCodeRepository 验证码存储器
-     * @param verificationCodeGenerator  验证码生成器
-     * @param verificationCodeSender     验证码发送器
-     * @param securityProperties         安全配置
+     * @param verificationCodeProperties 安全配置
      */
-    public ImageCodeProvider(VerificationCodeRepository verificationCodeRepository,
-                             VerificationCodeGenerator<ImageCode> verificationCodeGenerator,
-                             VerificationCodeSender<ImageCode> verificationCodeSender,
-                             SecurityProperties securityProperties) {
-        super(verificationCodeRepository, verificationCodeGenerator, verificationCodeSender);
-        this.imageProperties = securityProperties.getCode().getImage();
+    public ImageCodeProvider(VerificationCodeProperties verificationCodeProperties) {
+        this.imageProperties = verificationCodeProperties.getImage();
     }
 
     /**

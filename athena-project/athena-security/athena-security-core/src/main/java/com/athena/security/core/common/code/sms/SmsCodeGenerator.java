@@ -2,7 +2,7 @@ package com.athena.security.core.common.code.sms;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.athena.security.core.common.SecurityProperties;
+import com.athena.security.core.common.code.VerificationCodeProperties;
 import com.athena.security.core.common.code.base.VerificationCodeGenerator;
 
 /**
@@ -12,15 +12,15 @@ public class SmsCodeGenerator implements VerificationCodeGenerator<SmsCode> {
     /**
      * 短信验证码配置
      */
-    private final SecurityProperties.Sms smsProperties;
+    private final VerificationCodeProperties.Sms smsProperties;
 
     /**
      * 构造函数
      *
-     * @param securityProperties 安全配置
+     * @param verificationCodeProperties 安全配置
      */
-    public SmsCodeGenerator(SecurityProperties securityProperties) {
-        this.smsProperties = securityProperties.getCode().getSms();
+    public SmsCodeGenerator(VerificationCodeProperties verificationCodeProperties) {
+        this.smsProperties = verificationCodeProperties.getSms();
     }
 
     /**

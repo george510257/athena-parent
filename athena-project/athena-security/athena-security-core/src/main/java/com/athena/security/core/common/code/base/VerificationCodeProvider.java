@@ -2,41 +2,33 @@ package com.athena.security.core.common.code.base;
 
 import com.athena.security.core.common.code.VerificationCodeException;
 import com.athena.security.core.common.code.repository.VerificationCodeRepository;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
  * 验证码提供器
  *
- * @param <VC> 验证码类型
+ * @param <V> 验证码类型
  */
-public abstract class VerificationCodeProvider<VC extends VerificationCode> {
+public abstract class VerificationCodeProvider<V extends VerificationCode,
+        G extends VerificationCodeGenerator<V>,
+        S extends VerificationCodeSender<V>> {
     /**
      * 验证码存储器
      */
-    private final VerificationCodeRepository verificationCodeRepository;
+    @Resource
+    private VerificationCodeRepository repository;
     /**
      * 验证码生成器
      */
-    private final VerificationCodeGenerator<VC> verificationCodeGenerator;
+    @Autowired
+    private G generator;
     /**
      * 验证码发送器
      */
-    private final VerificationCodeSender<VC> verificationCodeSender;
-
-    /**
-     * 构造函数
-     *
-     * @param verificationCodeRepository 存储器
-     * @param verificationCodeGenerator  生成器
-     * @param verificationCodeSender     发送器
-     */
-    public VerificationCodeProvider(VerificationCodeRepository verificationCodeRepository,
-                                    VerificationCodeGenerator<VC> verificationCodeGenerator,
-                                    VerificationCodeSender<VC> verificationCodeSender) {
-        this.verificationCodeRepository = verificationCodeRepository;
-        this.verificationCodeGenerator = verificationCodeGenerator;
-        this.verificationCodeSender = verificationCodeSender;
-    }
+    @Autowired
+    private S sender;
 
     /**
      * 发送验证码
@@ -47,11 +39,11 @@ public abstract class VerificationCodeProvider<VC extends VerificationCode> {
         // 获取接收目标
         String target = getTarget(request);
         // 生成验证码
-        VC code = verificationCodeGenerator.generate();
+        V code = generator.generate();
         // 保存验证码
-        verificationCodeRepository.save(target, code);
+        repository.save(target, code);
         // 发送验证码
-        verificationCodeSender.send(target, code);
+        sender.send(target, code);
     }
 
     /**
@@ -64,7 +56,7 @@ public abstract class VerificationCodeProvider<VC extends VerificationCode> {
         String target = getTarget(request);
         String code = getCode(request);
         // 获取验证码
-        VerificationCode verificationCode = verificationCodeRepository.get(target);
+        VerificationCode verificationCode = repository.get(target);
         // 验证码不存在或已过期
         if (verificationCode == null) {
             throw new VerificationCodeException("验证码不存在或已过期");
@@ -72,7 +64,7 @@ public abstract class VerificationCodeProvider<VC extends VerificationCode> {
         // 验证码正确且未过期
         if (verificationCode.getCode().equals(code)
                 && verificationCode.getExpireTime().getTime() > System.currentTimeMillis()) {
-            verificationCodeRepository.remove(target);
+            repository.remove(target);
         } else {
             // 验证码错误
             throw new VerificationCodeException("验证码错误");

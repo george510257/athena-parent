@@ -1,4 +1,4 @@
-package com.athena.security.core.common;
+package com.athena.security.core.common.code;
 
 import com.athena.common.core.constant.BaseConstants;
 import com.athena.common.core.constant.BaseProperties;
@@ -12,28 +12,18 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security")
-public class SecurityProperties extends BaseProperties {
-    /**
-     * 验证码配置
-     */
-    private Code code = new Code();
+@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.verification-code")
+public class VerificationCodeProperties extends BaseProperties {
 
     /**
-     * 验证码配置
+     * 短信验证码配置
      */
-    @Data
-    public static class Code implements Serializable {
-        /**
-         * 短信验证码配置
-         */
-        private Sms sms = new Sms();
+    private Sms sms = new Sms();
 
-        /**
-         * 图形验证码配置
-         */
-        private Image image = new Image();
-    }
+    /**
+     * 图形验证码配置
+     */
+    private Image image = new Image();
 
     @Data
     public static class Sms implements Serializable {

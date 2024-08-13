@@ -3,7 +3,7 @@ package com.athena.security.core.common.code.image;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
-import com.athena.security.core.common.SecurityProperties;
+import com.athena.security.core.common.code.VerificationCodeProperties;
 import com.athena.security.core.common.code.base.VerificationCodeGenerator;
 
 /**
@@ -13,15 +13,15 @@ public class ImageCodeGenerator implements VerificationCodeGenerator<ImageCode> 
     /**
      * 图片验证码配置
      */
-    private final SecurityProperties.Image imageProperties;
+    private final VerificationCodeProperties.Image imageProperties;
 
     /**
      * 构造函数
      *
-     * @param securityProperties 安全配置
+     * @param verificationCodeProperties 安全配置
      */
-    public ImageCodeGenerator(SecurityProperties securityProperties) {
-        this.imageProperties = securityProperties.getCode().getImage();
+    public ImageCodeGenerator(VerificationCodeProperties verificationCodeProperties) {
+        this.imageProperties = verificationCodeProperties.getImage();
     }
 
     /**

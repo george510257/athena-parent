@@ -1,43 +1,41 @@
-package com.athena.security.core.common;
+package com.athena.security.core.common.code;
 
-import com.athena.security.core.common.code.base.VerificationCodeGenerator;
-import com.athena.security.core.common.code.base.VerificationCodeSender;
-import com.athena.security.core.common.code.image.ImageCode;
 import com.athena.security.core.common.code.image.ImageCodeGenerator;
 import com.athena.security.core.common.code.image.ImageCodeSender;
 import com.athena.security.core.common.code.repository.RedisVerificationCodeRepository;
 import com.athena.security.core.common.code.repository.VerificationCodeRepository;
-import com.athena.security.core.common.code.sms.SmsCode;
 import com.athena.security.core.common.code.sms.SmsCodeGenerator;
 import com.athena.security.core.common.code.sms.SmsCodeSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableConfigurationProperties(VerificationCodeProperties.class)
 public class VerificationCodeConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public VerificationCodeGenerator<ImageCode> imageCodeGenerator(SecurityProperties securityProperties) {
-        return new ImageCodeGenerator(securityProperties);
+    public ImageCodeGenerator imageCodeGenerator(VerificationCodeProperties verificationCodeProperties) {
+        return new ImageCodeGenerator(verificationCodeProperties);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public VerificationCodeGenerator<SmsCode> smsCodeGenerator(SecurityProperties securityProperties) {
-        return new SmsCodeGenerator(securityProperties);
+    public SmsCodeGenerator smsCodeGenerator(VerificationCodeProperties verificationCodeProperties) {
+        return new SmsCodeGenerator(verificationCodeProperties);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public VerificationCodeSender<ImageCode> imageCodeSender() {
+    public ImageCodeSender imageCodeSender() {
         return new ImageCodeSender();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public VerificationCodeSender<SmsCode> smsCodeSender() {
+    public SmsCodeSender smsCodeSender() {
         return new SmsCodeSender();
     }
 

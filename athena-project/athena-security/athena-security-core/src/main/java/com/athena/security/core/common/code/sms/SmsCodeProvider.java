@@ -1,12 +1,9 @@
 package com.athena.security.core.common.code.sms;
 
 import cn.hutool.core.util.StrUtil;
-import com.athena.security.core.common.SecurityProperties;
 import com.athena.security.core.common.code.VerificationCodeException;
-import com.athena.security.core.common.code.base.VerificationCodeGenerator;
+import com.athena.security.core.common.code.VerificationCodeProperties;
 import com.athena.security.core.common.code.base.VerificationCodeProvider;
-import com.athena.security.core.common.code.base.VerificationCodeSender;
-import com.athena.security.core.common.code.repository.VerificationCodeRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -17,26 +14,19 @@ import java.util.List;
  * 短信验证码提供器
  */
 @Component
-public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
+public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGenerator, SmsCodeSender> {
     /**
      * 短信验证码配置
      */
-    private final SecurityProperties.Sms smsProperties;
+    private final VerificationCodeProperties.Sms smsProperties;
 
     /**
      * 构造函数
      *
-     * @param verificationCodeRepository 验证码存储器
-     * @param verificationCodeGenerator  验证码生成器
-     * @param verificationCodeSender     验证码发送器
-     * @param securityProperties         安全配置
+     * @param verificationCodeProperties 安全配置
      */
-    public SmsCodeProvider(VerificationCodeRepository verificationCodeRepository,
-                           VerificationCodeGenerator<SmsCode> verificationCodeGenerator,
-                           VerificationCodeSender<SmsCode> verificationCodeSender,
-                           SecurityProperties securityProperties) {
-        super(verificationCodeRepository, verificationCodeGenerator, verificationCodeSender);
-        this.smsProperties = securityProperties.getCode().getSms();
+    public SmsCodeProvider(VerificationCodeProperties verificationCodeProperties) {
+        this.smsProperties = verificationCodeProperties.getSms();
     }
 
     /**
