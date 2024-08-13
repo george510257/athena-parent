@@ -18,5 +18,15 @@
             <artifactId>athena-starter-json</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.athena.starter.web</groupId>
+            <artifactId>athena-starter-web</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.athena.starter.data.redis</groupId>
+            <artifactId>athena-starter-data-redis</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

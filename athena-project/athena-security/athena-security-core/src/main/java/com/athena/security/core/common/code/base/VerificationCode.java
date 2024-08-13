@@ -1,4 +1,4 @@
-package com.athena.security.core.code;
+package com.athena.security.core.common.code.base;
 
 import lombok.Data;
 

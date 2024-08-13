@@ -197,5 +197,4 @@ public abstract class OAuth2BaseAuthenticationProvider implements Authentication
      */
     public abstract UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2BaseAuthenticationToken baseAuthenticationToken);
 
-
 }

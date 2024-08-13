@@ -1,4 +1,4 @@
-package com.athena.security.core.jackson2;
+package com.athena.security.core.common.jackson2;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;

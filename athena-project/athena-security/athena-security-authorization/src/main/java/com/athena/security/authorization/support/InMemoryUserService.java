@@ -26,7 +26,6 @@ public class InMemoryUserService implements UserService {
         CollUtil.addAll(USERS, users);
     }
 
-
     @Override
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
         return USERS.stream()

@@ -50,7 +50,6 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
         checkUser(userDetails, token.getPassword());
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 
-
     }
 
     private void checkUser(UserDetails userDetails, String password) {
