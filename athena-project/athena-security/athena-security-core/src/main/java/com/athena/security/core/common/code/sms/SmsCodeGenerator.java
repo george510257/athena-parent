@@ -32,7 +32,7 @@ public class SmsCodeGenerator implements VerificationCodeGenerator<SmsCode> {
     public SmsCode generate() {
         SmsCode smsCode = new SmsCode();
         smsCode.setCode(RandomUtil.randomNumbers(smsProperties.getLength()));
-        smsCode.setExpireTime(DateUtil.offsetSecond(DateUtil.date(), smsProperties.getExpireIn()));
+        smsCode.setExpireTime(DateUtil.offsetSecond(DateUtil.date(), smsProperties.getExpireIn()).toJdkDate());
         return smsCode;
     }
 

@@ -37,7 +37,7 @@ public class ImageCodeGenerator implements VerificationCodeGenerator<ImageCode> 
         ImageCode imageCode = new ImageCode();
         imageCode.setCode(lineCaptcha.getCode());
         imageCode.setImage(lineCaptcha.getImage());
-        imageCode.setExpireTime(DateUtil.offsetSecond(DateUtil.date(), imageProperties.getExpireIn()));
+        imageCode.setExpireTime(DateUtil.offsetSecond(DateUtil.date(), imageProperties.getExpireIn()).toJdkDate());
         return imageCode;
     }
 }

@@ -12,8 +12,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * @param <V> 验证码类型
  */
 public abstract class VerificationCodeProvider<V extends VerificationCode,
-        G extends VerificationCodeGenerator<V>,
-        S extends VerificationCodeSender<V>> {
+        G extends VerificationCodeGenerator<V>, S extends VerificationCodeSender<V>> {
     /**
      * 验证码存储器
      */
@@ -43,7 +42,7 @@ public abstract class VerificationCodeProvider<V extends VerificationCode,
         // 保存验证码
         repository.save(target, code);
         // 发送验证码
-        sender.send(target, code);
+        sender.send(target, code, request.getResponse());
     }
 
     /**
