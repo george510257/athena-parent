@@ -8,8 +8,10 @@ import com.athena.security.core.common.code.sms.SmsCodeGenerator;
 import com.athena.security.core.common.code.sms.SmsCodeSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 @Configuration
 @EnableConfigurationProperties(VerificationCodeProperties.class)
@@ -43,5 +45,15 @@ public class VerificationCodeConfig {
     @ConditionalOnMissingBean
     public VerificationCodeRepository verificationCodeRepository() {
         return new RedisVerificationCodeRepository();
+    }
+
+    @Bean
+    public FilterRegistrationBean<VerificationCodeFilter> verificationCodeFilter(VerificationCodeManager verificationCodeManager) {
+        FilterRegistrationBean<VerificationCodeFilter> bean = new FilterRegistrationBean<>();
+        bean.setName("verificationCodeFilter");
+        bean.addUrlPatterns("/*");
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        bean.setFilter(new VerificationCodeFilter(verificationCodeManager));
+        return bean;
     }
 }

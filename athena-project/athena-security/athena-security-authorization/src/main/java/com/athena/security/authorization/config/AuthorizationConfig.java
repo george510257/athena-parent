@@ -2,7 +2,6 @@ package com.athena.security.authorization.config;
 
 import com.athena.security.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.authorization.customizer.OAuth2ResourceServerCustomizer;
-import com.athena.security.core.common.code.VerificationCodeFilter;
 import com.athena.security.core.common.code.VerificationCodeManager;
 import com.athena.security.core.servlet.customizer.AuthorizeHttpRequestsCustomizer;
 import com.athena.security.core.servlet.customizer.ExceptionHandlingCustomizer;
@@ -16,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * 授权配置
@@ -40,8 +38,6 @@ public class AuthorizationConfig {
                                                                 OAuth2AuthorizationServerCustomizer authorizationServerCustomizer,
                                                                 OAuth2ResourceServerCustomizer resourceServerCustomizer,
                                                                 ExceptionHandlingCustomizer exceptionHandlingCustomizer) throws Exception {
-        // 添加验证码过滤器
-        http.addFilterBefore(new VerificationCodeFilter(verificationCodeManager), UsernamePasswordAuthenticationFilter.class);
         // 默认安全配置
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         // 自定义安全配置

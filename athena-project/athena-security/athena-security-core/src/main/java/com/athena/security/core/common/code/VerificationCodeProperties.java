@@ -46,7 +46,7 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 获取短信验证码url
          */
-        private String url = "/sms/code";
+        private String url = "/code/sms";
         /**
          * 需要校验验证码的url
          */
@@ -90,7 +90,7 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 获取图形验证码url
          */
-        private String url = "/image/code";
+        private String url = "/code/image";
         /**
          * 需要校验验证码的url
          */
