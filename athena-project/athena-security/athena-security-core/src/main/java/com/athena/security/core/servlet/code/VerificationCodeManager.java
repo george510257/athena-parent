@@ -26,12 +26,10 @@ public class VerificationCodeManager {
      * @return 验证码提供器
      */
     public VerificationCodeProvider<?, ?, ?> getProvider(ServletWebRequest request) {
-        for (VerificationCodeProvider<?, ?, ?> provider : providers) {
-            if (provider.support(request)) {
-                return provider;
-            }
-        }
-        return null;
+        return providers.stream()
+                .filter(provider -> provider.support(request))
+                .findFirst()
+                .orElse(null);
     }
 
 }
