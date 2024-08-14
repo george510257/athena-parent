@@ -4,30 +4,24 @@ import cn.hutool.core.util.StrUtil;
 import com.athena.security.core.servlet.code.VerificationCodeException;
 import com.athena.security.core.servlet.code.VerificationCodeProperties;
 import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.util.WebUtils;
 
 import java.util.List;
 
 /**
  * 短信验证码提供器
  */
-@Component
-public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGenerator, SmsCodeSender> {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
     /**
      * 短信验证码配置
      */
-    private final VerificationCodeProperties.Sms smsProperties;
-
-    /**
-     * 构造函数
-     *
-     * @param verificationCodeProperties 安全配置
-     */
-    public SmsCodeProvider(VerificationCodeProperties verificationCodeProperties) {
-        this.smsProperties = verificationCodeProperties.getSms();
-    }
+    private VerificationCodeProperties.Sms sms;
 
     /**
      * 是否发送请求
@@ -37,7 +31,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
      */
     @Override
     public boolean isSendRequest(ServletWebRequest request) {
-        String url = smsProperties.getUrl();
+        String url = sms.getUrl();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return pathMatcher.match(url, request.getRequest().getRequestURI());
     }
@@ -54,7 +48,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
         if (isSmsLogin(request)) {
             return true;
         }
-        List<String> urls = smsProperties.getUrls();
+        List<String> urls = sms.getUrls();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return urls.stream().anyMatch(url -> pathMatcher.match(url, request.getRequest().getRequestURI()));
     }
@@ -79,11 +73,11 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
      */
     @Override
     public String getTarget(ServletWebRequest request) {
-        String target = request.getRequest().getParameter(smsProperties.getTargetParameterName());
+        String target = WebUtils.findParameterValue(request.getRequest(), sms.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
         }
-        throw new VerificationCodeException("参数不能为空 parameterName: " + smsProperties.getTargetParameterName());
+        throw new VerificationCodeException("参数不能为空 parameterName: " + sms.getTargetParameterName());
     }
 
     /**
@@ -94,11 +88,11 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
      */
     @Override
     public String getCode(ServletWebRequest request) {
-        String code = request.getRequest().getParameter(smsProperties.getCodeParameterName());
+        String code = WebUtils.findParameterValue(request.getRequest(), sms.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;
         }
-        throw new VerificationCodeException("参数不能为空 parameterName: " + smsProperties.getCodeParameterName());
+        throw new VerificationCodeException("参数不能为空 parameterName: " + sms.getCodeParameterName());
     }
 
 }

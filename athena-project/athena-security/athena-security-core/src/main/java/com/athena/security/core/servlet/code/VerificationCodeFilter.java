@@ -4,17 +4,16 @@ import cn.hutool.json.JSONUtil;
 import com.athena.common.bean.result.Result;
 import com.athena.common.bean.result.ResultStatus;
 import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
-import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,15 +23,16 @@ import java.io.IOException;
  * 验证码过滤器
  */
 @Slf4j
-@Component
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class VerificationCodeFilter extends OncePerRequestFilter implements OrderedFilter {
-
-    @Setter
+    /**
+     * 认证失败处理器
+     */
     private AuthenticationFailureHandler authenticationFailureHandler = this::sendErrorResponse;
     /**
      * 验证码管理器
      */
-    @Resource
     private VerificationCodeManager verificationCodeManager;
 
     /**
@@ -47,7 +47,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        VerificationCodeProvider<?, ?, ?> provider = verificationCodeManager.getProvider(servletWebRequest);
+        VerificationCodeProvider<?> provider = verificationCodeManager.getProvider(servletWebRequest);
 
         // 无需校验验证码
         if (provider == null) {

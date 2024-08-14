@@ -4,30 +4,24 @@ import cn.hutool.core.util.StrUtil;
 import com.athena.security.core.servlet.code.VerificationCodeException;
 import com.athena.security.core.servlet.code.VerificationCodeProperties;
 import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.util.WebUtils;
 
 import java.util.List;
 
 /**
  * 图片验证码提供器
  */
-@Component
-public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, ImageCodeGenerator, ImageCodeSender> {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
     /**
      * 图片验证码配置
      */
-    private final VerificationCodeProperties.Image imageProperties;
-
-    /**
-     * 构造函数
-     *
-     * @param verificationCodeProperties 安全配置
-     */
-    public ImageCodeProvider(VerificationCodeProperties verificationCodeProperties) {
-        this.imageProperties = verificationCodeProperties.getImage();
-    }
+    private VerificationCodeProperties.Image image;
 
     /**
      * 是否发送请求
@@ -37,7 +31,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
      */
     @Override
     public boolean isSendRequest(ServletWebRequest request) {
-        String url = imageProperties.getUrl();
+        String url = image.getUrl();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return pathMatcher.match(url, request.getRequest().getRequestURI());
     }
@@ -54,7 +48,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
         if (isPasswordLogin(request)) {
             return true;
         }
-        List<String> urls = imageProperties.getUrls();
+        List<String> urls = image.getUrls();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return urls.stream().anyMatch(url -> pathMatcher.match(url, request.getRequest().getRequestURI()));
     }
@@ -79,11 +73,11 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
      */
     @Override
     public String getTarget(ServletWebRequest request) {
-        String target = request.getRequest().getParameter(imageProperties.getTargetParameterName());
+        String target = WebUtils.findParameterValue(request.getRequest(), image.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
         }
-        throw new VerificationCodeException("参数不能为空 parameterName: " + imageProperties.getTargetParameterName());
+        throw new VerificationCodeException("参数不能为空 parameterName: " + image.getTargetParameterName());
     }
 
     /**
@@ -94,11 +88,11 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
      */
     @Override
     public String getCode(ServletWebRequest request) {
-        String code = request.getRequest().getParameter(imageProperties.getCodeParameterName());
+        String code = WebUtils.findParameterValue(request.getRequest(), image.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;
         }
-        throw new VerificationCodeException("参数不能为空 parameterName: " + imageProperties.getCodeParameterName());
+        throw new VerificationCodeException("参数不能为空 parameterName: " + image.getCodeParameterName());
     }
 
 }
