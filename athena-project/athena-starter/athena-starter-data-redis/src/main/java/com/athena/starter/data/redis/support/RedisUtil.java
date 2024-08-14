@@ -166,9 +166,10 @@ public class RedisUtil {
      * @param key       键
      * @param value     值
      * @param timeout   超时时间
+     * @param timeUnit  时间单位
      */
-    public void setCacheValue(String cacheName, String key, Object value, long timeout) {
-        getRedisTemplate().opsForValue().set(getCacheKey(cacheName, key), value, timeout);
+    public void setCacheValue(String cacheName, String key, Object value, long timeout, TimeUnit timeUnit) {
+        getRedisTemplate().opsForValue().set(getCacheKey(cacheName, key), value, timeout, timeUnit);
     }
 
     /**
@@ -184,9 +185,10 @@ public class RedisUtil {
     /**
      * 设置缓存值
      *
-     * @param key     键
-     * @param value   值
-     * @param timeout 超时时间
+     * @param key      键
+     * @param value    值
+     * @param timeout  超时时间
+     * @param timeUnit 时间单位
      */
     public void setCacheValue(String key, Object value, long timeout, TimeUnit timeUnit) {
         getRedisTemplate().opsForValue().set(getCacheKey(key), value, timeout, timeUnit);
