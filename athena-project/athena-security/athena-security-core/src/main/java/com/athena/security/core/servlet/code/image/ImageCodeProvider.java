@@ -62,7 +62,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
      * @return 接收目标
      */
     @Override
-    public String getTarget(ServletWebRequest request) throws VerificationCodeException {
+    public String getTarget(ServletWebRequest request) {
         String target = request.getRequest().getParameter(imageProperties.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
@@ -77,7 +77,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
      * @return 验证码
      */
     @Override
-    public String getCode(ServletWebRequest request) throws VerificationCodeException {
+    public String getCode(ServletWebRequest request) {
         String code = request.getRequest().getParameter(imageProperties.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;
