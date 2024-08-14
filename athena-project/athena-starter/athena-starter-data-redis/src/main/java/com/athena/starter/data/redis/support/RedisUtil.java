@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Redis 工具类
@@ -187,8 +188,8 @@ public class RedisUtil {
      * @param value   值
      * @param timeout 超时时间
      */
-    public void setCacheValue(String key, Object value, long timeout) {
-        getRedisTemplate().opsForValue().set(getCacheKey(key), value, timeout);
+    public void setCacheValue(String key, Object value, long timeout, TimeUnit timeUnit) {
+        getRedisTemplate().opsForValue().set(getCacheKey(key), value, timeout, timeUnit);
     }
 
     /**

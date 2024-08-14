@@ -1,7 +1,10 @@
 package com.athena.security.core.common.code.repository;
 
+import cn.hutool.core.date.DateUtil;
 import com.athena.security.core.common.code.base.VerificationCode;
 import com.athena.starter.data.redis.support.RedisUtil;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 基于 Redis 的验证码存取器
@@ -20,7 +23,7 @@ public class RedisVerificationCodeRepository implements VerificationCodeReposito
      */
     @Override
     public void save(String key, VerificationCode code) {
-        RedisUtil.setCacheValue(buildKey(key), code);
+        RedisUtil.setCacheValue(buildKey(key), code, DateUtil.betweenMs(DateUtil.date(), code.getExpireTime()), TimeUnit.MILLISECONDS);
     }
 
     /**
