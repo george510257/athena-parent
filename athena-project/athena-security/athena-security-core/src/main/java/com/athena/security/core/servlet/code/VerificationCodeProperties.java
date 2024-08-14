@@ -34,7 +34,7 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 过期时间
          */
-        private int expireIn = 60;
+        private int expireIn = 600;
         /**
          * 验证码参数名
          */
@@ -62,7 +62,7 @@ public class VerificationCodeProperties extends BaseProperties {
         /**
          * 过期时间
          */
-        private int expireIn = 60;
+        private int expireIn = 600;
         /**
          * 图形验证码宽度
          */
