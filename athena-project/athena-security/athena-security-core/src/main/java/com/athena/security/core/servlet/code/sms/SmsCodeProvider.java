@@ -62,7 +62,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
      * @return 目标
      */
     @Override
-    public String getTarget(ServletWebRequest request) {
+    public String getTarget(ServletWebRequest request) throws VerificationCodeException {
         String target = request.getRequest().getParameter(smsProperties.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
@@ -77,7 +77,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
      * @return 验证码
      */
     @Override
-    public String getCode(ServletWebRequest request) {
+    public String getCode(ServletWebRequest request) throws VerificationCodeException {
         String code = request.getRequest().getParameter(smsProperties.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;

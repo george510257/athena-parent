@@ -50,7 +50,7 @@ public abstract class VerificationCodeProvider<Code extends VerificationCode,
      *
      * @param request 请求
      */
-    public void verify(ServletWebRequest request) {
+    public void verify(ServletWebRequest request) throws VerificationCodeException {
         // 获取接收目标和验证码
         String target = getTarget(request);
         String code = getCode(request);
@@ -105,7 +105,7 @@ public abstract class VerificationCodeProvider<Code extends VerificationCode,
      * @param request 请求
      * @return 接收目标
      */
-    public abstract String getTarget(ServletWebRequest request);
+    public abstract String getTarget(ServletWebRequest request) throws VerificationCodeException;
 
     /**
      * 获取验证码
@@ -113,6 +113,6 @@ public abstract class VerificationCodeProvider<Code extends VerificationCode,
      * @param request 请求
      * @return 验证码
      */
-    public abstract String getCode(ServletWebRequest request);
+    public abstract String getCode(ServletWebRequest request) throws VerificationCodeException;
 
 }

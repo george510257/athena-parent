@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -16,6 +17,7 @@ import java.io.IOException;
 /**
  * 验证码过滤器
  */
+@Slf4j
 @Component
 public class VerificationCodeFilter extends OncePerRequestFilter implements OrderedFilter {
 
@@ -45,7 +47,13 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
                 return;
             } else if (provider.isVerifyRequest(servletWebRequest)) {
                 // 校验验证码请求
-                provider.verify(servletWebRequest);
+                try {
+                    provider.verify(servletWebRequest);
+                } catch (VerificationCodeException e) {
+                    log.error("验证码校验失败", e);
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+                    return;
+                }
             }
         }
         // 继续执行过滤器链

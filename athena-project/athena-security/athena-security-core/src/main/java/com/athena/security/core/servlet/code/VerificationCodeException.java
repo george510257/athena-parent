@@ -1,23 +1,22 @@
 package com.athena.security.core.servlet.code;
 
-import org.springframework.security.core.AuthenticationException;
-
 /**
  * 验证码异常
  */
-public class VerificationCodeException extends AuthenticationException {
-    /**
-     * @param msg   异常信息
-     * @param cause 异常
-     */
-    public VerificationCodeException(String msg, Throwable cause) {
-        super(msg, cause);
+public class VerificationCodeException extends Exception {
+
+    public VerificationCodeException() {
     }
 
-    /**
-     * @param msg 异常信息
-     */
-    public VerificationCodeException(String msg) {
-        super(msg);
+    public VerificationCodeException(String message) {
+        super(message);
+    }
+
+    public VerificationCodeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public VerificationCodeException(Throwable cause) {
+        super(cause);
     }
 }
