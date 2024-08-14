@@ -2,7 +2,6 @@ package com.athena.security.authorization.config;
 
 import com.athena.security.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.authorization.customizer.OAuth2ResourceServerCustomizer;
-import com.athena.security.core.common.code.VerificationCodeManager;
 import com.athena.security.core.servlet.customizer.AuthorizeHttpRequestsCustomizer;
 import com.athena.security.core.servlet.customizer.ExceptionHandlingCustomizer;
 import com.athena.security.core.servlet.customizer.FormLoginCustomizer;
@@ -34,7 +33,6 @@ public class AuthorizationConfig {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity http,
-                                                                VerificationCodeManager verificationCodeManager,
                                                                 OAuth2AuthorizationServerCustomizer authorizationServerCustomizer,
                                                                 OAuth2ResourceServerCustomizer resourceServerCustomizer,
                                                                 ExceptionHandlingCustomizer exceptionHandlingCustomizer) throws Exception {

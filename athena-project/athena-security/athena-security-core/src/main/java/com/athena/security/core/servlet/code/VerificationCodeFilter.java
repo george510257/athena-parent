@@ -1,6 +1,6 @@
-package com.athena.security.core.common.code;
+package com.athena.security.core.servlet.code;
 
-import com.athena.security.core.common.code.base.VerificationCodeProvider;
+import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,10 @@
-package com.athena.security.core.common.code.image;
+package com.athena.security.core.servlet.code.image;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
-import com.athena.security.core.common.code.VerificationCodeProperties;
-import com.athena.security.core.common.code.base.VerificationCodeGenerator;
+import com.athena.security.core.servlet.code.VerificationCodeProperties;
+import com.athena.security.core.servlet.code.base.VerificationCodeGenerator;
 
 /**
  * 图片验证码生成器

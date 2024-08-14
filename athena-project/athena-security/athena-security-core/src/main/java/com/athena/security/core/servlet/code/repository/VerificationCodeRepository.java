@@ -1,6 +1,6 @@
-package com.athena.security.core.common.code.repository;
+package com.athena.security.core.servlet.code.repository;
 
-import com.athena.security.core.common.code.base.VerificationCode;
+import com.athena.security.core.servlet.code.base.VerificationCode;
 
 /**
  * 验证码存储器

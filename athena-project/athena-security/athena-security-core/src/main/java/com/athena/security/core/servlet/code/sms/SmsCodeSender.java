@@ -1,9 +1,9 @@
-package com.athena.security.core.common.code.sms;
+package com.athena.security.core.servlet.code.sms;
 
 import cn.hutool.json.JSONUtil;
 import com.athena.common.bean.result.Result;
 import com.athena.common.bean.result.ResultStatus;
-import com.athena.security.core.common.code.base.VerificationCodeSender;
+import com.athena.security.core.servlet.code.base.VerificationCodeSender;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 

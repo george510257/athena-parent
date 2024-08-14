@@ -1,6 +1,6 @@
-package com.athena.security.core.common.code.image;
+package com.athena.security.core.servlet.code.image;
 
-import com.athena.security.core.common.code.base.VerificationCode;
+import com.athena.security.core.servlet.code.base.VerificationCode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

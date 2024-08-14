@@ -1,4 +1,4 @@
-package com.athena.security.core.common.code;
+package com.athena.security.core.servlet.code;
 
 import com.athena.common.core.constant.BaseConstants;
 import com.athena.common.core.constant.BaseProperties;

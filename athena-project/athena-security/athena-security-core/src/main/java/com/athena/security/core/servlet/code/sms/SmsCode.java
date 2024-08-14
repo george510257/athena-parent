@@ -1,6 +1,6 @@
-package com.athena.security.core.common.code.sms;
+package com.athena.security.core.servlet.code.sms;
 
-import com.athena.security.core.common.code.base.VerificationCode;
+import com.athena.security.core.servlet.code.base.VerificationCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

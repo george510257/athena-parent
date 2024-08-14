@@ -1,9 +1,9 @@
-package com.athena.security.core.common.code.sms;
+package com.athena.security.core.servlet.code.sms;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.athena.security.core.common.code.VerificationCodeProperties;
-import com.athena.security.core.common.code.base.VerificationCodeGenerator;
+import com.athena.security.core.servlet.code.VerificationCodeProperties;
+import com.athena.security.core.servlet.code.base.VerificationCodeGenerator;
 
 /**
  * 短信验证码生成器

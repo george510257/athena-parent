@@ -1,4 +1,4 @@
-package com.athena.security.core.common.code.base;
+package com.athena.security.core.servlet.code.base;
 
 /**
  * 验证码生成器

@@ -1,11 +1,11 @@
-package com.athena.security.core.common.code;
+package com.athena.security.core.servlet.code;
 
-import com.athena.security.core.common.code.image.ImageCodeGenerator;
-import com.athena.security.core.common.code.image.ImageCodeSender;
-import com.athena.security.core.common.code.repository.RedisVerificationCodeRepository;
-import com.athena.security.core.common.code.repository.VerificationCodeRepository;
-import com.athena.security.core.common.code.sms.SmsCodeGenerator;
-import com.athena.security.core.common.code.sms.SmsCodeSender;
+import com.athena.security.core.servlet.code.image.ImageCodeGenerator;
+import com.athena.security.core.servlet.code.image.ImageCodeSender;
+import com.athena.security.core.servlet.code.repository.RedisVerificationCodeRepository;
+import com.athena.security.core.servlet.code.repository.VerificationCodeRepository;
+import com.athena.security.core.servlet.code.sms.SmsCodeGenerator;
+import com.athena.security.core.servlet.code.sms.SmsCodeSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,6 @@
-package com.athena.security.core.common.code;
+package com.athena.security.core.servlet.code;
 
-import com.athena.security.core.common.code.base.VerificationCodeProvider;
+import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;

@@ -1,7 +1,7 @@
-package com.athena.security.core.common.code.base;
+package com.athena.security.core.servlet.code.base;
 
-import com.athena.security.core.common.code.VerificationCodeException;
-import com.athena.security.core.common.code.repository.VerificationCodeRepository;
+import com.athena.security.core.servlet.code.VerificationCodeException;
+import com.athena.security.core.servlet.code.repository.VerificationCodeRepository;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.ServletWebRequest;
