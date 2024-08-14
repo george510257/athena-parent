@@ -50,9 +50,25 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode, Image
      */
     @Override
     public boolean isVerifyRequest(ServletWebRequest request) {
+        // 判断是否密码登录
+        if (isPasswordLogin(request)) {
+            return true;
+        }
         List<String> urls = imageProperties.getUrls();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return urls.stream().anyMatch(url -> pathMatcher.match(url, request.getRequest().getRequestURI()));
+    }
+
+    /**
+     * 是否密码登录
+     *
+     * @param request 请求
+     * @return 是否密码登录
+     */
+    private boolean isPasswordLogin(ServletWebRequest request) {
+        String requestURI = request.getRequest().getRequestURI();
+        String grantType = request.getRequest().getParameter("grant_type");
+        return StrUtil.containsIgnoreCase(requestURI, "/oauth2/token") && StrUtil.containsIgnoreCase(grantType, "password");
     }
 
     /**

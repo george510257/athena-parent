@@ -50,9 +50,25 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode, SmsCodeGe
      */
     @Override
     public boolean isVerifyRequest(ServletWebRequest request) {
+        // 判断是否是短信登录
+        if (isSmsLogin(request)) {
+            return true;
+        }
         List<String> urls = smsProperties.getUrls();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return urls.stream().anyMatch(url -> pathMatcher.match(url, request.getRequest().getRequestURI()));
+    }
+
+    /**
+     * 是否短信登录
+     *
+     * @param request 请求
+     * @return 是否短信登录
+     */
+    private boolean isSmsLogin(ServletWebRequest request) {
+        String requestURI = request.getRequest().getRequestURI();
+        String grantType = request.getRequest().getParameter("grant_type");
+        return StrUtil.containsIgnoreCase(requestURI, "/oauth2/token") && StrUtil.containsIgnoreCase(grantType, "sms");
     }
 
     /**
