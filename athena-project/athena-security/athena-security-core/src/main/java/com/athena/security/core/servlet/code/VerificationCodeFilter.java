@@ -1,6 +1,7 @@
 package com.athena.security.core.servlet.code;
 
 import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
+import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,16 +22,8 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
     /**
      * 验证码管理器
      */
-    private final VerificationCodeManager verificationCodeManager;
-
-    /**
-     * 构造函数
-     *
-     * @param verificationCodeManager 验证码管理器
-     */
-    public VerificationCodeFilter(VerificationCodeManager verificationCodeManager) {
-        this.verificationCodeManager = verificationCodeManager;
-    }
+    @Resource
+    private VerificationCodeManager verificationCodeManager;
 
     /**
      * 过滤器逻辑
@@ -66,6 +59,6 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
      */
     @Override
     public int getOrder() {
-        return REQUEST_WRAPPER_FILTER_MAX_ORDER - 104;
+        return REQUEST_WRAPPER_FILTER_MAX_ORDER - 9999;
     }
 }
