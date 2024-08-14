@@ -9,10 +9,10 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 验证码提供器
  *
- * @param <V> 验证码类型
+ * @param <Code> 验证码类型
  */
-public abstract class VerificationCodeProvider<V extends VerificationCode,
-        G extends VerificationCodeGenerator<V>, S extends VerificationCodeSender<V>> {
+public abstract class VerificationCodeProvider<Code extends VerificationCode,
+        Generator extends VerificationCodeGenerator<Code>, Sender extends VerificationCodeSender<Code>> {
     /**
      * 验证码存储器
      */
@@ -22,12 +22,12 @@ public abstract class VerificationCodeProvider<V extends VerificationCode,
      * 验证码生成器
      */
     @Autowired
-    private G generator;
+    private Generator generator;
     /**
      * 验证码发送器
      */
     @Autowired
-    private S sender;
+    private Sender sender;
 
     /**
      * 发送验证码
@@ -38,7 +38,7 @@ public abstract class VerificationCodeProvider<V extends VerificationCode,
         // 获取接收目标
         String target = getTarget(request);
         // 生成验证码
-        V code = generator.generate();
+        Code code = generator.generate();
         // 保存验证码
         repository.save(target, code);
         // 发送验证码

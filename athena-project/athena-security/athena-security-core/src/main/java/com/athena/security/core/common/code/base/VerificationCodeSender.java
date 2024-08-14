@@ -5,10 +5,10 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * 验证码发送器
  *
- * @param <V> 验证码类型
+ * @param <Code> 验证码类型
  */
 @FunctionalInterface
-public interface VerificationCodeSender<V extends VerificationCode> {
+public interface VerificationCodeSender<Code extends VerificationCode> {
 
     /**
      * 发送验证码
@@ -17,5 +17,5 @@ public interface VerificationCodeSender<V extends VerificationCode> {
      * @param code     验证码
      * @param response 响应
      */
-    void send(String target, V code, HttpServletResponse response);
+    void send(String target, Code code, HttpServletResponse response);
 }

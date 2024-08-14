@@ -3,15 +3,15 @@ package com.athena.security.core.common.code.base;
 /**
  * 验证码生成器
  *
- * @param <V> 验证码类型
+ * @param <Code> 验证码类型
  */
 @FunctionalInterface
-public interface VerificationCodeGenerator<V extends VerificationCode> {
+public interface VerificationCodeGenerator<Code extends VerificationCode> {
 
     /**
      * 生成验证码
      *
      * @return 验证码
      */
-    V generate();
+    Code generate();
 }

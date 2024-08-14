@@ -59,6 +59,11 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * 获取过滤器顺序
+     *
+     * @return 过滤器顺序
+     */
     @Override
     public int getOrder() {
         return REQUEST_WRAPPER_FILTER_MAX_ORDER - 104;
