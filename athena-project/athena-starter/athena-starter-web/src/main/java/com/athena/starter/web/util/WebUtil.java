@@ -1,4 +1,4 @@
-package com.athena.common.core.util;
+package com.athena.starter.web.util;
 
 import cn.hutool.core.collection.CollUtil;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,9 +1,9 @@
 package com.athena.security.authorization.authentication;
 
 import cn.hutool.core.util.StrUtil;
-import com.athena.common.core.util.WebUtil;
 import com.athena.security.authorization.config.AuthorizationConstants;
 import com.athena.security.authorization.util.AuthenticationUtil;
+import com.athena.starter.web.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
