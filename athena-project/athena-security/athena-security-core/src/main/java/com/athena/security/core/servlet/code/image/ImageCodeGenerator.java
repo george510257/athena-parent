@@ -5,12 +5,14 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
 import com.athena.security.core.servlet.code.VerificationCodeProperties;
 import com.athena.security.core.servlet.code.base.VerificationCodeGenerator;
-import lombok.Data;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * 图片验证码生成器
  */
-@Data
+@Setter
+@Accessors(chain = true)
 public class ImageCodeGenerator implements VerificationCodeGenerator<ImageCode> {
     /**
      * 图片验证码配置

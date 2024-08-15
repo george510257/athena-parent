@@ -4,12 +4,14 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.athena.security.core.servlet.code.VerificationCodeProperties;
 import com.athena.security.core.servlet.code.base.VerificationCodeGenerator;
-import lombok.Data;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * 短信验证码生成器
  */
-@Data
+@Setter
+@Accessors(chain = true)
 public class SmsCodeGenerator implements VerificationCodeGenerator<SmsCode> {
     /**
      * 短信验证码配置

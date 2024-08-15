@@ -8,8 +8,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.security.core.AuthenticationException;
@@ -23,8 +23,8 @@ import java.io.IOException;
  * 验证码过滤器
  */
 @Slf4j
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Setter
+@Accessors(chain = true)
 public class VerificationCodeFilter extends OncePerRequestFilter implements OrderedFilter {
     /**
      * 认证失败处理器

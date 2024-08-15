@@ -20,98 +20,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(VerificationCodeProperties.class)
 public class VerificationCodeConfig {
+    /**
+     * 验证码配置
+     */
     @Resource
     private VerificationCodeProperties verificationCodeProperties;
-
-    /**
-     * 图片验证码生成器
-     *
-     * @return 图片验证码生成器
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public ImageCodeGenerator imageCodeGenerator() {
-        ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
-        imageCodeGenerator.setImage(verificationCodeProperties.getImage());
-        return imageCodeGenerator;
-    }
-
-    /**
-     * 短信验证码生成器
-     *
-     * @return 短信验证码生成器
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public SmsCodeGenerator smsCodeGenerator() {
-        SmsCodeGenerator smsCodeGenerator = new SmsCodeGenerator();
-        smsCodeGenerator.setSms(verificationCodeProperties.getSms());
-        return smsCodeGenerator;
-    }
-
-    /**
-     * 图片验证码发送器
-     *
-     * @return 图片验证码发送器
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public ImageCodeSender imageCodeSender() {
-        return new ImageCodeSender();
-    }
-
-    /**
-     * 短信验证码发送器
-     *
-     * @return 短信验证码发送器
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public SmsCodeSender smsCodeSender() {
-        return new SmsCodeSender();
-    }
-
-    /**
-     * 图片验证码提供器
-     *
-     * @param imageCodeGenerator         图片验证码生成器
-     * @param imageCodeSender            图片验证码发送器
-     * @param verificationCodeRepository 验证码存储器
-     * @return 图片验证码提供器
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public ImageCodeProvider imageCodeProvider(ImageCodeGenerator imageCodeGenerator,
-                                               ImageCodeSender imageCodeSender,
-                                               VerificationCodeRepository verificationCodeRepository) {
-        ImageCodeProvider imageCodeProvider = new ImageCodeProvider();
-        imageCodeProvider.setGenerator(imageCodeGenerator);
-        imageCodeProvider.setSender(imageCodeSender);
-        imageCodeProvider.setRepository(verificationCodeRepository);
-        imageCodeProvider.setImage(verificationCodeProperties.getImage());
-        return imageCodeProvider;
-    }
-
-    /**
-     * 短信验证码提供器
-     *
-     * @param smsCodeGenerator           短信验证码生成器
-     * @param smsCodeSender              短信验证码发送器
-     * @param verificationCodeRepository 验证码存储器
-     * @return 短信验证码提供器
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public SmsCodeProvider smsCodeProvider(SmsCodeGenerator smsCodeGenerator,
-                                           SmsCodeSender smsCodeSender,
-                                           VerificationCodeRepository verificationCodeRepository) {
-        SmsCodeProvider smsCodeProvider = new SmsCodeProvider();
-        smsCodeProvider.setGenerator(smsCodeGenerator);
-        smsCodeProvider.setSender(smsCodeSender);
-        smsCodeProvider.setRepository(verificationCodeRepository);
-        smsCodeProvider.setSms(verificationCodeProperties.getSms());
-        return smsCodeProvider;
-    }
 
     /**
      * 验证码存储器
@@ -125,6 +38,40 @@ public class VerificationCodeConfig {
     }
 
     /**
+     * 图片验证码提供器
+     *
+     * @param verificationCodeRepository 验证码存储器
+     * @return 图片验证码提供器
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public ImageCodeProvider imageCodeProvider(VerificationCodeRepository verificationCodeRepository) {
+        return (ImageCodeProvider) new ImageCodeProvider()
+                .setImage(verificationCodeProperties.getImage())
+                .setRepository(verificationCodeRepository)
+                .setGenerator(new ImageCodeGenerator()
+                        .setImage(verificationCodeProperties.getImage()))
+                .setSender(new ImageCodeSender());
+    }
+
+    /**
+     * 短信验证码提供器
+     *
+     * @param verificationCodeRepository 验证码存储器
+     * @return 短信验证码提供器
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public SmsCodeProvider smsCodeProvider(VerificationCodeRepository verificationCodeRepository) {
+        return (SmsCodeProvider) new SmsCodeProvider()
+                .setSms(verificationCodeProperties.getSms())
+                .setRepository(verificationCodeRepository)
+                .setGenerator(new SmsCodeGenerator()
+                        .setSms(verificationCodeProperties.getSms()))
+                .setSender(new SmsCodeSender());
+    }
+
+    /**
      * 验证码过滤器
      *
      * @param verificationCodeManager 验证码管理器
@@ -133,8 +80,7 @@ public class VerificationCodeConfig {
     @Bean
     @ConditionalOnMissingBean
     public VerificationCodeFilter verificationCodeFilter(VerificationCodeManager verificationCodeManager) {
-        VerificationCodeFilter verificationCodeFilter = new VerificationCodeFilter();
-        verificationCodeFilter.setVerificationCodeManager(verificationCodeManager);
-        return verificationCodeFilter;
+        return new VerificationCodeFilter()
+                .setVerificationCodeManager(verificationCodeManager);
     }
 }

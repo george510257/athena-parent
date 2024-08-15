@@ -4,8 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.athena.security.core.servlet.code.VerificationCodeException;
 import com.athena.security.core.servlet.code.VerificationCodeProperties;
 import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.util.WebUtils;
@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * 短信验证码提供器
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Setter
+@Accessors(chain = true)
 public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
     /**
      * 短信验证码配置
