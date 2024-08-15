@@ -1,6 +1,9 @@
 package com.athena.starter.web.util;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.JakartaServletUtil;
+import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.experimental.UtilityClass;
@@ -9,8 +12,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.WebUtils;
 
-import java.io.OutputStream;
 import java.util.Optional;
 
 @UtilityClass
@@ -32,30 +35,27 @@ public class WebUtil {
         return Optional.empty();
     }
 
-    public String getParameter(String key) {
-        return getRequest()
-                .map(WebUtil::getParameterMap)
-                .map(map -> map.getFirst(key))
-                .orElse(null);
-    }
-
-    public OutputStream getOutputStream() {
-        return getResponse()
-                .map(response -> {
-                    try {
-                        return response.getOutputStream();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .orElseThrow(() -> new RuntimeException("获取response输出流失败"));
-    }
-
     public Optional<HttpServletResponse> getResponse() {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             return Optional.ofNullable(((ServletRequestAttributes) requestAttributes).getResponse());
         }
         return Optional.empty();
+    }
+
+    public String getParameter(HttpServletRequest request, String parameterName) {
+        String parameter = WebUtils.findParameterValue(request, parameterName);
+        if (StrUtil.isNotBlank(parameter)) {
+            return parameter;
+        }
+        return getParameterByBody(request, parameterName);
+    }
+
+    public String getParameterByBody(HttpServletRequest request, String parameterName) {
+        String body = JakartaServletUtil.getBody(request);
+        if (StrUtil.isNotBlank(body)) {
+            return JSONUtil.parseObj(body).getStr(parameterName);
+        }
+        return null;
     }
 }

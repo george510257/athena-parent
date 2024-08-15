@@ -4,11 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.athena.security.core.servlet.code.VerificationCodeException;
 import com.athena.security.core.servlet.code.VerificationCodeProperties;
 import com.athena.security.core.servlet.code.base.VerificationCodeProvider;
+import com.athena.starter.web.util.WebUtil;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.util.WebUtils;
 
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     @Override
     public String getTarget(ServletWebRequest request) {
-        String target = WebUtils.findParameterValue(request.getRequest(), sms.getTargetParameterName());
+        String target = WebUtil.getParameter(request.getRequest(), sms.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
         }
@@ -88,7 +88,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     @Override
     public String getCode(ServletWebRequest request) {
-        String code = WebUtils.findParameterValue(request.getRequest(), sms.getCodeParameterName());
+        String code = WebUtil.getParameter(request.getRequest(), sms.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;
         }
