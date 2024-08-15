@@ -1,5 +1,6 @@
 package com.athena.security.core.servlet.code.image;
 
+import com.athena.security.core.servlet.code.VerificationCodeException;
 import com.athena.security.core.servlet.code.base.VerificationCodeSender;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class ImageCodeSender implements VerificationCodeSender<ImageCode> {
         try {
             ImageIO.write(code.getImage(), "PNG", response.getOutputStream());
         } catch (IOException e) {
-            log.error("图片验证码发送失败", e);
+            throw new VerificationCodeException("图片验证码发送失败", e);
         }
     }
 }
