@@ -1,10 +1,10 @@
 package com.athena.security.authorization.authentication;
 
-import com.athena.security.authorization.support.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
@@ -17,20 +17,20 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
     /**
      * 用户服务
      */
-    private final IUserService userService;
+    private final UserDetailsService userDetailsService;
 
     /**
      * 构造函数
      *
      * @param authorizationService 认证服务
      * @param tokenGenerator       令牌生成器
-     * @param userService          用户服务
+     * @param userDetailsService   用户服务
      */
     public OAuth2SmsAuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                            OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                           IUserService userService) {
+                                           UserDetailsService userDetailsService) {
         super(authorizationService, tokenGenerator);
-        this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     /**
@@ -42,11 +42,16 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
     @Override
     public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2BaseAuthenticationToken baseAuthenticationToken) {
         OAuth2SmsAuthenticationToken token = (OAuth2SmsAuthenticationToken) baseAuthenticationToken;
-        UserDetails userDetails = userService.loadUserByMobile(token.getMobile());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(token.getMobile());
         checkUser(userDetails);
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
+    /**
+     * 检查用户
+     *
+     * @param userDetails 用户详情
+     */
     private void checkUser(UserDetails userDetails) {
         if (userDetails == null) {
             throw new BadCredentialsException("用户不存在");

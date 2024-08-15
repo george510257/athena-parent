@@ -1,9 +1,9 @@
 package com.athena.security.authorization.authentication;
 
-import com.athena.security.authorization.support.IUserService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -16,8 +16,10 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
     /**
      * 用户详情认证提供者
      */
-    private final IUserService userService;
-
+    private final UserDetailsService userDetailsService;
+    /**
+     * 密码编码器
+     */
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -25,15 +27,15 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
      *
      * @param authorizationService 授权服务
      * @param tokenGenerator       令牌生成器
-     * @param userService          用户服务
+     * @param userDetailsService   用户服务
      * @param passwordEncoder      密码编码器
      */
     public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                                 OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                                IUserService userService,
+                                                UserDetailsService userDetailsService,
                                                 PasswordEncoder passwordEncoder) {
         super(authorizationService, tokenGenerator);
-        this.userService = userService;
+        this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -46,12 +48,18 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
     @Override
     public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2BaseAuthenticationToken baseAuthenticationToken) {
         OAuth2PasswordAuthenticationToken token = (OAuth2PasswordAuthenticationToken) baseAuthenticationToken;
-        UserDetails userDetails = userService.loadUserByUsername(token.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(token.getUsername());
         checkUser(userDetails, token.getPassword());
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 
     }
 
+    /**
+     * 检查用户
+     *
+     * @param userDetails 用户详情
+     * @param password    密码
+     */
     private void checkUser(UserDetails userDetails, String password) {
         if (userDetails == null) {
             throw new BadCredentialsException("用户不存在");

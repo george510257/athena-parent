@@ -17,12 +17,5 @@ public class JwtCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> 
      */
     @Override
     public void customize(JwtEncodingContext context) {
-//        // 客户端模式不设置用户信息
-//        if (AuthorizationGrantType.CLIENT_CREDENTIALS.equals(context.getAuthorizationGrantType())) {
-//            return;
-//        }
-//        // 设置用户信息
-//        Object principal = context.getPrincipal().getPrincipal();
-//        context.getClaims().claim("principal", principal);
     }
 }

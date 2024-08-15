@@ -11,29 +11,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 内存用户服务
+ */
 public class InMemoryUserService implements IUserService {
 
+    /**
+     * 用户列表
+     */
     private static final List<User> USERS = new ArrayList<>();
 
+    /**
+     * 构造方法
+     */
     public InMemoryUserService() {
     }
 
+    /**
+     * 构造方法
+     *
+     * @param users 用户列表
+     */
     public InMemoryUserService(List<User> users) {
         USERS.addAll(users);
     }
 
+    /**
+     * 构造方法
+     *
+     * @param users 用户列表
+     */
     public InMemoryUserService(User... users) {
         CollUtil.addAll(USERS, users);
     }
 
-    @Override
-    public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
-        return USERS.stream()
-                .filter(user -> user.getMobile().equals(mobile))
-                .findFirst()
-                .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
-    }
-
+    /**
+     * 获取当前用户
+     *
+     * @return 当前用户
+     */
     @Override
     public Optional<? extends IUser<?, ?, ?>> getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -42,6 +58,14 @@ public class InMemoryUserService implements IUserService {
                 .findFirst();
     }
 
+    /**
+     * 更新密码
+     *
+     * @param user        用户
+     * @param newPassword 新密码
+     *                    {@code PasswordEncoder} 加密后的密码
+     * @return 用户
+     */
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {
         return USERS.stream()
@@ -54,6 +78,11 @@ public class InMemoryUserService implements IUserService {
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
     }
 
+    /**
+     * 创建用户
+     *
+     * @param user 用户
+     */
     @Override
     public void createUser(UserDetails user) {
         if (userExists(user.getUsername())) {
@@ -62,6 +91,11 @@ public class InMemoryUserService implements IUserService {
         USERS.add((User) user);
     }
 
+    /**
+     * 更新用户
+     *
+     * @param user 用户
+     */
     @Override
     public void updateUser(UserDetails user) {
         USERS.stream()
@@ -73,6 +107,11 @@ public class InMemoryUserService implements IUserService {
                 });
     }
 
+    /**
+     * 删除用户
+     *
+     * @param username 用户名
+     */
     @Override
     public void deleteUser(String username) {
         USERS.stream()
@@ -81,6 +120,12 @@ public class InMemoryUserService implements IUserService {
                 .ifPresent(USERS::remove);
     }
 
+    /**
+     * 修改密码
+     *
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     */
     @Override
     public void changePassword(String oldPassword, String newPassword) {
         User user = (User) getCurrentUser().orElseThrow(() -> new IllegalArgumentException("用户未登录"));
@@ -93,15 +138,28 @@ public class InMemoryUserService implements IUserService {
                 .ifPresent(u -> u.setPassword(newPassword));
     }
 
+    /**
+     * 用户是否存在
+     *
+     * @param username 用户名
+     * @return 是否存在
+     */
     @Override
     public boolean userExists(String username) {
         return USERS.stream().anyMatch(user -> user.getUsername().equals(username));
     }
 
+    /**
+     * 通过用户名加载用户
+     *
+     * @param username 用户名
+     * @return 用户
+     * @throws UsernameNotFoundException 用户不存在
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return USERS.stream()
-                .filter(user -> user.getUsername().equals(username))
+                .filter(user -> user.getUsername().equals(username) || user.getMobile().equals(username))
                 .findFirst()
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
     }
