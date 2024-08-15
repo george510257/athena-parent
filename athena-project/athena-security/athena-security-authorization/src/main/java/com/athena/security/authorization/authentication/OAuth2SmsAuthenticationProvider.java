@@ -1,6 +1,6 @@
 package com.athena.security.authorization.authentication;
 
-import com.athena.security.authorization.support.UserService;
+import com.athena.security.authorization.support.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +17,7 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
     /**
      * 用户服务
      */
-    private final UserService userService;
+    private final IUserService userService;
 
     /**
      * 构造函数
@@ -28,7 +28,7 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
      */
     public OAuth2SmsAuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                            OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                           UserService userService) {
+                                           IUserService userService) {
         super(authorizationService, tokenGenerator);
         this.userService = userService;
     }

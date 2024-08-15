@@ -3,10 +3,10 @@ package com.athena.security.authorization.config;
 import cn.hutool.core.collection.CollUtil;
 import com.athena.common.bean.security.Role;
 import com.athena.common.bean.security.User;
+import com.athena.security.authorization.support.IUserService;
 import com.athena.security.authorization.support.InMemoryUserService;
 import com.athena.security.authorization.support.RedisOAuth2AuthorizationConsentService;
 import com.athena.security.authorization.support.RedisOAuth2AuthorizationService;
-import com.athena.security.authorization.support.UserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -69,7 +69,7 @@ public class DefaultAuthConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-    public UserService userService() {
+    public IUserService userService() {
         User user = new User();
         user.setUsername("admin");
         user.setPassword("{noop}admin");

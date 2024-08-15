@@ -4,7 +4,7 @@ import com.athena.security.authorization.authentication.OAuth2PasswordAuthentica
 import com.athena.security.authorization.authentication.OAuth2PasswordAuthenticationProvider;
 import com.athena.security.authorization.authentication.OAuth2SmsAuthenticationConverter;
 import com.athena.security.authorization.authentication.OAuth2SmsAuthenticationProvider;
-import com.athena.security.authorization.support.UserService;
+import com.athena.security.authorization.support.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +24,7 @@ public class TokenEndpointCustomizer implements Customizer<OAuth2TokenEndpointCo
      * 用户详情认证提供者
      */
     @Resource
-    private UserService userService;
+    private IUserService userService;
     /**
      * 密码编码器
      */

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryUserService implements UserService {
+public class InMemoryUserService implements IUserService {
 
     private static final List<User> USERS = new ArrayList<>();
 

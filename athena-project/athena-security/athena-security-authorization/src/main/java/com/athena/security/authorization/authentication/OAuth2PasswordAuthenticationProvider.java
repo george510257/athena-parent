@@ -1,6 +1,6 @@
 package com.athena.security.authorization.authentication;
 
-import com.athena.security.authorization.support.UserService;
+import com.athena.security.authorization.support.IUserService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
     /**
      * 用户详情认证提供者
      */
-    private final UserService userService;
+    private final IUserService userService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -30,7 +30,7 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
      */
     public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                                 OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                                UserService userService,
+                                                IUserService userService,
                                                 PasswordEncoder passwordEncoder) {
         super(authorizationService, tokenGenerator);
         this.userService = userService;
