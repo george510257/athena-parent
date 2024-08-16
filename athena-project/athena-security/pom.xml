@@ -17,6 +17,7 @@
         <module>athena-security-core</module>
         <module>athena-security-reactive</module>
         <module>athena-security-servlet</module>
+        <module>athena-security-servlet-resource</module>
     </modules>
 
     <dependencies>
