@@ -9,13 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.security.core</groupId>
-    <artifactId>athena-security-core</artifactId>
+    <groupId>com.athena.security.reactive</groupId>
+    <artifactId>athena-security-reactive</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.athena.starter.json</groupId>
-            <artifactId>athena-starter-json</artifactId>
-        </dependency>
-    </dependencies>
+
 </project>

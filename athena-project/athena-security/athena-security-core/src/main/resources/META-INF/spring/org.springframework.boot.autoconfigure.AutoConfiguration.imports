@@ -1,3 +1,1 @@
-com.athena.security.core.common.SecurityConfig
-com.athena.security.core.reactive.ReactiveSecurityConfig
-com.athena.security.core.servlet.ServletSecurityConfig
+com.athena.security.core.CoreSecurityAutoConfig

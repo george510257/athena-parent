@@ -2,9 +2,9 @@ package com.athena.security.authorization.config;
 
 import com.athena.security.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.authorization.customizer.OAuth2ResourceServerCustomizer;
-import com.athena.security.core.servlet.customizer.AuthorizeHttpRequestsCustomizer;
-import com.athena.security.core.servlet.customizer.ExceptionHandlingCustomizer;
-import com.athena.security.core.servlet.customizer.FormLoginCustomizer;
+import com.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
+import com.athena.security.servlet.customizer.ExceptionHandlingCustomizer;
+import com.athena.security.servlet.customizer.FormLoginCustomizer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

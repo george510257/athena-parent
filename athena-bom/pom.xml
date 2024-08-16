@@ -104,13 +104,13 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.client</groupId>
-                <artifactId>athena-security-client</artifactId>
+                <groupId>com.athena.security.reactive</groupId>
+                <artifactId>athena-security-reactive</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.resource</groupId>
-                <artifactId>athena-security-resource</artifactId>
+                <groupId>com.athena.security.servlet</groupId>
+                <artifactId>athena-security-servlet</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
