@@ -114,8 +114,8 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.authorization</groupId>
-                <artifactId>athena-security-authorization</artifactId>
+                <groupId>com.athena.security.servlet.authorization</groupId>
+                <artifactId>athena-security-servlet-authorization</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -13,7 +13,7 @@
     <artifactId>athena-security</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>athena-security-authorization</module>
+        <module>athena-security-servlet-authorization</module>
         <module>athena-security-core</module>
         <module>athena-security-reactive</module>
         <module>athena-security-servlet</module>
