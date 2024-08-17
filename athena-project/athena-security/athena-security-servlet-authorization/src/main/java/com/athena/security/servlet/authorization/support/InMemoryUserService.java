@@ -23,21 +23,6 @@ public class InMemoryUserService implements IUserService {
 
     /**
      * 构造方法
-     */
-    public InMemoryUserService() {
-    }
-
-    /**
-     * 构造方法
-     *
-     * @param users 用户列表
-     */
-    public InMemoryUserService(List<User> users) {
-        USERS.addAll(users);
-    }
-
-    /**
-     * 构造方法
      *
      * @param users 用户列表
      */

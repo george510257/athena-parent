@@ -4,7 +4,6 @@ import com.athena.security.servlet.authorization.config.AuthorizationConstants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -40,11 +39,10 @@ public abstract class OAuth2AuthorizationMixin {
          * @param parser  JsonParser 对象
          * @param context DeserializationContext 对象
          * @return OAuth2Authorization 对象
-         * @throws IOException      IO异常
-         * @throws JacksonException Jackson异常
+         * @throws IOException IO异常
          */
         @Override
-        public OAuth2Authorization deserialize(JsonParser parser, DeserializationContext context) throws IOException, JacksonException {
+        public OAuth2Authorization deserialize(JsonParser parser, DeserializationContext context) throws IOException {
             // 获取ObjectMapper
             ObjectMapper mapper = (ObjectMapper) parser.getCodec();
             // 获取JsonNode
