@@ -3,6 +3,7 @@ package com.athena.security.servlet.authorization.config;
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
 import com.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
+import com.athena.security.servlet.customizer.CsrfCustomizer;
 import com.athena.security.servlet.customizer.ExceptionHandlingCustomizer;
 import com.athena.security.servlet.customizer.FormLoginCustomizer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -50,16 +51,24 @@ public class AuthorizationConfig {
 
     /**
      * 默认安全配置
+     *
+     * @param http                            Http安全
+     * @param authorizeHttpRequestsCustomizer 请求授权自定义器
+     * @param formLoginCustomizer             表单登录自定义器
+     * @param csrfCustomizer                  CSRF自定义器
      */
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
-                                                   FormLoginCustomizer formLoginCustomizer) throws Exception {
+                                                   FormLoginCustomizer formLoginCustomizer,
+                                                   CsrfCustomizer csrfCustomizer) throws Exception {
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // 表单登录
         http.formLogin(formLoginCustomizer);
+        // CSRF
+        http.csrf(csrfCustomizer);
         // 构建
         return http.build();
     }
