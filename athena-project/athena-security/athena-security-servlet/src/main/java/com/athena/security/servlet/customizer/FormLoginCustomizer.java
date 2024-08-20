@@ -1,6 +1,7 @@
 package com.athena.security.servlet.customizer;
 
 import com.athena.security.core.properties.CoreSecurityProperties;
+import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class FormLoginCustomizer implements Customizer<FormLoginConfigurer<HttpSecurity>> {
 
-    private final CoreSecurityProperties.FormLogin formLogin;
-
-    public FormLoginCustomizer(CoreSecurityProperties coreSecurityProperties) {
-        this.formLogin = coreSecurityProperties.getFormLogin();
-    }
+    /**
+     * 核心安全属性配置
+     */
+    @Resource
+    private CoreSecurityProperties coreSecurityProperties;
 
     /**
      * 自定义
@@ -25,12 +26,12 @@ public class FormLoginCustomizer implements Customizer<FormLoginConfigurer<HttpS
      */
     @Override
     public void customize(FormLoginConfigurer<HttpSecurity> configurer) {
+        CoreSecurityProperties.FormLogin formLogin = coreSecurityProperties.getFormLogin();
+        // 配置表单登录
         configurer.loginPage(formLogin.getLoginPage())
                 .loginProcessingUrl(formLogin.getLoginProcessingUrl())
                 .usernameParameter(formLogin.getUsernameParameter())
                 .passwordParameter(formLogin.getPasswordParameter())
-                .successForwardUrl(formLogin.getSuccessForwardUrl())
-                .failureForwardUrl(formLogin.getFailureForwardUrl())
                 .permitAll();
     }
 }

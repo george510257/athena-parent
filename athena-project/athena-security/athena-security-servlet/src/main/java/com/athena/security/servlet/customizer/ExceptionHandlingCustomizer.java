@@ -1,9 +1,12 @@
 package com.athena.security.servlet.customizer;
 
+import com.athena.security.core.properties.CoreSecurityProperties;
+import jakarta.annotation.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -16,6 +19,13 @@ import java.util.Set;
  */
 @Component
 public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandlingConfigurer<HttpSecurity>> {
+
+    /**
+     * 核心安全属性配置
+     */
+    @Resource
+    private CoreSecurityProperties coreSecurityProperties;
+
     /**
      * 自定义
      *
@@ -23,8 +33,12 @@ public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandling
      */
     @Override
     public void customize(ExceptionHandlingConfigurer<HttpSecurity> configurer) {
+        // 配置登录入口点
+        AuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(coreSecurityProperties.getFormLogin().getLoginPage());
+        // 创建请求匹配器
+        RequestMatcher requestMatcher = createRequestMatcher();
         // 配置异常处理 - 登录入口点
-        configurer.defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/login"), createRequestMatcher());
+        configurer.defaultAuthenticationEntryPointFor(authenticationEntryPoint, requestMatcher);
     }
 
     /**

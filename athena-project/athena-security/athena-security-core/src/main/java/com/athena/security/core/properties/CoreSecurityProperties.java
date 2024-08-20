@@ -8,6 +8,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
 
+/**
+ * 核心安全属性配置
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security")
@@ -42,13 +45,5 @@ public class CoreSecurityProperties extends BaseProperties {
          * 密码参数
          */
         private String passwordParameter = "password";
-        /**
-         * 成功跳转地址
-         */
-        private String successForwardUrl = "/";
-        /**
-         * 失败跳转地址
-         */
-        private String failureForwardUrl = "/login.html?error";
     }
 }
