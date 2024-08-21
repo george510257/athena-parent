@@ -2,10 +2,8 @@ package com.athena.security.servlet.authorization.config;
 
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
-import com.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
-import com.athena.security.servlet.customizer.CsrfCustomizer;
-import com.athena.security.servlet.customizer.ExceptionHandlingCustomizer;
-import com.athena.security.servlet.customizer.FormLoginCustomizer;
+import com.athena.security.servlet.customizer.*;
+import com.athena.security.servlet.mobile.MobileConfigurer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,6 +60,7 @@ public class AuthorizationConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    FormLoginCustomizer formLoginCustomizer,
+                                                   MobileCustomizer mobileCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
@@ -69,6 +68,8 @@ public class AuthorizationConfig {
         http.formLogin(formLoginCustomizer);
         // CSRF
         http.csrf(csrfCustomizer);
+        // 手机号码登录
+        http.with(new MobileConfigurer<>(), mobileCustomizer);
         // 构建
         return http.build();
     }

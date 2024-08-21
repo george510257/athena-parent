@@ -23,6 +23,10 @@ public class CoreSecurityProperties extends BaseProperties {
      * 表单登录
      */
     private FormLogin formLogin = new FormLogin();
+    /**
+     * 手机号登录
+     */
+    private Mobile mobile = new Mobile();
 
     /**
      * 表单登录
@@ -36,7 +40,7 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 登录处理 URL
          */
-        private String loginProcessingUrl = "/api/login";
+        private String loginProcessingUrl = "/api/formLogin";
         /**
          * 用户名参数
          */
@@ -45,5 +49,21 @@ public class CoreSecurityProperties extends BaseProperties {
          * 密码参数
          */
         private String passwordParameter = "password";
+    }
+
+    @Data
+    public static class Mobile implements Serializable {
+        /**
+         * 登录页面
+         */
+        private String loginPage = "/login.html";
+        /**
+         * 登录处理 URL
+         */
+        private String loginProcessingUrl = "/api/mobileLogin";
+        /**
+         * 手机号参数
+         */
+        private String mobileParameter = "mobile";
     }
 }
