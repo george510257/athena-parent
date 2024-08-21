@@ -61,6 +61,9 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     private boolean isSmsLogin(ServletWebRequest request) {
         String requestURI = request.getRequest().getRequestURI();
+        if (StrUtil.containsIgnoreCase(requestURI, "/api/mobileLogin")) {
+            return true;
+        }
         String grantType = request.getRequest().getParameter("grant_type");
         return StrUtil.containsIgnoreCase(requestURI, "/oauth2/token") && StrUtil.containsIgnoreCase(grantType, "sms");
     }

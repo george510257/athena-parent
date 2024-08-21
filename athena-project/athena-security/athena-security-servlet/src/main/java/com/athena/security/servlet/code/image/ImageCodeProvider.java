@@ -61,6 +61,9 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     private boolean isPasswordLogin(ServletWebRequest request) {
         String requestURI = request.getRequest().getRequestURI();
+        if (StrUtil.containsIgnoreCase(requestURI, "/api/formLogin")) {
+            return true;
+        }
         String grantType = request.getRequest().getParameter("grant_type");
         return StrUtil.containsIgnoreCase(requestURI, "/oauth2/token") && StrUtil.containsIgnoreCase(grantType, "password");
     }
