@@ -41,8 +41,10 @@ public class RestCustomizer implements Customizer<RestConfigurer<HttpSecurity>> 
     private void authenticationConverters(List<AuthenticationConverter> authenticationConverters) {
         for (AuthenticationConverter authenticationConverter : authenticationConverters) {
             if (authenticationConverter instanceof MobileAuthenticationConverter mobileAuthenticationConverter) {
+                // 设置手机号参数
                 mobileAuthenticationConverter.setMobileParameter(coreSecurityProperties.getRest().getMobileParameter());
             } else if (authenticationConverter instanceof UsernamePasswordAuthenticationConverter usernamePasswordAuthenticationConverter) {
+                // 设置用户名和密码参数
                 usernamePasswordAuthenticationConverter.setUsernameParameter(coreSecurityProperties.getRest().getUsernameParameter());
                 usernamePasswordAuthenticationConverter.setPasswordParameter(coreSecurityProperties.getRest().getPasswordParameter());
             }

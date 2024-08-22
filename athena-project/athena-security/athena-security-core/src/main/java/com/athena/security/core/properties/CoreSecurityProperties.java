@@ -58,6 +58,9 @@ public class CoreSecurityProperties extends BaseProperties {
 
     }
 
+    /**
+     * 验证码配置
+     */
     @Data
     public static class VerificationCode implements Serializable {
 
@@ -73,6 +76,9 @@ public class CoreSecurityProperties extends BaseProperties {
 
     }
 
+    /**
+     * 短信验证码配置
+     */
     @Data
     public static class Sms implements Serializable {
         /**
@@ -101,6 +107,9 @@ public class CoreSecurityProperties extends BaseProperties {
         private List<String> urls = new ArrayList<>();
     }
 
+    /**
+     * 图形验证码配置
+     */
     @Data
     public static class Image implements Serializable {
         /**

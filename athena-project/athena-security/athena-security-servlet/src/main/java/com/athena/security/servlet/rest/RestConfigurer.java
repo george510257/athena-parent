@@ -14,49 +14,112 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * REST 配置器
+ *
+ * @param <H> HTTP 安全构建器
+ */
 public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
         AbstractAuthenticationFilterConfigurer<H, RestConfigurer<H>, RestAuthenticationFilter> {
 
+    /**
+     * 认证转换器
+     */
     private final List<AuthenticationConverter> authenticationConverters = new ArrayList<>();
+    /**
+     * 认证提供者
+     */
     private final List<AuthenticationProvider> authenticationProviders = new ArrayList<>();
+    /**
+     * 认证转换器消费者
+     */
     private Consumer<List<AuthenticationConverter>> authenticationConvertersConsumer = (authenticationConverters) -> {
     };
+    /**
+     * 认证提供者消费者
+     */
     private Consumer<List<AuthenticationProvider>> authenticationProvidersConsumer = (authenticationProviders) -> {
     };
 
+    /**
+     * 构造函数
+     */
     public RestConfigurer() {
         super(new RestAuthenticationFilter(), null);
     }
 
+    /**
+     * 登录页面
+     *
+     * @param loginPage 登录页面
+     * @return REST 配置器
+     */
     public RestConfigurer<H> loginPage(String loginPage) {
         return super.loginPage(loginPage);
     }
 
+    /**
+     * 添加认证转换器
+     *
+     * @param authenticationConverter 认证转换器
+     * @return REST 配置器
+     */
     public RestConfigurer<H> authenticationConverter(AuthenticationConverter authenticationConverter) {
         this.authenticationConverters.add(authenticationConverter);
         return this;
     }
 
+    /**
+     * 添加认证提供者
+     *
+     * @param authenticationProvider 认证提供者
+     * @return REST 配置器
+     */
     public RestConfigurer<H> authenticationProvider(AuthenticationProvider authenticationProvider) {
         this.authenticationProviders.add(authenticationProvider);
         return this;
     }
 
+    /**
+     * 自定义认证转换器
+     *
+     * @param authenticationConvertersConsumer 认证转换器消费者
+     * @return REST 配置器
+     */
     public RestConfigurer<H> authenticationConverters(Consumer<List<AuthenticationConverter>> authenticationConvertersConsumer) {
         this.authenticationConvertersConsumer = authenticationConvertersConsumer;
         return this;
     }
 
+    /**
+     * 自定义认证提供者
+     *
+     * @param authenticationProvidersConsumer 认证提供者消费者
+     * @return REST 配置器
+     */
     public RestConfigurer<H> authenticationProviders(Consumer<List<AuthenticationProvider>> authenticationProvidersConsumer) {
         this.authenticationProvidersConsumer = authenticationProvidersConsumer;
         return this;
     }
 
+    /**
+     * 设置登录处理 URL
+     *
+     * @param loginProcessingUrl 登录处理 URL
+     *                           loginProcessingUrl 登录处理 URL
+     * @return 请求匹配器
+     */
     @Override
     protected RequestMatcher createLoginProcessingUrlMatcher(String loginProcessingUrl) {
         return new AntPathRequestMatcher(loginProcessingUrl, "POST");
     }
 
+    /**
+     * 配置
+     *
+     * @param http HTTP 安全构建器
+     * @throws Exception 异常
+     */
     @Override
     public void configure(H http) throws Exception {
         // 设置默认的认证转换器
@@ -78,6 +141,11 @@ public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
         super.configure(http);
     }
 
+    /**
+     * 创建默认的认证转换器
+     *
+     * @return 认证转换器
+     */
     private List<AuthenticationConverter> createDefaultAuthenticationConverters() {
         List<AuthenticationConverter> authenticationConverters = new ArrayList<>();
         authenticationConverters.add(new MobileAuthenticationConverter());
@@ -85,6 +153,11 @@ public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
         return authenticationConverters;
     }
 
+    /**
+     * 创建默认的认证提供者
+     *
+     * @return 认证提供者
+     */
     private List<AuthenticationProvider> createDefaultAuthenticationProviders() {
         List<AuthenticationProvider> authenticationProviders = new ArrayList<>();
         UserDetailsService userDetailsService = SpringUtil.getBean(UserDetailsService.class);

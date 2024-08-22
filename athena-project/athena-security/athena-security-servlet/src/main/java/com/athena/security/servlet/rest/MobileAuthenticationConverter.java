@@ -6,11 +6,22 @@ import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 
+/**
+ * 手机号认证转换器
+ */
 @Setter
 public class MobileAuthenticationConverter implements AuthenticationConverter {
-
+    /**
+     * 手机号参数
+     */
     private String mobileParameter = "mobile";
 
+    /**
+     * 转换
+     *
+     * @param request 请求
+     * @return 认证
+     */
     @Override
     public Authentication convert(HttpServletRequest request) {
         String mobile = obtainMobile(request);
@@ -20,6 +31,12 @@ public class MobileAuthenticationConverter implements AuthenticationConverter {
         return MobileAuthenticationToken.unauthenticated(mobile);
     }
 
+    /**
+     * 获取手机号
+     *
+     * @param request 请求
+     * @return 手机号
+     */
     private String obtainMobile(HttpServletRequest request) {
         return WebUtil.getParameter(request, mobileParameter);
     }

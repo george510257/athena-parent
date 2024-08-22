@@ -10,10 +10,22 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * 默认验证成功处理器
+ */
 @Slf4j
 @Component
 public class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    /**
+     * 在验证完成后调用。
+     *
+     * @param request        请求
+     * @param response       响应
+     * @param authentication 验证
+     * @throws IOException      异常
+     * @throws ServletException 异常
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("登录成功");
