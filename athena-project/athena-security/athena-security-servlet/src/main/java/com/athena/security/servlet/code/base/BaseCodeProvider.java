@@ -13,7 +13,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  */
 @Setter
 @Accessors(chain = true)
-public abstract class VerificationCodeProvider<Code extends VerificationCode> {
+public abstract class BaseCodeProvider<Code extends BaseCode> {
     /**
      * 验证码存储器
      */
@@ -21,11 +21,11 @@ public abstract class VerificationCodeProvider<Code extends VerificationCode> {
     /**
      * 验证码生成器
      */
-    private VerificationCodeGenerator<Code> generator;
+    private BaseCodeGenerator<Code> generator;
     /**
      * 验证码发送器
      */
-    private VerificationCodeSender<Code> sender;
+    private BaseCodeSender<Code> sender;
 
     /**
      * 发送验证码
@@ -53,14 +53,14 @@ public abstract class VerificationCodeProvider<Code extends VerificationCode> {
         String target = getTarget(request);
         String code = getCode(request);
         // 获取验证码
-        VerificationCode verificationCode = repository.get(target);
+        BaseCode baseCode = repository.get(target);
         // 验证码不存在或已过期
-        if (verificationCode == null) {
+        if (baseCode == null) {
             throw new VerificationCodeException("验证码不存在或已过期");
         }
         // 验证码正确且未过期
-        if (verificationCode.getCode().equals(code)
-                && verificationCode.getExpireTime().getTime() > System.currentTimeMillis()) {
+        if (baseCode.getCode().equals(code)
+                && baseCode.getExpireTime().getTime() > System.currentTimeMillis()) {
             repository.remove(target);
         } else {
             // 验证码错误

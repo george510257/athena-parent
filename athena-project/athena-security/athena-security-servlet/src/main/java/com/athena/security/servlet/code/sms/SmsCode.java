@@ -1,6 +1,6 @@
 package com.athena.security.servlet.code.sms;
 
-import com.athena.security.servlet.code.base.VerificationCode;
+import com.athena.security.servlet.code.base.BaseCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,5 +9,5 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SmsCode extends VerificationCode {
+public class SmsCode extends BaseCode {
 }

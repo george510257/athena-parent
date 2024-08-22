@@ -6,7 +6,7 @@ package com.athena.security.servlet.code.base;
  * @param <Code> 验证码类型
  */
 @FunctionalInterface
-public interface VerificationCodeGenerator<Code extends VerificationCode> {
+public interface BaseCodeGenerator<Code extends BaseCode> {
 
     /**
      * 生成验证码

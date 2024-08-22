@@ -1,7 +1,7 @@
 package com.athena.security.servlet.code.image;
 
 import com.athena.security.servlet.code.VerificationCodeException;
-import com.athena.security.servlet.code.base.VerificationCodeSender;
+import com.athena.security.servlet.code.base.BaseCodeSender;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,7 +12,7 @@ import java.io.IOException;
  * 图片验证码发送器
  */
 @Slf4j
-public class ImageCodeSender implements VerificationCodeSender<ImageCode> {
+public class ImageCodeSender implements BaseCodeSender<ImageCode> {
     /**
      * 发送图片验证码
      *

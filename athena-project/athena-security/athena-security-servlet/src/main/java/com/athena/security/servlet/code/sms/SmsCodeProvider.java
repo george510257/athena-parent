@@ -1,12 +1,11 @@
 package com.athena.security.servlet.code.sms;
 
 import cn.hutool.core.util.StrUtil;
+import com.athena.security.core.properties.CoreSecurityProperties;
 import com.athena.security.servlet.code.VerificationCodeException;
-import com.athena.security.servlet.code.VerificationCodeProperties;
-import com.athena.security.servlet.code.base.VerificationCodeProvider;
+import com.athena.security.servlet.code.base.BaseCodeProvider;
 import com.athena.starter.web.util.WebUtil;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -15,13 +14,12 @@ import java.util.List;
 /**
  * 短信验证码提供器
  */
-@Setter
-@Accessors(chain = true)
-public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
+@RequiredArgsConstructor
+public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
     /**
      * 短信验证码配置
      */
-    private VerificationCodeProperties.Sms sms;
+    private final CoreSecurityProperties properties;
 
     /**
      * 是否发送请求
@@ -31,6 +29,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     @Override
     public boolean isSendRequest(ServletWebRequest request) {
+        CoreSecurityProperties.Sms sms = properties.getVerificationCode().getSms();
         String url = sms.getUrl();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return pathMatcher.match(url, request.getRequest().getRequestURI());
@@ -44,6 +43,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     @Override
     public boolean isVerifyRequest(ServletWebRequest request) {
+        CoreSecurityProperties.Sms sms = properties.getVerificationCode().getSms();
         // 判断是否是短信登录
         if (isSmsLogin(request)) {
             return true;
@@ -60,10 +60,11 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      * @return 是否短信登录
      */
     protected boolean isSmsLogin(ServletWebRequest request) {
+        CoreSecurityProperties.Rest rest = properties.getRest();
         // 判断是否是短信登录
         String requestURI = request.getRequest().getRequestURI();
-        if (StrUtil.containsIgnoreCase(requestURI, "/api/restLogin")) {
-            String mobile = WebUtil.getParameter(request.getRequest(), "mobile");
+        if (StrUtil.containsIgnoreCase(requestURI, rest.getLoginProcessingUrl())) {
+            String mobile = WebUtil.getParameter(request.getRequest(), rest.getMobileParameter());
             return StrUtil.isNotBlank(mobile);
         }
         // 判断是否是短信登录
@@ -82,6 +83,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     @Override
     public String getTarget(ServletWebRequest request) {
+        CoreSecurityProperties.Sms sms = properties.getVerificationCode().getSms();
         String target = WebUtil.getParameter(request.getRequest(), sms.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
@@ -97,6 +99,7 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      */
     @Override
     public String getCode(ServletWebRequest request) {
+        CoreSecurityProperties.Sms sms = properties.getVerificationCode().getSms();
         String code = WebUtil.getParameter(request.getRequest(), sms.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;

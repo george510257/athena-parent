@@ -1,12 +1,11 @@
 package com.athena.security.servlet.code.image;
 
 import cn.hutool.core.util.StrUtil;
+import com.athena.security.core.properties.CoreSecurityProperties;
 import com.athena.security.servlet.code.VerificationCodeException;
-import com.athena.security.servlet.code.VerificationCodeProperties;
-import com.athena.security.servlet.code.base.VerificationCodeProvider;
+import com.athena.security.servlet.code.base.BaseCodeProvider;
 import com.athena.starter.web.util.WebUtil;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -15,13 +14,12 @@ import java.util.List;
 /**
  * 图片验证码提供器
  */
-@Setter
-@Accessors(chain = true)
-public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
+@RequiredArgsConstructor
+public class ImageCodeProvider extends BaseCodeProvider<ImageCode> {
     /**
      * 图片验证码配置
      */
-    private VerificationCodeProperties.Image image;
+    private final CoreSecurityProperties properties;
 
     /**
      * 是否发送请求
@@ -31,6 +29,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     @Override
     public boolean isSendRequest(ServletWebRequest request) {
+        CoreSecurityProperties.Image image = properties.getVerificationCode().getImage();
         String url = image.getUrl();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return pathMatcher.match(url, request.getRequest().getRequestURI());
@@ -44,6 +43,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     @Override
     public boolean isVerifyRequest(ServletWebRequest request) {
+        CoreSecurityProperties.Image image = properties.getVerificationCode().getImage();
         // 判断是否密码登录
         if (isPasswordLogin(request)) {
             return true;
@@ -60,10 +60,11 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      * @return 是否密码登录
      */
     protected boolean isPasswordLogin(ServletWebRequest request) {
+        CoreSecurityProperties.Rest rest = properties.getRest();
         String requestURI = request.getRequest().getRequestURI();
         // 判断是否密码登录
-        if (StrUtil.containsIgnoreCase(requestURI, "/api/restLogin")) {
-            String username = WebUtil.getParameter(request.getRequest(), "username");
+        if (StrUtil.containsIgnoreCase(requestURI, rest.getLoginProcessingUrl())) {
+            String username = WebUtil.getParameter(request.getRequest(), rest.getUsernameParameter());
             return StrUtil.isNotBlank(username);
         }
         // 判断是否密码登录
@@ -82,6 +83,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     @Override
     public String getTarget(ServletWebRequest request) {
+        CoreSecurityProperties.Image image = properties.getVerificationCode().getImage();
         String target = WebUtil.getParameter(request.getRequest(), image.getTargetParameterName());
         if (StrUtil.isNotBlank(target)) {
             return target;
@@ -97,6 +99,7 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      */
     @Override
     public String getCode(ServletWebRequest request) {
+        CoreSecurityProperties.Image image = properties.getVerificationCode().getImage();
         String code = WebUtil.getParameter(request.getRequest(), image.getCodeParameterName());
         if (StrUtil.isNotBlank(code)) {
             return code;

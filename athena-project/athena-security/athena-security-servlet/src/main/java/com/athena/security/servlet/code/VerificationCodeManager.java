@@ -1,6 +1,6 @@
 package com.athena.security.servlet.code;
 
-import com.athena.security.servlet.code.base.VerificationCodeProvider;
+import com.athena.security.servlet.code.base.BaseCodeProvider;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -17,7 +17,7 @@ public class VerificationCodeManager {
      * 验证码提供器列表
      */
     @Resource
-    private List<VerificationCodeProvider<?>> providers;
+    private List<BaseCodeProvider<?>> providers;
 
     /**
      * 获取验证码提供器
@@ -25,7 +25,7 @@ public class VerificationCodeManager {
      * @param request 请求
      * @return 验证码提供器
      */
-    public VerificationCodeProvider<?> getProvider(ServletWebRequest request) {
+    public BaseCodeProvider<?> getProvider(ServletWebRequest request) {
         return providers.stream()
                 .filter(provider -> provider.support(request))
                 .findFirst()

@@ -2,24 +2,16 @@ package com.athena.security.servlet.rest;
 
 import com.athena.starter.web.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 
+@Setter
 public class UsernamePasswordAuthenticationConverter implements AuthenticationConverter {
 
     private String usernameParameter = "username";
     private String passwordParameter = "password";
-
-    public UsernamePasswordAuthenticationConverter usernameParameter(String usernameParameter) {
-        this.usernameParameter = usernameParameter;
-        return this;
-    }
-
-    public UsernamePasswordAuthenticationConverter passwordParameter(String passwordParameter) {
-        this.passwordParameter = passwordParameter;
-        return this;
-    }
 
     @Override
     public Authentication convert(HttpServletRequest request) {

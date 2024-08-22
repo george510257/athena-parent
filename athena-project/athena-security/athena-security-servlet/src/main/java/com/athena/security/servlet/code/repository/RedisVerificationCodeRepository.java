@@ -1,7 +1,7 @@
 package com.athena.security.servlet.code.repository;
 
 import cn.hutool.core.date.DateUtil;
-import com.athena.security.servlet.code.base.VerificationCode;
+import com.athena.security.servlet.code.base.BaseCode;
 import com.athena.starter.data.redis.support.RedisUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -22,7 +22,7 @@ public class RedisVerificationCodeRepository implements VerificationCodeReposito
      * @param code 验证码
      */
     @Override
-    public void save(String key, VerificationCode code) {
+    public void save(String key, BaseCode code) {
         RedisUtil.setCacheValue(buildKey(key), code, DateUtil.betweenMs(DateUtil.date(), code.getExpireTime()), TimeUnit.MILLISECONDS);
     }
 
@@ -33,8 +33,8 @@ public class RedisVerificationCodeRepository implements VerificationCodeReposito
      * @return 验证码
      */
     @Override
-    public VerificationCode get(String key) {
-        return RedisUtil.getCacheValue(buildKey(key), VerificationCode.class);
+    public BaseCode get(String key) {
+        return RedisUtil.getCacheValue(buildKey(key), BaseCode.class);
     }
 
     /**

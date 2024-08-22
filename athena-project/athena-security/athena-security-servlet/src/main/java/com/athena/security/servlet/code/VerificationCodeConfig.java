@@ -1,5 +1,6 @@
 package com.athena.security.servlet.code;
 
+import com.athena.security.core.properties.CoreSecurityProperties;
 import com.athena.security.servlet.code.image.ImageCodeGenerator;
 import com.athena.security.servlet.code.image.ImageCodeProvider;
 import com.athena.security.servlet.code.image.ImageCodeSender;
@@ -10,7 +11,6 @@ import com.athena.security.servlet.code.sms.SmsCodeProvider;
 import com.athena.security.servlet.code.sms.SmsCodeSender;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -19,13 +19,12 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
  * 验证码配置
  */
 @Configuration
-@EnableConfigurationProperties(VerificationCodeProperties.class)
 public class VerificationCodeConfig {
     /**
      * 验证码配置
      */
     @Resource
-    private VerificationCodeProperties verificationCodeProperties;
+    private CoreSecurityProperties coreSecurityProperties;
 
     /**
      * 验证码存储器
@@ -47,11 +46,9 @@ public class VerificationCodeConfig {
     @Bean
     @ConditionalOnMissingBean
     public ImageCodeProvider imageCodeProvider(VerificationCodeRepository verificationCodeRepository) {
-        return (ImageCodeProvider) new ImageCodeProvider()
-                .setImage(verificationCodeProperties.getImage())
+        return (ImageCodeProvider) new ImageCodeProvider(coreSecurityProperties)
                 .setRepository(verificationCodeRepository)
-                .setGenerator(new ImageCodeGenerator()
-                        .setImage(verificationCodeProperties.getImage()))
+                .setGenerator(new ImageCodeGenerator(coreSecurityProperties))
                 .setSender(new ImageCodeSender());
     }
 
@@ -64,11 +61,9 @@ public class VerificationCodeConfig {
     @Bean
     @ConditionalOnMissingBean
     public SmsCodeProvider smsCodeProvider(VerificationCodeRepository verificationCodeRepository) {
-        return (SmsCodeProvider) new SmsCodeProvider()
-                .setSms(verificationCodeProperties.getSms())
+        return (SmsCodeProvider) new SmsCodeProvider(coreSecurityProperties)
                 .setRepository(verificationCodeRepository)
-                .setGenerator(new SmsCodeGenerator()
-                        .setSms(verificationCodeProperties.getSms()))
+                .setGenerator(new SmsCodeGenerator(coreSecurityProperties))
                 .setSender(new SmsCodeSender());
     }
 

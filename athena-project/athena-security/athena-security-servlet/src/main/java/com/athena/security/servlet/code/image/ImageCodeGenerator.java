@@ -3,21 +3,19 @@ package com.athena.security.servlet.code.image;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
-import com.athena.security.servlet.code.VerificationCodeProperties;
-import com.athena.security.servlet.code.base.VerificationCodeGenerator;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import com.athena.security.core.properties.CoreSecurityProperties;
+import com.athena.security.servlet.code.base.BaseCodeGenerator;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 图片验证码生成器
  */
-@Setter
-@Accessors(chain = true)
-public class ImageCodeGenerator implements VerificationCodeGenerator<ImageCode> {
+@RequiredArgsConstructor
+public class ImageCodeGenerator implements BaseCodeGenerator<ImageCode> {
     /**
      * 图片验证码配置
      */
-    private VerificationCodeProperties.Image image;
+    private final CoreSecurityProperties properties;
 
     /**
      * 生成验证码
@@ -26,6 +24,7 @@ public class ImageCodeGenerator implements VerificationCodeGenerator<ImageCode> 
      */
     @Override
     public ImageCode generate() {
+        CoreSecurityProperties.Image image = properties.getVerificationCode().getImage();
         // 创建线段干扰的验证码
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(image.getWidth(), image.getHeight(), image.getLength(), image.getLineCount(), image.getFontSize());
         // 创建图片验证码

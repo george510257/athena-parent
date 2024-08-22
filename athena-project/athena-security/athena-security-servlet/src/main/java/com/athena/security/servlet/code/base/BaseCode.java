@@ -9,7 +9,7 @@ import java.util.Date;
  * 验证码
  */
 @Data
-public abstract class VerificationCode implements Serializable {
+public abstract class BaseCode implements Serializable {
     /**
      * 验证码
      */

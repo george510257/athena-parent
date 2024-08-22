@@ -2,17 +2,14 @@ package com.athena.security.servlet.rest;
 
 import com.athena.starter.web.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 
+@Setter
 public class MobileAuthenticationConverter implements AuthenticationConverter {
 
     private String mobileParameter = "mobile";
-
-    public MobileAuthenticationConverter mobileParameter(String mobileParameter) {
-        this.mobileParameter = mobileParameter;
-        return this;
-    }
 
     @Override
     public Authentication convert(HttpServletRequest request) {

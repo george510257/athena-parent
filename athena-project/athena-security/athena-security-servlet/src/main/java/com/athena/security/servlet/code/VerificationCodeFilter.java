@@ -1,6 +1,6 @@
 package com.athena.security.servlet.code;
 
-import com.athena.security.servlet.code.base.VerificationCodeProvider;
+import com.athena.security.servlet.code.base.BaseCodeProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        VerificationCodeProvider<?> provider = verificationCodeManager.getProvider(servletWebRequest);
+        BaseCodeProvider<?> provider = verificationCodeManager.getProvider(servletWebRequest);
         // 无需校验验证码
         if (provider == null) {
             filterChain.doFilter(request, response);

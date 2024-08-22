@@ -1,6 +1,6 @@
 package com.athena.security.servlet.code.repository;
 
-import com.athena.security.servlet.code.base.VerificationCode;
+import com.athena.security.servlet.code.base.BaseCode;
 
 /**
  * 验证码存储器
@@ -13,7 +13,7 @@ public interface VerificationCodeRepository {
      * @param key  验证码标识
      * @param code 验证码
      */
-    void save(String key, VerificationCode code);
+    void save(String key, BaseCode code);
 
     /**
      * 获取验证码
@@ -21,7 +21,7 @@ public interface VerificationCodeRepository {
      * @param key 验证码标识
      * @return 验证码
      */
-    VerificationCode get(String key);
+    BaseCode get(String key);
 
     /**
      * 移除验证码

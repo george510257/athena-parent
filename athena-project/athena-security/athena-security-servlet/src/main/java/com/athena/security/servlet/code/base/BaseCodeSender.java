@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @param <Code> 验证码类型
  */
 @FunctionalInterface
-public interface VerificationCodeSender<Code extends VerificationCode> {
+public interface BaseCodeSender<Code extends BaseCode> {
 
     /**
      * 发送验证码
