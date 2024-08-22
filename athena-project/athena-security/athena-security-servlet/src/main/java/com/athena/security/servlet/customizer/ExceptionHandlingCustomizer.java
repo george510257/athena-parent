@@ -34,7 +34,7 @@ public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandling
     @Override
     public void customize(ExceptionHandlingConfigurer<HttpSecurity> configurer) {
         // 配置登录入口点
-        AuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(coreSecurityProperties.getFormLogin().getLoginPage());
+        AuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(coreSecurityProperties.getRest().getLoginPage());
         // 创建请求匹配器
         RequestMatcher requestMatcher = createRequestMatcher();
         // 配置异常处理 - 登录入口点

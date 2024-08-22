@@ -59,13 +59,19 @@ public class SmsCodeProvider extends VerificationCodeProvider<SmsCode> {
      * @param request 请求
      * @return 是否短信登录
      */
-    private boolean isSmsLogin(ServletWebRequest request) {
+    protected boolean isSmsLogin(ServletWebRequest request) {
+        // 判断是否是短信登录
         String requestURI = request.getRequest().getRequestURI();
-        if (StrUtil.containsIgnoreCase(requestURI, "/api/mobileLogin")) {
-            return true;
+        if (StrUtil.containsIgnoreCase(requestURI, "/api/restLogin")) {
+            String mobile = WebUtil.getParameter(request.getRequest(), "mobile");
+            return StrUtil.isNotBlank(mobile);
         }
-        String grantType = request.getRequest().getParameter("grant_type");
-        return StrUtil.containsIgnoreCase(requestURI, "/oauth2/token") && StrUtil.containsIgnoreCase(grantType, "sms");
+        // 判断是否是短信登录
+        if (StrUtil.containsIgnoreCase(requestURI, "/oauth2/token")) {
+            String grantType = WebUtil.getParameter(request.getRequest(), "grant_type");
+            return StrUtil.containsIgnoreCase(grantType, "sms");
+        }
+        return false;
     }
 
     /**

@@ -31,7 +31,7 @@ public class AuthorizeHttpRequestsCustomizer implements Customizer<AuthorizeHttp
                 // 静态资源和登录页面不需要认证
                 .requestMatchers(coreSecurityProperties.getIgnoreUrls()).permitAll()
                 // 登录页面和登录请求不需要认证
-                .requestMatchers(coreSecurityProperties.getFormLogin().getLoginPage()).permitAll()
+                .requestMatchers(coreSecurityProperties.getRest().getLoginPage()).permitAll()
                 // 所有请求都需要认证
                 .anyRequest().authenticated();
     }

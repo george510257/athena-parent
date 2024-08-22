@@ -20,19 +20,15 @@ public class CoreSecurityProperties extends BaseProperties {
      */
     private String[] ignoreUrls = new String[]{"/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico", "/actuator/**", "/error"};
     /**
-     * 表单登录
+     * rest登录配置
      */
-    private FormLogin formLogin = new FormLogin();
-    /**
-     * 手机号登录
-     */
-    private Mobile mobile = new Mobile();
+    private Rest rest = new Rest();
 
     /**
-     * 表单登录
+     * rest登录配置
      */
     @Data
-    public static class FormLogin implements Serializable {
+    public static class Rest implements Serializable {
         /**
          * 登录页面
          */
@@ -40,30 +36,8 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 登录处理 URL
          */
-        private String loginProcessingUrl = "/api/formLogin";
-        /**
-         * 用户名参数
-         */
-        private String usernameParameter = "username";
-        /**
-         * 密码参数
-         */
-        private String passwordParameter = "password";
+        private String loginProcessingUrl = "/api/restLogin";
+
     }
 
-    @Data
-    public static class Mobile implements Serializable {
-        /**
-         * 登录页面
-         */
-        private String loginPage = "/login.html";
-        /**
-         * 登录处理 URL
-         */
-        private String loginProcessingUrl = "/api/mobileLogin";
-        /**
-         * 手机号参数
-         */
-        private String mobileParameter = "mobile";
-    }
 }

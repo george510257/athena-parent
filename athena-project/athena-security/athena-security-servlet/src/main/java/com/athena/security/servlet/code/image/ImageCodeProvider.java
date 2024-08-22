@@ -59,13 +59,19 @@ public class ImageCodeProvider extends VerificationCodeProvider<ImageCode> {
      * @param request 请求
      * @return 是否密码登录
      */
-    private boolean isPasswordLogin(ServletWebRequest request) {
+    protected boolean isPasswordLogin(ServletWebRequest request) {
         String requestURI = request.getRequest().getRequestURI();
-        if (StrUtil.containsIgnoreCase(requestURI, "/api/formLogin")) {
-            return true;
+        // 判断是否密码登录
+        if (StrUtil.containsIgnoreCase(requestURI, "/api/restLogin")) {
+            String username = WebUtil.getParameter(request.getRequest(), "username");
+            return StrUtil.isNotBlank(username);
         }
-        String grantType = request.getRequest().getParameter("grant_type");
-        return StrUtil.containsIgnoreCase(requestURI, "/oauth2/token") && StrUtil.containsIgnoreCase(grantType, "password");
+        // 判断是否密码登录
+        if (StrUtil.containsIgnoreCase(requestURI, "/oauth2/token")) {
+            String grantType = WebUtil.getParameter(request.getRequest(), "grant_type");
+            return StrUtil.containsIgnoreCase(grantType, "password");
+        }
+        return false;
     }
 
     /**

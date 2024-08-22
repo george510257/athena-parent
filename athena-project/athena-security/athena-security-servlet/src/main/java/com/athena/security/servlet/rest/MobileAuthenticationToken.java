@@ -1,4 +1,4 @@
-package com.athena.security.servlet.mobile;
+package com.athena.security.servlet.rest;
 
 import lombok.Getter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

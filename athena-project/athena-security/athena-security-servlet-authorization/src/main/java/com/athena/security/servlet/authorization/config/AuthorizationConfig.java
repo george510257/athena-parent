@@ -2,8 +2,11 @@ package com.athena.security.servlet.authorization.config;
 
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
-import com.athena.security.servlet.customizer.*;
-import com.athena.security.servlet.mobile.MobileConfigurer;
+import com.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
+import com.athena.security.servlet.customizer.CsrfCustomizer;
+import com.athena.security.servlet.customizer.ExceptionHandlingCustomizer;
+import com.athena.security.servlet.customizer.RestCustomizer;
+import com.athena.security.servlet.rest.RestConfigurer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,24 +55,20 @@ public class AuthorizationConfig {
      *
      * @param http                            Http安全
      * @param authorizeHttpRequestsCustomizer 请求授权自定义器
-     * @param formLoginCustomizer             表单登录自定义器
      * @param csrfCustomizer                  CSRF自定义器
      */
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
-                                                   FormLoginCustomizer formLoginCustomizer,
-                                                   MobileCustomizer mobileCustomizer,
+                                                   RestCustomizer restCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
-        // 表单登录
-        http.formLogin(formLoginCustomizer);
         // CSRF
         http.csrf(csrfCustomizer);
         // 手机号码登录
-        http.with(new MobileConfigurer<>(), mobileCustomizer);
+        http.with(new RestConfigurer<>(), restCustomizer);
         // 构建
         return http.build();
     }
