@@ -54,21 +54,21 @@ public class AuthorizationConfig {
      * 默认安全配置
      *
      * @param http                            Http安全
+     * @param restCustomizer                  REST自定义器
      * @param authorizeHttpRequestsCustomizer 请求授权自定义器
      * @param csrfCustomizer                  CSRF自定义器
      */
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
-                                                   AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    RestCustomizer restCustomizer,
+                                                   AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
+        http.with(new RestConfigurer<>(), restCustomizer);
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // CSRF
         http.csrf(csrfCustomizer);
-        // 手机号码登录
-        http.with(new RestConfigurer<>(), restCustomizer);
         // 构建
         return http.build();
     }
