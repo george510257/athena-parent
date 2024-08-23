@@ -2,10 +2,8 @@ package com.athena.security.servlet.authorization.config;
 
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
-import com.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
-import com.athena.security.servlet.customizer.CsrfCustomizer;
-import com.athena.security.servlet.customizer.ExceptionHandlingCustomizer;
-import com.athena.security.servlet.customizer.RestCustomizer;
+import com.athena.security.servlet.code.VerificationCodeConfigurer;
+import com.athena.security.servlet.customizer.*;
 import com.athena.security.servlet.rest.RestConfigurer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +35,7 @@ public class AuthorizationConfig {
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity http,
                                                                 OAuth2AuthorizationServerCustomizer authorizationServerCustomizer,
                                                                 OAuth2ResourceServerCustomizer resourceServerCustomizer,
+
                                                                 ExceptionHandlingCustomizer exceptionHandlingCustomizer) throws Exception {
         // 默认安全配置
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
@@ -55,6 +54,7 @@ public class AuthorizationConfig {
      *
      * @param http                            Http安全
      * @param restCustomizer                  REST自定义器
+     * @param verificationCodeCustomizer      验证码自定义器
      * @param authorizeHttpRequestsCustomizer 请求授权自定义器
      * @param csrfCustomizer                  CSRF自定义器
      */
@@ -62,9 +62,11 @@ public class AuthorizationConfig {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
                                                    RestCustomizer restCustomizer,
+                                                   VerificationCodeCustomizer verificationCodeCustomizer,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
         http.with(new RestConfigurer<>(), restCustomizer);
+        http.with(new VerificationCodeConfigurer<>(), verificationCodeCustomizer);
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // CSRF

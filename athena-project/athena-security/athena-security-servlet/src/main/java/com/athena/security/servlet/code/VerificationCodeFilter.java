@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,7 +20,7 @@ import java.io.IOException;
 @Slf4j
 @Setter
 @Accessors(chain = true)
-public class VerificationCodeFilter extends OncePerRequestFilter implements OrderedFilter {
+public class VerificationCodeFilter extends OncePerRequestFilter {
     /**
      * 认证失败处理器
      */
@@ -64,16 +63,6 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Orde
             // 校验失败处理
             authenticationFailureHandler.onAuthenticationFailure(request, response, e);
         }
-    }
-
-    /**
-     * 获取过滤器顺序
-     *
-     * @return 过滤器顺序
-     */
-    @Override
-    public int getOrder() {
-        return REQUEST_WRAPPER_FILTER_MAX_ORDER - 9999;
     }
 
 }
