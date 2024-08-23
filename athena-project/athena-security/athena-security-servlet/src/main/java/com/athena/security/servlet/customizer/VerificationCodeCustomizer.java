@@ -47,15 +47,14 @@ public class VerificationCodeCustomizer implements Customizer<VerificationCodeCo
                         .setUrl(image.getUrl())
                         .setUrls(image.getUrls())
                         .setLoginProcessingUrl(rest.getLoginProcessingUrl())
-                        .setUsernameParameter(rest.getUsernameParameter());
-                ImageCodeGenerator imageCodeGenerator = (ImageCodeGenerator) imageCodeProvider.getGenerator();
-                imageCodeGenerator
-                        .setWidth(image.getWidth())
-                        .setHeight(image.getHeight())
-                        .setLength(image.getLength())
-                        .setExpireIn(image.getExpireIn())
-                        .setFontSize(image.getFontSize())
-                        .setLineCount(image.getLineCount());
+                        .setUsernameParameter(rest.getUsernameParameter())
+                        .setGenerator(new ImageCodeGenerator()
+                                .setWidth(image.getWidth())
+                                .setHeight(image.getHeight())
+                                .setLength(image.getLength())
+                                .setExpireIn(image.getExpireIn())
+                                .setFontSize(image.getFontSize())
+                                .setLineCount(image.getLineCount()));
             } else if (provider instanceof SmsCodeProvider smsCodeProvider) {
                 CoreSecurityProperties.Sms sms = coreSecurityProperties.getVerificationCode().getSms();
                 smsCodeProvider
@@ -63,13 +62,11 @@ public class VerificationCodeCustomizer implements Customizer<VerificationCodeCo
                         .setTargetParameterName(sms.getTargetParameterName())
                         .setUrl(sms.getUrl())
                         .setUrls(sms.getUrls())
-                        .setLoginProcessingUrl(rest.getLoginProcessingUrl());
-                SmsCodeGenerator smsCodeGenerator = (SmsCodeGenerator) smsCodeProvider.getGenerator();
-                smsCodeGenerator
-                        .setLength(sms.getLength())
-                        .setExpireIn(sms.getExpireIn());
+                        .setLoginProcessingUrl(rest.getLoginProcessingUrl())
+                        .setGenerator(new SmsCodeGenerator()
+                                .setLength(sms.getLength())
+                                .setExpireIn(sms.getExpireIn()));
             }
         }
-
     }
 }

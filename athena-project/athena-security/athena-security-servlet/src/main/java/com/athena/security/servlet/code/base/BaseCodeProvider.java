@@ -2,7 +2,8 @@ package com.athena.security.servlet.code.base;
 
 import com.athena.security.servlet.code.VerificationCodeException;
 import com.athena.security.servlet.code.repository.VerificationCodeRepository;
-import lombok.Data;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
@@ -10,20 +11,21 @@ import org.springframework.web.context.request.ServletWebRequest;
  *
  * @param <Code> 验证码类型
  */
-@Data
+@Setter
+@Accessors(chain = true)
 public abstract class BaseCodeProvider<Code extends BaseCode> {
     /**
      * 验证码存储器
      */
-    private final VerificationCodeRepository repository;
+    private VerificationCodeRepository repository;
     /**
      * 验证码生成器
      */
-    private final BaseCodeGenerator<Code> generator;
+    private BaseCodeGenerator<Code> generator;
     /**
      * 验证码发送器
      */
-    private final BaseCodeSender<Code> sender;
+    private BaseCodeSender<Code> sender;
 
     /**
      * 发送验证码

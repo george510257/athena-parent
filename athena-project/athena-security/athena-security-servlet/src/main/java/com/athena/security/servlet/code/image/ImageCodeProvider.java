@@ -3,7 +3,6 @@ package com.athena.security.servlet.code.image;
 import cn.hutool.core.util.StrUtil;
 import com.athena.security.servlet.code.VerificationCodeException;
 import com.athena.security.servlet.code.base.BaseCodeProvider;
-import com.athena.security.servlet.code.repository.VerificationCodeRepository;
 import com.athena.starter.web.util.WebUtil;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -48,15 +47,6 @@ public class ImageCodeProvider extends BaseCodeProvider<ImageCode> {
      * oauth2 token url
      */
     private String oauth2TokenUrl = "/oauth2/token";
-
-    /**
-     * 构造函数
-     *
-     * @param repository 验证码存储器
-     */
-    public ImageCodeProvider(VerificationCodeRepository repository) {
-        super(repository, new ImageCodeGenerator(), new ImageCodeSender());
-    }
 
     /**
      * 是否发送请求

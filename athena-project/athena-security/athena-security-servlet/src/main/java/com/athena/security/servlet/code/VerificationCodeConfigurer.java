@@ -1,10 +1,14 @@
 package com.athena.security.servlet.code;
 
 import com.athena.security.servlet.code.base.BaseCodeProvider;
+import com.athena.security.servlet.code.image.ImageCodeGenerator;
 import com.athena.security.servlet.code.image.ImageCodeProvider;
+import com.athena.security.servlet.code.image.ImageCodeSender;
 import com.athena.security.servlet.code.repository.RedisVerificationCodeRepository;
 import com.athena.security.servlet.code.repository.VerificationCodeRepository;
+import com.athena.security.servlet.code.sms.SmsCodeGenerator;
 import com.athena.security.servlet.code.sms.SmsCodeProvider;
+import com.athena.security.servlet.code.sms.SmsCodeSender;
 import com.athena.security.servlet.handler.DefaultAuthenticationFailureHandler;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -59,8 +63,14 @@ public class VerificationCodeConfigurer<H extends HttpSecurityBuilder<H>>
 
     private List<BaseCodeProvider<?>> createDefaultProviders() {
         List<BaseCodeProvider<?>> providers = new ArrayList<>();
-        providers.add(new ImageCodeProvider(verificationCodeRepository));
-        providers.add(new SmsCodeProvider(verificationCodeRepository));
+        providers.add(new ImageCodeProvider()
+                .setRepository(verificationCodeRepository)
+                .setGenerator(new ImageCodeGenerator())
+                .setSender(new ImageCodeSender()));
+        providers.add(new SmsCodeProvider()
+                .setRepository(verificationCodeRepository)
+                .setGenerator(new SmsCodeGenerator())
+                .setSender(new SmsCodeSender()));
         return providers;
     }
 
