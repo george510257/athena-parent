@@ -1,0 +1,24 @@
+${AnsiColor.BLUE}${AnsiStyle.BOLD}
+
+               AAA                tttt         hhhhhhh
+              A:::A            ttt:::t         h:::::h
+             A:::::A           t:::::t         h:::::h
+            A:::::::A          t:::::t         h:::::h
+           A:::::::::A   ttttttt:::::ttttttt    h::::h hhhhh           eeeeeeeeeeee    nnnn  nnnnnnnn      aaaaaaaaaaaaa
+          A:::::A:::::A  t:::::::::::::::::t    h::::hh:::::hhh      ee::::::::::::ee  n:::nn::::::::nn    a::::::::::::a
+         A:::::A A:::::A t:::::::::::::::::t    h::::::::::::::hh   e::::::eeeee:::::een::::::::::::::nn   aaaaaaaaa:::::a
+        A:::::A   A:::::Atttttt:::::::tttttt    h:::::::hhh::::::h e::::::e     e:::::enn:::::::::::::::n           a::::a
+       A:::::A     A:::::A     t:::::t          h::::::h   h::::::he:::::::eeeee::::::e  n:::::nnnn:::::n    aaaaaaa:::::a
+      A:::::AAAAAAAAA:::::A    t:::::t          h:::::h     h:::::he:::::::::::::::::e   n::::n    n::::n  aa::::::::::::a
+     A:::::::::::::::::::::A   t:::::t          h:::::h     h:::::he::::::eeeeeeeeeee    n::::n    n::::n a::::aaaa::::::a
+    A:::::AAAAAAAAAAAAA:::::A  t:::::t    tttttth:::::h     h:::::he:::::::e             n::::n    n::::na::::a    a:::::a
+   A:::::A             A:::::A t::::::tttt:::::th:::::h     h:::::he::::::::e            n::::n    n::::na::::a    a:::::a
+  A:::::A               A:::::Att::::::::::::::th:::::h     h:::::h e::::::::eeeeeeee    n::::n    n::::na:::::aaaa::::::a
+ A:::::A                 A:::::A tt:::::::::::tth:::::h     h:::::h  ee:::::::::::::e    n::::n    n::::n a::::::::::aa:::a
+AAAAAAA                   AAAAAAA  ttttttttttt  hhhhhhh     hhhhhhh    eeeeeeeeeeeeee    nnnnnn    nnnnnn  aaaaaaaaaa  aaaa
+
+${AnsiColor.CYAN}${AnsiStyle.BOLD}
+    :: Java ::               (v${java.version})
+    :: Spring Boot ::        (v${spring-boot.version})
+    :: Athena ::             (v${application.version})
+${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
