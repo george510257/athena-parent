@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 
 @Setter
 @Accessors(chain = true)
-public class VerificationCodeConfigurer<H extends HttpSecurityBuilder<H>>
+public final class VerificationCodeConfigurer<H extends HttpSecurityBuilder<H>>
         extends AbstractHttpConfigurer<VerificationCodeConfigurer<H>, H> {
     /**
      * 验证码存储器
