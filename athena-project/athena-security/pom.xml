@@ -18,6 +18,7 @@
         <module>athena-security-reactive-resource</module>
         <module>athena-security-servlet</module>
         <module>athena-security-servlet-authorization</module>
+        <module>athena-security-servlet-client</module>
         <module>athena-security-servlet-resource</module>
     </modules>
 
