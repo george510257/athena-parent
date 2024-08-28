@@ -17,22 +17,22 @@ public class OidcCustomizer implements Customizer<OidcConfigurer> {
      * OIDC提供者配置端点自定义器
      */
     @Resource
-    private Optional<ProviderConfigurationEndpointCustomizer> providerConfigurationEndpointCustomizer;
+    private Optional<OidcProviderConfigurationEndpointCustomizer> oidcProviderConfigurationEndpointCustomizer;
     /**
      * OIDC登出端点自定义器
      */
     @Resource
-    private Optional<LogoutEndpointCustomizer> logoutEndpointCustomizer;
+    private Optional<OidcLogoutEndpointCustomizer> oidcLogoutEndpointCustomizer;
     /**
      * OIDC客户端注册端点自定义器
      */
     @Resource
-    private Optional<ClientRegistrationEndpointCustomizer> clientRegistrationEndpointCustomizer;
+    private Optional<OidcClientRegistrationEndpointCustomizer> oidcClientRegistrationEndpointCustomizer;
     /**
      * OIDC用户信息端点自定义器
      */
     @Resource
-    private Optional<UserInfoEndpointCustomizer> userInfoEndpointCustomizer;
+    private Optional<OidcUserInfoEndpointCustomizer> oidcUserInfoEndpointCustomizer;
 
     /**
      * 自定义
@@ -42,12 +42,12 @@ public class OidcCustomizer implements Customizer<OidcConfigurer> {
     @Override
     public void customize(OidcConfigurer configurer) {
         // OIDC提供者配置端点自定义
-        providerConfigurationEndpointCustomizer.ifPresent(configurer::providerConfigurationEndpoint);
+        oidcProviderConfigurationEndpointCustomizer.ifPresent(configurer::providerConfigurationEndpoint);
         // OIDC登出端点自定义
-        logoutEndpointCustomizer.ifPresent(configurer::logoutEndpoint);
+        oidcLogoutEndpointCustomizer.ifPresent(configurer::logoutEndpoint);
         // OIDC客户端注册端点自定义
-        clientRegistrationEndpointCustomizer.ifPresent(configurer::clientRegistrationEndpoint);
+        oidcClientRegistrationEndpointCustomizer.ifPresent(configurer::clientRegistrationEndpoint);
         // OIDC用户信息端点自定义
-        userInfoEndpointCustomizer.ifPresent(configurer::userInfoEndpoint);
+        oidcUserInfoEndpointCustomizer.ifPresent(configurer::userInfoEndpoint);
     }
 }

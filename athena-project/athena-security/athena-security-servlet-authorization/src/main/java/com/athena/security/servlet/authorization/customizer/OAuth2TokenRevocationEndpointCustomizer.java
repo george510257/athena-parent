@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 令牌撤销端点自定义器
  */
 @Component
-public class TokenRevocationEndpointCustomizer implements Customizer<OAuth2TokenRevocationEndpointConfigurer> {
+public class OAuth2TokenRevocationEndpointCustomizer implements Customizer<OAuth2TokenRevocationEndpointConfigurer> {
     /**
      * 自定义
      *

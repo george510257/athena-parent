@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * jwt自定义
  */
 @Component
-public class JwtCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
+public class JwtEncodingContextCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
 
     /**
      * 自定义jwt

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * 用户信息端点自定义器
  */
 @Component
-public class UserInfoEndpointCustomizer implements Customizer<OidcUserInfoEndpointConfigurer> {
+public class OidcUserInfoEndpointCustomizer implements Customizer<OidcUserInfoEndpointConfigurer> {
     @Resource
     private UserDetailsService userDetailsService;
 

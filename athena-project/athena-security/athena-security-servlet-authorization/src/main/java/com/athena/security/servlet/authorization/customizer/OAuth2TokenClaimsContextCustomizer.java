@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 授权令牌自定义
  */
 @Component
-public class AccessTokenCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {
+public class OAuth2TokenClaimsContextCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {
 
     /**
      * 自定义令牌

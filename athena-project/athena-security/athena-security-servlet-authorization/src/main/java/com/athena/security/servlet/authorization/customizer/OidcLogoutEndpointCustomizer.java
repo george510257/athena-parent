@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 登出端点自定义器
  */
 @Component
-public class LogoutEndpointCustomizer implements Customizer<OidcLogoutEndpointConfigurer> {
+public class OidcLogoutEndpointCustomizer implements Customizer<OidcLogoutEndpointConfigurer> {
     /**
      * 自定义
      *

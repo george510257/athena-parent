@@ -2,6 +2,7 @@ package com.athena.security.servlet.authorization.config;
 
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
+import com.athena.security.servlet.client.customizer.OAuth2LoginCustomizer;
 import com.athena.security.servlet.code.VerificationCodeConfigurer;
 import com.athena.security.servlet.customizer.*;
 import com.athena.security.servlet.rest.RestConfigurer;
@@ -64,9 +65,14 @@ public class AuthorizationConfig {
                                                    RestCustomizer restCustomizer,
                                                    VerificationCodeCustomizer verificationCodeCustomizer,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
+                                                   OAuth2LoginCustomizer oauth2LoginCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
+        // REST 登录
         http.with(new RestConfigurer<>(), restCustomizer);
+        // 验证码
         http.with(new VerificationCodeConfigurer<>(), verificationCodeCustomizer);
+        // OAuth2 登录
+        http.oauth2Login(oauth2LoginCustomizer);
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // CSRF

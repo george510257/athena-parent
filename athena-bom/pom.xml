@@ -109,6 +109,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.athena.security.reactive.resource</groupId>
+                <artifactId>athena-security-reactive-resource</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.athena.security.servlet</groupId>
                 <artifactId>athena-security-servlet</artifactId>
                 <version>${project.version}</version>
@@ -116,6 +121,16 @@
             <dependency>
                 <groupId>com.athena.security.servlet.authorization</groupId>
                 <artifactId>athena-security-servlet-authorization</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.athena.security.servlet.client</groupId>
+                <artifactId>athena-security-servlet-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.athena.security.servlet.resource</groupId>
+                <artifactId>athena-security-servlet-resource</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

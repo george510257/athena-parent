@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 客户端注册端点自定义器
  */
 @Component
-public class ClientRegistrationEndpointCustomizer implements Customizer<OidcClientRegistrationEndpointConfigurer> {
+public class OidcClientRegistrationEndpointCustomizer implements Customizer<OidcClientRegistrationEndpointConfigurer> {
     /**
      * 自定义
      *

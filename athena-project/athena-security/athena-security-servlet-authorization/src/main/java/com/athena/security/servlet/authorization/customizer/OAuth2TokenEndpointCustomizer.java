@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * 令牌端点自定义器
  */
 @Component
-public class TokenEndpointCustomizer implements Customizer<OAuth2TokenEndpointConfigurer> {
+public class OAuth2TokenEndpointCustomizer implements Customizer<OAuth2TokenEndpointConfigurer> {
 
     /**
      * 用户详情认证提供者

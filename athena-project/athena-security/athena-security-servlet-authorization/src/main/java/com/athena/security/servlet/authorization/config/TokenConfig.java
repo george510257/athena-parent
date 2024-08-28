@@ -1,7 +1,7 @@
 package com.athena.security.servlet.authorization.config;
 
-import com.athena.security.servlet.authorization.customizer.AccessTokenCustomizer;
-import com.athena.security.servlet.authorization.customizer.JwtCustomizer;
+import com.athena.security.servlet.authorization.customizer.JwtEncodingContextCustomizer;
+import com.athena.security.servlet.authorization.customizer.OAuth2TokenClaimsContextCustomizer;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.annotation.Resource;
@@ -24,12 +24,12 @@ public class TokenConfig {
      * JWT自定义器
      */
     @Resource
-    private Optional<JwtCustomizer> jwtCustomizer;
+    private Optional<JwtEncodingContextCustomizer> jwtEncodingContextCustomizer;
     /**
      * 访问令牌自定义器
      */
     @Resource
-    private Optional<AccessTokenCustomizer> accessTokenCustomizer;
+    private Optional<OAuth2TokenClaimsContextCustomizer> oauth2TokenClaimsContextCustomizer;
 
     /**
      * OAuth2令牌生成器
@@ -42,10 +42,10 @@ public class TokenConfig {
     public OAuth2TokenGenerator<? extends OAuth2Token> oauth2TokenGenerator(JwtEncoder jwtEncoder) {
         // JWT生成器
         JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
-        jwtCustomizer.ifPresent(jwtGenerator::setJwtCustomizer);
+        jwtEncodingContextCustomizer.ifPresent(jwtGenerator::setJwtCustomizer);
         // 访问令牌生成器
         OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
-        accessTokenCustomizer.ifPresent(accessTokenGenerator::setAccessTokenCustomizer);
+        oauth2TokenClaimsContextCustomizer.ifPresent(accessTokenGenerator::setAccessTokenCustomizer);
         // 刷新令牌生成器
         OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
         // 委托OAuth2令牌生成器
