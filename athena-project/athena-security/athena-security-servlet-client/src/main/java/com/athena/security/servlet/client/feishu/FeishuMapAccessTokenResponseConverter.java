@@ -14,14 +14,29 @@ import java.util.Map;
 @Component
 public class FeishuMapAccessTokenResponseConverter implements IMapAccessTokenResponseConverter {
 
+    /**
+     * 默认 Map 类型 OAuth2 访问令牌响应转换器
+     */
     private final DefaultMapOAuth2AccessTokenResponseConverter delegate = new DefaultMapOAuth2AccessTokenResponseConverter();
 
+    /**
+     * 将 Map 类型的响应参数转换为 OAuth2AccessTokenResponse 对象
+     *
+     * @param parameters 响应参数
+     * @return OAuth2AccessTokenResponse 对象
+     */
     @Override
     public OAuth2AccessTokenResponse convert(Map<String, Object> parameters) {
         return delegate.convert(MapUtil.get(parameters, "data", new TypeReference<>() {
         }));
     }
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return "feishu".equals(registrationId);
