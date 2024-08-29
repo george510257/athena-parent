@@ -1,5 +1,7 @@
 package com.athena.security.servlet.client.customizer;
 
+import com.athena.security.servlet.client.delegate.DelegateAuthorizationCodeTokenResponseClient;
+import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer;
@@ -10,12 +12,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TokenEndpointCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>.TokenEndpointConfig> {
-    /**
-     * 自定义 OAuth2 令牌端点配置
-     *
-     * @param config 配置器
-     */
+
+    @Resource
+    private DelegateAuthorizationCodeTokenResponseClient delegateAuthorizationCodeTokenResponseClient;
     @Override
-    public void customize(OAuth2LoginConfigurer.TokenEndpointConfig config) {
+    public void customize(OAuth2LoginConfigurer<HttpSecurity>.TokenEndpointConfig config) {
+        config.accessTokenResponseClient(delegateAuthorizationCodeTokenResponseClient);
     }
+
 }

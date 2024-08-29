@@ -16,6 +16,6 @@ public class RedirectionEndpointCustomizer implements Customizer<OAuth2LoginConf
      * @param config 配置器
      */
     @Override
-    public void customize(OAuth2LoginConfigurer.RedirectionEndpointConfig config) {
+    public void customize(OAuth2LoginConfigurer<HttpSecurity>.RedirectionEndpointConfig config) {
     }
 }

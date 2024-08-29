@@ -16,6 +16,6 @@ public class AuthorizationCodeGrantCustomizer implements Customizer<OAuth2Client
      * @param configurer 配置器
      */
     @Override
-    public void customize(OAuth2ClientConfigurer.AuthorizationCodeGrantConfigurer configurer) {
+    public void customize(OAuth2ClientConfigurer<HttpSecurity>.AuthorizationCodeGrantConfigurer configurer) {
     }
 }

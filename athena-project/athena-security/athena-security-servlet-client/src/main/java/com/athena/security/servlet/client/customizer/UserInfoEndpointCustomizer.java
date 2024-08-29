@@ -16,6 +16,6 @@ public class UserInfoEndpointCustomizer implements Customizer<OAuth2LoginConfigu
      * @param config 配置器
      */
     @Override
-    public void customize(OAuth2LoginConfigurer.UserInfoEndpointConfig config) {
+    public void customize(OAuth2LoginConfigurer<HttpSecurity>.UserInfoEndpointConfig config) {
     }
 }
