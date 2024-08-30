@@ -5,21 +5,19 @@ import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequestEntityConverter;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 飞书 OAuth2 授权码请求转换器
  */
 @Component
 public class FeishuAuthorizationCodeGrantRequestEntityConverter implements IAuthorizationCodeGrantRequestEntityConverter {
-    /**
-     * OAuth2 授权码请求转换器
-     */
-    private final OAuth2AuthorizationCodeGrantRequestEntityConverter converter = new OAuth2AuthorizationCodeGrantRequestEntityConverter();
+
     @Resource
     private FeishuHelper feishuHelper;
 
@@ -42,13 +40,12 @@ public class FeishuAuthorizationCodeGrantRequestEntityConverter implements IAuth
      */
     @Override
     public RequestEntity<?> convert(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
-        converter.setHeadersConverter(this::convertHeaders);
-        converter.setParametersConverter(this::convertParameters);
-        RequestEntity<?> requestEntity = converter.convert(authorizationCodeGrantRequest);
-        MultiValueMap<String, String> body = (MultiValueMap<String, String>) requestEntity.getBody();
-        return RequestEntity.post(requestEntity.getUrl())
-                .headers(requestEntity.getHeaders())
-                .body(body.toSingleValueMap());
+        HttpHeaders headers = this.convertHeaders(authorizationCodeGrantRequest);
+        Map<String, String> parameters = this.convertParameters(authorizationCodeGrantRequest);
+        URI uri = URI.create(authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getTokenUri());
+        return RequestEntity.post(uri)
+                .headers(headers)
+                .body(parameters);
     }
 
     /**
@@ -57,10 +54,10 @@ public class FeishuAuthorizationCodeGrantRequestEntityConverter implements IAuth
      * @param authorizationCodeGrantRequest 授权码授权请求
      * @return 参数
      */
-    private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("grant_type", "authorization_code");
-        parameters.add("code", authorizationCodeGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode());
+    private Map<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("grant_type", "authorization_code");
+        parameters.put("code", authorizationCodeGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode());
         return parameters;
     }
 

@@ -33,7 +33,7 @@ public class FeishuHelper {
         return "";
     }
 
-    public AppAccessTokenResponse getAppAccessToken(AppAccessTokenRequest request) {
+    private AppAccessTokenResponse getAppAccessToken(AppAccessTokenRequest request) {
         RestTemplate restTemplate = new RestTemplate();
         RequestEntity<AppAccessTokenRequest> requestEntity = RequestEntity
                 .post(URI.create("https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal"))
