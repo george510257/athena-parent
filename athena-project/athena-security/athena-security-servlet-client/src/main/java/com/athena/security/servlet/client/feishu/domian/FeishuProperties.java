@@ -18,12 +18,33 @@ public class FeishuProperties extends BaseProperties {
      */
     private String registrationId = "feishu";
     /**
-     * app token url
+     * 飞书应用级别的access_token uri
      */
-    private String appAccessTokenUrl = "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal";
+    private String appAccessTokenUri = "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal";
 
     /**
-     * redis key prefix
+     * 飞书授权码授权 uri
      */
-    private String cacheName = "feishu_app_access_token";
+    private String authorizationUri = "https://open.feishu.cn/open-apis/authen/v1/authorize";
+
+    /**
+     * 飞书用户级别的access_token uri
+     */
+    private String tokenUri = "https://open.feishu.cn/open-apis/authen/v1/oidc/access_token";
+
+    /**
+     * 飞书用户信息 uri
+     */
+    private String userInfoUri = "https://open.feishu.cn/open-apis/authen/v1/user_info";
+
+    /**
+     * 用户名属性
+     */
+    private String userNameAttribute = "union_id";
+
+    /**
+     * 客户端名称
+     */
+    private String clientName = "飞书";
+
 }

@@ -18,6 +18,11 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class FeishuHelper {
     /**
+     * 应用访问令牌缓存名称
+     */
+    private static final String APP_ACCESS_TOKEN_CACHE_NAME = "feishu:app_access_token";
+
+    /**
      * 飞书属性配置
      */
     @Resource
@@ -32,7 +37,7 @@ public class FeishuHelper {
      */
     public String getAppAccessToken(String clientId, String clientSecret) {
         // 从缓存中获取应用访问令牌
-        AppAccessTokenResponse response = RedisUtil.getCacheValue(feishuProperties.getCacheName(), clientId, AppAccessTokenResponse.class);
+        AppAccessTokenResponse response = RedisUtil.getCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, clientId, AppAccessTokenResponse.class);
         if (response != null) {
             return response.getAppAccessToken();
         }
@@ -44,7 +49,7 @@ public class FeishuHelper {
         response = getAppAccessToken(request);
         // 缓存应用访问令牌
         if (response != null) {
-            RedisUtil.setCacheValue(feishuProperties.getCacheName(), clientId, response, response.getExpire(), TimeUnit.SECONDS);
+            RedisUtil.setCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, clientId, response, response.getExpire(), TimeUnit.SECONDS);
             return response.getAppAccessToken();
         }
         // 返回空
@@ -62,7 +67,7 @@ public class FeishuHelper {
         RestTemplate restTemplate = new RestTemplate();
         // 请求实体
         RequestEntity<AppAccessTokenRequest> requestEntity = RequestEntity
-                .post(URI.create("https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal"))
+                .post(URI.create(feishuProperties.getAppAccessTokenUri()))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .body(request);
         // 返回应用访问令牌

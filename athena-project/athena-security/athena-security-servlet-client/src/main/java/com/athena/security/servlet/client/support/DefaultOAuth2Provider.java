@@ -1,11 +1,10 @@
 package com.athena.security.servlet.client.support;
 
-import cn.hutool.core.map.MapUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-
-import java.util.HashMap;
 
 /**
  * 默认OAuth2提供者
@@ -65,14 +64,12 @@ public enum DefaultOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            builder.authorizationUri("https://open.feishu.cn/open-apis/authen/v1/authorize");
-            builder.tokenUri("https://open.feishu.cn/open-apis/authen/v1/oidc/access_token");
-            builder.userInfoUri("https://open.feishu.cn/open-apis/authen/v1/user_info");
-            builder.providerConfigurationMetadata(MapUtil.builder(new HashMap<String, Object>())
-                    .put("appTokenUri", "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal")
-                    .build());
-            builder.userNameAttributeName("union_id");
-            builder.clientName("飞书");
+            FeishuProperties feishuProperties = SpringUtil.getBean(FeishuProperties.class);
+            builder.authorizationUri(feishuProperties.getAuthorizationUri());
+            builder.tokenUri(feishuProperties.getTokenUri());
+            builder.userInfoUri(feishuProperties.getUserInfoUri());
+            builder.userNameAttributeName(feishuProperties.getUserNameAttribute());
+            builder.clientName(feishuProperties.getClientName());
             return builder;
         }
     };
