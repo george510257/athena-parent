@@ -1,6 +1,6 @@
 package com.athena.security.servlet.client.feishu;
 
-import com.athena.security.servlet.client.base.IAuthorizationRequestCustomizer;
+import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
 

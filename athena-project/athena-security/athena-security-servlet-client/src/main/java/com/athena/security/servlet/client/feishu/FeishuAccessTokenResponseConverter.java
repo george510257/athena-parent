@@ -3,7 +3,7 @@ package com.athena.security.servlet.client.feishu;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
-import com.athena.security.servlet.client.base.IMapAccessTokenResponseConverter;
+import com.athena.security.servlet.client.delegate.IAccessTokenResponseConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.endpoint.DefaultMapOAuth2AccessTokenResponseConverter;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class FeishuMapAccessTokenResponseConverter implements IMapAccessTokenResponseConverter {
+public class FeishuAccessTokenResponseConverter implements IAccessTokenResponseConverter {
 
     /**
      * 默认 Map 类型 OAuth2 访问令牌响应转换器

@@ -1,7 +1,5 @@
 package com.athena.security.servlet.client.delegate;
 
-import com.athena.security.servlet.client.base.IAuthorizationCodeGrantRequestEntityConverter;
-import com.athena.security.servlet.client.base.IMapAccessTokenResponseConverter;
 import jakarta.annotation.Resource;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -30,12 +28,12 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
      * 授权码授权请求实体转换器列表
      */
     @Resource
-    private List<IAuthorizationCodeGrantRequestEntityConverter> requestEntityConverters;
+    private List<IAuthorizationCodeGrantRequestConverter> requestEntityConverters;
     /**
      * accessToken 响应转换器列表
      */
     @Resource
-    private List<IMapAccessTokenResponseConverter> oauth2AccessTokenResponseConverters;
+    private List<IAccessTokenResponseConverter> oauth2AccessTokenResponseConverters;
 
     /**
      * 获取访问令牌响应

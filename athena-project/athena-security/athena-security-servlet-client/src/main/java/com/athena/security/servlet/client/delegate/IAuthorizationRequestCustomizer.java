@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.base;
+package com.athena.security.servlet.client.delegate;
 
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 

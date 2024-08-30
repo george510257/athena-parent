@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.base;
+package com.athena.security.servlet.client.delegate;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
@@ -9,5 +9,5 @@ import java.util.function.Predicate;
 /**
  * OAuth2 授权码请求实体转换器
  */
-public interface IAuthorizationCodeGrantRequestEntityConverter extends Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>>, Predicate<String> {
+public interface IAuthorizationCodeGrantRequestConverter extends Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>>, Predicate<String> {
 }

@@ -1,6 +1,6 @@
 package com.athena.security.servlet.client.feishu;
 
-import com.athena.security.servlet.client.base.IAuthorizationCodeGrantRequestEntityConverter;
+import com.athena.security.servlet.client.delegate.IAuthorizationCodeGrantRequestConverter;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
@@ -16,7 +16,7 @@ import java.util.Map;
  * 飞书 OAuth2 授权码请求转换器
  */
 @Component
-public class FeishuAuthorizationCodeGrantRequestEntityConverter implements IAuthorizationCodeGrantRequestEntityConverter {
+public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {
 
     @Resource
     private FeishuHelper feishuHelper;

@@ -1,6 +1,5 @@
 package com.athena.security.servlet.client.delegate;
 
-import com.athena.security.servlet.client.base.IAuthorizationRequestCustomizer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
