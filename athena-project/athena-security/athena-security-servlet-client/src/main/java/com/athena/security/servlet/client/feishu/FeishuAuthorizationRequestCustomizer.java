@@ -1,6 +1,8 @@
 package com.athena.security.servlet.client.feishu;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
+import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
+import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,12 @@ import java.util.Map;
 @Component
 public class FeishuAuthorizationRequestCustomizer implements IAuthorizationRequestCustomizer {
     /**
+     * 飞书属性配置
+     */
+    @Resource
+    private FeishuProperties feishuProperties;
+
+    /**
      * 测试是否支持指定的注册标识
      *
      * @param registrationId 注册标识
@@ -19,7 +27,8 @@ public class FeishuAuthorizationRequestCustomizer implements IAuthorizationReque
      */
     @Override
     public boolean test(String registrationId) {
-        return "feishu".equals(registrationId);
+        // 判断是否为飞书注册标识
+        return feishuProperties.getRegistrationId().equals(registrationId);
     }
 
     /**
@@ -29,6 +38,7 @@ public class FeishuAuthorizationRequestCustomizer implements IAuthorizationReque
      */
     @Override
     public void accept(OAuth2AuthorizationRequest.Builder builder) {
+        // 飞书 OAuth2 授权请求参数处理
         builder.parameters(this::parametersConsumer);
     }
 

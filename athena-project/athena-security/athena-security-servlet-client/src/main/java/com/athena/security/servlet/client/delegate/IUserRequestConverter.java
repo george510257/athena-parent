@@ -6,5 +6,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 
 import java.util.function.Predicate;
 
+/**
+ * 用户请求转换器
+ */
 public interface IUserRequestConverter extends Converter<OAuth2UserRequest, RequestEntity<?>>, Predicate<String> {
 }

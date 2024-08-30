@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserInfoEndpointCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>.UserInfoEndpointConfig> {
+    /**
+     * 委托 OAuth2 用户信息服务
+     */
     @Resource
     private DelegateOAuth2UserService delegateOAuth2UserService;
 

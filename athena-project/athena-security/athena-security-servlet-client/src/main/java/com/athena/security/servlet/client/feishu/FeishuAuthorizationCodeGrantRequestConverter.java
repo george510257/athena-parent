@@ -1,6 +1,7 @@
 package com.athena.security.servlet.client.feishu;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationCodeGrantRequestConverter;
+import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
@@ -17,9 +18,16 @@ import java.util.Map;
  */
 @Component
 public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {
-
+    /**
+     * 飞书助手
+     */
     @Resource
     private FeishuHelper feishuHelper;
+    /**
+     * 飞书属性配置
+     */
+    @Resource
+    private FeishuProperties feishuProperties;
 
     /**
      * 判断是否支持指定的注册标识
@@ -29,7 +37,8 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
      */
     @Override
     public boolean test(String registrationId) {
-        return "feishu".equals(registrationId);
+        // 判断是否为飞书注册标识
+        return feishuProperties.getRegistrationId().equals(registrationId);
     }
 
     /**
@@ -40,9 +49,13 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
      */
     @Override
     public RequestEntity<?> convert(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+        // 请求头
         HttpHeaders headers = this.convertHeaders(authorizationCodeGrantRequest);
+        // 请求参数
         Map<String, String> parameters = this.convertParameters(authorizationCodeGrantRequest);
+        // 请求地址
         URI uri = URI.create(authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getTokenUri());
+        // 创建请求实体
         return RequestEntity.post(uri)
                 .headers(headers)
                 .body(parameters);
@@ -56,8 +69,11 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
      */
     private Map<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         Map<String, String> parameters = new HashMap<>();
+        // 授权类型
         parameters.put("grant_type", "authorization_code");
+        // 授权码
         parameters.put("code", authorizationCodeGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode());
+        // 返回参数
         return parameters;
     }
 
@@ -68,10 +84,15 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
      * @return 请求头
      */
     private HttpHeaders convertHeaders(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+        // 客户端注册
         ClientRegistration clientRegistration = authorizationCodeGrantRequest.getClientRegistration();
+        // 请求头
         HttpHeaders headers = new HttpHeaders();
+        // 设置请求头
         headers.add("Content-Type", "application/json; charset=UTF-8");
+        // 设置授权头
         headers.setBearerAuth(feishuHelper.getAppAccessToken(clientRegistration.getClientId(), clientRegistration.getClientSecret()));
+        // 返回请求头
         return headers;
     }
 

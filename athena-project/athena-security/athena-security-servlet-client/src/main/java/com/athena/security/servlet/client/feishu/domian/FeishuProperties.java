@@ -14,6 +14,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.feishu")
 public class FeishuProperties extends BaseProperties {
     /**
+     * 飞书应用 id
+     */
+    private String registrationId = "feishu";
+    /**
      * app token url
      */
     private String appAccessTokenUrl = "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal";
