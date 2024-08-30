@@ -4,6 +4,7 @@ import com.athena.security.servlet.client.base.IAuthorizationCodeGrantRequestEnt
 import com.athena.security.servlet.client.base.IMapAccessTokenResponseConverter;
 import jakarta.annotation.Resource;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.core.http.converter.OAuth2AccessToken
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,10 +57,13 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
                 .filter(converter -> converter.test(registrationId))
                 .findFirst()
                 .ifPresent(converter -> {
-                    RestTemplate restTemplate = new RestTemplate();
                     OAuth2AccessTokenResponseHttpMessageConverter messageConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
                     messageConverter.setAccessTokenResponseConverter(converter);
-                    restTemplate.setMessageConverters(List.of(new FormHttpMessageConverter(), messageConverter));
+                    RestTemplate restTemplate = new RestTemplate(Arrays.asList(
+                            messageConverter,
+                            new FormHttpMessageConverter(),
+                            new MappingJackson2HttpMessageConverter()
+                    ));
                     restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
                     this.delegate.setRestOperations(restTemplate);
                 });

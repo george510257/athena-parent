@@ -2,6 +2,7 @@ package com.athena.security.servlet.client.feishu;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
 import com.athena.security.servlet.client.base.IMapAccessTokenResponseConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.endpoint.DefaultMapOAuth2AccessTokenResponseConverter;
@@ -27,6 +28,7 @@ public class FeishuMapAccessTokenResponseConverter implements IMapAccessTokenRes
      */
     @Override
     public OAuth2AccessTokenResponse convert(Map<String, Object> parameters) {
+        log.info("FeishuMapAccessTokenResponseConverter convert parameters -> {}", JSONUtil.toJsonStr(parameters));
         return delegate.convert(MapUtil.get(parameters, "data", new TypeReference<>() {
         }));
     }

@@ -1,8 +1,11 @@
 package com.athena.security.servlet.client.support;
 
+import cn.hutool.core.map.MapUtil;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+
+import java.util.HashMap;
 
 /**
  * 默认OAuth2提供者
@@ -65,6 +68,9 @@ public enum DefaultOAuth2Provider {
             builder.authorizationUri("https://open.feishu.cn/open-apis/authen/v1/authorize");
             builder.tokenUri("https://open.feishu.cn/open-apis/authen/v1/oidc/access_token");
             builder.userInfoUri("https://open.feishu.cn/open-apis/authen/v1/user_info");
+            builder.providerConfigurationMetadata(MapUtil.builder(new HashMap<String, Object>())
+                    .put("appTokenUri", "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal")
+                    .build());
             builder.userNameAttributeName("union_id");
             builder.clientName("飞书");
             return builder;
