@@ -1,6 +1,8 @@
 package com.athena.common.bean.security;
 
 import com.athena.common.bean.base.BaseVo;
+import com.athena.common.bean.jackson2.UserDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,10 +11,13 @@ import java.util.List;
 
 /**
  * 用户信息
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Schema(title = "用户信息", description = "用户信息")
+@JsonDeserialize(using = UserDeserializer.class)
 public class User extends BaseVo implements IUser<Role, Permission, Organization> {
     /**
      * 用户名

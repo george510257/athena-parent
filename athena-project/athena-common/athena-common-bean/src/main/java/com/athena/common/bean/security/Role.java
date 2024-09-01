@@ -1,6 +1,8 @@
 package com.athena.common.bean.security;
 
 import com.athena.common.bean.base.BaseVo;
+import com.athena.common.bean.jackson2.RoleDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,10 +11,13 @@ import java.util.List;
 
 /**
  * 角色信息
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Schema(title = "角色信息", description = "角色信息")
+@JsonDeserialize(using = RoleDeserializer.class)
 public class Role extends BaseVo implements IRole<Permission> {
 
     /**

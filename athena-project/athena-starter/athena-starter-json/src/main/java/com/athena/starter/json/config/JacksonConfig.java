@@ -1,7 +1,6 @@
 package com.athena.starter.json.config;
 
 import cn.hutool.core.date.DatePattern;
-import com.athena.common.bean.jackson2.BeanModule;
 import com.athena.starter.json.support.DefaultDateFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -78,13 +77,4 @@ public class JacksonConfig {
         return javaTimeModule;
     }
 
-    /**
-     * BeanModule
-     *
-     * @return BeanModule
-     */
-    @Bean
-    public BeanModule beanModule() {
-        return new BeanModule();
-    }
 }
