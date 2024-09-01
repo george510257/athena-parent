@@ -14,6 +14,8 @@ import java.util.concurrent.Executor;
 
 /**
  * oss 资源适配
+ *
+ * @author george
  */
 @Slf4j
 @RequiredArgsConstructor
