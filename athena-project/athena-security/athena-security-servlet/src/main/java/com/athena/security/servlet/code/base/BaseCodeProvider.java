@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * 验证码提供器
  *
  * @param <Code> 验证码类型
+ * @author george
  */
 @Setter
 @Accessors(chain = true)

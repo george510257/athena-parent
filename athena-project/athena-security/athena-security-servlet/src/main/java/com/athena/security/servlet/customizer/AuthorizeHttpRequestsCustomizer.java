@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 授权请求自定义器
+ *
+ * @author george
  */
 @Component
 public class AuthorizeHttpRequestsCustomizer implements Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> {

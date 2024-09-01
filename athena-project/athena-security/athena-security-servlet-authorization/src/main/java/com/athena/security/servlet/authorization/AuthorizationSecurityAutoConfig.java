@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 授权自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

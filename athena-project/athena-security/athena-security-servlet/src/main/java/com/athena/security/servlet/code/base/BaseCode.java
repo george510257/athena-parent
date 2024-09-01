@@ -7,6 +7,8 @@ import java.util.Date;
 
 /**
  * 验证码
+ *
+ * @author george
  */
 @Data
 public abstract class BaseCode implements Serializable {

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 授权jackson模块
+ *
+ * @author george
  */
 @Component
 public class AuthorizationModule extends SimpleModule {

@@ -25,6 +25,7 @@ import java.util.List;
  *
  * @param <Vo> 视图
  * @param <S>  服务
+ * @author george
  */
 public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> implements IFeign<Vo> {
     /**

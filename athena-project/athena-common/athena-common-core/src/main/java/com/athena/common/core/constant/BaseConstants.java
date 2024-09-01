@@ -2,6 +2,8 @@ package com.athena.common.core.constant;
 
 /**
  * 基础常量
+ *
+ * @author george
  */
 public interface BaseConstants {
     /**

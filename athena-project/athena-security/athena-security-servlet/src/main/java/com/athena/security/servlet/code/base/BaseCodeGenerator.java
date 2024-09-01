@@ -4,6 +4,7 @@ package com.athena.security.servlet.code.base;
  * 验证码生成器
  *
  * @param <Code> 验证码类型
+ * @author george
  */
 @FunctionalInterface
 public interface BaseCodeGenerator<Code extends BaseCode> {

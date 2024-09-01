@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 验证码发送器
  *
  * @param <Code> 验证码类型
+ * @author george
  */
 @FunctionalInterface
 public interface BaseCodeSender<Code extends BaseCode> {
