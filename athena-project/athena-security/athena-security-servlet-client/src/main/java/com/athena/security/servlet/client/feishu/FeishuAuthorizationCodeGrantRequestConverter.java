@@ -4,9 +4,12 @@ import com.athena.security.servlet.client.delegate.IAuthorizationCodeGrantReques
 import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationExchange;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -69,10 +72,11 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
      */
     private Map<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         Map<String, String> parameters = new HashMap<>();
+        OAuth2AuthorizationExchange authorizationExchange = authorizationCodeGrantRequest.getAuthorizationExchange();
         // 授权类型
-        parameters.put("grant_type", "authorization_code");
+        parameters.put(OAuth2ParameterNames.GRANT_TYPE, authorizationCodeGrantRequest.getGrantType().getValue());
         // 授权码
-        parameters.put("code", authorizationCodeGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode());
+        parameters.put(OAuth2ParameterNames.CODE, authorizationExchange.getAuthorizationResponse().getCode());
         // 返回参数
         return parameters;
     }
@@ -89,7 +93,7 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
         // 请求头
         HttpHeaders headers = new HttpHeaders();
         // 设置请求头
-        headers.add("Content-Type", "application/json; charset=UTF-8");
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         // 设置授权头
         headers.setBearerAuth(feishuHelper.getAppAccessToken(clientRegistration.getClientId(), clientRegistration.getClientSecret()));
         // 返回请求头

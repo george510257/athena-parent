@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * 委托授权请求解析器
@@ -32,13 +32,12 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      * 自定义 OAuth2 授权请求器
      */
     @Resource
-    private List<IAuthorizationRequestCustomizer> customizers;
+    private Optional<IAuthorizationRequestCustomizer> customizers;
     /**
      * 客户端注册库
      */
     @Resource
     private ClientRegistrationRepository clientRegistrationRepository;
-
 
     /**
      * 解析授权请求
@@ -97,6 +96,5 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
                 .ifPresent(delegate::setAuthorizationRequestCustomizer);
         return delegate;
     }
-
 
 }

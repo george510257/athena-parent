@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * 委托 OAuth2 用户信息服务
@@ -19,13 +19,13 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * 用户请求转换器列表
      */
     @Resource
-    private List<IUserRequestConverter> requestConverters;
+    private Optional<IUserRequestConverter> requestConverters;
 
     /**
      * 用户响应转换器列表
      */
     @Resource
-    private List<IUserResponseConverter> responseConverters;
+    private Optional<IUserResponseConverter> responseConverters;
 
     /**
      * 加载用户
