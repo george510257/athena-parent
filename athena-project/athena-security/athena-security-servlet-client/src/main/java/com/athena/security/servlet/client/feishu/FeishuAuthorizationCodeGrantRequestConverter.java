@@ -6,6 +6,7 @@ import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationExchange;
@@ -51,7 +52,7 @@ public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizat
      * @return 请求实体
      */
     @Override
-    public RequestEntity<?> convert(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+    public RequestEntity<?> convert(@NonNull OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         // 请求头
         HttpHeaders headers = this.convertHeaders(authorizationCodeGrantRequest);
         // 请求参数

@@ -5,6 +5,7 @@ import com.athena.security.servlet.client.delegate.IAccessTokenResponseConverter
 import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.core.endpoint.DefaultMapOAuth2AccessTokenResponseConverter;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,7 @@ public class FeishuAccessTokenResponseConverter implements IAccessTokenResponseC
      * @return OAuth2AccessTokenResponse 对象
      */
     @Override
-    public OAuth2AccessTokenResponse convert(Map<String, Object> parameters) {
+    public OAuth2AccessTokenResponse convert(@NonNull Map<String, Object> parameters) {
         log.info("FeishuMapAccessTokenResponseConverter convert parameters -> {}", JSONUtil.toJsonStr(parameters));
         // 获取 data 节点数据
         Map<String, Object> data = (Map<String, Object>) parameters.get("data");

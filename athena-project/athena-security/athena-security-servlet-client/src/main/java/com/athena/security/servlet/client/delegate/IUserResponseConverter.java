@@ -1,6 +1,7 @@
 package com.athena.security.servlet.client.delegate;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public interface IUserResponseConverter extends Converter<OAuth2UserRequest, Con
      * @return 是否支持
      */
     @Override
-    default Converter<Map<String, Object>, Map<String, Object>> convert(OAuth2UserRequest oauth2UserRequest) {
+    default Converter<Map<String, Object>, Map<String, Object>> convert(@NonNull OAuth2UserRequest oauth2UserRequest) {
         return parameters -> convert(oauth2UserRequest, parameters);
     }
 
