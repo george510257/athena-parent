@@ -54,14 +54,17 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
         return delegate.resolve(request);
     }
 
-    private DefaultOAuth2AuthorizationRequestResolver getDelegate(String clientRegistrationId) {
-        DefaultOAuth2AuthorizationRequestResolver delegate = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, AUTHORIZATION_REQUEST_BASE_URI);
-        // 自定义 OAuth2 授权请求器
-        customizers.stream()
-                .filter(customizer -> customizer.test(clientRegistrationId))
-                .findFirst()
-                .ifPresent(delegate::setAuthorizationRequestCustomizer);
-        return delegate;
+    /**
+     * 解析授权请求
+     *
+     * @param request              请求
+     * @param clientRegistrationId 客户端注册标识
+     * @return 授权请求
+     */
+    @Override
+    public OAuth2AuthorizationRequest resolve(HttpServletRequest request, String clientRegistrationId) {
+        DefaultOAuth2AuthorizationRequestResolver delegate = getDelegate(clientRegistrationId);
+        return delegate.resolve(request, clientRegistrationId);
     }
 
     /**
@@ -80,15 +83,20 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
     }
 
     /**
-     * 解析授权请求
+     * 获取委托
      *
-     * @param request              请求
      * @param clientRegistrationId 客户端注册标识
-     * @return 授权请求
+     * @return 委托
      */
-    @Override
-    public OAuth2AuthorizationRequest resolve(HttpServletRequest request, String clientRegistrationId) {
-        DefaultOAuth2AuthorizationRequestResolver delegate = getDelegate(clientRegistrationId);
-        return delegate.resolve(request, clientRegistrationId);
+    private DefaultOAuth2AuthorizationRequestResolver getDelegate(String clientRegistrationId) {
+        DefaultOAuth2AuthorizationRequestResolver delegate = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, AUTHORIZATION_REQUEST_BASE_URI);
+        // 自定义 OAuth2 授权请求器
+        customizers.stream()
+                .filter(customizer -> customizer.test(clientRegistrationId))
+                .findFirst()
+                .ifPresent(delegate::setAuthorizationRequestCustomizer);
+        return delegate;
     }
+
+
 }

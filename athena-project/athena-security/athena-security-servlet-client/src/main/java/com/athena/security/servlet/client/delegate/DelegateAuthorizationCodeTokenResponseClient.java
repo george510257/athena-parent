@@ -41,6 +41,17 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         // 获取注册标识
         String registrationId = authorizationCodeGrantRequest.getClientRegistration().getRegistrationId();
+        OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> delegate = getDelegate(registrationId);
+        return delegate.getTokenResponse(authorizationCodeGrantRequest);
+    }
+
+    /**
+     * 获取委托
+     *
+     * @param registrationId 注册标识
+     * @return 委托
+     */
+    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> getDelegate(String registrationId) {
         DefaultAuthorizationCodeTokenResponseClient delegate = new DefaultAuthorizationCodeTokenResponseClient();
         // 根据注册标识获取授权码授权请求实体转换器
         requestEntityConverters.stream()
@@ -62,8 +73,7 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
                     restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
                     delegate.setRestOperations(restTemplate);
                 });
-        // 获取访问令牌响应
-        return delegate.getTokenResponse(authorizationCodeGrantRequest);
+        return delegate;
     }
 
 }
