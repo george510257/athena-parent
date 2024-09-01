@@ -35,12 +35,12 @@ public class FeishuUserResponseConverter implements IUserResponseConverter {
      * 转换
      *
      * @param oauth2UserRequest 用户请求
-     * @param params            参数
+     * @param parameters        参数
      * @return 转换结果
      */
     @Override
-    public Map<String, Object> convert(OAuth2UserRequest oauth2UserRequest, Map<String, Object> params) {
+    public Map<String, Object> convert(OAuth2UserRequest oauth2UserRequest, Map<String, Object> parameters) {
         // 获取数据
-        return (Map<String, Object>) params.get("data");
+        return (Map<String, Object>) parameters.get("data");
     }
 }

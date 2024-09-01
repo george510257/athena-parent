@@ -16,11 +16,6 @@ import java.util.List;
 @Component
 public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     /**
-     * 默认 OAuth2 用户信息服务
-     */
-    private final DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
-
-    /**
      * 用户请求转换器列表
      */
     @Resource
@@ -36,6 +31,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         // 获取注册 ID
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
         requestConverters.stream()
                 .filter(converter -> converter.test(registrationId))
                 .findFirst()

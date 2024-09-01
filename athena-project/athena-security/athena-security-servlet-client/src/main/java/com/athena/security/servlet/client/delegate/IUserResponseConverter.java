@@ -19,15 +19,15 @@ public interface IUserResponseConverter extends Converter<OAuth2UserRequest, Con
      */
     @Override
     default Converter<Map<String, Object>, Map<String, Object>> convert(OAuth2UserRequest oauth2UserRequest) {
-        return params -> convert(oauth2UserRequest, params);
+        return parameters -> convert(oauth2UserRequest, parameters);
     }
 
     /**
      * 转换
      *
      * @param oauth2UserRequest 用户请求
-     * @param params            参数
+     * @param parameters        参数
      * @return 转换结果
      */
-    Map<String, Object> convert(OAuth2UserRequest oauth2UserRequest, Map<String, Object> params);
+    Map<String, Object> convert(OAuth2UserRequest oauth2UserRequest, Map<String, Object> parameters);
 }

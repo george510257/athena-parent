@@ -21,10 +21,6 @@ import java.util.List;
 @Component
 public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
     /**
-     * 默认授权码令牌响应客户端
-     */
-    private final DefaultAuthorizationCodeTokenResponseClient delegate = new DefaultAuthorizationCodeTokenResponseClient();
-    /**
      * 授权码授权请求实体转换器列表
      */
     @Resource
@@ -45,11 +41,12 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         // 获取注册标识
         String registrationId = authorizationCodeGrantRequest.getClientRegistration().getRegistrationId();
+        DefaultAuthorizationCodeTokenResponseClient delegate = new DefaultAuthorizationCodeTokenResponseClient();
         // 根据注册标识获取授权码授权请求实体转换器
         requestEntityConverters.stream()
                 .filter(converter -> converter.test(registrationId))
                 .findFirst()
-                .ifPresent(this.delegate::setRequestEntityConverter);
+                .ifPresent(delegate::setRequestEntityConverter);
         // 根据注册标识获取 accessToken 响应转换器
         oauth2AccessTokenResponseConverters.stream()
                 .filter(converter -> converter.test(registrationId))
@@ -63,10 +60,10 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
                             new MappingJackson2HttpMessageConverter()
                     ));
                     restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
-                    this.delegate.setRestOperations(restTemplate);
+                    delegate.setRestOperations(restTemplate);
                 });
         // 获取访问令牌响应
-        return this.delegate.getTokenResponse(authorizationCodeGrantRequest);
+        return delegate.getTokenResponse(authorizationCodeGrantRequest);
     }
 
 }

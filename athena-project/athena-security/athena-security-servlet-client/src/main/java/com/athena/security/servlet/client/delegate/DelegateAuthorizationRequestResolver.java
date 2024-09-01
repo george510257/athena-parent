@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.delegate;
 
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
@@ -24,30 +25,20 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      */
     private final static String AUTHORIZATION_REQUEST_BASE_URI = "/oauth2/authorization";
     /**
-     * 默认 OAuth2 授权请求解析器
+     * 授权请求匹配器
      */
-    private final DefaultOAuth2AuthorizationRequestResolver delegate;
+    private final AntPathRequestMatcher authorizationRequestMatcher = new AntPathRequestMatcher(AUTHORIZATION_REQUEST_BASE_URI + "/{" + REGISTRATION_ID + "}");
     /**
      * 自定义 OAuth2 授权请求器
      */
-    private final List<IAuthorizationRequestCustomizer> customizers;
+    @Resource
+    private List<IAuthorizationRequestCustomizer> customizers;
     /**
-     * 授权请求匹配器
+     * 客户端注册库
      */
-    private final AntPathRequestMatcher authorizationRequestMatcher;
+    @Resource
+    private ClientRegistrationRepository clientRegistrationRepository;
 
-    /**
-     * 实例化一个委托授权请求解析器
-     *
-     * @param clientRegistrationRepository 客户端注册库
-     * @param customizers                  自定义 OAuth2 授权请求器
-     */
-    public DelegateAuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository,
-                                                List<IAuthorizationRequestCustomizer> customizers) {
-        this.customizers = customizers;
-        this.authorizationRequestMatcher = new AntPathRequestMatcher(AUTHORIZATION_REQUEST_BASE_URI + "/{" + REGISTRATION_ID + "}");
-        this.delegate = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, AUTHORIZATION_REQUEST_BASE_URI);
-    }
 
     /**
      * 解析授权请求
@@ -59,12 +50,18 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
     public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
         // 获取客户端注册标识
         String clientRegistrationId = getClientRegistrationId(request);
+        DefaultOAuth2AuthorizationRequestResolver delegate = getDelegate(clientRegistrationId);
+        return delegate.resolve(request);
+    }
+
+    private DefaultOAuth2AuthorizationRequestResolver getDelegate(String clientRegistrationId) {
+        DefaultOAuth2AuthorizationRequestResolver delegate = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, AUTHORIZATION_REQUEST_BASE_URI);
         // 自定义 OAuth2 授权请求器
         customizers.stream()
                 .filter(customizer -> customizer.test(clientRegistrationId))
                 .findFirst()
                 .ifPresent(delegate::setAuthorizationRequestCustomizer);
-        return delegate.resolve(request);
+        return delegate;
     }
 
     /**
@@ -91,12 +88,7 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      */
     @Override
     public OAuth2AuthorizationRequest resolve(HttpServletRequest request, String clientRegistrationId) {
-        // 自定义 OAuth2 授权请求器
-        customizers.stream()
-                .filter(customizer -> customizer.test(clientRegistrationId))
-                .findFirst()
-                .ifPresent(delegate::setAuthorizationRequestCustomizer);
-        // 解析授权请求
+        DefaultOAuth2AuthorizationRequestResolver delegate = getDelegate(clientRegistrationId);
         return delegate.resolve(request, clientRegistrationId);
     }
 }
