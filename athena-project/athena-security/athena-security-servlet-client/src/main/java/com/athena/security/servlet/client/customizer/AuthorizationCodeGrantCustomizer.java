@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 授权码授权自定义器
+ *
+ * @author george
  */
 @Component
 public class AuthorizationCodeGrantCustomizer implements Customizer<OAuth2ClientConfigurer<HttpSecurity>.AuthorizationCodeGrantConfigurer> {

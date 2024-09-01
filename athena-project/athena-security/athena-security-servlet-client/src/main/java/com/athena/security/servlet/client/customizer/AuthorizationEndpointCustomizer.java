@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 授权端点自定义器
+ *
+ * @author george
  */
 @Component
 public class AuthorizationEndpointCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>.AuthorizationEndpointConfig> {

@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 /**
  * 应用访问令牌请求
+ *
+ * @author george
  */
 @Data
 public class AppAccessTokenRequest implements Serializable {

@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 
 /**
  * 授权工具类
+ *
+ * @author george
  */
 @UtilityClass
 public class AuthenticationUtil {

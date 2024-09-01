@@ -18,6 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * 授权配置
+ *
+ * @author george
  */
 @Configuration
 public class AuthorizationConfig {

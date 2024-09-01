@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 阿里云oss自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

@@ -6,6 +6,8 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 
 /**
  * 授权常量
+ *
+ * @author george
  */
 public interface AuthorizationConstants {
     /**

@@ -13,6 +13,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 异步线程池配置
+ *
+ * @author george
  */
 @EnableAsync
 @Configuration
