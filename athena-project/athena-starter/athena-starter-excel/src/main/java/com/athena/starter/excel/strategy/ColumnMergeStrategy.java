@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * 列合并策略 <br> 纵向合并相同列的单元格 <br> 例如：合并第1列和第2列相同的单元格
+ *
+ * @author george
  */
 public class ColumnMergeStrategy extends AbstractMergeStrategy {
     /**

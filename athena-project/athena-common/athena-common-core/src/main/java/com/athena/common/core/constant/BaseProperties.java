@@ -7,6 +7,8 @@ import java.util.Map;
 
 /**
  * 基础属性
+ *
+ * @author george
  */
 @Data
 public abstract class BaseProperties implements Serializable {

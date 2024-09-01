@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存时间
+ *
+ * @author george
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

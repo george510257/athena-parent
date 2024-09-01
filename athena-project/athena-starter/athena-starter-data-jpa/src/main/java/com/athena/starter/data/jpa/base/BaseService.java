@@ -16,6 +16,7 @@ import java.util.List;
  * @param <E> 实体
  * @param <C> 转换器
  * @param <R> 仓库
+ * @author george
  */
 public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         C extends IConverter<V, E>, R extends IRepository<E>> implements IService<V> {

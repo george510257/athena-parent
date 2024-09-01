@@ -18,6 +18,7 @@ import java.util.Locale;
  * Excel写入构建器自定义器
  *
  * @param <B> AbstractExcelWriterParameterBuilder
+ * @author george
  */
 @Data
 public class BaseExcelWriterBuilderCustomizer<B extends AbstractExcelWriterParameterBuilder<B, ?>> implements ICustomizer<B> {

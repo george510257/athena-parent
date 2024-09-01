@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * 客户端安全配置
+ *
+ * @author george
  */
 @Configuration
 public class ClientSecurityConfig {

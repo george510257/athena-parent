@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 核心自动配置类
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

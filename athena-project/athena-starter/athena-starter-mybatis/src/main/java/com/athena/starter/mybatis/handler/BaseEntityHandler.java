@@ -12,6 +12,8 @@ import java.util.Date;
 
 /**
  * 基础实体处理器
+ *
+ * @author george
  */
 @Slf4j
 @Component

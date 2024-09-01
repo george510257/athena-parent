@@ -19,6 +19,7 @@ import java.util.List;
  * @param <E> 实体对象
  * @param <C> 转换器
  * @param <M> Mapper
+ * @author george
  */
 public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         C extends IConverter<V, E>, M extends IMapper<E>>

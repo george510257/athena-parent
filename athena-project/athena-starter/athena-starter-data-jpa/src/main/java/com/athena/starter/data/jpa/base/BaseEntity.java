@@ -14,6 +14,8 @@ import java.util.Date;
 
 /**
  * 基础实体类
+ *
+ * @author george
  */
 @Data
 @MappedSuperclass
