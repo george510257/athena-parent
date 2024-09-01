@@ -10,6 +10,7 @@ import java.util.List;
  * 角色信息
  *
  * @param <P> 权限类型
+ * @author george
  */
 public interface IRole<P extends IPermission> extends GrantedAuthority, ITreeNode, IDomain {
     /**

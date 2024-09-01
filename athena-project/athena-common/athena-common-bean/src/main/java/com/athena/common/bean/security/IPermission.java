@@ -5,6 +5,8 @@ import com.athena.common.bean.base.ITreeNode;
 
 /**
  * 权限接口
+ *
+ * @author george
  */
 public interface IPermission extends ITreeNode, IDomain {
     /**

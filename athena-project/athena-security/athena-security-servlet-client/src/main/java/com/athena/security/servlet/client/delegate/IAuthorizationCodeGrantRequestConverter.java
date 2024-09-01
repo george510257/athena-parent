@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 
 /**
  * OAuth2 授权码请求实体转换器
+ *
+ * @author george
  */
 public interface IAuthorizationCodeGrantRequestConverter extends Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>>, Predicate<String> {
 }

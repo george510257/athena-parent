@@ -17,6 +17,8 @@ import java.util.Optional;
 
 /**
  * 委托授权码令牌响应客户端
+ *
+ * @author george
  */
 @Component
 public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {

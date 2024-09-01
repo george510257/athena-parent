@@ -10,7 +10,8 @@ import java.util.List;
 /**
  * 分页查询响应VO
  *
- * @param <T>
+ * @param <T> 数据类型
+ * @author george
  */
 @Data
 @Accessors(chain = true)

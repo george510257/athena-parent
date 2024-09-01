@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 
 /**
  * 用户请求转换器
+ *
+ * @author george
  */
 public interface IUserRequestConverter extends Converter<OAuth2UserRequest, RequestEntity<?>>, Predicate<String> {
 }

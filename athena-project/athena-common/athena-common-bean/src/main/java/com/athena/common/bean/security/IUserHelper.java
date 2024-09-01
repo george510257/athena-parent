@@ -11,6 +11,8 @@ import java.util.TimeZone;
 
 /**
  * 用户帮助类
+ *
+ * @author george
  */
 public interface IUserHelper {
 

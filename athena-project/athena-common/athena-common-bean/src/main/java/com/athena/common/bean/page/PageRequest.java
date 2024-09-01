@@ -9,7 +9,8 @@ import java.io.Serializable;
 /**
  * 分页查询VO
  *
- * @param <T>
+ * @param <T> 查询参数类型
+ * @author george
  */
 @Data
 @Accessors(chain = true)

@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 
 /**
  * accessToken 响应转换器
+ *
+ * @author george
  */
 public interface IAccessTokenResponseConverter extends Converter<Map<String, Object>, OAuth2AccessTokenResponse>, Predicate<String> {
 }

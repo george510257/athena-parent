@@ -13,6 +13,8 @@ import java.util.Optional;
 
 /**
  * 委托授权请求解析器
+ *
+ * @author george
  */
 @Component
 public class DelegateAuthorizationRequestResolver implements OAuth2AuthorizationRequestResolver {

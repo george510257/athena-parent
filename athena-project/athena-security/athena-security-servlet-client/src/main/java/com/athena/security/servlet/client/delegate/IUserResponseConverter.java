@@ -9,6 +9,8 @@ import java.util.function.Predicate;
 
 /**
  * 用户响应转换器
+ *
+ * @author george
  */
 public interface IUserResponseConverter extends Converter<OAuth2UserRequest, Converter<Map<String, Object>, Map<String, Object>>>, Predicate<String> {
 

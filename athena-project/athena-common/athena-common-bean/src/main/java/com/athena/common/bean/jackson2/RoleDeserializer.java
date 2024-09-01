@@ -18,6 +18,14 @@ import java.util.List;
  * @author george
  */
 public class RoleDeserializer extends JsonDeserializer<Role> {
+    /**
+     * 将JSON内容反序列化为Role对象
+     *
+     * @param parser  JsonParser JSON解析器
+     * @param context DeserializationContext 上下文
+     * @return Role 角色对象
+     * @throws IOException IO异常
+     */
     @Override
     public Role deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         // 获取ObjectMapper

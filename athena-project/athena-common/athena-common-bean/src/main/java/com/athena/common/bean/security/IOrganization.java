@@ -5,6 +5,8 @@ import com.athena.common.bean.base.ITreeNode;
 
 /**
  * 组织机构接口
+ *
+ * @author george
  */
 public interface IOrganization extends ITreeNode, IDomain {
 }

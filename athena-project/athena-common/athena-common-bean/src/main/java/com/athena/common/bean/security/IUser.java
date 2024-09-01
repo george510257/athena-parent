@@ -12,6 +12,7 @@ import java.util.List;
  * @param <R> 角色
  * @param <P> 权限
  * @param <O> 组织机构
+ * @author george
  */
 public interface IUser<R extends IRole<P>, P extends IPermission, O extends IOrganization> extends UserDetails, IDomain {
     /**

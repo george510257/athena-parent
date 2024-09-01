@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 返回结果状态
+ *
+ * @author george
  */
 @Getter
 @RequiredArgsConstructor

@@ -19,6 +19,15 @@ import java.util.List;
  * @author george
  */
 public class UserDeserializer extends JsonDeserializer<User> {
+
+    /**
+     * 将JSON内容反序列化为User对象
+     *
+     * @param parser  JSON解析器
+     * @param context 上下文
+     * @return User 用户对象
+     * @throws IOException IO异常
+     */
     @Override
     public User deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         // 获取ObjectMapper

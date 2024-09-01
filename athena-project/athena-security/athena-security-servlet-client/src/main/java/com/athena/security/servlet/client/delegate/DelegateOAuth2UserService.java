@@ -12,6 +12,8 @@ import java.util.Optional;
 
 /**
  * 委托 OAuth2 用户信息服务
+ *
+ * @author george
  */
 @Component
 public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {

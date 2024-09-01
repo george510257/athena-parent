@@ -2,6 +2,8 @@ package com.athena.common.bean.result;
 
 /**
  * 返回结果状态
+ *
+ * @author george
  */
 public interface IResultStatus {
 

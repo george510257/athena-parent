@@ -4,6 +4,8 @@ import lombok.Getter;
 
 /**
  * 返回结果异常
+ *
+ * @author george
  */
 @Getter
 public class ResultException extends RuntimeException {

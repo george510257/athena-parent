@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 组织信息
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
