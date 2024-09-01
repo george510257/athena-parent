@@ -9,6 +9,8 @@ import java.util.Date;
 
 /**
  * 基础实体
+ *
+ * @author george
  */
 @Data
 @Schema(title = "基础实体", description = "基础实体")

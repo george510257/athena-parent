@@ -9,6 +9,8 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
 /**
  * 删除标记转换器
+ *
+ * @author george
  */
 public class DeletedConverter implements Converter<Boolean> {
 
@@ -39,11 +41,10 @@ public class DeletedConverter implements Converter<Boolean> {
      * @param contentProperty     内容属性
      * @param globalConfiguration 全局配置
      * @return Java数据
-     * @throws Exception 异常
      */
     @Override
-    public Boolean convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        return cellData.getStringValue().equals("已删除");
+    public Boolean convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        return "已删除".equals(cellData.getStringValue());
     }
 
     /**
@@ -53,10 +54,9 @@ public class DeletedConverter implements Converter<Boolean> {
      * @param contentProperty     内容属性
      * @param globalConfiguration 全局配置
      * @return Excel数据
-     * @throws Exception 异常
      */
     @Override
-    public WriteCellData<?> convertToExcelData(Boolean value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+    public WriteCellData<?> convertToExcelData(Boolean value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return value ? new WriteCellData<>("已删除") : new WriteCellData<>("正常");
     }
 

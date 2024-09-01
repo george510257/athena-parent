@@ -5,6 +5,8 @@ import java.util.Date;
 
 /**
  * 领域对象
+ *
+ * @author george
  */
 public interface IDomain extends Serializable {
     /**

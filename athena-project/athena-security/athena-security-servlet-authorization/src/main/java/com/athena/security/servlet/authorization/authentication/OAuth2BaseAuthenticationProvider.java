@@ -148,7 +148,7 @@ public abstract class OAuth2BaseAuthenticationProvider implements Authentication
             // @formatter:off
             tokenContext = tokenContextBuilder
                     .tokenType(AuthorizationConstants.ID_TOKEN_TOKEN_TYPE)
-                    .authorization(authorizationBuilder.build())	// ID token customizer may need access to the access token and/or refresh token
+                    .authorization(authorizationBuilder.build())
                     .build();
             // @formatter:on
             OAuth2Token generatedIdToken = this.tokenGenerator.generate(tokenContext);

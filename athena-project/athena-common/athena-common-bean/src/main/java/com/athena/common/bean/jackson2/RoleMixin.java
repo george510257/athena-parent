@@ -5,7 +5,6 @@ import com.athena.common.bean.security.Role;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -17,6 +16,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 角色Mixin
+ *
+ * @author george
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = RoleMixin.RoleDeserializer.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
@@ -26,7 +30,7 @@ public abstract class RoleMixin {
 
     public static class RoleDeserializer extends JsonDeserializer<Role> {
         @Override
-        public Role deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
+        public Role deserialize(JsonParser parser, DeserializationContext context) throws IOException {
             // 获取ObjectMapper
             ObjectMapper mapper = (ObjectMapper) parser.getCodec();
             // 获取JsonNode
@@ -44,7 +48,7 @@ public abstract class RoleMixin {
 
             Integer sort = node.get("sort").asInt();
 
-            List<Permission> permissions = mapper.convertValue(node.get("permissions"), new TypeReference<List<Permission>>() {
+            List<Permission> permissions = mapper.convertValue(node.get("permissions"), new TypeReference<>() {
             });
 
             // 创建Role对象

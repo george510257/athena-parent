@@ -7,9 +7,21 @@ import lombok.experimental.UtilityClass;
 
 import java.util.Date;
 
+/**
+ * Jackson工具类
+ *
+ * @author george
+ */
 @UtilityClass
 public class JacksonUtil {
 
+    /**
+     * 序列化基础实体
+     *
+     * @param mapper ObjectMapper
+     * @param node   JsonNode
+     * @param baseVo 基础实体
+     */
     public void deserializeBaseVo(ObjectMapper mapper, JsonNode node, BaseVo baseVo) {
         // 获取JsonNode中的字段值
         Long id = node.get("id").asLong();

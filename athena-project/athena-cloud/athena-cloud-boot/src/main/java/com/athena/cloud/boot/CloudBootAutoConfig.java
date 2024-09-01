@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 云服务启动自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

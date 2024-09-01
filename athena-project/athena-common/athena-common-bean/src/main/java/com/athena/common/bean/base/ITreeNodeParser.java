@@ -8,6 +8,7 @@ import cn.hutool.core.lang.tree.parser.NodeParser;
  * 树节点解析器
  *
  * @param <T> 树节点类型
+ * @author george
  */
 public class ITreeNodeParser<T extends ITreeNode> implements NodeParser<T, Long> {
     /**

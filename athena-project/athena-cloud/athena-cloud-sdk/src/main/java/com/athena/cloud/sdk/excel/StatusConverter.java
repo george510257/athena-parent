@@ -9,6 +9,8 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
 /**
  * 状态转换器
+ *
+ * @author george
  */
 public class StatusConverter implements Converter<Integer> {
 
@@ -39,15 +41,10 @@ public class StatusConverter implements Converter<Integer> {
      * @param contentProperty     Excel属性
      * @param globalConfiguration 全局配置
      * @return Java数据
-     * @throws Exception 异常
      */
     @Override
-    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        return switch (cellData.getStringValue()) {
-            case "启用" -> 1;
-            case "禁用" -> 0;
-            default -> 0;
-        };
+    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        return "启用".equals(cellData.getStringValue()) ? 1 : 0;
     }
 
     /**
@@ -57,15 +54,10 @@ public class StatusConverter implements Converter<Integer> {
      * @param contentProperty     Excel属性
      * @param globalConfiguration 全局配置
      * @return Excel数据
-     * @throws Exception 异常
      */
     @Override
-    public WriteCellData<?> convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        return switch (value) {
-            case 1 -> new WriteCellData<>("启用");
-            case 0 -> new WriteCellData<>("禁用");
-            default -> new WriteCellData<>("");
-        };
+    public WriteCellData<?> convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        return new WriteCellData<>(value == 1 ? "启用" : "禁用");
     }
 
 }

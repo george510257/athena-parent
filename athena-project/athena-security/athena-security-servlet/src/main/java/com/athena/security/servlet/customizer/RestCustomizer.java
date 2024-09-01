@@ -14,6 +14,8 @@ import java.util.List;
 
 /**
  * 表单登录自定义器
+ *
+ * @author george
  */
 @Component
 public class RestCustomizer implements Customizer<RestConfigurer<HttpSecurity>> {

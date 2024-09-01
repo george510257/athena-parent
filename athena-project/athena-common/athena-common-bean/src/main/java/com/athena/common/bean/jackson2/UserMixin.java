@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -18,6 +17,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 用户Mixin
+ *
+ * @author george
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = UserMixin.UserDeserializer.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
@@ -27,7 +31,7 @@ public abstract class UserMixin {
 
     public static class UserDeserializer extends JsonDeserializer<User> {
         @Override
-        public User deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        public User deserialize(JsonParser parser, DeserializationContext context) throws IOException {
             // 获取ObjectMapper
             ObjectMapper mapper = (ObjectMapper) parser.getCodec();
             // 获取JsonNode

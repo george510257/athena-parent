@@ -9,6 +9,8 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
 /**
  * 数据源类型转换器
+ *
+ * @author george
  */
 public class DatasourceTypeConverter implements Converter<Integer> {
     /**
@@ -38,10 +40,9 @@ public class DatasourceTypeConverter implements Converter<Integer> {
      * @param contentProperty     Excel属性
      * @param globalConfiguration 全局配置
      * @return Java数据
-     * @throws Exception 异常
      */
     @Override
-    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return switch (cellData.getStringValue()) {
             case "mysql" -> 1;
             case "oracle" -> 2;
@@ -58,10 +59,9 @@ public class DatasourceTypeConverter implements Converter<Integer> {
      * @param contentProperty     Excel属性
      * @param globalConfiguration 全局配置
      * @return Excel数据
-     * @throws Exception 异常
      */
     @Override
-    public WriteCellData<?> convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+    public WriteCellData<?> convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return switch (value) {
             case 1 -> new WriteCellData<>("mysql");
             case 2 -> new WriteCellData<>("oracle");

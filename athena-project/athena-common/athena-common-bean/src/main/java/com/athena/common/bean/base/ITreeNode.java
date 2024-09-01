@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * 树节点接口
+ *
+ * @author george
  */
 public interface ITreeNode extends Serializable {
     /**

@@ -18,6 +18,7 @@ import java.util.function.Consumer;
  * REST 配置器
  *
  * @param <H> HTTP 安全构建器
+ * @author george
  */
 public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
         AbstractAuthenticationFilterConfigurer<H, RestConfigurer<H>, RestAuthenticationFilter> {
@@ -54,6 +55,7 @@ public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
      * @param loginPage 登录页面
      * @return REST 配置器
      */
+    @Override
     public RestConfigurer<H> loginPage(String loginPage) {
         return super.loginPage(loginPage);
     }
