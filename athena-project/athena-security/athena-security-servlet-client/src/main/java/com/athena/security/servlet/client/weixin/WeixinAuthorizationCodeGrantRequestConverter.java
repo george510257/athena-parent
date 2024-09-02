@@ -60,6 +60,12 @@ public class WeixinAuthorizationCodeGrantRequestConverter implements IAuthorizat
                 .build();
     }
 
+    /**
+     * 转换为请求参数
+     *
+     * @param authorizationCodeGrantRequest 授权码授权请求
+     * @return 请求参数
+     */
     private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("appid", authorizationCodeGrantRequest.getClientRegistration().getClientId());
