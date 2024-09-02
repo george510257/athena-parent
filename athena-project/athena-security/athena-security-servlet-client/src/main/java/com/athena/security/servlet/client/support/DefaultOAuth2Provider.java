@@ -16,7 +16,7 @@ public enum DefaultOAuth2Provider {
     /**
      * 微信开放平台
      */
-    WECHAT_OPEN {
+    WEIXIN_OPEN {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
@@ -33,7 +33,7 @@ public enum DefaultOAuth2Provider {
     /**
      * 微信公众平台
      */
-    WECHAT_MP {
+    WEIXIN_MP {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
