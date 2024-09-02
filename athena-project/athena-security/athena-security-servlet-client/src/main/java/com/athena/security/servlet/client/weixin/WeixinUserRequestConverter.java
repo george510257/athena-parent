@@ -24,15 +24,30 @@ import java.net.URI;
 @Component
 public class WeixinUserRequestConverter implements IUserRequestConverter {
 
+    /**
+     * 微信配置属性
+     */
     @Resource
     private WeixinProperties weixinProperties;
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return weixinProperties.getMpRegistrationId().equals(registrationId)
                 || weixinProperties.getOpenRegistrationId().equals(registrationId);
     }
 
+    /**
+     * 获取用户请求
+     *
+     * @param oauth2UserRequest 用户请求
+     * @return 请求实体
+     */
     @Override
     public RequestEntity<?> convert(@NonNull OAuth2UserRequest oauth2UserRequest) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();

@@ -2,7 +2,6 @@ package com.athena.security.servlet.client.feishu;
 
 import cn.hutool.json.JSONUtil;
 import com.athena.security.servlet.client.delegate.IAccessTokenResponseConverter;
-import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;

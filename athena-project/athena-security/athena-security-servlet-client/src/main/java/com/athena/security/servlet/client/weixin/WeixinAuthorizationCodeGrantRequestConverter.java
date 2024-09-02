@@ -22,15 +22,30 @@ import java.net.URI;
  */
 @Component
 public class WeixinAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {
+    /**
+     * 微信配置属性
+     */
     @Resource
     private WeixinProperties weixinProperties;
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return weixinProperties.getMpRegistrationId().equals(registrationId)
                 || weixinProperties.getOpenRegistrationId().equals(registrationId);
     }
 
+    /**
+     * 转换为请求实体
+     *
+     * @param authorizationCodeGrantRequest 授权码授权请求
+     * @return 请求实体
+     */
     @Override
     public RequestEntity<?> convert(@NonNull OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         // 请求参数

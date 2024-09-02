@@ -2,7 +2,6 @@ package com.athena.security.servlet.client.feishu;
 
 import com.athena.security.servlet.client.feishu.domian.AppAccessTokenRequest;
 import com.athena.security.servlet.client.feishu.domian.AppAccessTokenResponse;
-import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import com.athena.starter.data.redis.support.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.http.RequestEntity;

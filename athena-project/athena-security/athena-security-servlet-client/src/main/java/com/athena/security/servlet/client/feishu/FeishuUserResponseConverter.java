@@ -1,7 +1,6 @@
 package com.athena.security.servlet.client.feishu;
 
 import com.athena.security.servlet.client.delegate.IUserResponseConverter;
-import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Component;

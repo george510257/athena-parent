@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.feishu.domian;
+package com.athena.security.servlet.client.feishu;
 
 import com.athena.common.core.constant.BaseConstants;
 import com.athena.common.core.constant.BaseProperties;

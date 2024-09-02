@@ -54,5 +54,8 @@ public class WeixinProperties extends BaseProperties {
      */
     private String clientName = "微信";
 
+    /**
+     * 微信授权范围
+     */
     private List<String> scopes = List.of("snsapi_base", "snsapi_userinfo", "snsapi_login");
 }

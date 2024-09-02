@@ -1,7 +1,7 @@
 package com.athena.security.servlet.client.support;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
+import com.athena.security.servlet.client.feishu.FeishuProperties;
 import com.athena.security.servlet.client.weixin.WeixinProperties;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
