@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * xxl-job自动配置类
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

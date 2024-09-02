@@ -16,6 +16,8 @@ import java.io.IOException;
 
 /**
  * 验证码过滤器
+ *
+ * @author george
  */
 @Slf4j
 @Setter

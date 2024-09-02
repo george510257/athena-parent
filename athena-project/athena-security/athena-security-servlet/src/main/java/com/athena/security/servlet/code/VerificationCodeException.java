@@ -4,6 +4,8 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  * 验证码异常
+ *
+ * @author george
  */
 public class VerificationCodeException extends AuthenticationException {
 

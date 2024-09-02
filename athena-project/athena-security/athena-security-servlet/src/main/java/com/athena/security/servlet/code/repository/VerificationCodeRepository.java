@@ -4,6 +4,8 @@ import com.athena.security.servlet.code.base.BaseCode;
 
 /**
  * 验证码存储器
+ *
+ * @author george
  */
 public interface VerificationCodeRepository {
 

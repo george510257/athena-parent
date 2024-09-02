@@ -2,6 +2,8 @@ package com.athena.starter.web.config;
 
 /**
  * Web常量
+ *
+ * @author george
  */
 public interface WebConstants {
     /**

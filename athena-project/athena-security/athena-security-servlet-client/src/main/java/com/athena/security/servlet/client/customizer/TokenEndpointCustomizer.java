@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 令牌端点自定义器
+ *
+ * @author george
  */
 @Component
 public class TokenEndpointCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>.TokenEndpointConfig> {

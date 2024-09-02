@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Swagger自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

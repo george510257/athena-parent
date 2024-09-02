@@ -17,6 +17,8 @@ import java.util.Optional;
 
 /**
  * 令牌配置
+ *
+ * @author george
  */
 @Configuration
 public class TokenConfig {

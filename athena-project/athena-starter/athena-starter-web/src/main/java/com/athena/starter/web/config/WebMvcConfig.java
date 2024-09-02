@@ -20,6 +20,8 @@ import java.util.List;
 
 /**
  * WebMvc配置
+ *
+ * @author george
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

@@ -14,6 +14,8 @@ import java.util.TimeZone;
 
 /**
  * 时区类型处理器
+ *
+ * @author george
  */
 @Component
 @MappedTypes(TimeZone.class)

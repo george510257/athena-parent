@@ -9,6 +9,8 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 
 /**
  * 用户名密码认证转换器
+ *
+ * @author george
  */
 @Setter
 public class UsernamePasswordAuthenticationConverter implements AuthenticationConverter {

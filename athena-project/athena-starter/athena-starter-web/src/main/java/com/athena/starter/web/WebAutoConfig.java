@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Web自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

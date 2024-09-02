@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 短信验证码发送器
+ *
+ * @author george
  */
 @Slf4j
 public class SmsCodeSender implements BaseCodeSender<SmsCode> {

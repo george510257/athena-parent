@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author george
+ */
 @Component
 public class VerificationCodeCustomizer implements Customizer<VerificationCodeConfigurer<HttpSecurity>> {
 

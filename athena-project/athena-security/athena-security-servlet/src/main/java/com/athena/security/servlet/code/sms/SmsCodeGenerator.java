@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 
 /**
  * 短信验证码生成器
+ *
+ * @author george
  */
 @Setter
 @Accessors(chain = true)

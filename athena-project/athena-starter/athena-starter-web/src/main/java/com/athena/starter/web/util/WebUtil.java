@@ -16,6 +16,11 @@ import org.springframework.web.util.WebUtils;
 
 import java.util.Optional;
 
+/**
+ * web工具类
+ *
+ * @author george
+ */
 @UtilityClass
 public class WebUtil {
 

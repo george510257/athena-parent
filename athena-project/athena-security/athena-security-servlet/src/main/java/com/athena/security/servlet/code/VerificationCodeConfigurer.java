@@ -23,6 +23,8 @@ import java.util.function.Consumer;
 
 /**
  * 验证码配置
+ *
+ * @author george
  */
 
 @Setter

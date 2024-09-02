@@ -8,6 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 线程池任务属性
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

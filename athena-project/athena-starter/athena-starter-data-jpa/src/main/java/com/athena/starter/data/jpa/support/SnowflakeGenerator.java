@@ -6,6 +6,8 @@ import org.hibernate.id.IdentifierGenerator;
 
 /**
  * 雪花算法生成器
+ *
+ * @author george
  */
 public class SnowflakeGenerator implements IdentifierGenerator {
     /**

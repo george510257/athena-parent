@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 /**
  * 定时任务配置
+ *
+ * @author george
  */
 @AutoConfiguration
 public class XxlJobConfig {

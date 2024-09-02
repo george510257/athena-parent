@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * web配置类
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

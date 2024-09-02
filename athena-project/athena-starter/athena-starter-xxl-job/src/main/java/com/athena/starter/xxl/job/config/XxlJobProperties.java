@@ -8,6 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * xxl-job配置类
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

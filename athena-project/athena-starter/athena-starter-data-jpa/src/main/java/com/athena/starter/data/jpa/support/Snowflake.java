@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 
 /**
  * 雪花算法注解
+ *
+ * @author george
  */
 @ValueGenerationType(generatedBy = SnowflakeGenerator.class)
 @IdGeneratorType(SnowflakeGenerator.class)

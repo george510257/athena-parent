@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * 验证码管理器
+ *
+ * @author george
  */
 @RequiredArgsConstructor
 public class VerificationCodeManager {
