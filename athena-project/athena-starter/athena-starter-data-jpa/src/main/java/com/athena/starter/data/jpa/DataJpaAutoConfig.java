@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * JPA自动配置类
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

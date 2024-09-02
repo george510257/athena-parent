@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * 动态数据源配置
+ *
+ * @author george
  */
 @AutoConfiguration
 public class DynamicDataSourceConfig {

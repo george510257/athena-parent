@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * 核心安全属性配置
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 /**
  * 默认OAuth2客户端属性映射器
+ *
+ * @author george
  */
 @RequiredArgsConstructor
 public class DefaultOAuth2ClientPropertiesMapper {

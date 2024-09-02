@@ -10,6 +10,8 @@ import java.lang.annotation.*;
  * ExcelParameter 注解
  * <p>
  * 用于标记实体类中的方法，用于标记Excel的参数
+ *
+ * @author george
  */
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD})

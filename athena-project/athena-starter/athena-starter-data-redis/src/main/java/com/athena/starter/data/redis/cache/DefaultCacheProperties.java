@@ -13,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 默认缓存配置
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

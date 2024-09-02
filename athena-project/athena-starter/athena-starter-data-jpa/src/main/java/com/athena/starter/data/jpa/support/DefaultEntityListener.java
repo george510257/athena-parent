@@ -13,6 +13,8 @@ import java.util.Date;
 
 /**
  * 默认实体监听器
+ *
+ * @author george
  */
 @Slf4j
 @Component

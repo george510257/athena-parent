@@ -12,6 +12,8 @@ import java.io.IOException;
 
 /**
  * 默认验证成功处理器
+ *
+ * @author george
  */
 @Slf4j
 @Component

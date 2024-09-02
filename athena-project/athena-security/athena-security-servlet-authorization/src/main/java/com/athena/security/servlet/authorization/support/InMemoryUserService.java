@@ -13,6 +13,8 @@ import java.util.Optional;
 
 /**
  * 内存用户服务
+ *
+ * @author george
  */
 public class InMemoryUserService implements IUserService {
 

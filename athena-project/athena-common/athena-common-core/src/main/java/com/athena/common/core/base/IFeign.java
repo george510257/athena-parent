@@ -14,6 +14,7 @@ import java.util.List;
  * Feign接口
  *
  * @param <Vo> VO
+ * @author george
  */
 public interface IFeign<Vo extends BaseVo> {
 

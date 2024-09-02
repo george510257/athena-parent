@@ -8,6 +8,8 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 
 /**
  * 默认OAuth2提供者
+ *
+ * @author george
  */
 public enum DefaultOAuth2Provider {
     /**

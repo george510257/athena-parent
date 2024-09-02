@@ -10,6 +10,8 @@ import java.util.Date;
 
 /**
  * 默认日期格式化类
+ *
+ * @author george
  */
 public class DefaultDateFormat extends SimpleDateFormat {
 

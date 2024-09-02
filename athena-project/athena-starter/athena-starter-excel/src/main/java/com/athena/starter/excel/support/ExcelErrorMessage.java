@@ -5,6 +5,11 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
+/**
+ * Excel错误消息
+ *
+ * @author george
+ */
 @Data
 @Accessors(chain = true)
 public class ExcelErrorMessage implements Serializable {

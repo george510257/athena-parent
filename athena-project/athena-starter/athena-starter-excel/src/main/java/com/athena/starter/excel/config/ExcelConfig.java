@@ -15,6 +15,8 @@ import java.util.List;
 
 /**
  * Excel配置类
+ *
+ * @author george
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

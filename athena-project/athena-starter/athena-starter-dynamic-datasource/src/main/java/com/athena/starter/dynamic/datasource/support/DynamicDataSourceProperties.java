@@ -8,6 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 动态数据源配置
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

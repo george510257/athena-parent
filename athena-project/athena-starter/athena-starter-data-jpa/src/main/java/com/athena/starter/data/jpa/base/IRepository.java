@@ -11,6 +11,11 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
+/**
+ * 持久化接口
+ *
+ * @author george
+ */
 @NoRepositoryBean
 public interface IRepository<E extends BaseEntity> extends JpaRepositoryImplementation<E, Long> {
 

@@ -5,6 +5,8 @@ import com.athena.starter.excel.annotation.ExcelTable;
 
 /**
  * Excel写入Table构建器自定义器
+ *
+ * @author george
  */
 public class ExcelWriterTableBuilderCustomizer extends BaseExcelWriterBuilderCustomizer<ExcelWriterTableBuilder> {
     /**

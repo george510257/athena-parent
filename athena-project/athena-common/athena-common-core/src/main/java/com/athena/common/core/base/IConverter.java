@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  *
  * @param <S> 源
  * @param <T> 目标
+ * @author george
  */
 public interface IConverter<S, T> {
     /**

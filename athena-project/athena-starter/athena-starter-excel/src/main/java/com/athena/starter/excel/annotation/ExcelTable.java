@@ -6,6 +6,8 @@ import java.lang.annotation.*;
  * ExcelTable 注解
  * <p>
  * 用于标记实体类中的方法，用于标记Excel中的table
+ *
+ * @author george
  */
 @Documented
 @Target({ElementType.METHOD})

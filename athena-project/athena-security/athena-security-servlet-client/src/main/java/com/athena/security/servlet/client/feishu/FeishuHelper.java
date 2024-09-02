@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 飞书助手
+ *
+ * @author george
  */
 @Component
 public class FeishuHelper {

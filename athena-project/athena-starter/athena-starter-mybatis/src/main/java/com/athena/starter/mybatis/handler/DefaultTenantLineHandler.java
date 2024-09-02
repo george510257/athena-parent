@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 默认租户处理器
+ *
+ * @author george
  */
 @Component
 public class DefaultTenantLineHandler implements TenantLineHandler {

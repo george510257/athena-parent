@@ -10,6 +10,8 @@ import java.io.IOException;
 
 /**
  * 图片验证码发送器
+ *
+ * @author george
  */
 @Slf4j
 public class ImageCodeSender implements BaseCodeSender<ImageCode> {

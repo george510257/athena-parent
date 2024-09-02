@@ -14,6 +14,8 @@ import java.util.Map;
 
 /**
  * 从数据源中获取 配置信息
+ *
+ * @author george
  */
 public class DefaultJdbcDataSourceProvider extends AbstractJdbcDataSourceProvider {
     /**

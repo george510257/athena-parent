@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 /**
  * 图片验证码
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

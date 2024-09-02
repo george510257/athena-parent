@@ -16,6 +16,8 @@ import java.util.Set;
 
 /**
  * 异常处理自定义器
+ *
+ * @author george
  */
 @Component
 public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandlingConfigurer<HttpSecurity>> {

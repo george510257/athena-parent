@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
  * Mapper接口
  *
  * @param <E> 实体类型
+ * @author george
  */
 public interface IMapper<E> extends BaseMapper<E> {
 

@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * 飞书用户响应转换器
+ *
+ * @author george
  */
 @Component
 public class FeishuUserResponseConverter implements IUserResponseConverter {

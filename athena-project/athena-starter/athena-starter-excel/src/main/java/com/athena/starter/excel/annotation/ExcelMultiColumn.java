@@ -6,6 +6,8 @@ import java.lang.annotation.*;
  * ExcelMultiColumn 注解
  * <p>
  * 用于标记实体类中的字段，用于标记Excel中的多列
+ *
+ * @author george
  */
 @Documented
 @Target({ElementType.FIELD, ElementType.METHOD})

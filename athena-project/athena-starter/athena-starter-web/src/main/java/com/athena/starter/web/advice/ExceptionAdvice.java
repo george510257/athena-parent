@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 异常通知
+ *
+ * @author george
  */
 @Slf4j
 @RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)

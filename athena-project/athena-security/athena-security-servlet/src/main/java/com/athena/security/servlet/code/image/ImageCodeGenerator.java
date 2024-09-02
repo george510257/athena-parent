@@ -9,6 +9,8 @@ import lombok.experimental.Accessors;
 
 /**
  * 图片验证码生成器
+ *
+ * @author george
  */
 @Setter
 @Accessors(chain = true)

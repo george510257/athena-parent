@@ -19,6 +19,8 @@ import java.util.Map;
 
 /**
  * 飞书 OAuth2 授权码请求转换器
+ *
+ * @author george
  */
 @Component
 public class FeishuAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {

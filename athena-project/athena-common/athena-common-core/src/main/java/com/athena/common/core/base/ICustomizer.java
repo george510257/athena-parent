@@ -4,6 +4,7 @@ package com.athena.common.core.base;
  * 定制器
  *
  * @param <T> 定制对象
+ * @author george
  */
 @FunctionalInterface
 public interface ICustomizer<T> {

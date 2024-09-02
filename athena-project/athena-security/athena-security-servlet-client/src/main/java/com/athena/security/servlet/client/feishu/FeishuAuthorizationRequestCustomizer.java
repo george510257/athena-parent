@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * 飞书 OAuth2 授权请求自定义器
+ *
+ * @author george
  */
 @Component
 public class FeishuAuthorizationRequestCustomizer implements IAuthorizationRequestCustomizer {

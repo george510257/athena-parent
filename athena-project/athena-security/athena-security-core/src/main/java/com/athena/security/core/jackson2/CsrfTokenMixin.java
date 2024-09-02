@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.*;
 
 /**
  * CSRF令牌混合
+ *
+ * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,

@@ -6,6 +6,8 @@ import org.springframework.security.web.csrf.DefaultCsrfToken;
 
 /**
  * 安全核心模块
+ *
+ * @author george
  */
 public class CoreSecurityModule extends SimpleModule {
     /**

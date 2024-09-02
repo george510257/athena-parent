@@ -14,6 +14,8 @@ import java.util.Map;
 
 /**
  * 飞书访问令牌响应转换器
+ *
+ * @author george
  */
 @Slf4j
 @Component

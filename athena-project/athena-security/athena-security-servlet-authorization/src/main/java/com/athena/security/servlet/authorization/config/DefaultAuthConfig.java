@@ -26,6 +26,8 @@ import java.util.UUID;
 
 /**
  * 默认认证配置
+ *
+ * @author george
  */
 @AutoConfiguration
 public class DefaultAuthConfig {

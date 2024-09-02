@@ -16,6 +16,8 @@ import org.springframework.security.web.jackson2.WebServletJackson2Module;
 
 /**
  * 安全配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

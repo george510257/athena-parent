@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Redis 配置类
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan
