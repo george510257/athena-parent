@@ -7,6 +7,8 @@ import java.net.URI;
 
 /**
  * oss存储位置
+ *
+ * @author george
  */
 @Data
 public class OssStorageLocation {

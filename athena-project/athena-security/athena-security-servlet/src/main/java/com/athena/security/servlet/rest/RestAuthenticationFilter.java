@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * Rest认证过滤器
+ *
+ * @author george
  */
 @Setter
 public class RestAuthenticationFilter extends UsernamePasswordAuthenticationFilter {

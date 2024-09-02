@@ -9,6 +9,8 @@ import java.io.InputStream;
 
 /**
  * RequestBodyInputStream 用于解决流只能读取一次的问题
+ *
+ * @author george
  */
 public class RequestBodyInputStream extends ServletInputStream {
     /**

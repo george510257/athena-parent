@@ -9,6 +9,8 @@ import java.util.Optional;
 
 /**
  * OAuth2授权服务器自定义器
+ *
+ * @author george
  */
 @Component
 public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2AuthorizationServerConfigurer> {

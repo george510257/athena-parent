@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * Redis OAuth2授权服务
+ *
+ * @author george
  */
 @Slf4j
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {

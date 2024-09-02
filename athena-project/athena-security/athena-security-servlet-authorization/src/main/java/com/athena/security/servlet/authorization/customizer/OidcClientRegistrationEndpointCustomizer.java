@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 客户端注册端点自定义器
+ *
+ * @author george
  */
 @Component
 public class OidcClientRegistrationEndpointCustomizer implements Customizer<OidcClientRegistrationEndpointConfigurer> {

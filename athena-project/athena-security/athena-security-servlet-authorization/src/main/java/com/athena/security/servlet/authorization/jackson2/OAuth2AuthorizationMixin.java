@@ -21,6 +21,8 @@ import java.util.Set;
 
 /**
  * oauth2授权混合
+ *
+ * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = OAuth2AuthorizationMixin.OAuth2AuthorizationDeserializer.class)

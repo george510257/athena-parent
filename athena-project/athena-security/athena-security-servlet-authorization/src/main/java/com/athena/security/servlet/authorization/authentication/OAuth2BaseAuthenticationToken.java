@@ -10,6 +10,8 @@ import java.util.Set;
 
 /**
  * OAuth2 基础认证令牌
+ *
+ * @author george
  */
 @Getter
 public abstract class OAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {

@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 
 /**
  * RequestBodyWrapper 用于解决流只能读取一次的问题
+ *
+ * @author george
  */
 public class RequestBodyWrapper extends HttpServletRequestWrapper {
 

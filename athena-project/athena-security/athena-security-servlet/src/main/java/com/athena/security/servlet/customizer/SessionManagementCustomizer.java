@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 会话管理自定义器
+ *
+ * @author george
  */
 @Component
 public class SessionManagementCustomizer implements Customizer<SessionManagementConfigurer<HttpSecurity>> {

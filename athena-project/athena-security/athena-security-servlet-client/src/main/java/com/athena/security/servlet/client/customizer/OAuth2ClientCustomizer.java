@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * OAuth2 客户端自定义器
+ *
+ * @author george
  */
 @Component
 public class OAuth2ClientCustomizer implements Customizer<OAuth2ClientConfigurer<HttpSecurity>> {

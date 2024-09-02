@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 资源服务器自定义
+ *
+ * @author george
  */
 @Component
 public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> {

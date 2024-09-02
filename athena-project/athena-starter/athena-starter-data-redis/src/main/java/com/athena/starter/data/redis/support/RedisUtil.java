@@ -13,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Redis 工具类
+ *
+ * @author george
  */
 @UtilityClass
 public class RedisUtil {

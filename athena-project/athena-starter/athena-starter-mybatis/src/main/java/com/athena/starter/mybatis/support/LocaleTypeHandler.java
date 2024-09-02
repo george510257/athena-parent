@@ -14,6 +14,8 @@ import java.util.Locale;
 
 /**
  * 语言类型处理器
+ *
+ * @author george
  */
 @Component
 @MappedTypes(Locale.class)

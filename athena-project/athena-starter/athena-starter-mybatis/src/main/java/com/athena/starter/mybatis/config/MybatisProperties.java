@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Mybatis配置
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

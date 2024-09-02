@@ -12,6 +12,8 @@ import java.io.Serializable;
 
 /**
  * oss 动态配置
+ *
+ * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

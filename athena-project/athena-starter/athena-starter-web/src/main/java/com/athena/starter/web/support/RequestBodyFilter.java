@@ -12,6 +12,8 @@ import java.io.IOException;
 
 /**
  * RequestBodyFilter 用于解决流只能读取一次的问题
+ *
+ * @author george
  */
 @Component
 public class RequestBodyFilter extends OncePerRequestFilter implements OrderedFilter {

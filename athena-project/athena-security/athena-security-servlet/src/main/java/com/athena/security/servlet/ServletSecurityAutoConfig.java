@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 /**
  * Servlet安全配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

@@ -9,6 +9,8 @@ import java.util.Set;
 
 /**
  * OAuth2 密码认证令牌
+ *
+ * @author george
  */
 @Getter
 public class OAuth2PasswordAuthenticationToken extends OAuth2BaseAuthenticationToken {

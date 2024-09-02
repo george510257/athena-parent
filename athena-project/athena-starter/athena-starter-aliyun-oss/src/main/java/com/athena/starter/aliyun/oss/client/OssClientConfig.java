@@ -15,6 +15,8 @@ import java.util.Map;
 
 /**
  * 阿里云oss客户端配置
+ *
+ * @author george
  */
 @AutoConfiguration
 public class OssClientConfig {

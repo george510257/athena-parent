@@ -6,6 +6,8 @@ import java.time.Instant;
 
 /**
  * OAuth2 设备代码混合
+ *
+ * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,

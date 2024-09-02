@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 
 /**
  * 响应式安全自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

@@ -32,6 +32,8 @@ import java.util.Set;
 
 /**
  * OAuth2 基础认证提供者
+ *
+ * @author george
  */
 @Slf4j
 @RequiredArgsConstructor

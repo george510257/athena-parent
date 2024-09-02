@@ -9,6 +9,8 @@ import java.util.Set;
 
 /**
  * OAuth2 短信认证令牌
+ *
+ * @author george
  */
 @Getter
 public class OAuth2SmsAuthenticationToken extends OAuth2BaseAuthenticationToken {

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 令牌验证端点自定义器
+ *
+ * @author george
  */
 @Component
 public class OAuth2TokenIntrospectionEndpointCustomizer implements Customizer<OAuth2TokenIntrospectionEndpointConfigurer> {

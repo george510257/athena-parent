@@ -5,6 +5,8 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 /**
  * 手机号认证令牌
+ *
+ * @author george
  */
 @Getter
 public class MobileAuthenticationToken extends AbstractAuthenticationToken {

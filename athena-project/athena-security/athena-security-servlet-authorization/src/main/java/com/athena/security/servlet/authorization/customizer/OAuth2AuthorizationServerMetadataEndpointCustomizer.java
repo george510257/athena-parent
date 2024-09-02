@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 授权服务器元数据端点自定义器
+ *
+ * @author george
  */
 @Component
 public class OAuth2AuthorizationServerMetadataEndpointCustomizer implements Customizer<OAuth2AuthorizationServerMetadataEndpointConfigurer> {

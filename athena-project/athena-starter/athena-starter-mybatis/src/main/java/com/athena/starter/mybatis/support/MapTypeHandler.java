@@ -23,6 +23,7 @@ import java.util.TreeMap;
  *
  * @param <K> key
  * @param <V> value
+ * @author george
  */
 @Component
 @MappedTypes({Map.class, LinkedHashMap.class, HashMap.class, TreeMap.class})

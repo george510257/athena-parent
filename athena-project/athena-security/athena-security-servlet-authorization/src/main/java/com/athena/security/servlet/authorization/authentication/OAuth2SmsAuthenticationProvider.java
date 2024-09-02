@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * OAuth2 短信认证提供者
+ *
+ * @author george
  */
 @Slf4j
 public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationProvider {

@@ -13,6 +13,8 @@ import java.io.InputStream;
 
 /**
  * oss工具类
+ *
+ * @author george
  */
 @UtilityClass
 public class OssUtil {

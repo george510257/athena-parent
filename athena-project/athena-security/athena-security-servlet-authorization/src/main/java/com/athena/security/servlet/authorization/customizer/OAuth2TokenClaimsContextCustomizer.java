@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 授权令牌自定义
+ *
+ * @author george
  */
 @Component
 public class OAuth2TokenClaimsContextCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {

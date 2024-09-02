@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 /**
  * OAuth2 密码认证转换器
+ *
+ * @author george
  */
 public class OAuth2PasswordAuthenticationConverter extends OAuth2BaseAuthenticationConverter {
 

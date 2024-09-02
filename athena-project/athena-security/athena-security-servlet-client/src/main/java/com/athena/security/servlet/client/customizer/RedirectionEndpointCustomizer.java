@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 重定向端点自定义器
+ *
+ * @author george
  */
 @Component
 public class RedirectionEndpointCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>.RedirectionEndpointConfig> {

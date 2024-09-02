@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 基于 Redis 的验证码存取器
+ *
+ * @author george
  */
 public class RedisVerificationCodeRepository implements VerificationCodeRepository {
     /**

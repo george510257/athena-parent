@@ -9,6 +9,8 @@ import java.util.Optional;
 
 /**
  * OIDC自定义器
+ *
+ * @author george
  */
 @Component
 public class OidcCustomizer implements Customizer<OidcConfigurer> {

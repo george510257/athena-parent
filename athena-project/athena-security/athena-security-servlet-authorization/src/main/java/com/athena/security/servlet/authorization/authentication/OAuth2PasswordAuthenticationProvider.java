@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * OAuth2 密码认证提供者
+ *
+ * @author george
  */
 public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticationProvider {
     /**

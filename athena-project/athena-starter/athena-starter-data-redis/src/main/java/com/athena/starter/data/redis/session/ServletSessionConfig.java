@@ -6,6 +6,8 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 /**
  * ServletSessionConfig for web application
+ *
+ * @author george
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

@@ -17,6 +17,8 @@ import java.util.Set;
 
 /**
  * OAuth2 基础认证转换器
+ *
+ * @author george
  */
 public abstract class OAuth2BaseAuthenticationConverter implements AuthenticationConverter {
     /**

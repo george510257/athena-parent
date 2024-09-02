@@ -9,6 +9,7 @@ import java.util.Map;
  * OAuth2 授权令牌混合
  *
  * @param <T> OAuth2Token类型
+ * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,

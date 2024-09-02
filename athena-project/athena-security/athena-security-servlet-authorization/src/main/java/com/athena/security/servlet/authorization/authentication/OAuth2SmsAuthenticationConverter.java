@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 /**
  * OAuth2 短信认证转换器
+ *
+ * @author george
  */
 public class OAuth2SmsAuthenticationConverter extends OAuth2BaseAuthenticationConverter {
 

@@ -8,6 +8,8 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 
 /**
  * 手机号认证转换器
+ *
+ * @author george
  */
 @Setter
 public class MobileAuthenticationConverter implements AuthenticationConverter {

@@ -13,6 +13,7 @@ import java.util.List;
  * 服务接口
  *
  * @param <Vo> VO
+ * @author george
  */
 public interface IService<Vo extends BaseVo> {
 

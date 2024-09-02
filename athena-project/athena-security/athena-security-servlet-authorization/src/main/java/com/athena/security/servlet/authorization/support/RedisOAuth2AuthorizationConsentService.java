@@ -6,6 +6,8 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 
 /**
  * Redis OAuth2授权同意服务
+ *
+ * @author george
  */
 public class RedisOAuth2AuthorizationConsentService implements OAuth2AuthorizationConsentService {
     /**

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Mybatis自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

@@ -14,6 +14,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
  * Session配置
+ *
+ * @author george
  */
 @Configuration
 public class SessionConfig {

@@ -10,6 +10,8 @@ import java.util.concurrent.Executor;
 
 /**
  * 对象存储配置
+ *
+ * @author george
  */
 @AutoConfiguration
 public class OssStorageConfig {

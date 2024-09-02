@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * 行合并策略 <br> 横向合并相同行的单元格
+ *
+ * @author george
  */
 public class RowMergeStrategy extends AbstractMergeStrategy {
 

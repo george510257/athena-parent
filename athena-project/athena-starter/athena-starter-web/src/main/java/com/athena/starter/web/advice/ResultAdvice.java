@@ -19,6 +19,8 @@ import java.util.Objects;
 
 /**
  * 结果通知
+ *
+ * @author george
  */
 @RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)
 public class ResultAdvice implements ResponseBodyAdvice<Object> {

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Redis OAuth2 授权客户端服务
+ *
+ * @author george
  */
 @Component
 public class RedisOAuth2AuthorizedClientService implements OAuth2AuthorizedClientService {

@@ -12,6 +12,8 @@ import java.util.concurrent.Executor;
 
 /**
  * 基于OSS的资源协议解析器
+ *
+ * @author george
  */
 @RequiredArgsConstructor
 public class OssStorageProtocolResolver implements ProtocolResolver, ResourceLoaderAware {

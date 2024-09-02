@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 设备验证端点自定义器
+ *
+ * @author george
  */
 @Component
 public class OAuth2DeviceVerificationEndpointCustomizer implements Customizer<OAuth2DeviceVerificationEndpointConfigurer> {

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 提供者配置端点自定义器
+ *
+ * @author george
  */
 @Component
 public class OidcProviderConfigurationEndpointCustomizer implements Customizer<OidcProviderConfigurationEndpointConfigurer> {

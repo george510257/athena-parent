@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * 手机号认证提供者
+ *
+ * @author george
  */
 @RequiredArgsConstructor
 public class MobileAuthenticationProvider implements AuthenticationProvider {

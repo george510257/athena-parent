@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 资源安全自动配置
+ *
+ * @author george
  */
 @Configuration
 @ComponentScan

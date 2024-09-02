@@ -18,6 +18,8 @@ import java.util.Set;
 
 /**
  * oauth2授权同意混合
+ *
+ * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = OAuth2AuthorizationConsentMixin.OAuth2AuthorizationConsentDeserializer.class)

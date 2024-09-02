@@ -6,6 +6,8 @@ import org.springframework.session.data.redis.config.annotation.web.server.Enabl
 
 /**
  * ReactiveSessionConfig for web application
+ *
+ * @author george
  */
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)

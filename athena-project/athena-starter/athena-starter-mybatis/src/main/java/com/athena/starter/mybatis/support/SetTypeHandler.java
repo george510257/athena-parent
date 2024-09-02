@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * Set类型处理器
  *
  * @param <V> value
+ * @author george
  */
 @Component
 @MappedTypes({Set.class, LinkedHashSet.class, HashSet.class, TreeSet.class})
