@@ -2,6 +2,7 @@ package com.athena.security.servlet.client.support;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
+import com.athena.security.servlet.client.weixin.WeixinProperties;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -19,12 +20,13 @@ public enum DefaultOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            builder.scope("snsapi_login");
-            builder.authorizationUri("https://open.weixin.qq.com/connect/qrconnect");
-            builder.tokenUri("https://api.weixin.qq.com/sns/oauth2/access_token");
-            builder.userInfoUri("https://api.weixin.qq.com/sns/userinfo");
-            builder.userNameAttributeName("unionid");
-            builder.clientName("微信开放平台");
+            WeixinProperties weixinProperties = SpringUtil.getBean(WeixinProperties.class);
+            builder.scope(weixinProperties.getScopes());
+            builder.authorizationUri(weixinProperties.getOpenAuthorizationUri());
+            builder.tokenUri(weixinProperties.getTokenUri());
+            builder.userInfoUri(weixinProperties.getUserInfoUri());
+            builder.userNameAttributeName(weixinProperties.getUserNameAttribute());
+            builder.clientName(weixinProperties.getClientName());
             return builder;
         }
     },
@@ -35,12 +37,13 @@ public enum DefaultOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            builder.scope("snsapi_userinfo");
-            builder.authorizationUri("https://open.weixin.qq.com/connect/oauth2/authorize");
-            builder.tokenUri("https://api.weixin.qq.com/sns/oauth2/access_token");
-            builder.userInfoUri("https://api.weixin.qq.com/sns/userinfo");
-            builder.userNameAttributeName("unionid");
-            builder.clientName("微信公众平台");
+            WeixinProperties weixinProperties = SpringUtil.getBean(WeixinProperties.class);
+            builder.scope(weixinProperties.getScopes());
+            builder.authorizationUri(weixinProperties.getMpAuthorizationUri());
+            builder.tokenUri(weixinProperties.getTokenUri());
+            builder.userInfoUri(weixinProperties.getUserInfoUri());
+            builder.userNameAttributeName(weixinProperties.getUserNameAttribute());
+            builder.clientName(weixinProperties.getClientName());
             return builder;
         }
     },

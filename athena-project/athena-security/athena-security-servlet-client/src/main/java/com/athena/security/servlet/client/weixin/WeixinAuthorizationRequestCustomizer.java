@@ -21,7 +21,8 @@ public class WeixinAuthorizationRequestCustomizer implements IAuthorizationReque
 
     @Override
     public boolean test(String registrationId) {
-        return weixinProperties.getRegistrationId().equals(registrationId);
+        return weixinProperties.getMpRegistrationId().equals(registrationId)
+                || weixinProperties.getOpenRegistrationId().equals(registrationId);
     }
 
     @Override
