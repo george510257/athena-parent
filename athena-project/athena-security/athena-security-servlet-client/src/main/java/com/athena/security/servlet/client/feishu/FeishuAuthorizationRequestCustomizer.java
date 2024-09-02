@@ -4,9 +4,11 @@ import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomiz
 import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriBuilder;
 
-import java.util.Map;
+import java.net.URI;
 
 /**
  * 飞书 OAuth2 授权请求自定义器
@@ -41,18 +43,14 @@ public class FeishuAuthorizationRequestCustomizer implements IAuthorizationReque
     @Override
     public void accept(OAuth2AuthorizationRequest.Builder builder) {
         // 飞书 OAuth2 授权请求参数处理
-        builder.parameters(this::parametersConsumer);
+        builder.authorizationRequestUri(this::authorizationRequestUriConsumer);
     }
 
-    /**
-     * 参数消费者
-     *
-     * @param parameters 参数
-     */
-    private void parametersConsumer(Map<String, Object> parameters) {
-        // 飞书 OAuth2 授权请求参数 app_id 与 client_id 一致
-        parameters.put("app_id", parameters.get("client_id"));
-        parameters.remove("client_id");
+    private URI authorizationRequestUriConsumer(UriBuilder uriBuilder) {
+        String uri = uriBuilder.build().getQuery();
+        // 替换 client_id 为 app_id
+        uri = uri.replace(OAuth2ParameterNames.CLIENT_ID, "app_id");
+        // 飞书 OAuth2 授权请求参数处理
+        return uriBuilder.replaceQuery(uri).build();
     }
-
 }

@@ -1,14 +1,13 @@
 package com.athena.security.servlet.client.delegate;
 
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * 委托 OAuth2 用户信息服务
@@ -21,13 +20,13 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * 用户请求转换器列表
      */
     @Resource
-    private Optional<IUserRequestConverter> requestConverters;
+    private ObjectProvider<IUserRequestConverter> requestConverters;
 
     /**
      * 用户响应转换器列表
      */
     @Resource
-    private Optional<IUserResponseConverter> responseConverters;
+    private ObjectProvider<IUserResponseConverter> responseConverters;
 
     /**
      * 加载用户

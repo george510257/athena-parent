@@ -1,6 +1,7 @@
 package com.athena.security.servlet.client;
 
 import com.athena.security.servlet.client.feishu.domian.FeishuProperties;
+import com.athena.security.servlet.client.weixin.WeixinProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan
-@EnableConfigurationProperties({FeishuProperties.class})
+@EnableConfigurationProperties({FeishuProperties.class, WeixinProperties.class})
 public class ClientSecurityAutoConfig {
 }

@@ -2,14 +2,13 @@ package com.athena.security.servlet.client.delegate;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * 委托授权请求解析器
@@ -34,7 +33,7 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      * 自定义 OAuth2 授权请求器
      */
     @Resource
-    private Optional<IAuthorizationRequestCustomizer> customizers;
+    private ObjectProvider<IAuthorizationRequestCustomizer> customizers;
     /**
      * 客户端注册库
      */

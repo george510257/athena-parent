@@ -1,6 +1,7 @@
 package com.athena.security.servlet.client.delegate;
 
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * 委托授权码令牌响应客户端
@@ -26,12 +26,12 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
      * 授权码授权请求实体转换器列表
      */
     @Resource
-    private Optional<IAuthorizationCodeGrantRequestConverter> requestEntityConverters;
+    private ObjectProvider<IAuthorizationCodeGrantRequestConverter> requestEntityConverters;
     /**
      * accessToken 响应转换器列表
      */
     @Resource
-    private Optional<IAccessTokenResponseConverter> oauth2AccessTokenResponseConverters;
+    private ObjectProvider<IAccessTokenResponseConverter> oauth2AccessTokenResponseConverters;
 
     /**
      * 获取访问令牌响应
