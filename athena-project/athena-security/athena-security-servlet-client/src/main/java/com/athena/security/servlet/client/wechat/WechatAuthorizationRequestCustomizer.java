@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.weixin;
+package com.athena.security.servlet.client.wechat;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
 import jakarta.annotation.Resource;
@@ -15,12 +15,12 @@ import java.net.URI;
  * @author george
  */
 @Component
-public class WeixinAuthorizationRequestCustomizer implements IAuthorizationRequestCustomizer {
+public class WechatAuthorizationRequestCustomizer implements IAuthorizationRequestCustomizer {
     /**
      * 微信配置属性
      */
     @Resource
-    private WeixinProperties weixinProperties;
+    private WechatProperties wechatProperties;
 
     /**
      * 测试是否支持指定的注册标识
@@ -30,8 +30,8 @@ public class WeixinAuthorizationRequestCustomizer implements IAuthorizationReque
      */
     @Override
     public boolean test(String registrationId) {
-        return weixinProperties.getMpRegistrationId().equals(registrationId)
-                || weixinProperties.getOpenRegistrationId().equals(registrationId);
+        return wechatProperties.getMpRegistrationId().equals(registrationId)
+                || wechatProperties.getOpenRegistrationId().equals(registrationId);
     }
 
     /**

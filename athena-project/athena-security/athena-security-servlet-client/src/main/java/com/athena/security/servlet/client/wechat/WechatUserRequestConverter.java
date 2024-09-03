@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.weixin;
+package com.athena.security.servlet.client.wechat;
 
 import cn.hutool.core.util.StrUtil;
 import com.athena.security.servlet.client.delegate.IUserRequestConverter;
@@ -22,13 +22,13 @@ import java.net.URI;
  * @author george
  */
 @Component
-public class WeixinUserRequestConverter implements IUserRequestConverter {
+public class WechatUserRequestConverter implements IUserRequestConverter {
 
     /**
      * 微信配置属性
      */
     @Resource
-    private WeixinProperties weixinProperties;
+    private WechatProperties wechatProperties;
 
     /**
      * 测试是否支持指定的注册标识
@@ -38,8 +38,8 @@ public class WeixinUserRequestConverter implements IUserRequestConverter {
      */
     @Override
     public boolean test(String registrationId) {
-        return weixinProperties.getMpRegistrationId().equals(registrationId)
-                || weixinProperties.getOpenRegistrationId().equals(registrationId);
+        return wechatProperties.getMpRegistrationId().equals(registrationId)
+                || wechatProperties.getOpenRegistrationId().equals(registrationId);
     }
 
     /**

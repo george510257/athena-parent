@@ -2,7 +2,7 @@ package com.athena.security.servlet.client.support;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.athena.security.servlet.client.feishu.FeishuProperties;
-import com.athena.security.servlet.client.weixin.WeixinProperties;
+import com.athena.security.servlet.client.wechat.WechatProperties;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -16,34 +16,34 @@ public enum DefaultOAuth2Provider {
     /**
      * 微信开放平台
      */
-    WEIXIN_OPEN {
+    WECHAT_OPEN {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            WeixinProperties weixinProperties = SpringUtil.getBean(WeixinProperties.class);
-            builder.scope(weixinProperties.getScopes());
-            builder.authorizationUri(weixinProperties.getOpenAuthorizationUri());
-            builder.tokenUri(weixinProperties.getTokenUri());
-            builder.userInfoUri(weixinProperties.getUserInfoUri());
-            builder.userNameAttributeName(weixinProperties.getUserNameAttribute());
-            builder.clientName(weixinProperties.getClientName());
+            WechatProperties wechatProperties = SpringUtil.getBean(WechatProperties.class);
+            builder.scope(wechatProperties.getScopes());
+            builder.authorizationUri(wechatProperties.getOpenAuthorizationUri());
+            builder.tokenUri(wechatProperties.getTokenUri());
+            builder.userInfoUri(wechatProperties.getUserInfoUri());
+            builder.userNameAttributeName(wechatProperties.getUserNameAttribute());
+            builder.clientName(wechatProperties.getClientName());
             return builder;
         }
     },
     /**
      * 微信公众平台
      */
-    WEIXIN_MP {
+    WECHAT_MP {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            WeixinProperties weixinProperties = SpringUtil.getBean(WeixinProperties.class);
-            builder.scope(weixinProperties.getScopes());
-            builder.authorizationUri(weixinProperties.getMpAuthorizationUri());
-            builder.tokenUri(weixinProperties.getTokenUri());
-            builder.userInfoUri(weixinProperties.getUserInfoUri());
-            builder.userNameAttributeName(weixinProperties.getUserNameAttribute());
-            builder.clientName(weixinProperties.getClientName());
+            WechatProperties wechatProperties = SpringUtil.getBean(WechatProperties.class);
+            builder.scope(wechatProperties.getScopes());
+            builder.authorizationUri(wechatProperties.getMpAuthorizationUri());
+            builder.tokenUri(wechatProperties.getTokenUri());
+            builder.userInfoUri(wechatProperties.getUserInfoUri());
+            builder.userNameAttributeName(wechatProperties.getUserNameAttribute());
+            builder.clientName(wechatProperties.getClientName());
             return builder;
         }
     },

@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.weixin;
+package com.athena.security.servlet.client.wechat;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationCodeGrantRequestConverter;
 import jakarta.annotation.Resource;
@@ -21,12 +21,12 @@ import java.net.URI;
  * @author george
  */
 @Component
-public class WeixinAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {
+public class WechatAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {
     /**
      * 微信配置属性
      */
     @Resource
-    private WeixinProperties weixinProperties;
+    private WechatProperties wechatProperties;
 
     /**
      * 测试是否支持指定的注册标识
@@ -36,8 +36,8 @@ public class WeixinAuthorizationCodeGrantRequestConverter implements IAuthorizat
      */
     @Override
     public boolean test(String registrationId) {
-        return weixinProperties.getMpRegistrationId().equals(registrationId)
-                || weixinProperties.getOpenRegistrationId().equals(registrationId);
+        return wechatProperties.getMpRegistrationId().equals(registrationId)
+                || wechatProperties.getOpenRegistrationId().equals(registrationId);
     }
 
     /**

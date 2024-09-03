@@ -1,4 +1,4 @@
-package com.athena.security.servlet.client.weixin;
+package com.athena.security.servlet.client.wechat;
 
 import com.athena.common.core.constant.BaseConstants;
 import com.athena.common.core.constant.BaseProperties;
@@ -15,16 +15,16 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.weixin")
-public class WeixinProperties extends BaseProperties {
+@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.wechat")
+public class WechatProperties extends BaseProperties {
     /**
      * 微信应用 公众号 id
      */
-    private String mpRegistrationId = "weixin_mp";
+    private String mpRegistrationId = "wechat_mp";
     /**
      * 微信应用 开放平台 id
      */
-    private String openRegistrationId = "weixin_open";
+    private String openRegistrationId = "wechat_open";
     /**
      * 微信公众号 授权码授权 uri
      */
@@ -57,5 +57,5 @@ public class WeixinProperties extends BaseProperties {
     /**
      * 微信授权范围
      */
-    private List<String> scopes = List.of("snsapi_base", "snsapi_userinfo", "snsapi_login");
+    private List<String> scopes = List.of("snsapi_login");
 }
