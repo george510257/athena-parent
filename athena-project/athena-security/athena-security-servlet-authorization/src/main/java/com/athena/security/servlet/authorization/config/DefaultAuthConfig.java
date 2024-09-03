@@ -7,6 +7,9 @@ import com.athena.security.servlet.authorization.support.IUserService;
 import com.athena.security.servlet.authorization.support.InMemoryUserService;
 import com.athena.security.servlet.authorization.support.RedisOAuth2AuthorizationConsentService;
 import com.athena.security.servlet.authorization.support.RedisOAuth2AuthorizationService;
+import com.athena.security.servlet.client.social.InMemorySocialUserService;
+import com.athena.security.servlet.client.social.SocialUser;
+import com.athena.security.servlet.client.social.SocialUserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -113,5 +116,15 @@ public class DefaultAuthConfig {
                 .tokenSettings(TokenSettings.builder().accessTokenFormat(OAuth2TokenFormat.REFERENCE).build())
                 .build();
         return new InMemoryRegisteredClientRepository(messagingClient);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SocialUserService socialUserService() {
+        SocialUser user = new SocialUser();
+        user.setRegistrationId("feishu");
+        user.setProviderUserId("on_db245bfb681bd9db299aad19dd4cae66");
+        user.setUsername("admin");
+        return new InMemorySocialUserService(user);
     }
 }
