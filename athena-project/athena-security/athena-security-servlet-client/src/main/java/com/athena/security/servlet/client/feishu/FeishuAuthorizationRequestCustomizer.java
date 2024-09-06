@@ -45,6 +45,12 @@ public class FeishuAuthorizationRequestCustomizer implements IAuthorizationReque
         builder.authorizationRequestUri(this::authorizationRequestUriConsumer);
     }
 
+    /**
+     * 飞书 OAuth2 授权请求参数处理
+     *
+     * @param uriBuilder URI 构建器
+     * @return 处理后的 URI
+     */
     private URI authorizationRequestUriConsumer(UriBuilder uriBuilder) {
         String uri = uriBuilder.build().getQuery();
         // 替换 client_id 为 app_id

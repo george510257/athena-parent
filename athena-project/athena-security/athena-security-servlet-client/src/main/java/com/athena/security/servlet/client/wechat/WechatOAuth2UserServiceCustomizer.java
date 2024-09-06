@@ -29,18 +29,35 @@ public class WechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCust
     @Resource
     private WechatProperties wechatProperties;
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return wechatProperties.getMpRegistrationId().equals(registrationId)
                 || wechatProperties.getOpenRegistrationId().equals(registrationId);
     }
 
+    /**
+     * 定制化
+     *
+     * @param oauth2UserService OAuth2 用户信息服务
+     */
     @Override
-    public void customize(DefaultOAuth2UserService oAuth2UserService) {
+    public void customize(DefaultOAuth2UserService oauth2UserService) {
         // 设置属性转换器
-        oAuth2UserService.setRequestEntityConverter(this::requestEntityConverter);
+        oauth2UserService.setRequestEntityConverter(this::requestEntityConverter);
     }
 
+    /**
+     * 请求实体转换器
+     *
+     * @param request 授权码授权请求
+     * @return 请求实体
+     */
     private RequestEntity<?> requestEntityConverter(OAuth2UserRequest request) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add(OAuth2ParameterNames.ACCESS_TOKEN, request.getAccessToken().getTokenValue());

@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
 
+    /**
+     * 自定义授权码令牌响应客户端定制器
+     */
     @Resource
     private ObjectProvider<IAuthorizationCodeTokenResponseClientCustomizer> customizers;
 
