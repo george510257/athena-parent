@@ -1,11 +1,11 @@
 package com.athena.security.servlet.client.wechat;
 
-import com.athena.security.servlet.client.delegate.IAuthorizationCodeGrantRequestConverter;
+import com.athena.security.servlet.client.delegate.IAuthorizationCodeTokenResponseClientCustomizer;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
-import org.springframework.lang.NonNull;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 /**
- * 微信授权码请求转换器
+ * 微信授权码令牌响应客户端定制器
  *
  * @author george
  */
 @Component
-public class WechatAuthorizationCodeGrantRequestConverter implements IAuthorizationCodeGrantRequestConverter {
+public class WechatAuthorizationCodeTokenResponseClientCustomizer implements IAuthorizationCodeTokenResponseClientCustomizer {
     /**
      * 微信配置属性
      */
@@ -41,17 +41,27 @@ public class WechatAuthorizationCodeGrantRequestConverter implements IAuthorizat
     }
 
     /**
-     * 转换为请求实体
+     * 定制化
      *
-     * @param authorizationCodeGrantRequest 授权码授权请求
-     * @return 请求实体
+     * @param client 授权码令牌响应客户端
      */
     @Override
-    public RequestEntity<?> convert(@NonNull OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+    public void customize(DefaultAuthorizationCodeTokenResponseClient client) {
+        // 设置请求实体转换器
+        client.setRequestEntityConverter(this::requestEntityConverter);
+    }
+
+    /**
+     * 请求实体转换器
+     *
+     * @param request 授权码授权请求
+     * @return 请求实体
+     */
+    private RequestEntity<?> requestEntityConverter(OAuth2AuthorizationCodeGrantRequest request) {
         // 请求参数
-        MultiValueMap<String, String> parameters = this.convertParameters(authorizationCodeGrantRequest);
+        MultiValueMap<String, String> parameters = this.convertParameters(request);
         // 请求地址
-        URI uri = UriComponentsBuilder.fromUriString(authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getTokenUri())
+        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration().getProviderDetails().getTokenUri())
                 .queryParams(parameters)
                 .build().toUri();
         // 创建请求实体
@@ -61,17 +71,17 @@ public class WechatAuthorizationCodeGrantRequestConverter implements IAuthorizat
     }
 
     /**
-     * 转换为请求参数
+     * 请求参数转换
      *
-     * @param authorizationCodeGrantRequest 授权码授权请求
+     * @param request 授权码授权请求
      * @return 请求参数
      */
-    private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
+    private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest request) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("appid", authorizationCodeGrantRequest.getClientRegistration().getClientId());
-        parameters.add("secret", authorizationCodeGrantRequest.getClientRegistration().getClientSecret());
-        parameters.add(OAuth2ParameterNames.CODE, authorizationCodeGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode());
-        parameters.add(OAuth2ParameterNames.GRANT_TYPE, authorizationCodeGrantRequest.getGrantType().getValue());
+        parameters.add("appid", request.getClientRegistration().getClientId());
+        parameters.add("secret", request.getClientRegistration().getClientSecret());
+        parameters.add(OAuth2ParameterNames.CODE, request.getAuthorizationExchange().getAuthorizationResponse().getCode());
+        parameters.add(OAuth2ParameterNames.GRANT_TYPE, request.getGrantType().getValue());
         return parameters;
     }
 }

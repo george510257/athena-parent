@@ -21,23 +21,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-
-    /**
-     * 用户请求转换器列表
-     */
-    @Resource
-    private ObjectProvider<IUserRequestConverter> requestConverters;
-
-    /**
-     * 用户响应转换器列表
-     */
-    @Resource
-    private ObjectProvider<IUserResponseConverter> responseConverters;
     /**
      * 社交用户仓库
      */
     @Resource
     private SocialUserService socialUserService;
+    /**
+     * OAuth2UserService 定制器提供者
+     */
+    @Resource
+    private ObjectProvider<IOAuth2UserServiceCustomizer> customizers;
 
     /**
      * 加载用户
@@ -94,15 +87,10 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      */
     private OAuth2UserService<OAuth2UserRequest, OAuth2User> getDelegate(String registrationId) {
         DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
-        requestConverters.stream()
-                .filter(converter -> converter.test(registrationId))
+        customizers.stream()
+                .filter(customizer -> customizer.test(registrationId))
                 .findFirst()
-                .ifPresent(delegate::setRequestEntityConverter);
-        // 根据注册 ID 获取用户响应转换器
-        responseConverters.stream()
-                .filter(converter -> converter.test(registrationId))
-                .findFirst()
-                .ifPresent(delegate::setAttributesConverter);
+                .ifPresent(customizer -> customizer.customize(delegate));
         return delegate;
     }
 }
