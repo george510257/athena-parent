@@ -49,5 +49,7 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
         configurer.tokenEndpoint(tokenEndpointCustomizer);
         // 用户信息端点自定义器
         configurer.userInfoEndpoint(userInfoEndpointCustomizer);
+
+        configurer.failureUrl("/login?error");
     }
 }

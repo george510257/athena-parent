@@ -6,6 +6,7 @@ import cn.hutool.extra.servlet.JakartaServletUtil;
 import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -62,5 +63,9 @@ public class WebUtil {
             return JSONUtil.parseObj(body).getStr(parameterName);
         }
         return null;
+    }
+
+    public Optional<HttpSession> getSession() {
+        return getRequest().map(HttpServletRequest::getSession);
     }
 }
