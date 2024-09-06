@@ -16,12 +16,6 @@ import java.io.IOException;
  */
 public class GenericExceptionDeserializer<T extends Exception> extends JsonDeserializer<T> {
 
-    private Class<T> exceptionClass;
-
-    public GenericExceptionDeserializer(Class<T> exceptionClass) {
-        this.exceptionClass = exceptionClass;
-    }
-
     @Override
     public T deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
@@ -43,7 +37,7 @@ public class GenericExceptionDeserializer<T extends Exception> extends JsonDeser
 
         try {
             // 通过反射创建异常实例
-            T exception = exceptionClass.getConstructor(String.class).newInstance(message);
+            T exception = (T) Class.forName(node.get("type").asText()).getConstructor(String.class).newInstance(message);
             exception.setStackTrace(stackTrace);
             return exception;
         } catch (Exception e) {
