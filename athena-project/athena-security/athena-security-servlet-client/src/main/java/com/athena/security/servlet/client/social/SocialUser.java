@@ -1,6 +1,7 @@
 package com.athena.security.servlet.client.social;
 
 import com.athena.common.bean.base.BaseVo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Delegate;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@JsonDeserialize(using = SocialUserDeserializer.class)
 public class SocialUser extends BaseVo implements OAuth2User {
 
     @Delegate
