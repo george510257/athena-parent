@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.customizer;
 
+import com.athena.security.core.properties.CoreSecurityProperties;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>> {
+
+    @Resource
+    private CoreSecurityProperties coreSecurityProperties;
     /**
      * 授权端点自定义器
      */
@@ -41,6 +45,8 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      */
     @Override
     public void customize(OAuth2LoginConfigurer<HttpSecurity> configurer) {
+        // 登录页面
+        configurer.loginPage(coreSecurityProperties.getRest().getLoginPage());
         // 授权端点自定义器
         configurer.authorizationEndpoint(authorizationEndpointCustomizer);
         // 重定向端点自定义器
@@ -49,7 +55,5 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
         configurer.tokenEndpoint(tokenEndpointCustomizer);
         // 用户信息端点自定义器
         configurer.userInfoEndpoint(userInfoEndpointCustomizer);
-
-        configurer.failureUrl("/login?error");
     }
 }
