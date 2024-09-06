@@ -37,6 +37,10 @@ public class InMemorySocialUserRepository implements SocialUserRepository {
      */
     @Override
     public void saveSocialUser(SocialUser socialUser) {
+        USERS.stream()
+                .filter(user -> user.getProviderId().equals(socialUser.getProviderId()) && user.getName().equals(socialUser.getName()))
+                .findFirst()
+                .ifPresent(USERS::remove);
         USERS.add(socialUser);
     }
 

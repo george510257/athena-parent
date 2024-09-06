@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.delegate;
 
+import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.social.SocialUser;
 import com.athena.security.servlet.client.social.SocialUserRepository;
 import com.athena.starter.web.util.WebUtil;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private static final String SOCIAL_USER = "socialUser";
     /**
      * 用户请求转换器列表
      */
@@ -59,7 +59,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 未绑定
         if (!socialUser.getBindStatus()) {
             // 设置社交用户
-            WebUtil.getSession().ifPresent(session -> session.setAttribute(SOCIAL_USER, socialUser));
+            WebUtil.getSession().ifPresent(session -> session.setAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY, socialUser));
             // 抛出异常
             throw new OAuth2AuthenticationException(new OAuth2Error("social_user_not_bind", "社交用户未绑定", null));
         }
