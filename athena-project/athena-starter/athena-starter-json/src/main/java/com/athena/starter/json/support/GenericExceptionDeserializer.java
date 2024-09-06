@@ -8,6 +8,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
+/**
+ * 异常反序列化器
+ *
+ * @param <T> 异常类型
+ * @author george
+ */
 public class GenericExceptionDeserializer<T extends Exception> extends JsonDeserializer<T> {
 
     private Class<T> exceptionClass;

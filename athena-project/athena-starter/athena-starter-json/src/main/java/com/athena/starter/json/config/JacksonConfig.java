@@ -2,8 +2,7 @@ package com.athena.starter.json.config;
 
 import cn.hutool.core.date.DatePattern;
 import com.athena.starter.json.support.DefaultDateFormat;
-import com.athena.starter.json.support.GenericExceptionDeserializer;
-import com.athena.starter.json.support.GenericExceptionSerializer;
+import com.athena.starter.json.support.GenericExceptionMixin;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -70,8 +69,6 @@ public class JacksonConfig {
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DatePattern.NORM_DATE_FORMATTER));
         // HH:mm:ss
         javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DatePattern.NORM_TIME_FORMATTER));
-        // 异常处理
-        javaTimeModule.addSerializer(Exception.class, new GenericExceptionSerializer<>());
 
         // ======================= 时间反序列化规则 ==============================
         // yyyy-MM-dd HH:mm:ss
@@ -81,7 +78,8 @@ public class JacksonConfig {
         // HH:mm:ss
         javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DatePattern.NORM_TIME_FORMATTER));
 
-        javaTimeModule.addDeserializer(Exception.class, new GenericExceptionDeserializer<>(Exception.class));
+        // ======================= 异常序列化与反序列化规则 ========================
+        javaTimeModule.setMixInAnnotation(Exception.class, GenericExceptionMixin.class);
         return javaTimeModule;
     }
 

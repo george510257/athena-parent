@@ -3,14 +3,20 @@ package com.athena.starter.json.support;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 import java.io.IOException;
 
+/**
+ * 异常序列化器
+ *
+ * @author george
+ */
 public class GenericExceptionSerializer<T extends Exception> extends JsonSerializer<T> {
 
     @Override
     public void serialize(T exception, JsonGenerator jsonGenerator, SerializerProvider serializers) throws IOException {
-        jsonGenerator.writeStartObject();
+//        jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("message", exception.getMessage());
         jsonGenerator.writeStringField("type", exception.getClass().getName());
         jsonGenerator.writeArrayFieldStart("stackTrace");
@@ -22,7 +28,14 @@ public class GenericExceptionSerializer<T extends Exception> extends JsonSeriali
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();
-        jsonGenerator.writeEndObject();
+//        jsonGenerator.writeEndObject();
+    }
+
+    @Override
+    public void serializeWithType(T exception, JsonGenerator jsonGenerator, SerializerProvider serializers, TypeSerializer typeSer) throws IOException {
+        typeSer.writeTypePrefixForObject(exception, jsonGenerator);
+        serialize(exception, jsonGenerator, serializers);
+        typeSer.writeTypeSuffixForObject(exception, jsonGenerator);
     }
 }
 
