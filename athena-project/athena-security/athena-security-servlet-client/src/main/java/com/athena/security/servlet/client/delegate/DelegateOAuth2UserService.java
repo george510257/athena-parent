@@ -2,7 +2,7 @@ package com.athena.security.servlet.client.delegate;
 
 import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.social.SocialUser;
-import com.athena.security.servlet.client.social.SocialUserRepository;
+import com.athena.security.servlet.client.social.SocialUserService;
 import com.athena.starter.web.util.WebUtil;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
@@ -37,7 +37,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * 社交用户仓库
      */
     @Resource
-    private SocialUserRepository socialUserRepository;
+    private SocialUserService socialUserService;
 
     /**
      * 加载用户
@@ -75,13 +75,13 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * @return 社交用户
      */
     private SocialUser convetToSocialUser(OAuth2User oauth2User, String registrationId) {
-        SocialUser socialUser = socialUserRepository.loadSocialUser(registrationId, oauth2User.getName());
+        SocialUser socialUser = socialUserService.loadSocialUser(registrationId, oauth2User.getName());
         if (socialUser == null) {
             socialUser = new SocialUser();
             socialUser.setProviderId(registrationId);
             socialUser.setOauth2User(oauth2User);
             socialUser.setBindStatus(false);
-            socialUserRepository.saveSocialUser(socialUser);
+            socialUserService.saveSocialUser(socialUser);
         }
         return socialUser;
     }

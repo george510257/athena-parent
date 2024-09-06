@@ -7,8 +7,8 @@ import com.athena.security.servlet.authorization.support.IUserService;
 import com.athena.security.servlet.authorization.support.InMemoryUserService;
 import com.athena.security.servlet.authorization.support.RedisOAuth2AuthorizationConsentService;
 import com.athena.security.servlet.authorization.support.RedisOAuth2AuthorizationService;
-import com.athena.security.servlet.client.social.InMemorySocialUserRepository;
-import com.athena.security.servlet.client.social.SocialUserRepository;
+import com.athena.security.servlet.client.social.InMemorySocialUserService;
+import com.athena.security.servlet.client.social.SocialUserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -119,7 +119,7 @@ public class DefaultAuthConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public SocialUserRepository socialUserService() {
-        return new InMemorySocialUserRepository();
+    public SocialUserService socialUserService() {
+        return new InMemorySocialUserService();
     }
 }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SocialUserBindListener implements ApplicationListener<AuthenticationSuccessEvent> {
     @Resource
-    private SocialUserRepository socialUserRepository;
+    private SocialUserService socialUserService;
     @Resource
     private HttpSession session;
 
@@ -35,7 +35,7 @@ public class SocialUserBindListener implements ApplicationListener<Authenticatio
                 // 绑定社交用户
                 socialUser.setUsername(user.getUsername());
                 socialUser.setBindStatus(true);
-                socialUserRepository.saveSocialUser(socialUser);
+                socialUserService.saveSocialUser(socialUser);
                 session.removeAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY);
                 log.info("社交用户绑定成功");
             }
