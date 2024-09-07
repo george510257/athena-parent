@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.wechat;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.athena.security.servlet.client.delegate.IOAuth2UserServiceCustomizer;
 import jakarta.annotation.Resource;
@@ -59,15 +60,45 @@ public class WechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCust
      * @return 请求实体
      */
     private RequestEntity<?> requestEntityConverter(OAuth2UserRequest request) {
+        // 请求头
+        HttpHeaders headers = this.convertHeaders(request);
+        // 请求参数
+        MultiValueMap<String, String> parameters = this.convertParameters(request);
+        // 请求 URI
+        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration()
+                        .getProviderDetails()
+                        .getUserInfoEndpoint()
+                        .getUri())
+                .queryParams(parameters)
+                .build().toUri();
+        return RequestEntity.get(uri)
+                .headers(headers)
+                .build();
+    }
+
+    /**
+     * 转换请求头
+     *
+     * @param request 请求
+     * @return 请求头
+     */
+    private HttpHeaders convertHeaders(OAuth2UserRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(CollUtil.toList(MediaType.APPLICATION_JSON));
+        return headers;
+    }
+
+    /**
+     * 转换请求参数
+     *
+     * @param request 请求
+     * @return 请求参数
+     */
+    private MultiValueMap<String, String> convertParameters(OAuth2UserRequest request) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add(OAuth2ParameterNames.ACCESS_TOKEN, request.getAccessToken().getTokenValue());
         parameters.add("openid", StrUtil.toString(request.getAdditionalParameters().get("openid")));
         parameters.add("lang", "zh_CN");
-        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri())
-                .queryParams(parameters)
-                .build().toUri();
-        return RequestEntity.get(uri)
-                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-                .build();
+        return parameters;
     }
 }
