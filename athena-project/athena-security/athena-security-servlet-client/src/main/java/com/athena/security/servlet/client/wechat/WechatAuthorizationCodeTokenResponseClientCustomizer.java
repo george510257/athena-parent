@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.wechat;
 
+import cn.hutool.core.collection.CollUtil;
 import com.athena.security.servlet.client.delegate.IAuthorizationCodeTokenResponseClientCustomizer;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpHeaders;
@@ -58,6 +59,8 @@ public class WechatAuthorizationCodeTokenResponseClientCustomizer implements IAu
      * @return 请求实体
      */
     private RequestEntity<?> requestEntityConverter(OAuth2AuthorizationCodeGrantRequest request) {
+        // 请求头
+        HttpHeaders headers = this.convertHeaders(request);
         // 请求参数
         MultiValueMap<String, String> parameters = this.convertParameters(request);
         // 请求地址
@@ -66,8 +69,14 @@ public class WechatAuthorizationCodeTokenResponseClientCustomizer implements IAu
                 .build().toUri();
         // 创建请求实体
         return RequestEntity.get(uri)
-                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+                .headers(headers)
                 .build();
+    }
+
+    private HttpHeaders convertHeaders(OAuth2AuthorizationCodeGrantRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(CollUtil.toList(MediaType.APPLICATION_JSON));
+        return headers;
     }
 
     /**
