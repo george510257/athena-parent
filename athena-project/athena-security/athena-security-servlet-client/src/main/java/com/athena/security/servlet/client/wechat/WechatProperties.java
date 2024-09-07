@@ -55,7 +55,12 @@ public class WechatProperties extends BaseProperties {
     private String clientName = "微信";
 
     /**
-     * 微信授权范围
+     * 微信公众号授权范围
      */
-    private List<String> scopes = List.of("snsapi_login");
+    private List<String> mpScopes = List.of("snsapi_userinfo");
+
+    /**
+     * 微信开放平台授权范围
+     */
+    private List<String> openScopes = List.of("snsapi_login");
 }

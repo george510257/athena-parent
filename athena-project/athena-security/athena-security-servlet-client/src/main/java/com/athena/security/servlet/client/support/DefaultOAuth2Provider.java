@@ -21,7 +21,7 @@ public enum DefaultOAuth2Provider {
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
             WechatProperties wechatProperties = SpringUtil.getBean(WechatProperties.class);
-            builder.scope(wechatProperties.getScopes());
+            builder.scope(wechatProperties.getOpenScopes());
             builder.authorizationUri(wechatProperties.getOpenAuthorizationUri());
             builder.tokenUri(wechatProperties.getTokenUri());
             builder.userInfoUri(wechatProperties.getUserInfoUri());
@@ -38,7 +38,7 @@ public enum DefaultOAuth2Provider {
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
             WechatProperties wechatProperties = SpringUtil.getBean(WechatProperties.class);
-            builder.scope(wechatProperties.getScopes());
+            builder.scope(wechatProperties.getMpScopes());
             builder.authorizationUri(wechatProperties.getMpAuthorizationUri());
             builder.tokenUri(wechatProperties.getTokenUri());
             builder.userInfoUri(wechatProperties.getUserInfoUri());
