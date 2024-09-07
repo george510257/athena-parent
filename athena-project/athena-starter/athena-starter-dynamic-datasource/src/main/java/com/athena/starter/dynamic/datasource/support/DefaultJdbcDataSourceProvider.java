@@ -74,7 +74,7 @@ public class DefaultJdbcDataSourceProvider extends AbstractJdbcDataSourceProvide
      */
     private Map<String, DataSourceProperty> toDataSourcePropertiesMap(ResultSet rs) {
 
-        Map<String, DataSourceProperty> dataSourcePropertiesMap = new HashMap<>();
+        Map<String, DataSourceProperty> dataSourcePropertiesMap = new HashMap<>(16);
         try {
             while (rs.next()) {
                 DataSourceProperty property = new DataSourceProperty();

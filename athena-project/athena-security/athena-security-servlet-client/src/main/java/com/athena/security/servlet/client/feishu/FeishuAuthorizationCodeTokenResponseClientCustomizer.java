@@ -153,7 +153,7 @@ public class FeishuAuthorizationCodeTokenResponseClientCustomizer implements IAu
      * @return 参数
      */
     private Map<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest request) {
-        Map<String, String> parameters = new HashMap<>();
+        Map<String, String> parameters = new HashMap<>(2);
         OAuth2AuthorizationExchange authorizationExchange = request.getAuthorizationExchange();
         // 授权类型
         parameters.put(OAuth2ParameterNames.GRANT_TYPE, request.getGrantType().getValue());

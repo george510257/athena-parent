@@ -115,9 +115,9 @@ public class DefaultReadListener<T> implements IReadListener<T> {
             try {
                 field.setAccessible(true);
                 ExcelMultiColumn excelMultiColumn = field.getAnnotation(ExcelMultiColumn.class);
-                Map<String, Object> multiColumnMap = new HashMap<>();
                 int start = excelMultiColumn.start();
                 int end = Math.min(excelMultiColumn.end(), headMap.size());
+                Map<String, Object> multiColumnMap = new HashMap<>(end - start);
                 for (int i = start; i < end; i++) {
                     multiColumnMap.put(headMap.get(i), getJavaValue(cellMap.get(i)));
                 }

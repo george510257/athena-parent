@@ -179,7 +179,7 @@ public abstract class OAuth2BaseAuthenticationProvider implements Authentication
 
         Map<String, Object> additionalParameters = Collections.emptyMap();
         if (idToken != null) {
-            additionalParameters = new HashMap<>();
+            additionalParameters = new HashMap<>(1);
             additionalParameters.put(OidcParameterNames.ID_TOKEN, idToken.getTokenValue());
         }
 
