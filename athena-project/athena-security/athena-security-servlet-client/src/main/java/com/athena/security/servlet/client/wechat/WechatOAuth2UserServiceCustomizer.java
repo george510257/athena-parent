@@ -1,12 +1,9 @@
 package com.athena.security.servlet.client.wechat;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.delegate.IOAuth2UserServiceCustomizer;
 import jakarta.annotation.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -61,32 +58,13 @@ public class WechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCust
      * @return 请求实体
      */
     private RequestEntity<?> requestEntityConverter(OAuth2UserRequest request) {
-        // 请求头
-        HttpHeaders headers = this.convertHeaders(request);
         // 请求参数
         MultiValueMap<String, String> parameters = this.convertParameters(request);
         // 请求 URI
-        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration()
-                        .getProviderDetails()
-                        .getUserInfoEndpoint()
-                        .getUri())
-                .queryParams(parameters)
-                .build().toUri();
-        return RequestEntity.get(uri)
-                .headers(headers)
-                .build();
-    }
-
-    /**
-     * 转换请求头
-     *
-     * @param request 请求
-     * @return 请求头
-     */
-    private HttpHeaders convertHeaders(OAuth2UserRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(CollUtil.toList(MediaType.APPLICATION_JSON));
-        return headers;
+        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration().getProviderDetails()
+                        .getUserInfoEndpoint().getUri())
+                .queryParams(parameters).build().toUri();
+        return RequestEntity.get(uri).build();
     }
 
     /**
@@ -98,7 +76,8 @@ public class WechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCust
     private MultiValueMap<String, String> convertParameters(OAuth2UserRequest request) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add(OAuth2ParameterNames.ACCESS_TOKEN, request.getAccessToken().getTokenValue());
-        parameters.add(ClientSecurityConstants.WECHAT_OPENID, StrUtil.toString(request.getAdditionalParameters().get(ClientSecurityConstants.WECHAT_OPENID)));
+        parameters.add(ClientSecurityConstants.WECHAT_OPENID, StrUtil.toString(request.getAdditionalParameters()
+                .get(ClientSecurityConstants.WECHAT_OPENID)));
         parameters.add(ClientSecurityConstants.WECHAT_LANG, wechatProperties.getLang());
         return parameters;
     }
