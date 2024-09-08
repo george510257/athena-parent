@@ -54,11 +54,13 @@ public enum DefaultOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            builder.authorizationUri("https://login.work.weixin.qq.com/wwlogin/sso/login");
-            builder.tokenUri("https://qyapi.weixin.qq.com/cgi-bin/gettoken");
-            builder.userInfoUri("https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo");
-            builder.userNameAttributeName("openid");
-            builder.clientName("企业微信");
+            WechatProperties.Work work = SpringUtil.getBean(WechatProperties.class).getWork();
+            builder.scope(work.getScopes());
+            builder.authorizationUri(work.getAuthorizationUri());
+            builder.tokenUri(work.getTokenUri());
+            builder.userInfoUri(work.getUserInfoUri());
+            builder.userNameAttributeName(work.getUserNameAttribute());
+            builder.clientName(work.getClientName());
             return builder;
         }
     },

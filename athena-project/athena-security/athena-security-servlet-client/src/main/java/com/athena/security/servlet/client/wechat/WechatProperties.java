@@ -26,6 +26,10 @@ public class WechatProperties extends BaseProperties {
      * 开放平台
      */
     private Open open = new Open();
+    /**
+     * 企业微信
+     */
+    private Work work = new Work();
 
     /**
      * 微信公众号
@@ -95,5 +99,40 @@ public class WechatProperties extends BaseProperties {
          * 作用域
          */
         private List<String> scopes = List.of("snsapi_login");
+    }
+
+    /**
+     * 企业微信
+     */
+    @Data
+    public static class Work implements Serializable {
+        /**
+         * 注册标识
+         */
+        private String registrationId = "wechat_work";
+        /**
+         * 授权 URI
+         */
+        private String authorizationUri = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect";
+        /**
+         * 令牌 URI
+         */
+        private String tokenUri = "https://qyapi.weixin.qq.com/cgi-bin/gettoken";
+        /**
+         * 用户信息 URI
+         */
+        private String userInfoUri = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo";
+        /**
+         * 用户名属性
+         */
+        private String userNameAttribute = "UserId";
+        /**
+         * 客户端名称
+         */
+        private String clientName = "企业微信";
+        /**
+         * 作用域
+         */
+        private List<String> scopes = List.of("snsapi_base");
     }
 }
