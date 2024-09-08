@@ -28,28 +28,56 @@ import java.util.HashMap;
  */
 @Component
 public class WorkWechatAuthorizationCodeTokenResponseClientCustomizer implements IAuthorizationCodeTokenResponseClientCustomizer {
+    /**
+     * 企业微信属性配置
+     */
     @Resource
     private WechatProperties wechatProperties;
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return wechatProperties.getWork().getRegistrationId().equals(registrationId);
     }
 
+    /**
+     * 定制化
+     *
+     * @param client 授权码令牌响应客户端
+     */
     @Override
     public void customize(DefaultAuthorizationCodeTokenResponseClient client) {
         client.setRequestEntityConverter(this::requestEntityConverter);
     }
 
+    /**
+     * 请求实体转换器
+     *
+     * @param request  授权码授权请求
+     * @param response 响应
+     * @return 请求实体
+     */
     @Override
     public OAuth2AccessTokenResponse customResponse(OAuth2AuthorizationCodeGrantRequest request, OAuth2AccessTokenResponse response) {
         return OAuth2AccessTokenResponse.withResponse(response)
                 .additionalParameters(MapUtil.builder(new HashMap<String, Object>())
+                        // 添加授权码
                         .put(OAuth2ParameterNames.CODE, request.getAuthorizationExchange().getAuthorizationResponse().getCode())
                         .build())
                 .build();
     }
 
+    /**
+     * 请求实体转换器
+     *
+     * @param request 授权码授权请求
+     * @return 请求实体
+     */
     private RequestEntity<?> requestEntityConverter(OAuth2AuthorizationCodeGrantRequest request) {
         // 请求头
         HttpHeaders headers = this.convertHeaders(request);
@@ -65,12 +93,24 @@ public class WorkWechatAuthorizationCodeTokenResponseClientCustomizer implements
                 .build();
     }
 
+    /**
+     * 转换请求头
+     *
+     * @param request 授权码授权请求
+     * @return 请求头
+     */
     private HttpHeaders convertHeaders(OAuth2AuthorizationCodeGrantRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(CollUtil.toList(MediaType.APPLICATION_JSON));
         return headers;
     }
 
+    /**
+     * 转换请求参数
+     *
+     * @param request 授权码授权请求
+     * @return 请求参数
+     */
     private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest request) {
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         ClientRegistration clientRegistration = request.getClientRegistration();

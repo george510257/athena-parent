@@ -74,6 +74,12 @@ public class WechatAuthorizationCodeTokenResponseClientCustomizer implements IAu
                 .build();
     }
 
+    /**
+     * 转换请求头
+     *
+     * @param request 授权码授权请求
+     * @return 请求头
+     */
     private HttpHeaders convertHeaders(OAuth2AuthorizationCodeGrantRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(CollUtil.toList(MediaType.APPLICATION_JSON));

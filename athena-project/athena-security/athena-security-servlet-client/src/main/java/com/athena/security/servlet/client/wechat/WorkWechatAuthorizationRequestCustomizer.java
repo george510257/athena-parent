@@ -17,19 +17,39 @@ import java.util.Map;
  */
 @Component
 public class WorkWechatAuthorizationRequestCustomizer implements IAuthorizationRequestCustomizer {
+    /**
+     * 企业微信属性配置
+     */
     @Resource
     private WechatProperties wechatProperties;
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return wechatProperties.getWork().getRegistrationId().equals(registrationId);
     }
 
+    /**
+     * 定制化
+     *
+     * @param builder 授权请求构建器
+     */
     @Override
     public void accept(OAuth2AuthorizationRequest.Builder builder) {
+        // 设置参数
         builder.parameters(this::convertParameters);
     }
 
+    /**
+     * 转换参数
+     *
+     * @param parameters 参数
+     */
     private void convertParameters(Map<String, Object> parameters) {
         Map<String, Object> map = new HashMap<>();
         map.put(ClientSecurityConstants.WECHAT_WORK_LOGIN_TYPE, wechatProperties.getWork().getLoginType());

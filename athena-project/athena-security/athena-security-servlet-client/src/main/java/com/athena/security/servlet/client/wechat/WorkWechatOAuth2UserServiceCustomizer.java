@@ -22,20 +22,40 @@ import java.net.URI;
  */
 @Component
 public class WorkWechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCustomizer {
+    /**
+     * 企业微信属性配置
+     */
     @Resource
     private WechatProperties wechatProperties;
 
+    /**
+     * 测试是否支持指定的注册标识
+     *
+     * @param registrationId 注册标识
+     * @return 是否支持
+     */
     @Override
     public boolean test(String registrationId) {
         return wechatProperties.getWork().getRegistrationId().equals(registrationId);
     }
 
+    /**
+     * 定制化
+     *
+     * @param service OAuth2 用户信息服务
+     */
     @Override
     public void customize(DefaultOAuth2UserService service) {
         // 设置属性转换器
         service.setRequestEntityConverter(this::requestEntityConverter);
     }
 
+    /**
+     * 请求实体转换器
+     *
+     * @param request OAuth2 用户请求
+     * @return 请求实体
+     */
     private RequestEntity<?> requestEntityConverter(OAuth2UserRequest request) {
         // 请求头
         HttpHeaders headers = this.convertHeaders(request);
@@ -53,12 +73,24 @@ public class WorkWechatOAuth2UserServiceCustomizer implements IOAuth2UserService
                 .build();
     }
 
+    /**
+     * 转换请求头
+     *
+     * @param request OAuth2 用户请求
+     * @return 请求头
+     */
     private HttpHeaders convertHeaders(OAuth2UserRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(CollUtil.toList(MediaType.APPLICATION_JSON));
         return headers;
     }
 
+    /**
+     * 转换请求参数
+     *
+     * @param request OAuth2 用户请求
+     * @return 请求参数
+     */
     private MultiValueMap<String, String> convertParameters(OAuth2UserRequest request) {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add(OAuth2ParameterNames.ACCESS_TOKEN, request.getAccessToken().getTokenValue());
