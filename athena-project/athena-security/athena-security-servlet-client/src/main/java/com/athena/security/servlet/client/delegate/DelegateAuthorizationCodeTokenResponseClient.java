@@ -34,10 +34,12 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
         String registrationId = authorizationCodeGrantRequest.getClientRegistration().getRegistrationId();
         DefaultAuthorizationCodeTokenResponseClient delegate = new DefaultAuthorizationCodeTokenResponseClient();
         // 根据注册标识获取授权码授权请求实体转换器
-        customizers.stream()
-                .filter(customizer -> customizer.test(registrationId))
-                .findFirst()
-                .ifPresent(customizer -> customizer.customize(delegate));
+        IAuthorizationCodeTokenResponseClientCustomizer customizer = customizers.stream().filter(c -> c.test(registrationId)).findFirst().orElse(null);
+        if (customizer != null) {
+            customizer.customize(delegate);
+            OAuth2AccessTokenResponse response = delegate.getTokenResponse(authorizationCodeGrantRequest);
+            return customizer.customResponse(authorizationCodeGrantRequest, response);
+        }
         return delegate.getTokenResponse(authorizationCodeGrantRequest);
     }
 

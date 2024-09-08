@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.wechat;
 
+import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
@@ -54,8 +55,8 @@ public class WechatAuthorizationRequestCustomizer implements IAuthorizationReque
     private URI authorizationRequestUriConsumer(UriBuilder uriBuilder) {
         String uri = uriBuilder.build().getQuery();
         // 替换 client_id 为 appid
-        uri = uri.replace(OAuth2ParameterNames.CLIENT_ID, "appid");
+        uri = uri.replace(OAuth2ParameterNames.CLIENT_ID, ClientSecurityConstants.WECHAT_APP_ID);
         // 微信 OAuth2 授权请求参数添加 #wechat_redirect
-        return uriBuilder.replaceQuery(uri).fragment("wechat_redirect").build();
+        return uriBuilder.replaceQuery(uri).fragment(ClientSecurityConstants.WECHAT_REDIRECT).build();
     }
 }

@@ -19,6 +19,10 @@ import java.util.List;
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.wechat")
 public class WechatProperties extends BaseProperties {
     /**
+     * 语言
+     */
+    private String lang = "zh_CN";
+    /**
      * 公众号
      */
     private Mp mp = new Mp();
@@ -113,7 +117,7 @@ public class WechatProperties extends BaseProperties {
         /**
          * 授权 URI
          */
-        private String authorizationUri = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect";
+        private String authorizationUri = "https://login.work.weixin.qq.com/wwlogin/sso/login";
         /**
          * 令牌 URI
          */
@@ -121,11 +125,11 @@ public class WechatProperties extends BaseProperties {
         /**
          * 用户信息 URI
          */
-        private String userInfoUri = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo";
+        private String userInfoUri = "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo";
         /**
          * 用户名属性
          */
-        private String userNameAttribute = "UserId";
+        private String userNameAttribute = "userid";
         /**
          * 客户端名称
          */
@@ -134,5 +138,17 @@ public class WechatProperties extends BaseProperties {
          * 作用域
          */
         private List<String> scopes = List.of("snsapi_base");
+        /**
+         * 登录类型 ServiceApp: 服务商模式, CorpApp: 企业自建应用
+         */
+        private String loginType = "CorpApp";
+        /**
+         * 应用 ID 企业自建应用必填
+         */
+        private String agentId = "1000002";
+        /**
+         * 语言
+         */
+        private String lang = "zh";
     }
 }
