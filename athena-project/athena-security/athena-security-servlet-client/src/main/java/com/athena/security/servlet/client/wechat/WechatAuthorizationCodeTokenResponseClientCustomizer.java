@@ -37,8 +37,8 @@ public class WechatAuthorizationCodeTokenResponseClientCustomizer implements IAu
      */
     @Override
     public boolean test(String registrationId) {
-        return wechatProperties.getMpRegistrationId().equals(registrationId)
-                || wechatProperties.getOpenRegistrationId().equals(registrationId);
+        return wechatProperties.getMp().getRegistrationId().equals(registrationId)
+                || wechatProperties.getOpen().getRegistrationId().equals(registrationId);
     }
 
     /**

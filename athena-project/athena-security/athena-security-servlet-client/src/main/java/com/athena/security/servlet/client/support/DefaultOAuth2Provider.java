@@ -20,13 +20,13 @@ public enum DefaultOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            WechatProperties wechatProperties = SpringUtil.getBean(WechatProperties.class);
-            builder.scope(wechatProperties.getOpenScopes());
-            builder.authorizationUri(wechatProperties.getOpenAuthorizationUri());
-            builder.tokenUri(wechatProperties.getTokenUri());
-            builder.userInfoUri(wechatProperties.getUserInfoUri());
-            builder.userNameAttributeName(wechatProperties.getUserNameAttribute());
-            builder.clientName(wechatProperties.getClientName());
+            WechatProperties.Open open = SpringUtil.getBean(WechatProperties.class).getOpen();
+            builder.scope(open.getScopes());
+            builder.authorizationUri(open.getAuthorizationUri());
+            builder.tokenUri(open.getTokenUri());
+            builder.userInfoUri(open.getUserInfoUri());
+            builder.userNameAttributeName(open.getUserNameAttribute());
+            builder.clientName(open.getClientName());
             return builder;
         }
     },
@@ -37,13 +37,13 @@ public enum DefaultOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            WechatProperties wechatProperties = SpringUtil.getBean(WechatProperties.class);
-            builder.scope(wechatProperties.getMpScopes());
-            builder.authorizationUri(wechatProperties.getMpAuthorizationUri());
-            builder.tokenUri(wechatProperties.getTokenUri());
-            builder.userInfoUri(wechatProperties.getUserInfoUri());
-            builder.userNameAttributeName(wechatProperties.getUserNameAttribute());
-            builder.clientName(wechatProperties.getClientName());
+            WechatProperties.Mp mp = SpringUtil.getBean(WechatProperties.class).getMp();
+            builder.scope(mp.getScopes());
+            builder.authorizationUri(mp.getAuthorizationUri());
+            builder.tokenUri(mp.getTokenUri());
+            builder.userInfoUri(mp.getUserInfoUri());
+            builder.userNameAttributeName(mp.getUserNameAttribute());
+            builder.clientName(mp.getClientName());
             return builder;
         }
     },

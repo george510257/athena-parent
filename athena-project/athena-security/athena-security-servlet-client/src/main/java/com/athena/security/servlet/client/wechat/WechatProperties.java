@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,49 +19,81 @@ import java.util.List;
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.wechat")
 public class WechatProperties extends BaseProperties {
     /**
-     * 微信应用 公众号 id
+     * 公众号
      */
-    private String mpRegistrationId = "wechat_mp";
+    private Mp mp = new Mp();
     /**
-     * 微信应用 开放平台 id
+     * 开放平台
      */
-    private String openRegistrationId = "wechat_open";
-    /**
-     * 微信公众号 授权码授权 uri
-     */
-    private String mpAuthorizationUri = "https://open.weixin.qq.com/connect/oauth2/authorize";
-    /**
-     * 微信开放平台 授权码授权 uri
-     */
-    private String openAuthorizationUri = "https://open.weixin.qq.com/connect/qrconnect";
+    private Open open = new Open();
 
     /**
-     * 微信用户级别的access_token uri
+     * 微信公众号
      */
-    private String tokenUri = "https://api.weixin.qq.com/sns/oauth2/access_token";
+    @Data
+    public static class Mp implements Serializable {
+        /**
+         * 注册标识
+         */
+        private String registrationId = "wechat_mp";
+        /**
+         * 授权 URI
+         */
+        private String authorizationUri = "https://open.weixin.qq.com/connect/oauth2/authorize";
+        /**
+         * 令牌 URI
+         */
+        private String tokenUri = "https://api.weixin.qq.com/sns/oauth2/access_token";
+        /**
+         * 用户信息 URI
+         */
+        private String userInfoUri = "https://api.weixin.qq.com/sns/userinfo";
+        /**
+         * 用户名属性
+         */
+        private String userNameAttribute = "openid";
+        /**
+         * 客户端名称
+         */
+        private String clientName = "微信公众号";
+        /**
+         * 作用域
+         */
+        private List<String> scopes = List.of("snsapi_userinfo");
+    }
 
     /**
-     * 微信用户信息 uri
+     * 微信开放平台
      */
-    private String userInfoUri = "https://api.weixin.qq.com/sns/userinfo";
-
-    /**
-     * 用户名属性
-     */
-    private String userNameAttribute = "openid";
-
-    /**
-     * 客户端名称
-     */
-    private String clientName = "微信";
-
-    /**
-     * 微信公众号授权范围
-     */
-    private List<String> mpScopes = List.of("snsapi_userinfo");
-
-    /**
-     * 微信开放平台授权范围
-     */
-    private List<String> openScopes = List.of("snsapi_login");
+    @Data
+    public static class Open implements Serializable {
+        /**
+         * 注册标识
+         */
+        private String registrationId = "wechat_open";
+        /**
+         * 授权 URI
+         */
+        private String authorizationUri = "https://open.weixin.qq.com/connect/qrconnect";
+        /**
+         * 令牌 URI
+         */
+        private String tokenUri = "https://api.weixin.qq.com/sns/oauth2/access_token";
+        /**
+         * 用户信息 URI
+         */
+        private String userInfoUri = "https://api.weixin.qq.com/sns/userinfo";
+        /**
+         * 用户名属性
+         */
+        private String userNameAttribute = "openid";
+        /**
+         * 客户端名称
+         */
+        private String clientName = "微信开放平台";
+        /**
+         * 作用域
+         */
+        private List<String> scopes = List.of("snsapi_login");
+    }
 }
