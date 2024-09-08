@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.athena.security.servlet.client.delegate.IOAuth2UserServiceCustomizer;
 import jakarta.annotation.Resource;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -16,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Map;
 
 /**
  * 企业微信 OAuth2UserService 定制器
@@ -46,8 +48,30 @@ public class WorkWechatOAuth2UserServiceCustomizer implements IOAuth2UserService
      */
     @Override
     public void customize(DefaultOAuth2UserService service) {
-        // 设置属性转换器
+        // 设置请求实体转换器
         service.setRequestEntityConverter(this::requestEntityConverter);
+        // 设置属性转换器
+        service.setAttributesConverter(this::attributesConverter);
+    }
+
+    /**
+     * 属性转换器
+     *
+     * @param request OAuth2 用户请求
+     * @return 属性转换器
+     */
+    private Converter<Map<String, Object>, Map<String, Object>> attributesConverter(OAuth2UserRequest request) {
+        return parameters -> {
+            String userid = StrUtil.toString(parameters.get("userid"));
+            if (StrUtil.isNotBlank(userid)) {
+                parameters.put("id", "userid_" + userid);
+            }
+            String openId = StrUtil.toString(parameters.get("openid"));
+            if (StrUtil.isNotBlank(openId)) {
+                parameters.put("id", "openId_" + openId);
+            }
+            return parameters;
+        };
     }
 
     /**

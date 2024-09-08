@@ -129,7 +129,7 @@ public class WechatProperties extends BaseProperties {
         /**
          * 用户名属性
          */
-        private String userNameAttribute = "userid";
+        private String userNameAttribute = "id";
         /**
          * 客户端名称
          */
