@@ -38,7 +38,6 @@ public class AuthorizationConfig {
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity http,
                                                                 OAuth2AuthorizationServerCustomizer authorizationServerCustomizer,
                                                                 OAuth2ResourceServerCustomizer resourceServerCustomizer,
-
                                                                 ExceptionHandlingCustomizer exceptionHandlingCustomizer) throws Exception {
         // 默认安全配置
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
@@ -68,6 +67,7 @@ public class AuthorizationConfig {
                                                    VerificationCodeCustomizer verificationCodeCustomizer,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    OAuth2LoginCustomizer oauth2LoginCustomizer,
+                                                   OAuth2ResourceServerCustomizer resourceServerCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
         // REST 登录
         http.with(new RestConfigurer<>(), restCustomizer);
@@ -75,6 +75,8 @@ public class AuthorizationConfig {
         http.with(new VerificationCodeConfigurer<>(), verificationCodeCustomizer);
         // OAuth2 登录
         http.oauth2Login(oauth2LoginCustomizer);
+        // 资源服务器
+        http.oauth2ResourceServer(resourceServerCustomizer);
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // CSRF

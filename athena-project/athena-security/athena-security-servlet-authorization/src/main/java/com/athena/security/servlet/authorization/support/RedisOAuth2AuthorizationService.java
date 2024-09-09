@@ -33,7 +33,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
     /**
      * 保存授权
      *
-     * @param authorization the {@link OAuth2Authorization}
+     * @param authorization oauth2授权
      */
     @Override
     public void save(OAuth2Authorization authorization) {
@@ -49,7 +49,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
     /**
      * 删除授权
      *
-     * @param authorization the {@link OAuth2Authorization}
+     * @param authorization oauth2授权
      */
     @Override
     public void remove(OAuth2Authorization authorization) {
@@ -60,8 +60,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
     /**
      * 根据id查找授权
      *
-     * @param id the authorization identifier
-     * @return the {@link OAuth2Authorization} or {@code null} if not found
+     * @param id 授权id
+     * @return 授权
      */
     @Override
     public OAuth2Authorization findById(String id) {
@@ -86,6 +86,14 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
                 .orElse(null);
     }
 
+    /**
+     * 根据客户端id和用户名称查找授权
+     *
+     * @param authorization oauth2授权
+     * @param token         令牌
+     * @param tokenType     令牌类型
+     * @return 是否包含
+     */
     private boolean hasToken(OAuth2Authorization authorization, String token,
                              @Nullable OAuth2TokenType tokenType) {
         if (tokenType == null) {
@@ -121,36 +129,85 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
         return false;
     }
 
+    /**
+     * 匹配状态
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesState(OAuth2Authorization authorization, String token) {
         return token.equals(authorization.getAttribute(OAuth2ParameterNames.STATE));
     }
 
+    /**
+     * 匹配授权码
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesAuthorizationCode(OAuth2Authorization authorization, String token) {
         OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization
                 .getToken(OAuth2AuthorizationCode.class);
         return authorizationCode != null && authorizationCode.getToken().getTokenValue().equals(token);
     }
 
+    /**
+     * 匹配访问令牌
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesAccessToken(OAuth2Authorization authorization, String token) {
         OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getToken(OAuth2AccessToken.class);
         return accessToken != null && accessToken.getToken().getTokenValue().equals(token);
     }
 
+    /**
+     * 匹配刷新令牌
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesRefreshToken(OAuth2Authorization authorization, String token) {
         OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getToken(OAuth2RefreshToken.class);
         return refreshToken != null && refreshToken.getToken().getTokenValue().equals(token);
     }
 
+    /**
+     * 匹配id令牌
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesIdToken(OAuth2Authorization authorization, String token) {
         OAuth2Authorization.Token<OidcIdToken> idToken = authorization.getToken(OidcIdToken.class);
         return idToken != null && idToken.getToken().getTokenValue().equals(token);
     }
 
+    /**
+     * 匹配设备令牌
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesDeviceCode(OAuth2Authorization authorization, String token) {
         OAuth2Authorization.Token<OAuth2DeviceCode> deviceCode = authorization.getToken(OAuth2DeviceCode.class);
         return deviceCode != null && deviceCode.getToken().getTokenValue().equals(token);
     }
 
+    /**
+     * 匹配用户令牌
+     *
+     * @param authorization 授权
+     * @param token         令牌
+     * @return 是否匹配
+     */
     private boolean matchesUserCode(OAuth2Authorization authorization, String token) {
         OAuth2Authorization.Token<OAuth2UserCode> userCode = authorization.getToken(OAuth2UserCode.class);
         return userCode != null && userCode.getToken().getTokenValue().equals(token);
