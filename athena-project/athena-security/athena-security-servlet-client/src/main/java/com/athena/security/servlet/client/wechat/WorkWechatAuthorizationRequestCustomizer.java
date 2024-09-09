@@ -51,7 +51,7 @@ public class WorkWechatAuthorizationRequestCustomizer implements IAuthorizationR
      * @param parameters 参数
      */
     private void convertParameters(Map<String, Object> parameters) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(6);
         map.put(ClientSecurityConstants.WECHAT_WORK_LOGIN_TYPE, wechatProperties.getWork().getLoginType());
         map.put(ClientSecurityConstants.WECHAT_APP_ID, parameters.get(OAuth2ParameterNames.CLIENT_ID));
         map.put(ClientSecurityConstants.WECHAT_WORK_AGENT_ID, wechatProperties.getWork().getAgentId());

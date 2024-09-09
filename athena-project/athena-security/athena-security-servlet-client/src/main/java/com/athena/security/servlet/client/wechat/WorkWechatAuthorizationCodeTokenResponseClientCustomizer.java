@@ -62,7 +62,7 @@ public class WorkWechatAuthorizationCodeTokenResponseClientCustomizer implements
     @Override
     public OAuth2AccessTokenResponse customResponse(OAuth2AuthorizationCodeGrantRequest request, OAuth2AccessTokenResponse response) {
         return OAuth2AccessTokenResponse.withResponse(response)
-                .additionalParameters(MapUtil.builder(new HashMap<String, Object>())
+                .additionalParameters(MapUtil.builder(new HashMap<String, Object>(1))
                         // 添加授权码
                         .put(OAuth2ParameterNames.CODE, request.getAuthorizationExchange()
                                 .getAuthorizationResponse().getCode())

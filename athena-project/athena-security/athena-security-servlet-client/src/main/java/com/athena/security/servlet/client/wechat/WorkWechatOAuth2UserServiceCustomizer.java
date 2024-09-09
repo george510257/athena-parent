@@ -18,6 +18,8 @@ import java.util.Map;
 
 /**
  * 企业微信 OAuth2UserService 定制器
+ *
+ * @author george
  */
 @Component
 public class WorkWechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCustomizer {
