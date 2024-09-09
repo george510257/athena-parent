@@ -4,9 +4,9 @@ import com.athena.security.servlet.authorization.authentication.OAuth2PasswordAu
 import com.athena.security.servlet.authorization.authentication.OAuth2PasswordAuthenticationProvider;
 import com.athena.security.servlet.authorization.authentication.OAuth2SmsAuthenticationConverter;
 import com.athena.security.servlet.authorization.authentication.OAuth2SmsAuthenticationProvider;
-import com.athena.security.servlet.authorization.support.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -26,7 +26,7 @@ public class OAuth2TokenEndpointCustomizer implements Customizer<OAuth2TokenEndp
      * 用户详情认证提供者
      */
     @Resource
-    private IUserService userService;
+    private UserDetailsService userDetailsService;
     /**
      * 密码编码器
      */
@@ -52,11 +52,11 @@ public class OAuth2TokenEndpointCustomizer implements Customizer<OAuth2TokenEndp
     public void customize(OAuth2TokenEndpointConfigurer configurer) {
 
         // 添加密码模式
-        configurer.authenticationProvider(new OAuth2PasswordAuthenticationProvider(authorizationService, oauth2TokenGenerator, userService, passwordEncoder));
+        configurer.authenticationProvider(new OAuth2PasswordAuthenticationProvider(authorizationService, oauth2TokenGenerator, userDetailsService, passwordEncoder));
         configurer.accessTokenRequestConverter(new OAuth2PasswordAuthenticationConverter());
 
         // 添加短信模式
-        configurer.authenticationProvider(new OAuth2SmsAuthenticationProvider(authorizationService, oauth2TokenGenerator, userService));
+        configurer.authenticationProvider(new OAuth2SmsAuthenticationProvider(authorizationService, oauth2TokenGenerator, userDetailsService));
         configurer.accessTokenRequestConverter(new OAuth2SmsAuthenticationConverter());
     }
 }
