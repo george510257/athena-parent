@@ -14,6 +14,8 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+
 /**
  * 委托 OAuth2 用户信息服务
  *
@@ -77,8 +79,10 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         if (socialUser == null) {
             socialUser = new SocialUser();
             socialUser.setProviderId(registrationId);
-            socialUser.setOauth2User(oauth2User);
             socialUser.setBindStatus(false);
+            socialUser.setAttributes(oauth2User.getAttributes());
+            socialUser.setAuthorities(new HashSet<>(oauth2User.getAuthorities()));
+            socialUser.setName(oauth2User.getName());
             socialUserService.saveSocialUser(socialUser);
         }
         return socialUser;
