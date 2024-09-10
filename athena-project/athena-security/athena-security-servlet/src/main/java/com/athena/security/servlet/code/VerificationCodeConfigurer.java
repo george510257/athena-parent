@@ -26,7 +26,6 @@ import java.util.function.Consumer;
  *
  * @author george
  */
-
 @Setter
 @Accessors(chain = true)
 public final class VerificationCodeConfigurer<H extends HttpSecurityBuilder<H>>
