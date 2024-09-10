@@ -1,6 +1,5 @@
 package com.athena.security.core;
 
-import com.athena.security.core.jackson2.CoreSecurityModule;
 import com.athena.security.core.properties.CoreSecurityProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,8 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.jackson2.CoreJackson2Module;
-import org.springframework.security.web.jackson2.WebServletJackson2Module;
 
 /**
  * 安全配置
@@ -48,36 +45,36 @@ public class CoreSecurityAutoConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /**
-     * 安全核心模块
-     *
-     * @return 安全核心模块
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public CoreJackson2Module coreJackson2Module() {
-        return new CoreJackson2Module();
-    }
-
-    /**
-     * Web安全模块
-     *
-     * @return Web安全模块
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public WebServletJackson2Module webServletJackson2Module() {
-        return new WebServletJackson2Module();
-    }
-
-    /**
-     * 安全核心模块
-     *
-     * @return 安全核心模块
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public CoreSecurityModule coreSecurityModule() {
-        return new CoreSecurityModule();
-    }
+//    /**
+//     * 安全核心模块
+//     *
+//     * @return 安全核心模块
+//     */
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public CoreJackson2Module coreJackson2Module() {
+//        return new CoreJackson2Module();
+//    }
+//
+//    /**
+//     * Web安全模块
+//     *
+//     * @return Web安全模块
+//     */
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public WebServletJackson2Module webServletJackson2Module() {
+//        return new WebServletJackson2Module();
+//    }
+//
+//    /**
+//     * 安全核心模块
+//     *
+//     * @return 安全核心模块
+//     */
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public CoreSecurityModule coreSecurityModule() {
+//        return new CoreSecurityModule();
+//    }
 }

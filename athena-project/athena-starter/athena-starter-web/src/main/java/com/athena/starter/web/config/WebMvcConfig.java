@@ -62,7 +62,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
         // 创建ObjectMapper
-        ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build().registerModule(simpleModule);
+        ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build();
+        // 注册模块
+        objectMapper.registerModule(simpleModule);
+        // 禁用默认类型
+        objectMapper.deactivateDefaultTyping();
         // 添加自定义的Jackson消息转换器
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
         converter.setDefaultCharset(StandardCharsets.UTF_8);
