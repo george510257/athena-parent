@@ -3,6 +3,7 @@ package com.athena.security.servlet.authorization.support;
 import cn.hutool.core.collection.CollUtil;
 import com.athena.common.bean.security.IUser;
 import com.athena.common.bean.security.User;
+import com.athena.security.servlet.client.social.SocialUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,10 +40,16 @@ public class InMemoryUserService implements IUserService {
      */
     @Override
     public Optional<? extends IUser<?, ?, ?>> getCurrentUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return USERS.stream()
-                .filter(user -> user.getUsername().equals(username))
-                .findFirst();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User user) {
+            return Optional.of(user);
+        }
+        if (principal instanceof SocialUser socialUser) {
+            return USERS.stream()
+                    .filter(u -> u.getUsername().equals(socialUser.getUsername()))
+                    .findFirst();
+        }
+        return Optional.empty();
     }
 
     /**
