@@ -45,36 +45,4 @@ public class CoreSecurityAutoConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-//    /**
-//     * 安全核心模块
-//     *
-//     * @return 安全核心模块
-//     */
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public CoreJackson2Module coreJackson2Module() {
-//        return new CoreJackson2Module();
-//    }
-//
-//    /**
-//     * Web安全模块
-//     *
-//     * @return Web安全模块
-//     */
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public WebServletJackson2Module webServletJackson2Module() {
-//        return new WebServletJackson2Module();
-//    }
-//
-//    /**
-//     * 安全核心模块
-//     *
-//     * @return 安全核心模块
-//     */
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public CoreSecurityModule coreSecurityModule() {
-//        return new CoreSecurityModule();
-//    }
 }
