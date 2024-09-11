@@ -34,6 +34,10 @@ public class WechatProperties extends BaseProperties {
      * 企业微信
      */
     private Work work = new Work();
+    /**
+     * 小程序
+     */
+    private MiniApp miniApp = new MiniApp();
 
     /**
      * 微信公众号
@@ -150,5 +154,33 @@ public class WechatProperties extends BaseProperties {
          * 语言
          */
         private String lang = "zh";
+    }
+
+    @Data
+    public static class MiniApp implements Serializable {
+        /**
+         * 注册标识
+         */
+        private String registrationId = "wechat_mini_app";
+        /**
+         * 令牌 URI
+         */
+        private String tokenUri = "https://api.weixin.qq.com/sns/jscode2session";
+        /**
+         * 用户信息 URI
+         */
+        private String userInfoUri = "https://api.weixin.qq.com/sns/userinfo";
+        /**
+         * 用户名属性
+         */
+        private String userNameAttribute = "openid";
+        /**
+         * 客户端名称
+         */
+        private String clientName = "微信小程序";
+        /**
+         * 作用域
+         */
+        private List<String> scopes = List.of("snsapi_userinfo");
     }
 }

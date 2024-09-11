@@ -1,8 +1,12 @@
 package com.athena.security.servlet.authorization.customizer;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.athena.security.servlet.client.social.SocialUser;
+import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OidcUserInfoEndpointConfigurer;
@@ -18,6 +22,8 @@ import java.security.Principal;
  */
 @Component
 public class OidcUserInfoEndpointCustomizer implements Customizer<OidcUserInfoEndpointConfigurer> {
+    @Resource
+    private UserDetailsService userDetailsService;
 
     /**
      * 自定义
@@ -40,6 +46,11 @@ public class OidcUserInfoEndpointCustomizer implements Customizer<OidcUserInfoEn
         Authentication authentication = oauth2Authorization.getAttribute(Principal.class.getName());
         assert authentication != null;
         Object principal = authentication.getPrincipal();
+        if (principal instanceof SocialUser socialUser) {
+            String username = socialUser.getUsername();
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            return new OidcUserInfo(BeanUtil.beanToMap(userDetails));
+        }
         return new OidcUserInfo(BeanUtil.beanToMap(principal));
     }
 }
