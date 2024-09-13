@@ -13,17 +13,18 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
-import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.util.ArrayList;
 
 /**
  * Redis非透明令牌解释器
+ *
+ * @author george
  */
 @Slf4j
-@Component
-public class RedisOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
+//@Component
+public class DefaultOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
     /**
      * 授权服务
      */

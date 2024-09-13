@@ -1,5 +1,7 @@
 package com.athena.security.servlet.authorization.customizer;
 
+import com.athena.security.servlet.authorization.support.DefaultOAuth2TokenIntrospectionAuthenticationProvider;
+import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2TokenIntrospectionEndpointConfigurer;
 import org.springframework.stereotype.Component;
@@ -12,11 +14,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuth2TokenIntrospectionEndpointCustomizer implements Customizer<OAuth2TokenIntrospectionEndpointConfigurer> {
     /**
+     * 认证提供者
+     */
+    @Resource
+    private DefaultOAuth2TokenIntrospectionAuthenticationProvider authenticationProvider;
+
+    /**
      * 自定义
      *
      * @param configurer 配置器
      */
     @Override
     public void customize(OAuth2TokenIntrospectionEndpointConfigurer configurer) {
+        configurer.authenticationProvider(authenticationProvider);
     }
 }

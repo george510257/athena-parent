@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class InMemoryUserService implements IUserService {
                     .filter(u -> u.getUsername().equals(socialUser.getUsername()))
                     .findFirst();
         }
-        if (principal instanceof DefaultOAuth2AuthenticatedPrincipal oauth2Principal) {
+        if (principal instanceof OAuth2AuthenticatedPrincipal oauth2Principal) {
             return USERS.stream()
                     .filter(u -> u.getUsername().equals(oauth2Principal.getName()))
                     .findFirst();
