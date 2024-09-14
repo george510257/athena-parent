@@ -46,5 +46,9 @@ public interface ClientSecurityConstants {
      * 企业微信登录类型
      */
     String WECHAT_WORK_LOGIN_TYPE = "login_type";
+    /**
+     * 小程序 code
+     */
+    String MINI_APP_CODE = "js_code";
 }
 
