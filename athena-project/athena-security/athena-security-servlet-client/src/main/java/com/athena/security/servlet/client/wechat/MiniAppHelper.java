@@ -24,6 +24,9 @@ public class MiniAppHelper {
      * 小程序访问令牌缓存名称
      */
     private static final String APP_ACCESS_TOKEN_CACHE_NAME = "mini_app:access_token";
+    /**
+     * 微信配置属性
+     */
     @Resource
     private WechatProperties wechatProperties;
 
@@ -56,6 +59,12 @@ public class MiniAppHelper {
         return null;
     }
 
+    /**
+     * 获取小程序访问令牌
+     *
+     * @param request 请求
+     * @return 小程序访问令牌
+     */
     private MiniAppAccessTokenResponse getAppAccessToken(MiniAppAccessTokenRequest request) {
         RestTemplate restTemplate = new RestTemplate();
         URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getMiniApp().getAppAccessTokenUri())
