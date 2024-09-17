@@ -163,6 +163,10 @@ public class WechatProperties extends BaseProperties {
          */
         private String registrationId = "wechat_mini_app";
         /**
+         * 授权 URI
+         */
+        private String authorizationUri = "/login/oauth2/code/wechat_mini_app";
+        /**
          * 应用令牌 URI
          */
         private String appAccessTokenUri = "https://api.weixin.qq.com/cgi-bin/token";
