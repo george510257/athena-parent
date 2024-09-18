@@ -37,7 +37,8 @@ public class WechatOAuth2UserServiceCustomizer implements IOAuth2UserServiceCust
     @Override
     public boolean test(String registrationId) {
         return wechatProperties.getMp().getRegistrationId().equals(registrationId)
-                || wechatProperties.getOpen().getRegistrationId().equals(registrationId);
+                || wechatProperties.getOpen().getRegistrationId().equals(registrationId)
+                || wechatProperties.getMiniApp().getRegistrationId().equals(registrationId);
     }
 
     /**

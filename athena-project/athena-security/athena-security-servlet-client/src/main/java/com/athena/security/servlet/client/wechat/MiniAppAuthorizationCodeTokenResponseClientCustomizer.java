@@ -68,6 +68,11 @@ public class MiniAppAuthorizationCodeTokenResponseClientCustomizer implements IA
         client.setRestOperations(this.getRestOperations());
     }
 
+    /**
+     * 请求实体转换器
+     *
+     * @return 请求实体
+     */
     private RestOperations getRestOperations() {
         RestTemplate restTemplate = new RestTemplate();
         // 设置消息转换器
@@ -75,6 +80,11 @@ public class MiniAppAuthorizationCodeTokenResponseClientCustomizer implements IA
         return restTemplate;
     }
 
+    /**
+     * 请求实体转换器
+     *
+     * @return 请求实体
+     */
     private List<HttpMessageConverter<?>> getMessageConverters() {
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
         // 添加消息转换器
@@ -85,6 +95,12 @@ public class MiniAppAuthorizationCodeTokenResponseClientCustomizer implements IA
         return messageConverters;
     }
 
+    /**
+     * 访问令牌响应转换器
+     *
+     * @param parameters 参数
+     * @return 访问令牌响应
+     */
     private OAuth2AccessTokenResponse accessTokenResponseConverter(Map<String, Object> parameters) {
         return OAuth2AccessTokenResponse.withToken("accessToken")
                 .expiresIn(7200)
