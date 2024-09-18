@@ -1,7 +1,7 @@
 package com.athena.security.servlet.client.feishu;
 
-import com.athena.security.servlet.client.feishu.domian.AppAccessTokenRequest;
-import com.athena.security.servlet.client.feishu.domian.AppAccessTokenResponse;
+import com.athena.security.servlet.client.feishu.domian.FeishuAppAccessTokenRequest;
+import com.athena.security.servlet.client.feishu.domian.FeishuAppAccessTokenResponse;
 import com.athena.starter.data.redis.support.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.http.RequestEntity;
@@ -38,12 +38,12 @@ public class FeishuHelper {
      */
     public String getAppAccessToken(String clientId, String clientSecret) {
         // 从缓存中获取应用访问令牌
-        AppAccessTokenResponse response = RedisUtil.getCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, clientId, AppAccessTokenResponse.class);
+        FeishuAppAccessTokenResponse response = RedisUtil.getCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, clientId, FeishuAppAccessTokenResponse.class);
         if (response != null) {
             return response.getAppAccessToken();
         }
         // 请求应用访问令牌
-        AppAccessTokenRequest request = new AppAccessTokenRequest();
+        FeishuAppAccessTokenRequest request = new FeishuAppAccessTokenRequest();
         request.setAppId(clientId);
         request.setAppSecret(clientSecret);
         // 获取应用访问令牌
@@ -63,16 +63,16 @@ public class FeishuHelper {
      * @param request 应用访问令牌请求
      * @return 应用访问令牌
      */
-    private AppAccessTokenResponse getAppAccessToken(AppAccessTokenRequest request) {
+    private FeishuAppAccessTokenResponse getAppAccessToken(FeishuAppAccessTokenRequest request) {
         // 请求飞书接口
         RestTemplate restTemplate = new RestTemplate();
         // 请求实体
-        RequestEntity<AppAccessTokenRequest> requestEntity = RequestEntity
+        RequestEntity<FeishuAppAccessTokenRequest> requestEntity = RequestEntity
                 .post(URI.create(feishuProperties.getAppAccessTokenUri()))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .body(request);
         // 返回应用访问令牌
-        return restTemplate.exchange(requestEntity, AppAccessTokenResponse.class).getBody();
+        return restTemplate.exchange(requestEntity, FeishuAppAccessTokenResponse.class).getBody();
     }
 
 }

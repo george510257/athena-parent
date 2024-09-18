@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author george
  */
 @Data
-public class AppAccessTokenRequest implements Serializable {
+public class FeishuAppAccessTokenRequest implements Serializable {
     /**
      * 应用 ID
      */
