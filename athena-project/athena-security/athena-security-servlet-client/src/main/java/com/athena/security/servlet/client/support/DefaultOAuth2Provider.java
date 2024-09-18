@@ -47,6 +47,20 @@ public enum DefaultOAuth2Provider {
             return builder;
         }
     },
+    WECHAT_MINI_APP {
+        @Override
+        public ClientRegistration.Builder getBuilder(String registrationId) {
+            ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
+            WechatProperties.MiniApp miniApp = SpringUtil.getBean(WechatProperties.class).getMiniApp();
+            builder.scope(miniApp.getScopes());
+            builder.authorizationUri(miniApp.getAuthorizationUri());
+            builder.tokenUri(miniApp.getTokenUri());
+            builder.userInfoUri(miniApp.getUserInfoUri());
+            builder.userNameAttributeName(miniApp.getUserNameAttribute());
+            builder.clientName(miniApp.getClientName());
+            return builder;
+        }
+    },
     /**
      * 企业微信
      */

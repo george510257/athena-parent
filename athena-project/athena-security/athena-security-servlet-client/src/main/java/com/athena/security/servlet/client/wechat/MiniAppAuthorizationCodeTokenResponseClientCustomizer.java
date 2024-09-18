@@ -1,21 +1,30 @@
 package com.athena.security.servlet.client.wechat;
 
+import cn.hutool.core.collection.CollUtil;
 import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.delegate.IAuthorizationCodeTokenResponseClientCustomizer;
 import com.athena.security.servlet.client.wechat.domain.MiniAppAccessTokenResponse;
 import jakarta.annotation.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 小程序授权码令牌响应客户端定制器
@@ -55,6 +64,33 @@ public class MiniAppAuthorizationCodeTokenResponseClientCustomizer implements IA
     public void customize(DefaultAuthorizationCodeTokenResponseClient client) {
         // 设置请求实体转换器
         client.setRequestEntityConverter(this::requestEntityConverter);
+        // 设置访问令牌响应转换器
+        client.setRestOperations(this.getRestOperations());
+    }
+
+    private RestOperations getRestOperations() {
+        RestTemplate restTemplate = new RestTemplate();
+        // 设置消息转换器
+        restTemplate.setMessageConverters(this.getMessageConverters());
+        return restTemplate;
+    }
+
+    private List<HttpMessageConverter<?>> getMessageConverters() {
+        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+        // 添加消息转换器
+        OAuth2AccessTokenResponseHttpMessageConverter converter = new OAuth2AccessTokenResponseHttpMessageConverter();
+        converter.setSupportedMediaTypes(CollUtil.newArrayList(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN));
+        converter.setAccessTokenResponseConverter(this::accessTokenResponseConverter);
+        messageConverters.add(converter);
+        return messageConverters;
+    }
+
+    private OAuth2AccessTokenResponse accessTokenResponseConverter(Map<String, Object> parameters) {
+        return OAuth2AccessTokenResponse.withToken("accessToken")
+                .expiresIn(7200)
+                .tokenType(OAuth2AccessToken.TokenType.BEARER)
+                .additionalParameters(parameters)
+                .build();
     }
 
     /**
