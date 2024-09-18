@@ -47,6 +47,9 @@ public enum DefaultOAuth2Provider {
             return builder;
         }
     },
+    /**
+     * 微信小程序
+     */
     WECHAT_MINI_APP {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
