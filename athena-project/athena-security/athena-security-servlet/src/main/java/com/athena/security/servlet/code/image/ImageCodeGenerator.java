@@ -3,7 +3,7 @@ package com.athena.security.servlet.code.image;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
-import com.athena.security.servlet.code.base.BaseCodeGenerator;
+import com.athena.security.servlet.code.base.ICodeGenerator;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Setter
 @Accessors(chain = true)
-public class ImageCodeGenerator implements BaseCodeGenerator<ImageCode> {
+public class ImageCodeGenerator implements ICodeGenerator<ImageCode> {
     /**
      * 验证码长度
      */

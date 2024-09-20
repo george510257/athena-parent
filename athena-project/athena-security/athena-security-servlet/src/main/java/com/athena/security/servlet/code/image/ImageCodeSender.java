@@ -1,7 +1,7 @@
 package com.athena.security.servlet.code.image;
 
-import com.athena.security.servlet.code.VerificationCodeException;
-import com.athena.security.servlet.code.base.BaseCodeSender;
+import com.athena.security.servlet.code.CodeAuthenticationException;
+import com.athena.security.servlet.code.base.ICodeSender;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
  * @author george
  */
 @Slf4j
-public class ImageCodeSender implements BaseCodeSender<ImageCode> {
+public class ImageCodeSender implements ICodeSender<ImageCode> {
     /**
      * 发送图片验证码
      *
@@ -27,7 +27,7 @@ public class ImageCodeSender implements BaseCodeSender<ImageCode> {
         try {
             ImageIO.write(code.getImage(), "PNG", response.getOutputStream());
         } catch (IOException e) {
-            throw new VerificationCodeException("图片验证码发送失败", e);
+            throw new CodeAuthenticationException("图片验证码发送失败", e);
         }
     }
 }

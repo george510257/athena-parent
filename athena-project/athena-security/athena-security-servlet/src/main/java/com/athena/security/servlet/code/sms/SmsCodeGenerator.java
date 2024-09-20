@@ -2,7 +2,7 @@ package com.athena.security.servlet.code.sms;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.athena.security.servlet.code.base.BaseCodeGenerator;
+import com.athena.security.servlet.code.base.ICodeGenerator;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Setter
 @Accessors(chain = true)
-public class SmsCodeGenerator implements BaseCodeGenerator<SmsCode> {
+public class SmsCodeGenerator implements ICodeGenerator<SmsCode> {
     /**
      * 验证码长度
      */

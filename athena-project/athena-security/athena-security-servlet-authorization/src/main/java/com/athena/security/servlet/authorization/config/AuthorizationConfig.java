@@ -3,7 +3,7 @@ package com.athena.security.servlet.authorization.config;
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
 import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
 import com.athena.security.servlet.client.customizer.OAuth2LoginCustomizer;
-import com.athena.security.servlet.code.VerificationCodeConfigurer;
+import com.athena.security.servlet.code.CodeConfigurer;
 import com.athena.security.servlet.customizer.*;
 import com.athena.security.servlet.rest.RestConfigurer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -56,7 +56,7 @@ public class AuthorizationConfig {
      *
      * @param http                            Http安全
      * @param restCustomizer                  REST自定义器
-     * @param verificationCodeCustomizer      验证码自定义器
+     * @param codeCustomizer                  验证码自定义器
      * @param authorizeHttpRequestsCustomizer 请求授权自定义器
      * @param csrfCustomizer                  CSRF自定义器
      */
@@ -64,7 +64,7 @@ public class AuthorizationConfig {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
                                                    RestCustomizer restCustomizer,
-                                                   VerificationCodeCustomizer verificationCodeCustomizer,
+                                                   CodeCustomizer codeCustomizer,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    OAuth2LoginCustomizer oauth2LoginCustomizer,
                                                    OAuth2ResourceServerCustomizer resourceServerCustomizer,
@@ -72,7 +72,7 @@ public class AuthorizationConfig {
         // REST 登录
         http.with(new RestConfigurer<>(), restCustomizer);
         // 验证码
-        http.with(new VerificationCodeConfigurer<>(), verificationCodeCustomizer);
+        http.with(new CodeConfigurer<>(), codeCustomizer);
         // OAuth2 登录
         http.oauth2Login(oauth2LoginCustomizer);
         // 资源服务器

@@ -7,7 +7,7 @@ import com.athena.security.servlet.code.base.BaseCode;
  *
  * @author george
  */
-public interface VerificationCodeRepository {
+public interface ICodeRepository {
 
     /**
      * 保存验证码

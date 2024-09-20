@@ -7,7 +7,7 @@ package com.athena.security.servlet.code.base;
  * @author george
  */
 @FunctionalInterface
-public interface BaseCodeGenerator<Code extends BaseCode> {
+public interface ICodeGenerator<Code extends BaseCode> {
 
     /**
      * 生成验证码

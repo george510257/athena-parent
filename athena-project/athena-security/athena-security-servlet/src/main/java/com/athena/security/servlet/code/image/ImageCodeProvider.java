@@ -1,7 +1,7 @@
 package com.athena.security.servlet.code.image;
 
 import cn.hutool.core.util.StrUtil;
-import com.athena.security.servlet.code.VerificationCodeException;
+import com.athena.security.servlet.code.CodeAuthenticationException;
 import com.athena.security.servlet.code.base.BaseCodeProvider;
 import com.athena.starter.web.util.WebUtil;
 import lombok.Setter;
@@ -111,7 +111,7 @@ public class ImageCodeProvider extends BaseCodeProvider<ImageCode> {
         if (StrUtil.isNotBlank(target)) {
             return target;
         }
-        throw new VerificationCodeException("参数不能为空 parameterName: " + targetParameterName);
+        throw new CodeAuthenticationException("参数不能为空 parameterName: " + targetParameterName);
     }
 
     /**
@@ -126,7 +126,7 @@ public class ImageCodeProvider extends BaseCodeProvider<ImageCode> {
         if (StrUtil.isNotBlank(code)) {
             return code;
         }
-        throw new VerificationCodeException("参数不能为空 parameterName: " + codeParameterName);
+        throw new CodeAuthenticationException("参数不能为空 parameterName: " + codeParameterName);
     }
 
 }

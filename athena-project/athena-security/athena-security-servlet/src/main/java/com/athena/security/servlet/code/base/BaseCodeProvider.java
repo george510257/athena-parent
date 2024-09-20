@@ -1,7 +1,7 @@
 package com.athena.security.servlet.code.base;
 
-import com.athena.security.servlet.code.VerificationCodeException;
-import com.athena.security.servlet.code.repository.VerificationCodeRepository;
+import com.athena.security.servlet.code.CodeAuthenticationException;
+import com.athena.security.servlet.code.repository.ICodeRepository;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -18,15 +18,15 @@ public abstract class BaseCodeProvider<Code extends BaseCode> {
     /**
      * 验证码存储器
      */
-    private VerificationCodeRepository repository;
+    private ICodeRepository repository;
     /**
      * 验证码生成器
      */
-    private BaseCodeGenerator<Code> generator;
+    private ICodeGenerator<Code> generator;
     /**
      * 验证码发送器
      */
-    private BaseCodeSender<Code> sender;
+    private ICodeSender<Code> sender;
 
     /**
      * 发送验证码
@@ -57,7 +57,7 @@ public abstract class BaseCodeProvider<Code extends BaseCode> {
         BaseCode baseCode = repository.get(target);
         // 验证码不存在或已过期
         if (baseCode == null) {
-            throw new VerificationCodeException("验证码不存在或已过期");
+            throw new CodeAuthenticationException("验证码不存在或已过期");
         }
         // 验证码正确且未过期
         if (baseCode.getCode().equals(code)
@@ -65,7 +65,7 @@ public abstract class BaseCodeProvider<Code extends BaseCode> {
             repository.remove(target);
         } else {
             // 验证码错误
-            throw new VerificationCodeException("验证码错误");
+            throw new CodeAuthenticationException("验证码错误");
         }
     }
 

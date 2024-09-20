@@ -1,8 +1,8 @@
 package com.athena.security.servlet.client.delegate;
 
 import com.athena.security.servlet.client.config.ClientSecurityConstants;
+import com.athena.security.servlet.client.social.ISocialUserService;
 import com.athena.security.servlet.client.social.SocialUser;
-import com.athena.security.servlet.client.social.SocialUserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.ObjectProvider;
@@ -27,7 +27,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * 社交用户仓库
      */
     @Resource
-    private SocialUserService socialUserService;
+    private ISocialUserService socialUserService;
     /**
      * OAuth2UserService 定制器提供者
      */

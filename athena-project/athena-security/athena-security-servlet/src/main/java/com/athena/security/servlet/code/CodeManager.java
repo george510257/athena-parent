@@ -12,7 +12,7 @@ import java.util.List;
  * @author george
  */
 @RequiredArgsConstructor
-public class VerificationCodeManager {
+public class CodeManager {
 
     /**
      * 验证码提供器列表

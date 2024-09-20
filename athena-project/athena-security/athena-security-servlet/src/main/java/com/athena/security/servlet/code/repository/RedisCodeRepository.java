@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author george
  */
-public class RedisVerificationCodeRepository implements VerificationCodeRepository {
+public class RedisCodeRepository implements ICodeRepository {
     /**
      * 缓存名称
      */

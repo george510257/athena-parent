@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SocialUserBindListener implements ApplicationListener<AuthenticationSuccessEvent> {
     @Resource
-    private SocialUserService socialUserService;
+    private ISocialUserService socialUserService;
     @Resource
     private HttpSession session;
 

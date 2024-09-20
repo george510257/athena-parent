@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author george
  */
 @FunctionalInterface
-public interface BaseCodeSender<Code extends BaseCode> {
+public interface ICodeSender<Code extends BaseCode> {
 
     /**
      * 发送验证码

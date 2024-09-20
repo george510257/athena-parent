@@ -1,11 +1,11 @@
 package com.athena.security.servlet.customizer;
 
 import com.athena.security.core.properties.CoreSecurityProperties;
-import com.athena.security.servlet.code.VerificationCodeConfigurer;
+import com.athena.security.servlet.code.CodeConfigurer;
 import com.athena.security.servlet.code.base.BaseCodeProvider;
 import com.athena.security.servlet.code.image.ImageCodeGenerator;
 import com.athena.security.servlet.code.image.ImageCodeProvider;
-import com.athena.security.servlet.code.repository.VerificationCodeRepository;
+import com.athena.security.servlet.code.repository.ICodeRepository;
 import com.athena.security.servlet.code.sms.SmsCodeGenerator;
 import com.athena.security.servlet.code.sms.SmsCodeProvider;
 import jakarta.annotation.Resource;
@@ -21,21 +21,21 @@ import java.util.Optional;
  * @author george
  */
 @Component
-public class VerificationCodeCustomizer implements Customizer<VerificationCodeConfigurer<HttpSecurity>> {
+public class CodeCustomizer implements Customizer<CodeConfigurer<HttpSecurity>> {
 
     @Resource
     private CoreSecurityProperties coreSecurityProperties;
 
     @Resource
-    private Optional<VerificationCodeRepository> verificationCodeRepository;
+    private Optional<ICodeRepository> verificationCodeRepository;
 
     @Resource
     private Optional<AuthenticationFailureHandler> authenticationFailureHandler;
 
     @Override
-    public void customize(VerificationCodeConfigurer<HttpSecurity> configurer) {
+    public void customize(CodeConfigurer<HttpSecurity> configurer) {
         configurer.setProvidersConsumer(this::providersConsumer);
-        verificationCodeRepository.ifPresent(configurer::setVerificationCodeRepository);
+        verificationCodeRepository.ifPresent(configurer::setCodeRepository);
         authenticationFailureHandler.ifPresent(configurer::setAuthenticationFailureHandler);
     }
 

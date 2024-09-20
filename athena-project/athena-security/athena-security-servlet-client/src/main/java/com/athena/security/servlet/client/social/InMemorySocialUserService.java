@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author george
  */
-public class InMemorySocialUserService implements SocialUserService {
+public class InMemorySocialUserService implements ISocialUserService {
 
     /**
      * 用户列表

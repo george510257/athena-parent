@@ -3,7 +3,7 @@ package com.athena.security.servlet.code.sms;
 import cn.hutool.json.JSONUtil;
 import com.athena.common.bean.result.Result;
 import com.athena.common.bean.result.ResultStatus;
-import com.athena.security.servlet.code.base.BaseCodeSender;
+import com.athena.security.servlet.code.base.ICodeSender;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author george
  */
 @Slf4j
-public class SmsCodeSender implements BaseCodeSender<SmsCode> {
+public class SmsCodeSender implements ICodeSender<SmsCode> {
 
     /**
      * 发送短信验证码

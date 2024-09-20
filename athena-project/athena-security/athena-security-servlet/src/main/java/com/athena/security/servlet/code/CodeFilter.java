@@ -22,7 +22,7 @@ import java.io.IOException;
 @Slf4j
 @Setter
 @Accessors(chain = true)
-public class VerificationCodeFilter extends OncePerRequestFilter {
+public class CodeFilter extends OncePerRequestFilter {
     /**
      * 认证失败处理器
      */
@@ -30,7 +30,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
     /**
      * 验证码管理器
      */
-    private VerificationCodeManager verificationCodeManager;
+    private CodeManager codeManager;
 
     /**
      * 过滤器逻辑
@@ -44,7 +44,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        BaseCodeProvider<?> provider = verificationCodeManager.getProvider(servletWebRequest);
+        BaseCodeProvider<?> provider = codeManager.getProvider(servletWebRequest);
         // 无需校验验证码
         if (provider == null) {
             filterChain.doFilter(request, response);
@@ -60,7 +60,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
             provider.verify(servletWebRequest);
             // 继续执行过滤器链
             filterChain.doFilter(request, response);
-        } catch (VerificationCodeException e) {
+        } catch (CodeAuthenticationException e) {
             log.error("验证码校验失败", e);
             // 校验失败处理
             authenticationFailureHandler.onAuthenticationFailure(request, response, e);

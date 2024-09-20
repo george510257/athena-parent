@@ -7,13 +7,13 @@ import org.springframework.security.core.AuthenticationException;
  *
  * @author george
  */
-public class VerificationCodeException extends AuthenticationException {
+public class CodeAuthenticationException extends AuthenticationException {
 
-    public VerificationCodeException(String message) {
+    public CodeAuthenticationException(String message) {
         super(message);
     }
 
-    public VerificationCodeException(String message, Throwable cause) {
+    public CodeAuthenticationException(String message, Throwable cause) {
         super(message, cause);
     }
 }

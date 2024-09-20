@@ -5,7 +5,7 @@ package com.athena.security.servlet.client.social;
  *
  * @author george
  */
-public interface SocialUserService {
+public interface ISocialUserService {
 
     /**
      * 根据社交平台id和社交平台用户id查询社交用户
