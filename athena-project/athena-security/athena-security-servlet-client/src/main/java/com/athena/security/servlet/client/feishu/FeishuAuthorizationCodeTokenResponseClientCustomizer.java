@@ -139,7 +139,7 @@ public class FeishuAuthorizationCodeTokenResponseClientCustomizer implements IAu
         // 请求头
         HttpHeaders headers = new HttpHeaders();
         // 设置请求头
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         // 设置授权头
         headers.setBearerAuth(feishuHelper.getAppAccessToken(clientRegistration.getClientId(), clientRegistration.getClientSecret()));
         // 返回请求头
