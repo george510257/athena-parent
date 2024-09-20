@@ -3,6 +3,8 @@ package com.athena.security.servlet.authorization.customizer;
 import com.athena.security.servlet.authorization.support.DefaultOAuth2TokenIntrospectionAuthenticationProvider;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2TokenIntrospectionEndpointConfigurer;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +16,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuth2TokenIntrospectionEndpointCustomizer implements Customizer<OAuth2TokenIntrospectionEndpointConfigurer> {
     /**
-     * 认证提供者
+     * 注册客户端存储库
      */
     @Resource
-    private DefaultOAuth2TokenIntrospectionAuthenticationProvider authenticationProvider;
+    private RegisteredClientRepository registeredClientRepository;
+    /**
+     * 授权服务
+     */
+    @Resource
+    private OAuth2AuthorizationService authorizationService;
 
     /**
      * 自定义
@@ -26,6 +33,6 @@ public class OAuth2TokenIntrospectionEndpointCustomizer implements Customizer<OA
      */
     @Override
     public void customize(OAuth2TokenIntrospectionEndpointConfigurer configurer) {
-        configurer.authenticationProvider(authenticationProvider);
+        configurer.authenticationProvider(new DefaultOAuth2TokenIntrospectionAuthenticationProvider(registeredClientRepository, authorizationService));
     }
 }

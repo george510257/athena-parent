@@ -1,7 +1,7 @@
 package com.athena.security.servlet.authorization.support;
 
 import com.athena.security.servlet.authorization.util.AuthenticationUtil;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2TokenIntrospectionAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.net.URL;
@@ -30,7 +29,7 @@ import java.util.Map;
  *
  * @author george
  */
-@Component
+@RequiredArgsConstructor
 public class DefaultOAuth2TokenIntrospectionAuthenticationProvider implements AuthenticationProvider {
 
     private static final TypeDescriptor OBJECT_TYPE_DESCRIPTOR = TypeDescriptor.valueOf(Object.class);
@@ -40,13 +39,11 @@ public class DefaultOAuth2TokenIntrospectionAuthenticationProvider implements Au
     /**
      * 注册客户端存储库
      */
-    @Resource
-    private RegisteredClientRepository registeredClientRepository;
+    private final RegisteredClientRepository registeredClientRepository;
     /**
      * 授权服务
      */
-    @Resource
-    private OAuth2AuthorizationService authorizationService;
+    private final OAuth2AuthorizationService authorizationService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
