@@ -5,7 +5,6 @@ import com.athena.security.servlet.authorization.authentication.PasswordOAuth2Au
 import com.athena.security.servlet.authorization.authentication.PasswordOAuth2AuthenticationProvider;
 import com.athena.security.servlet.authorization.authentication.SmsOAuth2AuthenticationConverter;
 import com.athena.security.servlet.authorization.authentication.SmsOAuth2AuthenticationProvider;
-import com.athena.security.servlet.authorization.support.DefaultOAuth2TokenIntrospectionAuthenticationProvider;
 import com.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
@@ -17,7 +16,6 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.*;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
@@ -52,11 +50,6 @@ public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2Aut
      */
     @Resource
     private OAuth2TokenGenerator<? extends OAuth2Token> oauth2TokenGenerator;
-    /**
-     * 注册客户端存储库
-     */
-    @Resource
-    private RegisteredClientRepository registeredClientRepository;
 
     /**
      * 自定义
@@ -131,7 +124,6 @@ public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2Aut
      * @param configurer 令牌验证端点配置器
      */
     private void tokenIntrospectionEndpoint(OAuth2TokenIntrospectionEndpointConfigurer configurer) {
-        configurer.authenticationProvider(new DefaultOAuth2TokenIntrospectionAuthenticationProvider(registeredClientRepository, authorizationService));
     }
 
     /**
