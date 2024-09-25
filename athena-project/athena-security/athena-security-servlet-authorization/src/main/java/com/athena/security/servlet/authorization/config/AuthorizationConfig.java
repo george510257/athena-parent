@@ -27,24 +27,25 @@ public class AuthorizationConfig {
     /**
      * 授权安全过滤器链
      *
-     * @param http                          Http安全
-     * @param authorizationServerCustomizer 授权服务器自定义器
-     * @param resourceServerCustomizer      资源服务器自定义器
-     * @param exceptionHandlingCustomizer   异常处理自定义器
-     * @return 授权安全过滤器链
+     * @param http                                Http安全
+     * @param oauth2AuthorizationServerCustomizer OAuth2授权服务器自定义器
+     * @param oauth2ResourceServerCustomizer      OAuth2资源服务器自定义器
+     * @param exceptionHandlingCustomizer         异常处理自定义器
+     * @return SecurityFilterChain 安全过滤器链
+     * @throws Exception 异常
      */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity http,
-                                                                OAuth2AuthorizationServerCustomizer authorizationServerCustomizer,
-                                                                OAuth2ResourceServerCustomizer resourceServerCustomizer,
+                                                                OAuth2AuthorizationServerCustomizer oauth2AuthorizationServerCustomizer,
+                                                                OAuth2ResourceServerCustomizer oauth2ResourceServerCustomizer,
                                                                 ExceptionHandlingCustomizer exceptionHandlingCustomizer) throws Exception {
         // 默认安全配置
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         // 自定义安全配置
-        authorizationServerCustomizer.customize(http.getConfigurer(OAuth2AuthorizationServerConfigurer.class));
+        oauth2AuthorizationServerCustomizer.customize(http.getConfigurer(OAuth2AuthorizationServerConfigurer.class));
         // 资源服务器
-        http.oauth2ResourceServer(resourceServerCustomizer);
+        http.oauth2ResourceServer(oauth2ResourceServerCustomizer);
         // 异常处理
         http.exceptionHandling(exceptionHandlingCustomizer);
         // 构建
@@ -52,13 +53,17 @@ public class AuthorizationConfig {
     }
 
     /**
-     * 默认安全配置
+     * 默认安全过滤器链
      *
      * @param http                            Http安全
      * @param restCustomizer                  REST自定义器
      * @param codeCustomizer                  验证码自定义器
      * @param authorizeHttpRequestsCustomizer 请求授权自定义器
+     * @param oauth2LoginCustomizer           OAuth2登录自定义器
+     * @param oauth2ResourceServerCustomizer  OAuth2资源服务器自定义器
      * @param csrfCustomizer                  CSRF自定义器
+     * @return SecurityFilterChain 安全过滤器链
+     * @throws Exception 异常
      */
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
@@ -67,7 +72,7 @@ public class AuthorizationConfig {
                                                    CodeCustomizer codeCustomizer,
                                                    AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                    OAuth2LoginCustomizer oauth2LoginCustomizer,
-                                                   OAuth2ResourceServerCustomizer resourceServerCustomizer,
+                                                   OAuth2ResourceServerCustomizer oauth2ResourceServerCustomizer,
                                                    CsrfCustomizer csrfCustomizer) throws Exception {
         // REST 登录
         http.with(new RestConfigurer<>(), restCustomizer);
@@ -76,7 +81,7 @@ public class AuthorizationConfig {
         // OAuth2 登录
         http.oauth2Login(oauth2LoginCustomizer);
         // 资源服务器
-        http.oauth2ResourceServer(resourceServerCustomizer);
+        http.oauth2ResourceServer(oauth2ResourceServerCustomizer);
         // 配置请求授权
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer);
         // CSRF

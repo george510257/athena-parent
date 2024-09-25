@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  * @author george
  */
 @Slf4j
-public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationProvider {
+public class SmsOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationProvider {
     /**
      * 用户服务
      */
@@ -28,7 +28,7 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
      * @param tokenGenerator       令牌生成器
      * @param userDetailsService   用户服务
      */
-    public OAuth2SmsAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+    public SmsOAuth2AuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                            OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
                                            UserDetailsService userDetailsService) {
         super(authorizationService, tokenGenerator);
@@ -42,8 +42,8 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
      * @return 用户名密码认证令牌
      */
     @Override
-    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2BaseAuthenticationToken baseAuthenticationToken) {
-        OAuth2SmsAuthenticationToken token = (OAuth2SmsAuthenticationToken) baseAuthenticationToken;
+    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseOAuth2AuthenticationToken baseAuthenticationToken) {
+        SmsOAuth2AuthenticationToken token = (SmsOAuth2AuthenticationToken) baseAuthenticationToken;
         UserDetails userDetails = userDetailsService.loadUserByUsername(token.getMobile());
         checkUser(userDetails);
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -68,6 +68,6 @@ public class OAuth2SmsAuthenticationProvider extends OAuth2BaseAuthenticationPro
      */
     @Override
     public boolean supports(Class<?> authentication) {
-        return OAuth2SmsAuthenticationToken.class.isAssignableFrom(authentication);
+        return SmsOAuth2AuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

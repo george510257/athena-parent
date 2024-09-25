@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  *
  * @author george
  */
-public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticationProvider {
+public class PasswordOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationProvider {
     /**
      * 用户详情认证提供者
      */
@@ -32,7 +32,7 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
      * @param userDetailsService   用户服务
      * @param passwordEncoder      密码编码器
      */
-    public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+    public PasswordOAuth2AuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                                 OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
                                                 UserDetailsService userDetailsService,
                                                 PasswordEncoder passwordEncoder) {
@@ -48,8 +48,8 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
      * @return 用户名密码认证令牌
      */
     @Override
-    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(OAuth2BaseAuthenticationToken baseAuthenticationToken) {
-        OAuth2PasswordAuthenticationToken token = (OAuth2PasswordAuthenticationToken) baseAuthenticationToken;
+    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseOAuth2AuthenticationToken baseAuthenticationToken) {
+        PasswordOAuth2AuthenticationToken token = (PasswordOAuth2AuthenticationToken) baseAuthenticationToken;
         UserDetails userDetails = userDetailsService.loadUserByUsername(token.getUsername());
         checkUser(userDetails, token.getPassword());
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -79,6 +79,6 @@ public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticati
      */
     @Override
     public boolean supports(Class<?> authentication) {
-        return OAuth2PasswordAuthenticationToken.class.isAssignableFrom(authentication);
+        return PasswordOAuth2AuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

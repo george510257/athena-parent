@@ -21,6 +21,15 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
     @Override
     public void customize(OAuth2ResourceServerConfigurer<HttpSecurity> configurer) {
         // 默认配置
-        configurer.opaqueToken(Customizer.withDefaults());
+        configurer.opaqueToken(this::opaqueToken);
     }
+
+    /**
+     * 不透明令牌
+     *
+     * @param configurer 配置器
+     */
+    private void opaqueToken(OAuth2ResourceServerConfigurer<HttpSecurity>.OpaqueTokenConfigurer configurer) {
+    }
+
 }

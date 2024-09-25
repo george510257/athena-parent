@@ -13,7 +13,7 @@ import java.util.Set;
  * @author george
  */
 @Getter
-public class OAuth2PasswordAuthenticationToken extends OAuth2BaseAuthenticationToken {
+public class PasswordOAuth2AuthenticationToken extends BaseOAuth2AuthenticationToken {
     /**
      * 用户名
      */
@@ -32,7 +32,7 @@ public class OAuth2PasswordAuthenticationToken extends OAuth2BaseAuthenticationT
      * @param username             用户名
      * @param password             密码
      */
-    public OAuth2PasswordAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String username, String password) {
+    public PasswordOAuth2AuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String username, String password) {
         super(AuthorizationConstants.PASSWORD, clientPrincipal, additionalParameters, scopes);
         this.username = username;
         this.password = password;

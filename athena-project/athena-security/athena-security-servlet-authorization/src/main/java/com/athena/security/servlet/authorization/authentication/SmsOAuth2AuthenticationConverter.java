@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  *
  * @author george
  */
-public class OAuth2SmsAuthenticationConverter extends OAuth2BaseAuthenticationConverter {
+public class SmsOAuth2AuthenticationConverter extends BaseOAuth2AuthenticationConverter {
 
     /**
      * 转换
@@ -40,8 +40,8 @@ public class OAuth2SmsAuthenticationConverter extends OAuth2BaseAuthenticationCo
                 .filter(entry -> !List.of(OAuth2ParameterNames.GRANT_TYPE, AuthorizationConstants.MOBILE, OAuth2ParameterNames.SCOPE)
                         .contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().size() > 1 ? entry.getValue() : entry.getValue().getFirst()));
-        // 返回 OAuth2PasswordAuthenticationToken 对象
-        return new OAuth2SmsAuthenticationToken(clientPrincipal, additionalParameters, scopes, mobile);
+        // 返回 SmsOAuth2AuthenticationToken 对象
+        return new SmsOAuth2AuthenticationToken(clientPrincipal, additionalParameters, scopes, mobile);
     }
 
     /**

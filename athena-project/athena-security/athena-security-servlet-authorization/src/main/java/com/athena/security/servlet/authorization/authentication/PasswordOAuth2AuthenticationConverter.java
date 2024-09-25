@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  *
  * @author george
  */
-public class OAuth2PasswordAuthenticationConverter extends OAuth2BaseAuthenticationConverter {
+public class PasswordOAuth2AuthenticationConverter extends BaseOAuth2AuthenticationConverter {
 
     /**
      * 转换
@@ -45,8 +45,8 @@ public class OAuth2PasswordAuthenticationConverter extends OAuth2BaseAuthenticat
                 .filter(entry -> !List.of(OAuth2ParameterNames.GRANT_TYPE, OAuth2ParameterNames.USERNAME, OAuth2ParameterNames.PASSWORD, OAuth2ParameterNames.SCOPE)
                         .contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().size() > 1 ? entry.getValue() : entry.getValue().getFirst()));
-        // 返回 OAuth2PasswordAuthenticationToken 对象
-        return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters, scopes, username, password);
+        // 返回 PasswordOAuth2AuthenticationToken 对象
+        return new PasswordOAuth2AuthenticationToken(clientPrincipal, additionalParameters, scopes, username, password);
     }
 
     /**
