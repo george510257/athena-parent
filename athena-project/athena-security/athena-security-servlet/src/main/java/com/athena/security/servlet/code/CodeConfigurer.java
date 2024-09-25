@@ -12,6 +12,7 @@ import com.athena.security.servlet.code.sms.SmsCodeSender;
 import com.athena.security.servlet.handler.DefaultAuthenticationFailureHandler;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -19,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * 验证码配置
@@ -45,8 +45,7 @@ public final class CodeConfigurer<H extends HttpSecurityBuilder<H>>
     /**
      * 验证码管理器
      */
-    private Consumer<List<BaseCodeProvider<?>>> providersConsumer = (providers) -> {
-    };
+    private Customizer<List<BaseCodeProvider<?>>> providersCustomizer = Customizer.withDefaults();
 
     @Override
     public void configure(H builder) throws Exception {
@@ -57,11 +56,16 @@ public final class CodeConfigurer<H extends HttpSecurityBuilder<H>>
         if (!this.providers.isEmpty()) {
             providers.addAll(0, this.providers);
         }
-        this.providersConsumer.accept(providers);
+        this.providersCustomizer.customize(providers);
         codeFilter.setCodeManager(new CodeManager(providers));
         builder.addFilterBefore(postProcess(codeFilter), UsernamePasswordAuthenticationFilter.class);
     }
 
+    /**
+     * 创建默认的验证码提供器
+     *
+     * @return 验证码提供器列表
+     */
     private List<BaseCodeProvider<?>> createDefaultProviders() {
         List<BaseCodeProvider<?>> providers = new ArrayList<>();
         providers.add(new ImageCodeProvider()

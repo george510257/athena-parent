@@ -18,32 +18,53 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * 验证码自定义器
+ *
  * @author george
  */
 @Component
 public class CodeCustomizer implements Customizer<CodeConfigurer<HttpSecurity>> {
-
+    /**
+     * 核心安全属性配置
+     */
     @Resource
     private CoreSecurityProperties coreSecurityProperties;
-
+    /**
+     * 验证码仓库
+     */
     @Resource
-    private Optional<ICodeRepository> verificationCodeRepository;
-
+    private Optional<ICodeRepository> codeRepository;
+    /**
+     * 认证失败处理器
+     */
     @Resource
     private Optional<AuthenticationFailureHandler> authenticationFailureHandler;
 
+    /**
+     * 自定义
+     *
+     * @param configurer 配置器
+     */
     @Override
     public void customize(CodeConfigurer<HttpSecurity> configurer) {
-        configurer.setProvidersConsumer(this::providersConsumer);
-        verificationCodeRepository.ifPresent(configurer::setCodeRepository);
+        // 提供者自定义器
+        configurer.setProvidersCustomizer(this::providersCustomizer);
+        // 验证码仓库
+        codeRepository.ifPresent(configurer::setCodeRepository);
+        // 认证失败处理器
         authenticationFailureHandler.ifPresent(configurer::setAuthenticationFailureHandler);
     }
 
-    private void providersConsumer(List<BaseCodeProvider<?>> providers) {
+    /**
+     * 提供者自定义器
+     *
+     * @param providers 提供者列表
+     */
+    private void providersCustomizer(List<BaseCodeProvider<?>> providers) {
         CoreSecurityProperties.Rest rest = coreSecurityProperties.getRest();
         for (BaseCodeProvider<?> provider : providers) {
             if (provider instanceof ImageCodeProvider imageCodeProvider) {
-                CoreSecurityProperties.Image image = coreSecurityProperties.getVerificationCode().getImage();
+                CoreSecurityProperties.Image image = coreSecurityProperties.getCode().getImage();
                 imageCodeProvider
                         .setCodeParameterName(image.getCodeParameterName())
                         .setTargetParameterName(image.getTargetParameterName())
@@ -59,7 +80,7 @@ public class CodeCustomizer implements Customizer<CodeConfigurer<HttpSecurity>> 
                                 .setFontSize(image.getFontSize())
                                 .setLineCount(image.getLineCount()));
             } else if (provider instanceof SmsCodeProvider smsCodeProvider) {
-                CoreSecurityProperties.Sms sms = coreSecurityProperties.getVerificationCode().getSms();
+                CoreSecurityProperties.Sms sms = coreSecurityProperties.getCode().getSms();
                 smsCodeProvider
                         .setCodeParameterName(sms.getCodeParameterName())
                         .setTargetParameterName(sms.getTargetParameterName())

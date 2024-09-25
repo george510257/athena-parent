@@ -30,7 +30,7 @@ public class CoreSecurityProperties extends BaseProperties {
     /**
      * 验证码配置
      */
-    private VerificationCode verificationCode = new VerificationCode();
+    private Code code = new Code();
 
     /**
      * rest登录配置
@@ -64,7 +64,7 @@ public class CoreSecurityProperties extends BaseProperties {
      * 验证码配置
      */
     @Data
-    public static class VerificationCode implements Serializable {
+    public static class Code implements Serializable {
 
         /**
          * 短信验证码配置
