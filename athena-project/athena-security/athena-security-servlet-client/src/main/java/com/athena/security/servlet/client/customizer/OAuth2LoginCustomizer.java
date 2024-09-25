@@ -1,6 +1,9 @@
 package com.athena.security.servlet.client.customizer;
 
 import com.athena.security.core.properties.CoreSecurityProperties;
+import com.athena.security.servlet.client.delegate.DelegateAuthorizationCodeTokenResponseClient;
+import com.athena.security.servlet.client.delegate.DelegateAuthorizationRequestResolver;
+import com.athena.security.servlet.client.delegate.DelegateOAuth2UserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,25 +21,20 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
     @Resource
     private CoreSecurityProperties coreSecurityProperties;
     /**
-     * 授权端点自定义器
+     * 委托授权请求解析器
      */
     @Resource
-    private AuthorizationEndpointCustomizer authorizationEndpointCustomizer;
+    private DelegateAuthorizationRequestResolver delegateAuthorizationRequestResolver;
     /**
-     * 重定向端点自定义器
+     * 委托授权码令牌响应客户端
      */
     @Resource
-    private RedirectionEndpointCustomizer redirectionEndpointCustomizer;
+    private DelegateAuthorizationCodeTokenResponseClient delegateAuthorizationCodeTokenResponseClient;
     /**
-     * 令牌端点自定义器
+     * 委托 OAuth2 用户信息服务
      */
     @Resource
-    private TokenEndpointCustomizer tokenEndpointCustomizer;
-    /**
-     * 用户信息端点自定义器
-     */
-    @Resource
-    private UserInfoEndpointCustomizer userInfoEndpointCustomizer;
+    private DelegateOAuth2UserService delegateOAuth2UserService;
 
     /**
      * 自定义 OAuth2 登录配置
@@ -48,12 +46,50 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
         // 登录页面
         configurer.loginPage(coreSecurityProperties.getRest().getLoginPage());
         // 授权端点自定义器
-        configurer.authorizationEndpoint(authorizationEndpointCustomizer);
+        configurer.authorizationEndpoint(this::authorizationEndpoint);
         // 重定向端点自定义器
-        configurer.redirectionEndpoint(redirectionEndpointCustomizer);
+        configurer.redirectionEndpoint(this::redirectionEndpoint);
         // 令牌端点自定义器
-        configurer.tokenEndpoint(tokenEndpointCustomizer);
+        configurer.tokenEndpoint(this::tokenEndpoint);
         // 用户信息端点自定义器
-        configurer.userInfoEndpoint(userInfoEndpointCustomizer);
+        configurer.userInfoEndpoint(this::userInfoEndpoint);
+    }
+
+    /**
+     * 自定义 OAuth2 授权端点配置
+     *
+     * @param config 配置器
+     */
+    private void authorizationEndpoint(OAuth2LoginConfigurer<HttpSecurity>.AuthorizationEndpointConfig config) {
+        // 自定义 OAuth2 授权请求解析器
+        config.authorizationRequestResolver(delegateAuthorizationRequestResolver);
+    }
+
+    /**
+     * 重定向端点自定义器
+     *
+     * @param config 配置器
+     */
+    private void redirectionEndpoint(OAuth2LoginConfigurer<HttpSecurity>.RedirectionEndpointConfig config) {
+    }
+
+    /**
+     * 自定义 OAuth2 令牌端点配置
+     *
+     * @param config 配置器
+     */
+    private void tokenEndpoint(OAuth2LoginConfigurer<HttpSecurity>.TokenEndpointConfig config) {
+        // 自定义 OAuth2 授权码令牌响应客户端
+        config.accessTokenResponseClient(delegateAuthorizationCodeTokenResponseClient);
+    }
+
+    /**
+     * 自定义 OAuth2 用户信息端点配置
+     *
+     * @param config 配置器
+     */
+    private void userInfoEndpoint(OAuth2LoginConfigurer<HttpSecurity>.UserInfoEndpointConfig config) {
+        // 自定义 OAuth2 用户信息服务
+        config.userService(delegateOAuth2UserService);
     }
 }
