@@ -47,6 +47,12 @@ public final class CodeConfigurer<H extends HttpSecurityBuilder<H>>
      */
     private Customizer<List<BaseCodeProvider<?>>> providersCustomizer = Customizer.withDefaults();
 
+    /**
+     * 配置
+     *
+     * @param builder
+     * @throws Exception
+     */
     @Override
     public void configure(H builder) throws Exception {
         CodeFilter codeFilter = new CodeFilter();
