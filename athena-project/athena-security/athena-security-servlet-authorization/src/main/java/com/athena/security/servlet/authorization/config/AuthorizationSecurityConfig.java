@@ -1,7 +1,6 @@
 package com.athena.security.servlet.authorization.config;
 
 import com.athena.security.servlet.authorization.customizer.OAuth2AuthorizationServerCustomizer;
-import com.athena.security.servlet.authorization.customizer.OAuth2ResourceServerCustomizer;
 import com.athena.security.servlet.client.customizer.OAuth2LoginCustomizer;
 import com.athena.security.servlet.code.CodeConfigurer;
 import com.athena.security.servlet.customizer.*;

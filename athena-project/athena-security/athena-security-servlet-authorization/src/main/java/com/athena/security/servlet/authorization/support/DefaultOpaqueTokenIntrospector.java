@@ -1,12 +1,9 @@
-package com.athena.security.servlet.authorization.customizer;
+package com.athena.security.servlet.authorization.support;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
@@ -15,20 +12,20 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
+import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.util.ArrayList;
 
 /**
- * 资源服务器自定义
+ * 默认不透明令牌解释器
  *
  * @author george
  */
 @Slf4j
 @Component
-public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> {
-
+public class DefaultOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
     /**
      * 授权服务
      */
@@ -41,33 +38,13 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
     private UserDetailsService userDetailsService;
 
     /**
-     * 自定义
-     *
-     * @param configurer 配置器
-     */
-    @Override
-    public void customize(OAuth2ResourceServerConfigurer<HttpSecurity> configurer) {
-        // 默认配置
-        configurer.opaqueToken(this::opaqueToken);
-    }
-
-    /**
-     * 不透明令牌
-     *
-     * @param configurer 配置器
-     */
-    private void opaqueToken(OAuth2ResourceServerConfigurer<HttpSecurity>.OpaqueTokenConfigurer configurer) {
-        // 令牌解释器
-        configurer.introspector(this::introspector);
-    }
-
-    /**
-     * 令牌解释器
+     * 不透明令牌解释
      *
      * @param token 令牌
-     * @return 令牌主体
+     * @return OAuth2认证主体
      */
-    private OAuth2AuthenticatedPrincipal introspector(String token) {
+    @Override
+    public OAuth2AuthenticatedPrincipal introspect(String token) {
         // 查询授权
         OAuth2Authorization oauth2Authorization = authorizationService.findByToken(token, null);
         if (oauth2Authorization == null) {
@@ -95,10 +72,10 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
     }
 
     /**
-     * 转换为主体
+     * 转换为OAuth2认证主体
      *
      * @param socialUser 社交用户
-     * @return 主体
+     * @return OAuth2认证主体
      */
     private OAuth2AuthenticatedPrincipal convertToPrincipal(SocialUser socialUser) {
         String username = socialUser.getUsername();
@@ -106,5 +83,4 @@ public class OAuth2ResourceServerCustomizer implements Customizer<OAuth2Resource
                 BeanUtil.beanToMap(userDetailsService.loadUserByUsername(username)),
                 new ArrayList<>(socialUser.getAuthorities()));
     }
-
 }
