@@ -12,12 +12,19 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
+ * 默认用户助手
+ *
  * @author george
  */
 @Slf4j
 @Component
 public class DefaultUserHelper implements IUserHelper {
 
+    /**
+     * 获取当前用户
+     *
+     * @return 用户
+     */
     @Override
     public Optional<? extends IUser<?, ?, ?>> getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -53,7 +60,6 @@ public class DefaultUserHelper implements IUserHelper {
         user.setOrganization(oauth2Principal.getAttribute("organization"));
         user.setRoles(oauth2Principal.getAttribute("roles"));
         user.setOrganizations(oauth2Principal.getAttribute("organizations"));
-
         user.setId(oauth2Principal.getAttribute("id"));
         user.setTenantId(oauth2Principal.getAttribute("tenantId"));
         user.setVersion(oauth2Principal.getAttribute("version"));
