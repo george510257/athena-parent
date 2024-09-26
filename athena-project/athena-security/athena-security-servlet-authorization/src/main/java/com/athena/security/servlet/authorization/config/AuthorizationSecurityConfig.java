@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * @author george
  */
 @Configuration
-public class AuthorizationConfig {
+public class AuthorizationSecurityConfig {
 
     /**
      * 授权安全过滤器链
@@ -67,13 +67,13 @@ public class AuthorizationConfig {
      */
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
-                                                   RestCustomizer restCustomizer,
-                                                   CodeCustomizer codeCustomizer,
-                                                   AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
-                                                   OAuth2LoginCustomizer oauth2LoginCustomizer,
-                                                   OAuth2ResourceServerCustomizer oauth2ResourceServerCustomizer,
-                                                   CsrfCustomizer csrfCustomizer) throws Exception {
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
+                                                          RestCustomizer restCustomizer,
+                                                          CodeCustomizer codeCustomizer,
+                                                          AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
+                                                          OAuth2LoginCustomizer oauth2LoginCustomizer,
+                                                          OAuth2ResourceServerCustomizer oauth2ResourceServerCustomizer,
+                                                          CsrfCustomizer csrfCustomizer) throws Exception {
         // REST 登录
         http.with(new RestConfigurer<>(), restCustomizer);
         // 验证码
