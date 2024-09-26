@@ -43,8 +43,11 @@ public class MiniAppAuthorizationRequestCustomizer implements IAuthorizationRequ
      * @param parameters 参数
      */
     private void parametersConsumer(Map<String, Object> parameters) {
+        // 小程序授权请求参数 - code 和 state
         Map<String, Object> result = new HashMap<>(2);
+        // code 为前端传递过来的 code
         result.put("code", request.getParameter("code"));
+        // 后端生成 state
         result.put("state", parameters.get("state"));
         parameters.clear();
         parameters.putAll(result);
