@@ -2,7 +2,6 @@ package com.athena.security.servlet.authorization.support;
 
 import com.athena.starter.data.redis.support.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2DeviceCode;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
@@ -95,7 +94,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
      * @return 是否包含
      */
     private boolean hasToken(OAuth2Authorization authorization, String token,
-                             @Nullable OAuth2TokenType tokenType) {
+                             OAuth2TokenType tokenType) {
         if (tokenType == null) {
             return matchesState(authorization, token) ||
                     matchesAuthorizationCode(authorization, token) ||

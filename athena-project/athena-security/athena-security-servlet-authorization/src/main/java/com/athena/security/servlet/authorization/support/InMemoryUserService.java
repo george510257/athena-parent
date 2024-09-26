@@ -1,19 +1,13 @@
 package com.athena.security.servlet.authorization.support;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.json.JSONUtil;
-import com.athena.common.bean.security.IUser;
 import com.athena.common.bean.security.User;
-import com.athena.security.servlet.client.social.SocialUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 内存用户服务
@@ -35,31 +29,6 @@ public class InMemoryUserService implements IUserService {
      */
     public InMemoryUserService(User... users) {
         CollUtil.addAll(USERS, users);
-    }
-
-    /**
-     * 获取当前用户
-     *
-     * @return 当前用户
-     */
-    @Override
-    public Optional<? extends IUser<?, ?, ?>> getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.info("principal: {}", JSONUtil.toJsonStr(principal));
-        if (principal instanceof User user) {
-            return Optional.of(user);
-        }
-        if (principal instanceof SocialUser socialUser) {
-            return USERS.stream()
-                    .filter(u -> u.getUsername().equals(socialUser.getUsername()))
-                    .findFirst();
-        }
-        if (principal instanceof OAuth2AuthenticatedPrincipal oauth2Principal) {
-            return USERS.stream()
-                    .filter(u -> u.getUsername().equals(oauth2Principal.getName()))
-                    .findFirst();
-        }
-        return Optional.empty();
     }
 
     /**
