@@ -64,33 +64,54 @@ public class CodeCustomizer implements Customizer<CodeConfigurer<HttpSecurity>> 
         CoreSecurityProperties.Rest rest = coreSecurityProperties.getRest();
         for (BaseCodeProvider<?> provider : providers) {
             if (provider instanceof ImageCodeProvider imageCodeProvider) {
-                CoreSecurityProperties.Image image = coreSecurityProperties.getCode().getImage();
-                imageCodeProvider
-                        .setCodeParameterName(image.getCodeParameterName())
-                        .setTargetParameterName(image.getTargetParameterName())
-                        .setUrl(image.getUrl())
-                        .setUrls(image.getUrls())
-                        .setLoginProcessingUrl(rest.getLoginProcessingUrl())
-                        .setUsernameParameter(rest.getUsernameParameter())
-                        .setGenerator(new ImageCodeGenerator()
-                                .setWidth(image.getWidth())
-                                .setHeight(image.getHeight())
-                                .setLength(image.getLength())
-                                .setExpireIn(image.getExpireIn())
-                                .setFontSize(image.getFontSize())
-                                .setLineCount(image.getLineCount()));
+                imageCodeProviderCustomizer(imageCodeProvider, rest);
             } else if (provider instanceof SmsCodeProvider smsCodeProvider) {
-                CoreSecurityProperties.Sms sms = coreSecurityProperties.getCode().getSms();
-                smsCodeProvider
-                        .setCodeParameterName(sms.getCodeParameterName())
-                        .setTargetParameterName(sms.getTargetParameterName())
-                        .setUrl(sms.getUrl())
-                        .setUrls(sms.getUrls())
-                        .setLoginProcessingUrl(rest.getLoginProcessingUrl())
-                        .setGenerator(new SmsCodeGenerator()
-                                .setLength(sms.getLength())
-                                .setExpireIn(sms.getExpireIn()));
+                smsCodeProviderCustomizer(smsCodeProvider, rest);
             }
         }
     }
+
+    /**
+     * 短信验证码提供者自定义
+     *
+     * @param smsCodeProvider 短信验证码提供者
+     * @param rest            REST配置
+     */
+    private void smsCodeProviderCustomizer(SmsCodeProvider smsCodeProvider, CoreSecurityProperties.Rest rest) {
+        CoreSecurityProperties.Sms sms = coreSecurityProperties.getCode().getSms();
+        smsCodeProvider
+                .setCodeParameterName(sms.getCodeParameterName())
+                .setTargetParameterName(sms.getTargetParameterName())
+                .setUrl(sms.getUrl())
+                .setUrls(sms.getUrls())
+                .setLoginProcessingUrl(rest.getLoginProcessingUrl())
+                .setGenerator(new SmsCodeGenerator()
+                        .setLength(sms.getLength())
+                        .setExpireIn(sms.getExpireIn()));
+    }
+
+    /**
+     * 图形验证码提供者自定义
+     *
+     * @param imageCodeProvider 图形验证码提供者
+     * @param rest              REST配置
+     */
+    private void imageCodeProviderCustomizer(ImageCodeProvider imageCodeProvider, CoreSecurityProperties.Rest rest) {
+        CoreSecurityProperties.Image image = coreSecurityProperties.getCode().getImage();
+        imageCodeProvider
+                .setCodeParameterName(image.getCodeParameterName())
+                .setTargetParameterName(image.getTargetParameterName())
+                .setUrl(image.getUrl())
+                .setUrls(image.getUrls())
+                .setLoginProcessingUrl(rest.getLoginProcessingUrl())
+                .setUsernameParameter(rest.getUsernameParameter())
+                .setGenerator(new ImageCodeGenerator()
+                        .setWidth(image.getWidth())
+                        .setHeight(image.getHeight())
+                        .setLength(image.getLength())
+                        .setExpireIn(image.getExpireIn())
+                        .setFontSize(image.getFontSize())
+                        .setLineCount(image.getLineCount()));
+    }
+
 }
