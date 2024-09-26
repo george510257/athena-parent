@@ -2,7 +2,6 @@ package com.athena.security.servlet.resource.support;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.athena.common.bean.security.User;
-import jakarta.annotation.Resource;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
@@ -29,12 +28,6 @@ public class DefaultOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
     private static final String INTROSPECT_URI = "http://localhost:8082/userinfo";
 
     /**
-     * REST模板
-     */
-    @Resource
-    private RestTemplate restTemplate;
-
-    /**
      * 不透明令牌解释
      *
      * @param token 令牌
@@ -42,6 +35,7 @@ public class DefaultOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
      */
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
+        RestTemplate restTemplate = new RestTemplate();
         RequestEntity<Void> requestEntity = requestEntityConverter(token);
         return toPrincipal(restTemplate.exchange(requestEntity, User.class).getBody());
     }
