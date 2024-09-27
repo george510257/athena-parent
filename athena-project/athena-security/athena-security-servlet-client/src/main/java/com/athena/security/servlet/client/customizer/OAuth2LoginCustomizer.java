@@ -24,17 +24,17 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      * 委托授权请求解析器
      */
     @Resource
-    private DelegateAuthorizationRequestResolver delegateAuthorizationRequestResolver;
+    private DelegateAuthorizationRequestResolver authorizationRequestResolver;
     /**
      * 委托授权码令牌响应客户端
      */
     @Resource
-    private DelegateAuthorizationCodeTokenResponseClient delegateAuthorizationCodeTokenResponseClient;
+    private DelegateAuthorizationCodeTokenResponseClient authorizationCodeTokenResponseClient;
     /**
      * 委托 OAuth2 用户信息服务
      */
     @Resource
-    private DelegateOAuth2UserService delegateOAuth2UserService;
+    private DelegateOAuth2UserService oauth2UserService;
 
     /**
      * 自定义 OAuth2 登录配置
@@ -62,7 +62,7 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      */
     private void authorizationEndpoint(OAuth2LoginConfigurer<HttpSecurity>.AuthorizationEndpointConfig config) {
         // 自定义 OAuth2 授权请求解析器
-        config.authorizationRequestResolver(delegateAuthorizationRequestResolver);
+        config.authorizationRequestResolver(authorizationRequestResolver);
     }
 
     /**
@@ -80,7 +80,7 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      */
     private void tokenEndpoint(OAuth2LoginConfigurer<HttpSecurity>.TokenEndpointConfig config) {
         // 自定义 OAuth2 授权码令牌响应客户端
-        config.accessTokenResponseClient(delegateAuthorizationCodeTokenResponseClient);
+        config.accessTokenResponseClient(authorizationCodeTokenResponseClient);
     }
 
     /**
@@ -90,6 +90,6 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      */
     private void userInfoEndpoint(OAuth2LoginConfigurer<HttpSecurity>.UserInfoEndpointConfig config) {
         // 自定义 OAuth2 用户信息服务
-        config.userService(delegateOAuth2UserService);
+        config.userService(oauth2UserService);
     }
 }

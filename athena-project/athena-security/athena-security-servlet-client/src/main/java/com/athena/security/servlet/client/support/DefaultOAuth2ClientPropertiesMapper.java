@@ -1,6 +1,6 @@
 package com.athena.security.servlet.client.support;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.AuthenticationMethod;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -21,12 +22,13 @@ import java.util.stream.Collectors;
  *
  * @author george
  */
-@RequiredArgsConstructor
+@Component
 public class DefaultOAuth2ClientPropertiesMapper {
     /**
      * OAuth2客户端属性
      */
-    private final OAuth2ClientProperties properties;
+    @Resource
+    private OAuth2ClientProperties properties;
 
     /**
      * 获取客户端注册信息列表
@@ -55,12 +57,12 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * @param registration   注册信息
      * @return 客户端注册信息
      */
-    private ClientRegistration toClientRegistration(String registrationId,
-                                                    OAuth2ClientProperties.Registration registration) {
+    private ClientRegistration toClientRegistration(String registrationId, OAuth2ClientProperties.Registration registration) {
         // 获取构建器
-        ClientRegistration.Builder builder = getBuilder(registrationId, registration);
+        ClientRegistration.Builder builder = getBuilderByProvider(registrationId, registration.getProvider());
         // 映射属性
         PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+        map.from(registrationId).to(builder::registrationId);
         map.from(registration::getClientId).to(builder::clientId);
         map.from(registration::getClientSecret).to(builder::clientSecret);
         map.from(registration::getClientAuthenticationMethod)
@@ -79,22 +81,21 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * 获取构建器
      *
      * @param registrationId 注册ID
-     * @param registration   注册信息
+     * @param provider       提供者
      * @return 构建器
      */
-    private ClientRegistration.Builder getBuilder(String registrationId,
-                                                  OAuth2ClientProperties.Registration registration) {
+    private ClientRegistration.Builder getBuilderByProvider(String registrationId, String provider) {
         // 获取提供者ID
-        String providerId = registration.getProvider() != null ? registration.getProvider() : registrationId;
+        String providerId = provider != null ? provider : registrationId;
         // 获取构建器 - 从提供者属性
-        ClientRegistration.Builder builder = getBuilderByProviderProperties(registrationId, providerId);
+        ClientRegistration.Builder builder = getBuilderByProperties(registrationId, providerId);
         if (builder == null) {
             // 获取构建器 - 从通用提供者
-            builder = getBuilderByCommonProvider(registrationId, providerId);
+            builder = getBuilderByCommon(registrationId, providerId);
         }
         if (builder == null) {
             // 获取构建器 - 从默认提供者
-            builder = getBuilderByDefaultProvider(registrationId, providerId);
+            builder = getBuilderByDefault(registrationId, providerId);
         }
         if (builder == null) {
             // 未知提供者
@@ -111,7 +112,7 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * @param providerId     提供者ID
      * @return 构建器
      */
-    private ClientRegistration.Builder getBuilderByDefaultProvider(String registrationId, String providerId) {
+    private ClientRegistration.Builder getBuilderByDefault(String registrationId, String providerId) {
         try {
             DefaultOAuth2Provider defaultProvider = DefaultOAuth2Provider.valueOf(providerId.toUpperCase());
             return defaultProvider.getBuilder(registrationId);
@@ -127,7 +128,7 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * @param providerId     提供者ID
      * @return 构建器
      */
-    private ClientRegistration.Builder getBuilderByCommonProvider(String registrationId, String providerId) {
+    private ClientRegistration.Builder getBuilderByCommon(String registrationId, String providerId) {
         try {
             CommonOAuth2Provider commonProvider = CommonOAuth2Provider.valueOf(providerId.toUpperCase());
             return commonProvider.getBuilder(registrationId);
@@ -143,7 +144,7 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * @param providerId     提供者ID
      * @return 构建器
      */
-    private ClientRegistration.Builder getBuilderByProviderProperties(String registrationId, String providerId) {
+    private ClientRegistration.Builder getBuilderByProperties(String registrationId, String providerId) {
         // 获取提供者属性
         OAuth2ClientProperties.Provider provider = this.properties.getProvider().get(providerId);
         if (provider == null) {
@@ -153,11 +154,11 @@ public class DefaultOAuth2ClientPropertiesMapper {
             // 从发行者位置获取构建器
             ClientRegistration.Builder builder = ClientRegistrations.fromIssuerLocation(provider.getIssuerUri())
                     .registrationId(registrationId);
-            return getBuilder(builder, provider);
+            return copyProviderToBuilder(builder, provider);
         }
         // 从提供者属性获取构建器
         ClientRegistration.Builder builder = ClientRegistration.withRegistrationId(registrationId);
-        return getBuilder(builder, provider);
+        return copyProviderToBuilder(builder, provider);
     }
 
     /**
@@ -167,7 +168,7 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * @param provider 提供者属性
      * @return 构建器
      */
-    private ClientRegistration.Builder getBuilder(ClientRegistration.Builder builder, OAuth2ClientProperties.Provider provider) {
+    private ClientRegistration.Builder copyProviderToBuilder(ClientRegistration.Builder builder, OAuth2ClientProperties.Provider provider) {
         PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
         map.from(provider::getAuthorizationUri).to(builder::authorizationUri);
         map.from(provider::getTokenUri).to(builder::tokenUri);

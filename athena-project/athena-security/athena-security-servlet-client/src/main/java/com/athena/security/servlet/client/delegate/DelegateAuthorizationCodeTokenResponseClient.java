@@ -36,6 +36,7 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
         // 根据注册标识获取授权码授权请求实体转换器
         IAuthorizationCodeTokenResponseClientCustomizer customizer = customizers.stream()
                 .filter(c -> c.test(registrationId)).findFirst().orElse(null);
+        // 如果存在定制器，则进行定制
         if (customizer != null) {
             customizer.customize(delegate);
             OAuth2AccessTokenResponse response = delegate.getTokenResponse(authorizationCodeGrantRequest);

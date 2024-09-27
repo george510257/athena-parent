@@ -19,12 +19,12 @@ public class OAuth2ClientCustomizer implements Customizer<OAuth2ClientConfigurer
      * 委托授权请求解析器
      */
     @Resource
-    private DelegateAuthorizationRequestResolver delegateAuthorizationRequestResolver;
+    private DelegateAuthorizationRequestResolver authorizationRequestResolver;
     /**
      * 委托授权码令牌响应客户端
      */
     @Resource
-    private DelegateAuthorizationCodeTokenResponseClient delegateAuthorizationCodeTokenResponseClient;
+    private DelegateAuthorizationCodeTokenResponseClient authorizationCodeTokenResponseClient;
 
     /**
      * 自定义 OAuth2 客户端配置
@@ -44,8 +44,8 @@ public class OAuth2ClientCustomizer implements Customizer<OAuth2ClientConfigurer
      */
     private void authorizationCodeGrant(OAuth2ClientConfigurer<HttpSecurity>.AuthorizationCodeGrantConfigurer configurer) {
         // 设置委托授权请求解析器
-        configurer.authorizationRequestResolver(delegateAuthorizationRequestResolver);
+        configurer.authorizationRequestResolver(authorizationRequestResolver);
         // 设置委托授权码令牌响应客户端
-        configurer.accessTokenResponseClient(delegateAuthorizationCodeTokenResponseClient);
+        configurer.accessTokenResponseClient(authorizationCodeTokenResponseClient);
     }
 }
