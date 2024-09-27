@@ -28,7 +28,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(ResultException.class)
     @ResponseStatus(HttpStatus.OK)
     public Result<?> resultExceptionHandler(ResultException e) {
-        log.error("ResultException: {}", e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultStatus.FAIL.toResult().setCode(e.getCode()).setMessage(e.getMessage());
     }
 
@@ -41,7 +41,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.OK)
     public Result<?> runtimeExceptionHandler(RuntimeException e) {
-        log.error("RuntimeException: {}", e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultStatus.SERVER_ERROR.toResult().setMessage(e.getMessage());
     }
 
@@ -54,7 +54,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
     public Result<?> exceptionHandler(Exception e) {
-        log.error("Exception: {}", e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultStatus.SERVER_ERROR.toResult().setMessage(e.getMessage());
     }
 }
