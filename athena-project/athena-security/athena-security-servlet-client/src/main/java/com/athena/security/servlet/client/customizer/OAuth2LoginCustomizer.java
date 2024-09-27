@@ -1,13 +1,16 @@
 package com.athena.security.servlet.client.customizer;
 
 import com.athena.security.core.properties.CoreSecurityProperties;
-import com.athena.security.servlet.client.delegate.DelegateAuthorizationCodeTokenResponseClient;
-import com.athena.security.servlet.client.delegate.DelegateAuthorizationRequestResolver;
-import com.athena.security.servlet.client.delegate.DelegateOAuth2UserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,17 +27,17 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      * 委托授权请求解析器
      */
     @Resource
-    private DelegateAuthorizationRequestResolver authorizationRequestResolver;
+    private OAuth2AuthorizationRequestResolver authorizationRequestResolver;
     /**
      * 委托授权码令牌响应客户端
      */
     @Resource
-    private DelegateAuthorizationCodeTokenResponseClient authorizationCodeTokenResponseClient;
+    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient;
     /**
      * 委托 OAuth2 用户信息服务
      */
     @Resource
-    private DelegateOAuth2UserService oauth2UserService;
+    private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService;
 
     /**
      * 自定义 OAuth2 登录配置
@@ -80,7 +83,7 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
      */
     private void tokenEndpoint(OAuth2LoginConfigurer<HttpSecurity>.TokenEndpointConfig config) {
         // 自定义 OAuth2 授权码令牌响应客户端
-        config.accessTokenResponseClient(authorizationCodeTokenResponseClient);
+        config.accessTokenResponseClient(accessTokenResponseClient);
     }
 
     /**
