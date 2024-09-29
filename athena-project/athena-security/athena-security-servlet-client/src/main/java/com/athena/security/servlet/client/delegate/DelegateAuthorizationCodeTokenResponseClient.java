@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.delegate;
 
+import com.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
@@ -21,6 +22,11 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
      */
     @Resource
     private ObjectProvider<IAuthorizationCodeTokenResponseClientCustomizer> customizers;
+    /**
+     * 默认 OAuth2 客户端属性映射器
+     */
+    @Resource
+    private DefaultOAuth2ClientPropertiesMapper mapper;
 
     /**
      * 获取访问令牌响应
@@ -32,10 +38,13 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         // 获取注册标识
         String registrationId = authorizationCodeGrantRequest.getClientRegistration().getRegistrationId();
+        // 获取提供者
+        String provider = mapper.getProvider(registrationId);
+        // 创建默认授权码令牌响应客户端
         DefaultAuthorizationCodeTokenResponseClient delegate = new DefaultAuthorizationCodeTokenResponseClient();
         // 根据注册标识获取授权码授权请求实体转换器
         IAuthorizationCodeTokenResponseClientCustomizer customizer = customizers.stream()
-                .filter(c -> c.test(registrationId)).findFirst().orElse(null);
+                .filter(c -> c.test(provider)).findFirst().orElse(null);
         // 如果存在定制器，则进行定制
         if (customizer != null) {
             customizer.customize(delegate);

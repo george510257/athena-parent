@@ -3,6 +3,7 @@ package com.athena.security.servlet.client.delegate;
 import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.social.ISocialUserService;
 import com.athena.security.servlet.client.social.SocialUser;
+import com.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.ObjectProvider;
@@ -33,6 +34,11 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      */
     @Resource
     private ObjectProvider<IOAuth2UserServiceCustomizer> customizers;
+    /**
+     * 默认 OAuth2 客户端属性映射器
+     */
+    @Resource
+    private DefaultOAuth2ClientPropertiesMapper mapper;
     /**
      * 会话
      */
@@ -95,9 +101,13 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * @return 委托
      */
     private OAuth2UserService<OAuth2UserRequest, OAuth2User> getDelegate(String registrationId) {
+        // 获取提供者
+        String provider = mapper.getProvider(registrationId);
+        // 创建默认 OAuth2 用户信息服务
         DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
+        // 自定义 OAuth2 用户信息服务
         customizers.stream()
-                .filter(customizer -> customizer.test(registrationId))
+                .filter(customizer -> customizer.test(provider))
                 .findFirst()
                 .ifPresent(customizer -> customizer.customize(delegate));
         return delegate;

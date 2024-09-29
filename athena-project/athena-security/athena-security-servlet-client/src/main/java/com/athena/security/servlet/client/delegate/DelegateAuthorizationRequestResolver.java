@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.delegate;
 
+import com.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectProvider;
@@ -39,6 +40,11 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      */
     @Resource
     private ClientRegistrationRepository clientRegistrationRepository;
+    /**
+     * 默认 OAuth2 客户端属性映射器
+     */
+    @Resource
+    private DefaultOAuth2ClientPropertiesMapper mapper;
 
     /**
      * 解析授权请求
@@ -90,9 +96,11 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      */
     private DefaultOAuth2AuthorizationRequestResolver getDelegate(String clientRegistrationId) {
         DefaultOAuth2AuthorizationRequestResolver delegate = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, AUTHORIZATION_REQUEST_BASE_URI);
+        // 获取提供者
+        String provider = mapper.getProvider(clientRegistrationId);
         // 自定义 OAuth2 授权请求器
         customizers.stream()
-                .filter(customizer -> customizer.test(clientRegistrationId))
+                .filter(customizer -> customizer.test(provider))
                 .findFirst()
                 .ifPresent(delegate::setAuthorizationRequestCustomizer);
         return delegate;

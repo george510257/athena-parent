@@ -3,11 +3,8 @@ package com.athena.security.servlet.client.config;
 import com.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-
-import java.util.List;
 
 /**
  * 客户端安全配置
@@ -25,10 +22,8 @@ public class ClientSecurityConfig {
      */
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository(DefaultOAuth2ClientPropertiesMapper mapper) {
-        // 获取客户端注册信息列表
-        List<ClientRegistration> clientRegistrations = mapper.getClientRegistrationsList();
         // 创建内存客户端注册信息库
-        return new InMemoryClientRegistrationRepository(clientRegistrations);
+        return new InMemoryClientRegistrationRepository(mapper.getClientRegistrations());
     }
 
 }
