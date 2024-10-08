@@ -1,4 +1,4 @@
-package com.athena.starter.web.advice;
+package com.athena.starter.web.handler;
 
 import com.athena.common.bean.result.Result;
 import com.athena.common.bean.result.ResultStatus;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * @author george
  */
 @RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)
-public class ResultAdvice implements ResponseBodyAdvice<Object> {
+public class ResultHandler implements ResponseBodyAdvice<Object> {
 
     /**
      * Web属性

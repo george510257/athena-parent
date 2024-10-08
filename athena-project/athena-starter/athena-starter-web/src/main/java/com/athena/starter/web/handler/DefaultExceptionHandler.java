@@ -1,4 +1,4 @@
-package com.athena.starter.web.advice;
+package com.athena.starter.web.handler;
 
 import com.athena.common.bean.result.Result;
 import com.athena.common.bean.result.ResultException;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @Slf4j
 @RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)
-public class ExceptionAdvice {
+public class DefaultExceptionHandler {
 
     /**
      * 处理ResultException异常
