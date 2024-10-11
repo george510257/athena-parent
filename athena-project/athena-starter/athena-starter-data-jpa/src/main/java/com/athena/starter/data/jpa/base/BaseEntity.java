@@ -2,7 +2,7 @@ package com.athena.starter.data.jpa.base;
 
 import com.athena.common.bean.base.IDomain;
 import com.athena.starter.data.jpa.support.DefaultEntityListener;
-import com.athena.starter.data.jpa.support.Snowflake;
+import com.athena.starter.data.jpa.support.SnowflakeId;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -25,7 +25,7 @@ public abstract class BaseEntity implements IDomain {
      * 主键
      */
     @Id
-    @Snowflake
+    @SnowflakeId
     @Comment("主键")
     private Long id;
     /**
