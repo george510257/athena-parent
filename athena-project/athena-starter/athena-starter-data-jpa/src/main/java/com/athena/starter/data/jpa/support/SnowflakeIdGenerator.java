@@ -1,7 +1,7 @@
 package com.athena.starter.data.jpa.support;
 
-import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.factory.spi.CustomIdGeneratorCreationContext;
@@ -13,23 +13,23 @@ import java.lang.reflect.Member;
  *
  * @author george
  */
+@RequiredArgsConstructor
 public class SnowflakeIdGenerator implements IdentifierGenerator {
+
     /**
      * 雪花算法
      */
-    private final Snowflake snowflake;
+    private final SnowflakeId snowflakeId;
 
     /**
-     * 构造函数
-     *
-     * @param snowflakeId 雪花算法
-     * @param member      成员
-     * @param context     上下文
+     * 成员
      */
-    public SnowflakeIdGenerator(SnowflakeId snowflakeId, Member member, CustomIdGeneratorCreationContext context) {
-        // 创建雪花算法
-        this.snowflake = IdUtil.getSnowflake(snowflakeId.workerId(), snowflakeId.datacenterId());
-    }
+    private final Member member;
+
+    /**
+     * 上下文
+     */
+    private final CustomIdGeneratorCreationContext context;
 
     /**
      * 生成id
@@ -40,6 +40,12 @@ public class SnowflakeIdGenerator implements IdentifierGenerator {
      */
     @Override
     public Object generate(SharedSessionContractImplementor session, Object object) {
-        return snowflake.nextId();
+        long workerId = snowflakeId.workerId();
+        long datacenterId = snowflakeId.datacenterId();
+        // 如果没有配置workerId和datacenterId，则使用默认的
+        if (workerId == 0 && datacenterId == 0) {
+            return IdUtil.getSnowflakeNextId();
+        }
+        return IdUtil.getSnowflake(workerId, datacenterId).nextId();
     }
 }

@@ -16,24 +16,18 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SnowflakeId {
-    /**
-     * 雪花算法名称
-     *
-     * @return 雪花算法名称
-     */
-    String name() default "snowflake";
 
     /**
-     * 工作ID
+     * 工作id
      *
-     * @return 工作ID
+     * @return 工作id
      */
-    long workerId() default 0L;
+    long workerId() default 0;
 
     /**
-     * 数据中心ID
+     * 数据中心id
      *
-     * @return 数据中心ID
+     * @return 数据中心id
      */
-    long datacenterId() default 0L;
+    long datacenterId() default 0;
 }
