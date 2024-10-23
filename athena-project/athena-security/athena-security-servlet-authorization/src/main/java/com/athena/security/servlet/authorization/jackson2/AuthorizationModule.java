@@ -34,23 +34,23 @@ public class AuthorizationModule extends SimpleModule {
         // 授权类型
         context.setMixInAnnotations(AuthorizationGrantType.class, AuthorizationGrantTypeMixin.class);
         // 授权令牌
-        context.setMixInAnnotations(OAuth2AccessToken.class, OAuth2AccessTokenMixin.class);
+        context.setMixInAnnotations(OAuth2AccessToken.class, AccessTokenMixin.class);
         // 令牌类型
-        context.setMixInAnnotations(OAuth2AccessToken.TokenType.class, OAuth2AccessTokenTypeMixin.class);
+        context.setMixInAnnotations(OAuth2AccessToken.TokenType.class, AccessTokenTypeMixin.class);
         // 授权码
-        context.setMixInAnnotations(OAuth2AuthorizationCode.class, OAuth2AuthorizationCodeMixin.class);
+        context.setMixInAnnotations(OAuth2AuthorizationCode.class, AuthorizationCodeMixin.class);
         // 授权同意
-        context.setMixInAnnotations(OAuth2AuthorizationConsent.class, OAuth2AuthorizationConsentMixin.class);
+        context.setMixInAnnotations(OAuth2AuthorizationConsent.class, AuthorizationConsentMixin.class);
         // 授权
-        context.setMixInAnnotations(OAuth2Authorization.class, OAuth2AuthorizationMixin.class);
+        context.setMixInAnnotations(OAuth2Authorization.class, AuthorizationMixin.class);
         // 令牌
-        context.setMixInAnnotations(OAuth2Authorization.Token.class, OAuth2AuthorizationTokenMixin.class);
+        context.setMixInAnnotations(OAuth2Authorization.Token.class, AuthorizationTokenMixin.class);
         // 设备授权码
-        context.setMixInAnnotations(OAuth2DeviceCode.class, OAuth2DeviceCodeMixin.class);
+        context.setMixInAnnotations(OAuth2DeviceCode.class, DeviceCodeMixin.class);
         // 刷新令牌
-        context.setMixInAnnotations(OAuth2RefreshToken.class, OAuth2RefreshTokenMixin.class);
+        context.setMixInAnnotations(OAuth2RefreshToken.class, RefreshTokenMixin.class);
         // 用户代码
-        context.setMixInAnnotations(OAuth2UserCode.class, OAuth2UserCodeMixin.class);
+        context.setMixInAnnotations(OAuth2UserCode.class, UserCodeMixin.class);
         // OpenID Connect Id令牌
         context.setMixInAnnotations(OidcIdToken.class, OidcIdTokenMixin.class);
     }

@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  *
  * @author george
  */
-public class PasswordOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationProvider {
+public class PasswordAuthenticationProvider extends BaseAuthenticationProvider {
     /**
      * 用户详情认证提供者
      */
@@ -32,10 +32,10 @@ public class PasswordOAuth2AuthenticationProvider extends BaseOAuth2Authenticati
      * @param userDetailsService   用户服务
      * @param passwordEncoder      密码编码器
      */
-    public PasswordOAuth2AuthenticationProvider(OAuth2AuthorizationService authorizationService,
-                                                OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                                UserDetailsService userDetailsService,
-                                                PasswordEncoder passwordEncoder) {
+    public PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+                                          OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+                                          UserDetailsService userDetailsService,
+                                          PasswordEncoder passwordEncoder) {
         super(authorizationService, tokenGenerator);
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
@@ -48,8 +48,8 @@ public class PasswordOAuth2AuthenticationProvider extends BaseOAuth2Authenticati
      * @return 用户名密码认证令牌
      */
     @Override
-    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseOAuth2AuthenticationToken baseAuthenticationToken) {
-        PasswordOAuth2AuthenticationToken token = (PasswordOAuth2AuthenticationToken) baseAuthenticationToken;
+    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseAuthenticationToken baseAuthenticationToken) {
+        PasswordAuthenticationToken token = (PasswordAuthenticationToken) baseAuthenticationToken;
         UserDetails userDetails = userDetailsService.loadUserByUsername(token.getUsername());
         checkUser(userDetails, token.getPassword());
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -79,6 +79,6 @@ public class PasswordOAuth2AuthenticationProvider extends BaseOAuth2Authenticati
      */
     @Override
     public boolean supports(Class<?> authentication) {
-        return PasswordOAuth2AuthenticationToken.class.isAssignableFrom(authentication);
+        return PasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

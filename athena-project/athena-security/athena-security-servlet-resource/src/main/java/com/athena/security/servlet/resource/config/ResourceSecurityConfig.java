@@ -2,7 +2,7 @@ package com.athena.security.servlet.resource.config;
 
 import com.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
 import com.athena.security.servlet.customizer.CsrfCustomizer;
-import com.athena.security.servlet.customizer.OAuth2ResourceServerCustomizer;
+import com.athena.security.servlet.customizer.ResourceServerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +28,7 @@ public class ResourceSecurityConfig {
      */
     @Bean
     public SecurityFilterChain resourceSecurityFilterChain(HttpSecurity http,
-                                                           OAuth2ResourceServerCustomizer oauth2ResourceServerCustomizer,
+                                                           ResourceServerCustomizer oauth2ResourceServerCustomizer,
                                                            AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                            CsrfCustomizer csrfCustomizer) throws Exception {
         // 资源服务器

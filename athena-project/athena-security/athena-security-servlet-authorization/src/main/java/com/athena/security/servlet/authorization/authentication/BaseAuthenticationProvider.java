@@ -37,7 +37,7 @@ import java.util.Set;
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class BaseOAuth2AuthenticationProvider implements AuthenticationProvider {
+public abstract class BaseAuthenticationProvider implements AuthenticationProvider {
 
     /**
      * 授权服务
@@ -58,7 +58,7 @@ public abstract class BaseOAuth2AuthenticationProvider implements Authentication
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取密码认证令牌
-        BaseOAuth2AuthenticationToken baseAuthenticationToken = (BaseOAuth2AuthenticationToken) authentication;
+        BaseAuthenticationToken baseAuthenticationToken = (BaseAuthenticationToken) authentication;
         // 获取客户端主体
         OAuth2ClientAuthenticationToken clientPrincipal = AuthenticationUtil.getAuthenticatedClientElseThrowInvalidClient(authentication);
         // 获取注册客户端
@@ -197,6 +197,6 @@ public abstract class BaseOAuth2AuthenticationProvider implements Authentication
      * @param baseAuthenticationToken 基础认证令牌
      * @return 用户名密码认证令牌
      */
-    public abstract UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseOAuth2AuthenticationToken baseAuthenticationToken);
+    public abstract UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseAuthenticationToken baseAuthenticationToken);
 
 }

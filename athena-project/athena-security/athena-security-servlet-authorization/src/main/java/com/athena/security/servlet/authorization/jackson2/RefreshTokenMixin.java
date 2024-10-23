@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.*;
 import java.time.Instant;
 
 /**
- * OAuth2 设备代码混合
+ * OAuth2 刷新令牌混合
  *
  * @author george
  */
@@ -13,8 +13,7 @@ import java.time.Instant;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OAuth2DeviceCodeMixin {
-
+public class RefreshTokenMixin {
     /**
      * 构造函数
      *
@@ -23,9 +22,8 @@ public class OAuth2DeviceCodeMixin {
      * @param expiresAt  过期时间
      */
     @JsonCreator
-    public OAuth2DeviceCodeMixin(@JsonProperty("tokenValue") String tokenValue,
-                                 @JsonProperty("issuedAt") Instant issuedAt,
-                                 @JsonProperty("expiresAt") Instant expiresAt) {
+    public RefreshTokenMixin(@JsonProperty("tokenValue") String tokenValue,
+                             @JsonProperty("issuedAt") Instant issuedAt,
+                             @JsonProperty("expiresAt") Instant expiresAt) {
     }
-
 }

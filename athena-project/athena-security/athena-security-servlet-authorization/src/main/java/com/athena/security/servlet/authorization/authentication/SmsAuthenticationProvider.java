@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  * @author george
  */
 @Slf4j
-public class SmsOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationProvider {
+public class SmsAuthenticationProvider extends BaseAuthenticationProvider {
     /**
      * 用户服务
      */
@@ -28,9 +28,9 @@ public class SmsOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationPro
      * @param tokenGenerator       令牌生成器
      * @param userDetailsService   用户服务
      */
-    public SmsOAuth2AuthenticationProvider(OAuth2AuthorizationService authorizationService,
-                                           OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                           UserDetailsService userDetailsService) {
+    public SmsAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+                                     OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+                                     UserDetailsService userDetailsService) {
         super(authorizationService, tokenGenerator);
         this.userDetailsService = userDetailsService;
     }
@@ -42,8 +42,8 @@ public class SmsOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationPro
      * @return 用户名密码认证令牌
      */
     @Override
-    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseOAuth2AuthenticationToken baseAuthenticationToken) {
-        SmsOAuth2AuthenticationToken token = (SmsOAuth2AuthenticationToken) baseAuthenticationToken;
+    public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(BaseAuthenticationToken baseAuthenticationToken) {
+        SmsAuthenticationToken token = (SmsAuthenticationToken) baseAuthenticationToken;
         UserDetails userDetails = userDetailsService.loadUserByUsername(token.getMobile());
         checkUser(userDetails);
         return UsernamePasswordAuthenticationToken.authenticated(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -68,6 +68,6 @@ public class SmsOAuth2AuthenticationProvider extends BaseOAuth2AuthenticationPro
      */
     @Override
     public boolean supports(Class<?> authentication) {
-        return SmsOAuth2AuthenticationToken.class.isAssignableFrom(authentication);
+        return SmsAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

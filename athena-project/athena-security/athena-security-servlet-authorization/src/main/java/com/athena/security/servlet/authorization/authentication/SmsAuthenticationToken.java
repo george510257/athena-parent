@@ -13,7 +13,7 @@ import java.util.Set;
  * @author george
  */
 @Getter
-public class SmsOAuth2AuthenticationToken extends BaseOAuth2AuthenticationToken {
+public class SmsAuthenticationToken extends BaseAuthenticationToken {
 
     /**
      * 手机号
@@ -28,7 +28,7 @@ public class SmsOAuth2AuthenticationToken extends BaseOAuth2AuthenticationToken 
      * @param scopes               作用域
      * @param mobile               手机号
      */
-    public SmsOAuth2AuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String mobile) {
+    public SmsAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String mobile) {
         super(AuthorizationConstants.SMS, clientPrincipal, additionalParameters, scopes);
         this.mobile = mobile;
     }

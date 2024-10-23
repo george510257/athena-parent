@@ -14,7 +14,7 @@ import java.util.Set;
  * @author george
  */
 @Getter
-public abstract class BaseOAuth2AuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
+public abstract class BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
     /**
      * 作用域
@@ -29,7 +29,7 @@ public abstract class BaseOAuth2AuthenticationToken extends OAuth2AuthorizationG
      * @param additionalParameters   附加参数
      * @param scopes                 作用域
      */
-    public BaseOAuth2AuthenticationToken(AuthorizationGrantType authorizationGrantType, Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes) {
+    public BaseAuthenticationToken(AuthorizationGrantType authorizationGrantType, Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes) {
         super(authorizationGrantType, clientPrincipal, additionalParameters);
         this.scopes = scopes;
     }

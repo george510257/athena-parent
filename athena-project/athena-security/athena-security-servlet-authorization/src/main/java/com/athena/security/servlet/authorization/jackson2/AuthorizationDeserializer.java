@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * @author george
  */
-public class OAuth2AuthorizationDeserializer extends JsonDeserializer<OAuth2Authorization> {
+public class AuthorizationDeserializer extends JsonDeserializer<OAuth2Authorization> {
 
     /**
      * 反序列化 OAuth2Authorization 对象

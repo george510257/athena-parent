@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * @author george
  */
-public abstract class BaseOAuth2AuthenticationConverter implements AuthenticationConverter {
+public abstract class BaseAuthenticationConverter implements AuthenticationConverter {
     /**
      * 转换
      *

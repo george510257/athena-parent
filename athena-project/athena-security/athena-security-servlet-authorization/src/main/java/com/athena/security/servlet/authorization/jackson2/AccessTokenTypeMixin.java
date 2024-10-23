@@ -1,30 +1,23 @@
 package com.athena.security.servlet.authorization.jackson2;
 
 import com.fasterxml.jackson.annotation.*;
-import org.springframework.security.oauth2.core.OAuth2Token;
-
-import java.util.Map;
 
 /**
- * OAuth2 授权令牌混合
+ * oauth2访问令牌类型混合
  *
- * @param <T> OAuth2Token类型
  * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OAuth2AuthorizationTokenMixin<T extends OAuth2Token> {
-
+public class AccessTokenTypeMixin {
     /**
      * 构造函数
      *
-     * @param token    令牌
-     * @param metadata 元数据
+     * @param value 值
      */
     @JsonCreator
-    public OAuth2AuthorizationTokenMixin(@JsonProperty("token") T token,
-                                         @JsonProperty("metadata") Map<String, Object> metadata) {
+    public AccessTokenTypeMixin(@JsonProperty("value") String value) {
     }
 }

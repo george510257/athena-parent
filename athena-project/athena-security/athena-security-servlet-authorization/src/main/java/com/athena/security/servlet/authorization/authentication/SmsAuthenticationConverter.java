@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * OAuth2 密码认证转换器
+ * OAuth2 短信认证转换器
  *
  * @author george
  */
-public class PasswordOAuth2AuthenticationConverter extends BaseOAuth2AuthenticationConverter {
+public class SmsAuthenticationConverter extends BaseAuthenticationConverter {
 
     /**
      * 转换
@@ -30,23 +30,18 @@ public class PasswordOAuth2AuthenticationConverter extends BaseOAuth2Authenticat
      */
     @Override
     protected Authentication convert(MultiValueMap<String, String> parameterMap, Authentication clientPrincipal, Set<String> scopes) {
-        // 用户名 (REQUIRED)
-        String username = parameterMap.getFirst(OAuth2ParameterNames.USERNAME);
-        if (StrUtil.isBlank(username) || parameterMap.get(OAuth2ParameterNames.USERNAME).size() != 1) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME, AuthorizationConstants.ERROR_URI);
-        }
-        // 密码 (REQUIRED)
-        String password = parameterMap.getFirst(OAuth2ParameterNames.PASSWORD);
-        if (StrUtil.isBlank(password) || parameterMap.get(OAuth2ParameterNames.PASSWORD).size() != 1) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD, AuthorizationConstants.ERROR_URI);
+        // 手机号 (REQUIRED)
+        String mobile = parameterMap.getFirst(AuthorizationConstants.MOBILE);
+        if (StrUtil.isBlank(mobile) || parameterMap.get(AuthorizationConstants.MOBILE).size() != 1) {
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, AuthorizationConstants.MOBILE, AuthorizationConstants.ERROR_URI);
         }
         // 额外参数
         Map<String, Object> additionalParameters = parameterMap.entrySet().stream()
-                .filter(entry -> !List.of(OAuth2ParameterNames.GRANT_TYPE, OAuth2ParameterNames.USERNAME, OAuth2ParameterNames.PASSWORD, OAuth2ParameterNames.SCOPE)
+                .filter(entry -> !List.of(OAuth2ParameterNames.GRANT_TYPE, AuthorizationConstants.MOBILE, OAuth2ParameterNames.SCOPE)
                         .contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().size() > 1 ? entry.getValue() : entry.getValue().getFirst()));
-        // 返回 PasswordOAuth2AuthenticationToken 对象
-        return new PasswordOAuth2AuthenticationToken(clientPrincipal, additionalParameters, scopes, username, password);
+        // 返回 SmsOAuth2AuthenticationToken 对象
+        return new SmsAuthenticationToken(clientPrincipal, additionalParameters, scopes, mobile);
     }
 
     /**
@@ -57,6 +52,6 @@ public class PasswordOAuth2AuthenticationConverter extends BaseOAuth2Authenticat
      */
     @Override
     public boolean support(String grantType) {
-        return AuthorizationConstants.PASSWORD.getValue().equals(grantType);
+        return AuthorizationConstants.SMS.getValue().equals(grantType);
     }
 }

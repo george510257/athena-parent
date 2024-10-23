@@ -1,29 +1,30 @@
 package com.athena.security.servlet.authorization.jackson2;
 
 import com.fasterxml.jackson.annotation.*;
+import org.springframework.security.oauth2.core.OAuth2Token;
 
-import java.time.Instant;
+import java.util.Map;
 
 /**
- * OAuth2 刷新令牌混合
+ * OAuth2 授权令牌混合
  *
+ * @param <T> OAuth2Token类型
  * @author george
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OAuth2RefreshTokenMixin {
+public class AuthorizationTokenMixin<T extends OAuth2Token> {
+
     /**
      * 构造函数
      *
-     * @param tokenValue 令牌值
-     * @param issuedAt   发布时间
-     * @param expiresAt  过期时间
+     * @param token    令牌
+     * @param metadata 元数据
      */
     @JsonCreator
-    public OAuth2RefreshTokenMixin(@JsonProperty("tokenValue") String tokenValue,
-                                   @JsonProperty("issuedAt") Instant issuedAt,
-                                   @JsonProperty("expiresAt") Instant expiresAt) {
+    public AuthorizationTokenMixin(@JsonProperty("token") T token,
+                                   @JsonProperty("metadata") Map<String, Object> metadata) {
     }
 }

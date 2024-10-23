@@ -1,7 +1,7 @@
 package com.athena.security.servlet.authorization.config;
 
 import com.athena.security.servlet.authorization.customizer.JwtEncodingContextCustomizer;
-import com.athena.security.servlet.authorization.customizer.OAuth2TokenClaimsContextCustomizer;
+import com.athena.security.servlet.authorization.customizer.TokenClaimsContextCustomizer;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.annotation.Resource;
@@ -31,7 +31,7 @@ public class TokenConfig {
      * 访问令牌自定义器
      */
     @Resource
-    private Optional<OAuth2TokenClaimsContextCustomizer> oauth2TokenClaimsContextCustomizer;
+    private Optional<TokenClaimsContextCustomizer> oauth2TokenClaimsContextCustomizer;
 
     /**
      * OAuth2令牌生成器

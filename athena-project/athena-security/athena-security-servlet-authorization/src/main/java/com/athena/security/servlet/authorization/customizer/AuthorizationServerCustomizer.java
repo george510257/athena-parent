@@ -1,10 +1,10 @@
 package com.athena.security.servlet.authorization.customizer;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.athena.security.servlet.authorization.authentication.PasswordOAuth2AuthenticationConverter;
-import com.athena.security.servlet.authorization.authentication.PasswordOAuth2AuthenticationProvider;
-import com.athena.security.servlet.authorization.authentication.SmsOAuth2AuthenticationConverter;
-import com.athena.security.servlet.authorization.authentication.SmsOAuth2AuthenticationProvider;
+import com.athena.security.servlet.authorization.authentication.PasswordAuthenticationConverter;
+import com.athena.security.servlet.authorization.authentication.PasswordAuthenticationProvider;
+import com.athena.security.servlet.authorization.authentication.SmsAuthenticationConverter;
+import com.athena.security.servlet.authorization.authentication.SmsAuthenticationProvider;
 import com.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
@@ -29,7 +29,7 @@ import java.security.Principal;
  * @author george
  */
 @Component
-public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2AuthorizationServerConfigurer> {
+public class AuthorizationServerCustomizer implements Customizer<OAuth2AuthorizationServerConfigurer> {
     /**
      * 用户详情认证提供者
      */
@@ -110,12 +110,12 @@ public class OAuth2AuthorizationServerCustomizer implements Customizer<OAuth2Aut
     private void tokenEndpoint(OAuth2TokenEndpointConfigurer configurer) {
 
         // 添加密码模式
-        configurer.authenticationProvider(new PasswordOAuth2AuthenticationProvider(authorizationService, oauth2TokenGenerator, userDetailsService, passwordEncoder));
-        configurer.accessTokenRequestConverter(new PasswordOAuth2AuthenticationConverter());
+        configurer.authenticationProvider(new PasswordAuthenticationProvider(authorizationService, oauth2TokenGenerator, userDetailsService, passwordEncoder));
+        configurer.accessTokenRequestConverter(new PasswordAuthenticationConverter());
 
         // 添加短信模式
-        configurer.authenticationProvider(new SmsOAuth2AuthenticationProvider(authorizationService, oauth2TokenGenerator, userDetailsService));
-        configurer.accessTokenRequestConverter(new SmsOAuth2AuthenticationConverter());
+        configurer.authenticationProvider(new SmsAuthenticationProvider(authorizationService, oauth2TokenGenerator, userDetailsService));
+        configurer.accessTokenRequestConverter(new SmsAuthenticationConverter());
     }
 
     /**

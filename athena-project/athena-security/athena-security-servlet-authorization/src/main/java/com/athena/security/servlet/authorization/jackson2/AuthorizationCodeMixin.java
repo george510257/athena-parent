@@ -13,7 +13,7 @@ import java.time.Instant;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OAuth2AuthorizationCodeMixin {
+public class AuthorizationCodeMixin {
 
     /**
      * 构造函数
@@ -23,8 +23,8 @@ public class OAuth2AuthorizationCodeMixin {
      * @param expiresAt  过期时间
      */
     @JsonCreator
-    public OAuth2AuthorizationCodeMixin(@JsonProperty("tokenValue") String tokenValue,
-                                        @JsonProperty("issuedAt") Instant issuedAt,
-                                        @JsonProperty("expiresAt") Instant expiresAt) {
+    public AuthorizationCodeMixin(@JsonProperty("tokenValue") String tokenValue,
+                                  @JsonProperty("issuedAt") Instant issuedAt,
+                                  @JsonProperty("expiresAt") Instant expiresAt) {
     }
 }
