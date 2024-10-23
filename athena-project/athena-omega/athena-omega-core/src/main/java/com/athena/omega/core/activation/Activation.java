@@ -67,6 +67,7 @@ public interface Activation<Request, Response> {
      *
      * @param request 请求
      * @return 响应
+     * @throws Exception 异常
      */
     default Response process(Request request) throws Exception {
         // 初始化执行器
