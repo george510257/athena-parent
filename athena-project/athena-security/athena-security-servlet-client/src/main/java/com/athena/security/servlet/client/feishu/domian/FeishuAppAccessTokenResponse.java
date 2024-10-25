@@ -2,6 +2,7 @@ package com.athena.security.servlet.client.feishu.domian;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -11,15 +12,8 @@ import java.io.Serializable;
  * @author george
  */
 @Data
-public class FeishuAppAccessTokenResponse implements Serializable {
-    /**
-     * 响应码
-     */
-    private Integer code;
-    /**
-     * 响应消息
-     */
-    private String msg;
+@EqualsAndHashCode(callSuper = true)
+public class FeishuAppAccessTokenResponse extends FeishuResponse<String> implements Serializable {
     /**
      * 应用访问令牌
      */

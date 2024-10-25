@@ -1,9 +1,9 @@
 package com.athena.security.servlet.client.feishu;
 
-import com.athena.security.servlet.client.feishu.domian.FeishuAppAccessTokenRequest;
-import com.athena.security.servlet.client.feishu.domian.FeishuAppAccessTokenResponse;
+import com.athena.security.servlet.client.feishu.domian.*;
 import com.athena.starter.data.redis.support.RedisUtil;
 import jakarta.annotation.Resource;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -75,4 +75,51 @@ public class FeishuHelper {
         return restTemplate.exchange(requestEntity, FeishuAppAccessTokenResponse.class).getBody();
     }
 
+    /**
+     * 获取用户访问令牌
+     *
+     * @param request 用户访问令牌请求
+     * @return 用户访问令牌
+     */
+    public FeishuUserAccessTokenResponse getUserAccessToken(FeishuUserAccessTokenRequest request, String clientId, String clientSecret) {
+        // 请求飞书接口
+        RestTemplate restTemplate = new RestTemplate();
+        // 请求实体
+        RequestEntity<FeishuUserAccessTokenRequest> requestEntity = RequestEntity
+                .post(URI.create(feishuProperties.getTokenUri()))
+                .header("Content-Type", "application/json; charset=UTF-8")
+                .header("Authorization", "Bearer " + getAppAccessToken(clientId, clientSecret))
+                .body(request);
+        // 返回用户访问令牌
+        FeishuResponse<FeishuUserAccessTokenResponse> response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<FeishuResponse<FeishuUserAccessTokenResponse>>() {
+        }).getBody();
+        if (response != null) {
+            return response.getData();
+        }
+        return null;
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param userAccessToken 用户访问令牌
+     * @return 用户信息
+     */
+    public FeishuUserInfoResponse getUserInfo(String userAccessToken) {
+        // 请求飞书接口
+        RestTemplate restTemplate = new RestTemplate();
+        // 请求实体
+        RequestEntity<?> requestEntity = RequestEntity
+                .get(URI.create(feishuProperties.getUserInfoUri()))
+                .header("Content-Type", "application/json; charset=UTF-8")
+                .header("Authorization", "Bearer " + userAccessToken)
+                .build();
+        // 返回用户信息
+        FeishuResponse<FeishuUserInfoResponse> response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<FeishuResponse<FeishuUserInfoResponse>>() {
+        }).getBody();
+        if (response != null) {
+            return response.getData();
+        }
+        return null;
+    }
 }

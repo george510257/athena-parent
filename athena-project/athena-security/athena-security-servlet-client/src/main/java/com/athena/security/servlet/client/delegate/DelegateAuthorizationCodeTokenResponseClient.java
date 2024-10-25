@@ -18,10 +18,14 @@ import org.springframework.stereotype.Component;
 public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
 
     /**
-     * 自定义授权码令牌响应客户端定制器
+     * 默认授权码令牌响应客户端
+     */
+    private static final DefaultAuthorizationCodeTokenResponseClient DEFAULT = new DefaultAuthorizationCodeTokenResponseClient();
+    /**
+     * OAuth2 客户端属性映射器提供者
      */
     @Resource
-    private ObjectProvider<IAuthorizationCodeTokenResponseClientCustomizer> customizers;
+    private ObjectProvider<IAuthorizationCodeTokenResponseClientAdapter> adapters;
     /**
      * 默认 OAuth2 客户端属性映射器
      */
@@ -40,18 +44,10 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
         String registrationId = authorizationCodeGrantRequest.getClientRegistration().getRegistrationId();
         // 获取提供者
         String provider = mapper.getProvider(registrationId);
-        // 创建默认授权码令牌响应客户端
-        DefaultAuthorizationCodeTokenResponseClient delegate = new DefaultAuthorizationCodeTokenResponseClient();
-        // 根据注册标识获取授权码授权请求实体转换器
-        IAuthorizationCodeTokenResponseClientCustomizer customizer = customizers.stream()
-                .filter(c -> c.test(provider)).findFirst().orElse(null);
-        // 如果存在定制器，则进行定制
-        if (customizer != null) {
-            customizer.customize(delegate);
-            OAuth2AccessTokenResponse response = delegate.getTokenResponse(authorizationCodeGrantRequest);
-            return customizer.customResponse(authorizationCodeGrantRequest, response);
-        }
-        return delegate.getTokenResponse(authorizationCodeGrantRequest);
+        // 获取适配器
+        return adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
+                .map(adapter -> adapter.getTokenResponse(authorizationCodeGrantRequest))
+                .orElseGet(() -> DEFAULT.getTokenResponse(authorizationCodeGrantRequest));
     }
 
 }

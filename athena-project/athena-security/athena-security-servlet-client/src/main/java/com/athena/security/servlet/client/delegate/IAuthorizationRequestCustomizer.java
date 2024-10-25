@@ -1,8 +1,9 @@
 package com.athena.security.servlet.client.delegate;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 /**
@@ -10,5 +11,5 @@ import java.util.function.Predicate;
  *
  * @author george
  */
-public interface IAuthorizationRequestCustomizer extends Consumer<OAuth2AuthorizationRequest.Builder>, Predicate<String> {
+public interface IAuthorizationRequestCustomizer extends BiConsumer<OAuth2AuthorizationRequest.Builder, HttpServletRequest>, Predicate<String> {
 }

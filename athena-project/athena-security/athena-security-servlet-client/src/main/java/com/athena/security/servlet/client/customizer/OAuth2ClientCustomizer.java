@@ -1,12 +1,11 @@
 package com.athena.security.servlet.client.customizer;
 
+import com.athena.security.servlet.client.delegate.DelegateAuthorizationCodeTokenResponseClient;
+import com.athena.security.servlet.client.delegate.DelegateAuthorizationRequestResolver;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2ClientConfigurer;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,12 +19,12 @@ public class OAuth2ClientCustomizer implements Customizer<OAuth2ClientConfigurer
      * 委托授权请求解析器
      */
     @Resource
-    private OAuth2AuthorizationRequestResolver authorizationRequestResolver;
+    private DelegateAuthorizationRequestResolver authorizationRequestResolver;
     /**
      * 委托授权码令牌响应客户端
      */
     @Resource
-    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient;
+    private DelegateAuthorizationCodeTokenResponseClient accessTokenResponseClient;
 
     /**
      * 自定义 OAuth2 客户端配置

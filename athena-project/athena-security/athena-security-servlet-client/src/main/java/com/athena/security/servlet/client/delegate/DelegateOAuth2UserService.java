@@ -25,6 +25,10 @@ import java.util.HashSet;
 @Component
 public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     /**
+     * 默认 OAuth2 用户信息服务
+     */
+    private static final DefaultOAuth2UserService DEFAULT = new DefaultOAuth2UserService();
+    /**
      * 社交用户仓库
      */
     @Resource
@@ -33,7 +37,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
      * OAuth2UserService 定制器提供者
      */
     @Resource
-    private ObjectProvider<IOAuth2UserServiceCustomizer> customizers;
+    private ObjectProvider<IOAuth2UserServiceAdapter> adapters;
     /**
      * 默认 OAuth2 客户端属性映射器
      */
@@ -56,10 +60,12 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         // 获取注册 ID
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        // 获取委托
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = getDelegate(registrationId);
+        // 获取提供者
+        String provider = mapper.getProvider(registrationId);
         // 加载用户
-        OAuth2User oauth2User = delegate.loadUser(userRequest);
+        OAuth2User oauth2User = adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
+                .map(adapter -> adapter.loadUser(userRequest))
+                .orElseGet(() -> DEFAULT.loadUser(userRequest));
         // 转换为社交用户
         SocialUser socialUser = convetToSocialUser(oauth2User, registrationId);
         // 未绑定
@@ -94,22 +100,4 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         return socialUser;
     }
 
-    /**
-     * 获取委托
-     *
-     * @param registrationId 注册 ID
-     * @return 委托
-     */
-    private OAuth2UserService<OAuth2UserRequest, OAuth2User> getDelegate(String registrationId) {
-        // 获取提供者
-        String provider = mapper.getProvider(registrationId);
-        // 创建默认 OAuth2 用户信息服务
-        DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
-        // 自定义 OAuth2 用户信息服务
-        customizers.stream()
-                .filter(customizer -> customizer.test(provider))
-                .findFirst()
-                .ifPresent(customizer -> customizer.customize(delegate));
-        return delegate;
-    }
 }

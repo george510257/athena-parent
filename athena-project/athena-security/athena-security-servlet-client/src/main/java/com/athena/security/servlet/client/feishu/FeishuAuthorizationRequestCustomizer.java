@@ -2,6 +2,7 @@ package com.athena.security.servlet.client.feishu;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
@@ -38,9 +39,10 @@ public class FeishuAuthorizationRequestCustomizer implements IAuthorizationReque
      * 自定义 OAuth2 授权请求
      *
      * @param builder 构建器
+     * @param request 请求
      */
     @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder) {
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
         // 飞书 OAuth2 授权请求参数处理
         builder.authorizationRequestUri(this::authorizationRequestUriConsumer);
     }
