@@ -1,6 +1,7 @@
-package com.athena.security.servlet.client.wechat;
+package com.athena.security.servlet.client.wechat.mini;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
+import com.athena.security.servlet.client.wechat.WechatProperties;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
@@ -21,37 +22,7 @@ public class MiniAppAuthorizationRequestCustomizer implements IAuthorizationRequ
      */
     @Resource
     private WechatProperties wechatProperties;
-    /**
-     * 请求
-     */
-    @Resource
-    private HttpServletRequest request;
 
-    /**
-     * 接受输入参数
-     *
-     * @param builder 授权请求构建器
-     */
-    @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder) {
-        builder.parameters(this::parametersConsumer);
-    }
-
-    /**
-     * 授权请求参数处理
-     *
-     * @param parameters 参数
-     */
-    private void parametersConsumer(Map<String, Object> parameters) {
-        // 小程序授权请求参数 - code 和 state
-        Map<String, Object> result = new HashMap<>(2);
-        // code 为前端传递过来的 code
-        result.put("code", request.getParameter("code"));
-        // 后端生成 state
-        result.put("state", parameters.get("state"));
-        parameters.clear();
-        parameters.putAll(result);
-    }
 
     /**
      * 测试是否支持指定的注册标识
@@ -62,5 +33,24 @@ public class MiniAppAuthorizationRequestCustomizer implements IAuthorizationRequ
     @Override
     public boolean test(String registrationId) {
         return wechatProperties.getMiniApp().getRegistrationId().equals(registrationId);
+    }
+
+    /**
+     * 小程序 OAuth2 授权请求参数处理
+     *
+     * @param builder 构建器
+     * @param request 请求
+     */
+    @Override
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
+        // 小程序 OAuth2 授权请求参数处理
+        builder.parameters(parameters -> {
+            Map<String, Object> result = new HashMap<>(2);
+            result.put("code", request.getParameter("code"));
+            result.put("state", parameters.get("state"));
+            parameters.clear();
+            parameters.putAll(result);
+        });
+
     }
 }

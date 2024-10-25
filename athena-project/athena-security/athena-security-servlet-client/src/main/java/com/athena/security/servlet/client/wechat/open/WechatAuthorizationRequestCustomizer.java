@@ -1,14 +1,13 @@
-package com.athena.security.servlet.client.wechat;
+package com.athena.security.servlet.client.wechat.open;
 
 import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
+import com.athena.security.servlet.client.wechat.WechatProperties;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriBuilder;
-
-import java.net.URI;
 
 /**
  * 微信 OAuth2 授权请求自定义器
@@ -35,28 +34,23 @@ public class WechatAuthorizationRequestCustomizer implements IAuthorizationReque
                 || wechatProperties.getOpen().getRegistrationId().equals(registrationId);
     }
 
-    /**
-     * 接受输入参数
-     *
-     * @param builder 授权请求构建器
-     */
-    @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder) {
-        // 微信 OAuth2 授权请求参数处理
-        builder.authorizationRequestUri(this::authorizationRequestUriConsumer);
-    }
 
     /**
      * 微信 OAuth2 授权请求参数处理
      *
-     * @param uriBuilder URI 构建器
-     * @return 处理后的 URI
+     * @param builder 构建器
+     * @param request 请求
      */
-    private URI authorizationRequestUriConsumer(UriBuilder uriBuilder) {
-        String uri = uriBuilder.build().getQuery();
-        // 替换 client_id 为 appid
-        uri = uri.replace(OAuth2ParameterNames.CLIENT_ID, ClientSecurityConstants.WECHAT_APP_ID);
-        // 微信 OAuth2 授权请求参数添加 #wechat_redirect
-        return uriBuilder.replaceQuery(uri).fragment(ClientSecurityConstants.WECHAT_REDIRECT).build();
+    @Override
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
+        // 微信 OAuth2 授权请求参数处理
+        builder.authorizationRequestUri(uriBuilder -> {
+            // 构建 URI
+            String uri = uriBuilder.build().getQuery();
+            // 替换 client_id 为 appid
+            uri = uri.replace(OAuth2ParameterNames.CLIENT_ID, ClientSecurityConstants.WECHAT_APP_ID);
+            // 微信 OAuth2 授权请求参数添加 #wechat_redirect
+            return uriBuilder.replaceQuery(uri).fragment(ClientSecurityConstants.WECHAT_REDIRECT).build();
+        });
     }
 }

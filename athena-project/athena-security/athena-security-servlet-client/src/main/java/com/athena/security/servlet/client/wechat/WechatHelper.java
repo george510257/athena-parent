@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author george
  */
 @Component
-public class MiniAppHelper {
+public class WechatHelper {
 
     /**
      * 小程序访问令牌缓存名称
