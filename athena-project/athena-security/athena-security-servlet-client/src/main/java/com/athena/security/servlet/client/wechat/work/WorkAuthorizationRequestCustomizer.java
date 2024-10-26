@@ -1,6 +1,5 @@
 package com.athena.security.servlet.client.wechat.work;
 
-import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
 import com.athena.security.servlet.client.wechat.WechatProperties;
 import jakarta.annotation.Resource;
@@ -48,12 +47,12 @@ public class WorkAuthorizationRequestCustomizer implements IAuthorizationRequest
         builder.parameters(parameters -> {
             // 企业微信 OAuth2 授权请求参数处理
             Map<String, Object> map = new HashMap<>(6);
-            map.put(ClientSecurityConstants.WECHAT_WORK_LOGIN_TYPE, wechatProperties.getWork().getLoginType());
-            map.put(ClientSecurityConstants.WECHAT_APP_ID, parameters.get(OAuth2ParameterNames.CLIENT_ID));
-            map.put(ClientSecurityConstants.WECHAT_WORK_AGENT_ID, wechatProperties.getWork().getAgentId());
-            map.put(OAuth2ParameterNames.REDIRECT_URI, parameters.get(OAuth2ParameterNames.REDIRECT_URI));
-            map.put(OAuth2ParameterNames.STATE, parameters.get(OAuth2ParameterNames.STATE));
-            map.put(ClientSecurityConstants.WECHAT_LANG, wechatProperties.getWork().getLang());
+            map.put("login_type", wechatProperties.getWork().getLoginType());
+            map.put("appId", parameters.get(OAuth2ParameterNames.CLIENT_ID));
+            map.put("agentid", wechatProperties.getWork().getAgentId());
+            map.put("redirect_uri", parameters.get(OAuth2ParameterNames.REDIRECT_URI));
+            map.put("state", parameters.get(OAuth2ParameterNames.STATE));
+            map.put("lang", wechatProperties.getWork().getLang());
             parameters.clear();
             parameters.putAll(map);
         });

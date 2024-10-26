@@ -127,9 +127,13 @@ public class WechatProperties extends BaseProperties {
          */
         private String tokenUri = "https://qyapi.weixin.qq.com/cgi-bin/gettoken";
         /**
+         * 用户登录 URI
+         */
+        private String userLoginUri = "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo";
+        /**
          * 用户信息 URI
          */
-        private String userInfoUri = "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo";
+        private String userInfoUri = "https://qyapi.weixin.qq.com/cgi-bin/user/get";
         /**
          * 用户名属性
          */

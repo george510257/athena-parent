@@ -1,11 +1,17 @@
 package com.athena.security.servlet.client.wechat.work;
 
 import com.athena.security.servlet.client.delegate.IAuthorizationCodeTokenResponseClientAdapter;
+import com.athena.security.servlet.client.wechat.WechatHelper;
 import com.athena.security.servlet.client.wechat.WechatProperties;
+import com.athena.security.servlet.client.wechat.domain.WorkAccessTokenResponse;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 企业微信授权码令牌响应客户端定制器
@@ -19,6 +25,11 @@ public class WorkAuthorizationCodeTokenResponseClientAdapter implements IAuthori
      */
     @Resource
     private WechatProperties wechatProperties;
+    /**
+     * 企业微信助手
+     */
+    @Resource
+    private WechatHelper wechatHelper;
 
     /**
      * 测试是否支持指定的注册标识
@@ -31,66 +42,49 @@ public class WorkAuthorizationCodeTokenResponseClientAdapter implements IAuthori
         return wechatProperties.getWork().getRegistrationId().equals(registrationId);
     }
 
-//    /**
-//     * 定制化
-//     *
-//     * @param client 授权码令牌响应客户端
-//     */
-//    @Override
-//    public void customize(DefaultAuthorizationCodeTokenResponseClient client) {
-//        client.setRequestEntityConverter(this::requestEntityConverter);
-//    }
-//
-//    /**
-//     * 请求实体转换器
-//     *
-//     * @param request  授权码授权请求
-//     * @param response 响应
-//     * @return 请求实体
-//     */
-//    @Override
-//    public OAuth2AccessTokenResponse customResponse(OAuth2AuthorizationCodeGrantRequest request, OAuth2AccessTokenResponse response) {
-//        return OAuth2AccessTokenResponse.withResponse(response)
-//                .additionalParameters(MapUtil.builder(new HashMap<String, Object>(1))
-//                        // 添加授权码
-//                        .put(OAuth2ParameterNames.CODE, request.getAuthorizationExchange()
-//                                .getAuthorizationResponse().getCode())
-//                        .build())
-//                .build();
-//    }
-//
-//    /**
-//     * 请求实体转换器
-//     *
-//     * @param request 授权码授权请求
-//     * @return 请求实体
-//     */
-//    private RequestEntity<?> requestEntityConverter(OAuth2AuthorizationCodeGrantRequest request) {
-//        // 请求参数
-//        MultiValueMap<String, String> parameters = this.convertParameters(request);
-//        // 请求地址
-//        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration().getProviderDetails().getTokenUri())
-//                .queryParams(parameters).build().toUri();
-//        // 创建请求实体
-//        return RequestEntity.get(uri).build();
-//    }
-//
-//    /**
-//     * 转换请求参数
-//     *
-//     * @param request 授权码授权请求
-//     * @return 请求参数
-//     */
-//    private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest request) {
-//        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
-//        ClientRegistration clientRegistration = request.getClientRegistration();
-//        queryParameters.add(ClientSecurityConstants.WECHAT_WORK_CORP_ID, clientRegistration.getClientId());
-//        queryParameters.add(ClientSecurityConstants.WECHAT_WORK_CORP_SECRET, clientRegistration.getClientSecret());
-//        return queryParameters;
-//    }
-
+    /**
+     * 获取令牌响应
+     *
+     * @param authorizationGrantRequest 请求
+     * @return 令牌响应
+     */
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
-        return null;
+        String code = authorizationGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode();
+        String corpid = authorizationGrantRequest.getClientRegistration().getClientId();
+        String corpsecret = authorizationGrantRequest.getClientRegistration().getClientSecret();
+        WorkAccessTokenResponse response = wechatHelper.getWorkAccessToken(corpid, corpsecret);
+        return convertResponse(response, code);
     }
+
+    /**
+     * 转换响应
+     *
+     * @param response 响应
+     * @param code     授权码
+     * @return 令牌响应
+     */
+    private OAuth2AccessTokenResponse convertResponse(WorkAccessTokenResponse response, String code) {
+        return OAuth2AccessTokenResponse.withToken(response.getAccessToken())
+                .expiresIn(response.getExpiresIn())
+                .scopes(Set.of("work_wechat_user"))
+                .additionalParameters(convertAdditionalParameters(response, code))
+                .build();
+    }
+
+    /**
+     * 转换附加参数
+     *
+     * @param response 响应
+     * @param code     授权码
+     * @return 附加参数
+     */
+    private Map<String, Object> convertAdditionalParameters(WorkAccessTokenResponse response, String code) {
+        Map<String, Object> additionalParameters = new HashMap<>();
+        additionalParameters.put("code", code);
+        additionalParameters.put("errcode", response.getErrCode());
+        additionalParameters.put("errmsg", response.getErrMsg());
+        return additionalParameters;
+    }
+
 }

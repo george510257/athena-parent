@@ -1,5 +1,6 @@
 package com.athena.security.servlet.client.wechat;
 
+import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.wechat.domain.*;
 import com.athena.starter.data.redis.support.RedisUtil;
 import jakarta.annotation.Resource;
@@ -38,7 +39,7 @@ public class WechatHelper {
      */
     public MiniAppAccessTokenResponse getAppAccessToken(String appId, String appSecret) {
         // 从缓存中获取小程序访问令牌
-        MiniAppAccessTokenResponse response = RedisUtil.getCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, appId, MiniAppAccessTokenResponse.class);
+        MiniAppAccessTokenResponse response = RedisUtil.getCacheValue(ClientSecurityConstants.MINI_APP_ACCESS_TOKEN_CACHE_NAME, appId, MiniAppAccessTokenResponse.class);
         if (response != null) {
             return response;
         }
@@ -51,7 +52,7 @@ public class WechatHelper {
         response = getAppAccessToken(request);
         // 缓存小程序访问令牌
         if (response != null) {
-            RedisUtil.setCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, appId, response, response.getExpiresIn(), TimeUnit.SECONDS);
+            RedisUtil.setCacheValue(ClientSecurityConstants.MINI_APP_ACCESS_TOKEN_CACHE_NAME, appId, response, response.getExpiresIn(), TimeUnit.SECONDS);
             return response;
         }
         // 返回空
@@ -108,5 +109,76 @@ public class WechatHelper {
                 .build().toUri();
         RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
         return restTemplate.exchange(requestEntity, WechatUserInfoResponse.class).getBody();
+    }
+
+    /**
+     * 获取企业微信访问令牌
+     *
+     * @param corpid     企业 ID
+     * @param corpsecret 企业密钥
+     * @return 企业微信访问令牌
+     */
+    public WorkAccessTokenResponse getWorkAccessToken(String corpid, String corpsecret) {
+        WorkAccessTokenResponse response = RedisUtil.getCacheValue(ClientSecurityConstants.WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME, corpid, WorkAccessTokenResponse.class);
+        if (response != null) {
+            return response;
+        }
+        WorkAccessTokenRequest request = new WorkAccessTokenRequest();
+        request.setCorpid(corpid);
+        request.setCorpsecret(corpsecret);
+        response = getWorkAccessToken(request);
+        if (response != null) {
+            RedisUtil.setCacheValue(ClientSecurityConstants.WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME, corpid, response, response.getExpiresIn(), TimeUnit.SECONDS);
+            return response;
+        }
+        return null;
+    }
+
+    /**
+     * 获取企业微信访问令牌
+     *
+     * @param request 请求
+     * @return 企业微信访问令牌
+     */
+    private WorkAccessTokenResponse getWorkAccessToken(WorkAccessTokenRequest request) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getWork().getTokenUri())
+                .queryParam("corpid", request.getCorpid())
+                .queryParam("corpsecret", request.getCorpsecret())
+                .build().toUri();
+        RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
+        return restTemplate.exchange(requestEntity, WorkAccessTokenResponse.class).getBody();
+    }
+
+    /**
+     * 获取企业微信用户登录身份
+     *
+     * @param request 请求
+     * @return 企业微信用户登录身份
+     */
+    public WorkUserLoginResponse getWorkUserLogin(WorkUserLoginRequest request) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getWork().getUserLoginUri())
+                .queryParam("access_token", request.getAccessToken())
+                .queryParam("code", request.getCode())
+                .build().toUri();
+        RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
+        return restTemplate.exchange(requestEntity, WorkUserLoginResponse.class).getBody();
+    }
+
+    /**
+     * 获取企业微信用户信息
+     *
+     * @param request 请求
+     * @return 企业微信用户信息
+     */
+    public WorkUserInfoResponse getWorkUserInfo(WorkUserInfoRequest request) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getWork().getUserInfoUri())
+                .queryParam("access_token", request.getAccessToken())
+                .queryParam("userid", request.getUserid())
+                .build().toUri();
+        RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
+        return restTemplate.exchange(requestEntity, WorkUserInfoResponse.class).getBody();
     }
 }

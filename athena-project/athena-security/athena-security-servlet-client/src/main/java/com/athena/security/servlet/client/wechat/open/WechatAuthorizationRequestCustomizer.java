@@ -1,12 +1,10 @@
 package com.athena.security.servlet.client.wechat.open;
 
-import com.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.athena.security.servlet.client.delegate.IAuthorizationRequestCustomizer;
 import com.athena.security.servlet.client.wechat.WechatProperties;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,7 +32,6 @@ public class WechatAuthorizationRequestCustomizer implements IAuthorizationReque
                 || wechatProperties.getOpen().getRegistrationId().equals(registrationId);
     }
 
-
     /**
      * 微信 OAuth2 授权请求参数处理
      *
@@ -48,9 +45,9 @@ public class WechatAuthorizationRequestCustomizer implements IAuthorizationReque
             // 构建 URI
             String uri = uriBuilder.build().getQuery();
             // 替换 client_id 为 appid
-            uri = uri.replace(OAuth2ParameterNames.CLIENT_ID, ClientSecurityConstants.WECHAT_APP_ID);
+            uri = uri.replace("client_id", "appId");
             // 微信 OAuth2 授权请求参数添加 #wechat_redirect
-            return uriBuilder.replaceQuery(uri).fragment(ClientSecurityConstants.WECHAT_REDIRECT).build();
+            return uriBuilder.replaceQuery(uri).fragment("wechat_redirect").build();
         });
     }
 }
