@@ -3,10 +3,15 @@ package com.athena.security.servlet.client.wechat.mini;
 import com.athena.security.servlet.client.delegate.IAuthorizationCodeTokenResponseClientAdapter;
 import com.athena.security.servlet.client.wechat.WechatHelper;
 import com.athena.security.servlet.client.wechat.WechatProperties;
+import com.athena.security.servlet.client.wechat.domain.MiniAppAccessTokenResponse;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 小程序授权码令牌响应客户端定制器
@@ -37,116 +42,45 @@ public class MiniAppAuthorizationCodeTokenResponseClientAdapter implements IAuth
         return wechatProperties.getMiniApp().getRegistrationId().equals(registrationId);
     }
 
-//    /**
-//     * 定制化
-//     *
-//     * @param client 授权码令牌响应客户端
-//     */
-//    @Override
-//    public void customize(DefaultAuthorizationCodeTokenResponseClient client) {
-//        // 设置请求实体转换器
-//        client.setRequestEntityConverter(this::requestEntityConverter);
-//        // 设置访问令牌响应转换器
-//        client.setRestOperations(this.getRestOperations());
-//    }
-//
-//    /**
-//     * 请求实体转换器
-//     *
-//     * @return 请求实体
-//     */
-//    private RestOperations getRestOperations() {
-//        RestTemplate restTemplate = new RestTemplate();
-//        // 设置消息转换器
-//        restTemplate.setMessageConverters(this.getMessageConverters());
-//        return restTemplate;
-//    }
-//
-//    /**
-//     * 请求实体转换器
-//     *
-//     * @return 请求实体
-//     */
-//    private List<HttpMessageConverter<?>> getMessageConverters() {
-//        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-//        // 添加消息转换器
-//        OAuth2AccessTokenResponseHttpMessageConverter converter = new OAuth2AccessTokenResponseHttpMessageConverter();
-//        converter.setSupportedMediaTypes(CollUtil.newArrayList(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN));
-//        converter.setAccessTokenResponseConverter(this::accessTokenResponseConverter);
-//        messageConverters.add(converter);
-//        return messageConverters;
-//    }
-//
-//    /**
-//     * 访问令牌响应转换器
-//     *
-//     * @param parameters 参数
-//     * @return 访问令牌响应
-//     */
-//    private OAuth2AccessTokenResponse accessTokenResponseConverter(Map<String, Object> parameters) {
-//        return OAuth2AccessTokenResponse.withToken("accessToken")
-//                .expiresIn(7200)
-//                .tokenType(OAuth2AccessToken.TokenType.BEARER)
-//                .additionalParameters(parameters)
-//                .build();
-//    }
-//
-//    /**
-//     * 定制化响应
-//     *
-//     * @param request  授权码授权请求
-//     * @param response 响应
-//     * @return 定制化响应
-//     */
-//    @Override
-//    public OAuth2AccessTokenResponse customResponse(OAuth2AuthorizationCodeGrantRequest request, OAuth2AccessTokenResponse response) {
-//        // 获取小程序访问令牌
-//        MiniAppAccessTokenResponse miniAppAccessTokenResponse = miniAppHelper.getAppAccessToken(request.getClientRegistration().getClientId(), request.getClientRegistration().getClientSecret());
-//        // 构建响应
-//        return OAuth2AccessTokenResponse.withToken(miniAppAccessTokenResponse.getAccessToken())
-//                .expiresIn(miniAppAccessTokenResponse.getExpiresIn())
-//                .tokenType(OAuth2AccessToken.TokenType.BEARER)
-//                .additionalParameters(response.getAdditionalParameters())
-//                .build();
-//    }
-//
-//    /**
-//     * 请求实体转换器
-//     *
-//     * @param request 授权码授权请求
-//     * @return 请求实体
-//     */
-//    private RequestEntity<?> requestEntityConverter(OAuth2AuthorizationCodeGrantRequest request) {
-//        // 请求参数
-//        MultiValueMap<String, String> parameters = this.convertParameters(request);
-//        // 请求地址
-//        URI uri = UriComponentsBuilder.fromUriString(request.getClientRegistration().getProviderDetails().getTokenUri())
-//                .queryParams(parameters).build().toUri();
-//        // 创建请求实体
-//        return RequestEntity.get(uri).build();
-//    }
-//
-//    /**
-//     * 转换参数
-//     *
-//     * @param request 授权码授权请求
-//     * @return 参数
-//     */
-//    private MultiValueMap<String, String> convertParameters(OAuth2AuthorizationCodeGrantRequest request) {
-//        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-//        // 客户端 ID
-//        parameters.add(ClientSecurityConstants.WECHAT_APP_ID, request.getClientRegistration().getClientId());
-//        // 客户端密钥
-//        parameters.add(ClientSecurityConstants.WECHAT_APP_SECRET, request.getClientRegistration().getClientSecret());
-//        // 授权类型
-//        parameters.add(OAuth2ParameterNames.GRANT_TYPE, request.getGrantType().getValue());
-//        // 授权码
-//        parameters.add(ClientSecurityConstants.MINI_APP_CODE, request.getAuthorizationExchange().getAuthorizationResponse().getCode());
-//        return parameters;
-//    }
-
+    /**
+     * 获取令牌响应
+     *
+     * @param authorizationGrantRequest 授权码授权请求
+     * @return 令牌响应
+     */
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
-        return null;
+        String code = authorizationGrantRequest.getAuthorizationExchange().getAuthorizationResponse().getCode();
+        String appId = authorizationGrantRequest.getClientRegistration().getClientId();
+        String appSecret = authorizationGrantRequest.getClientRegistration().getClientSecret();
+        MiniAppAccessTokenResponse response = wechatHelper.getMiniAppAccessToken(appId, appSecret);
+        return convertResponse(response, code);
+    }
+
+    /**
+     * 转换响应
+     *
+     * @param response 响应
+     * @param code     授权码
+     * @return 令牌响应
+     */
+    private OAuth2AccessTokenResponse convertResponse(MiniAppAccessTokenResponse response, String code) {
+        return OAuth2AccessTokenResponse.withToken(response.getAccessToken())
+                .expiresIn(response.getExpiresIn())
+                .scopes(Set.of("mini_wechat_user"))
+                .additionalParameters(convertAdditionalParameters(code))
+                .build();
+    }
+
+    /**
+     * 转换附加参数
+     *
+     * @param code 授权码
+     * @return 附加参数
+     */
+    private Map<String, Object> convertAdditionalParameters(String code) {
+        Map<String, Object> additionalParameters = new HashMap<>();
+        additionalParameters.put("js_code", code);
+        return additionalParameters;
     }
 }

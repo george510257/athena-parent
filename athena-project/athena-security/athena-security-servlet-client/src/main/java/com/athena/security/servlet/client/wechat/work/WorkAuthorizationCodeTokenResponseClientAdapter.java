@@ -68,22 +68,19 @@ public class WorkAuthorizationCodeTokenResponseClientAdapter implements IAuthori
         return OAuth2AccessTokenResponse.withToken(response.getAccessToken())
                 .expiresIn(response.getExpiresIn())
                 .scopes(Set.of("work_wechat_user"))
-                .additionalParameters(convertAdditionalParameters(response, code))
+                .additionalParameters(convertAdditionalParameters(code))
                 .build();
     }
 
     /**
      * 转换附加参数
      *
-     * @param response 响应
-     * @param code     授权码
+     * @param code 授权码
      * @return 附加参数
      */
-    private Map<String, Object> convertAdditionalParameters(WorkAccessTokenResponse response, String code) {
+    private Map<String, Object> convertAdditionalParameters(String code) {
         Map<String, Object> additionalParameters = new HashMap<>();
         additionalParameters.put("code", code);
-        additionalParameters.put("errcode", response.getErrcode());
-        additionalParameters.put("errmsg", response.getErrmsg());
         return additionalParameters;
     }
 
