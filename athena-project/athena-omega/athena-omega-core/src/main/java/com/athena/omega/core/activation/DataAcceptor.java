@@ -1,5 +1,7 @@
 package com.athena.omega.core.activation;
 
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.core.map.MapUtil;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -30,7 +32,8 @@ public class DataAcceptor {
         if (!parameters.containsKey(name)) {
             parameters.put(name, new RequestParameter<T>().setType(type));
         }
-        return (RequestParameter<T>) parameters.get(name);
+        return MapUtil.get(parameters, name, new TypeReference<>() {
+        });
     }
 
     /**
