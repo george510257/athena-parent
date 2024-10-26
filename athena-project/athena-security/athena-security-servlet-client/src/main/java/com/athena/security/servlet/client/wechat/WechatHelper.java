@@ -1,7 +1,6 @@
 package com.athena.security.servlet.client.wechat;
 
-import com.athena.security.servlet.client.wechat.domain.MiniAppAccessTokenRequest;
-import com.athena.security.servlet.client.wechat.domain.MiniAppAccessTokenResponse;
+import com.athena.security.servlet.client.wechat.domain.*;
 import com.athena.starter.data.redis.support.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.http.RequestEntity;
@@ -74,5 +73,40 @@ public class WechatHelper {
                 .build().toUri();
         RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
         return restTemplate.exchange(requestEntity, MiniAppAccessTokenResponse.class).getBody();
+    }
+
+    /**
+     * 获取微信访问令牌
+     *
+     * @param request 请求
+     * @return 微信访问令牌
+     */
+    public WechatAccessTokenResponse getAccessToken(WechatAccessTokenRequest request) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getOpen().getTokenUri())
+                .queryParam("appid", request.getAppid())
+                .queryParam("secret", request.getSecret())
+                .queryParam("code", request.getCode())
+                .queryParam("grant_type", request.getGrantType())
+                .build().toUri();
+        RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
+        return restTemplate.exchange(requestEntity, WechatAccessTokenResponse.class).getBody();
+    }
+
+    /**
+     * 获取微信用户
+     *
+     * @param request 请求
+     * @return 微信用户
+     */
+    public WechatUserInfoResponse getUserInfo(WechatUserInfoRequest request) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getOpen().getUserInfoUri())
+                .queryParam("access_token", request.getAccessToken())
+                .queryParam("openid", request.getOpenid())
+                .queryParam("lang", request.getLang())
+                .build().toUri();
+        RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
+        return restTemplate.exchange(requestEntity, WechatUserInfoResponse.class).getBody();
     }
 }
