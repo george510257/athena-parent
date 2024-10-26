@@ -8,6 +8,7 @@ import com.athena.security.servlet.client.wechat.domain.WechatAccessTokenRequest
 import com.athena.security.servlet.client.wechat.domain.WechatAccessTokenResponse;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.stereotype.Component;
 
@@ -67,6 +68,7 @@ public class WechatAuthorizationCodeTokenResponseClientAdapter implements IAutho
                 .expiresIn(response.getExpiresIn())
                 .refreshToken(response.getRefreshToken())
                 .scopes(convertScopes(response.getScope()))
+                .tokenType(OAuth2AccessToken.TokenType.BEARER)
                 .additionalParameters(convertAdditionalParameters(response))
                 .build();
     }

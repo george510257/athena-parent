@@ -6,6 +6,7 @@ import com.athena.security.servlet.client.wechat.WechatProperties;
 import com.athena.security.servlet.client.wechat.domain.WorkAccessTokenResponse;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.stereotype.Component;
 
@@ -68,6 +69,7 @@ public class WorkAuthorizationCodeTokenResponseClientAdapter implements IAuthori
         return OAuth2AccessTokenResponse.withToken(response.getAccessToken())
                 .expiresIn(response.getExpiresIn())
                 .scopes(Set.of("work_wechat_user"))
+                .tokenType(OAuth2AccessToken.TokenType.BEARER)
                 .additionalParameters(convertAdditionalParameters(code))
                 .build();
     }
