@@ -52,7 +52,7 @@ public class WechatAuthorizationCodeTokenResponseClientAdapter implements IAutho
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
         WechatAccessTokenRequest request = this.convertRequest(authorizationGrantRequest);
-        WechatAccessTokenResponse response = wechatHelper.getAccessToken(request);
+        WechatAccessTokenResponse response = wechatHelper.getWechatAccessToken(request);
         return convertResponse(response);
     }
 

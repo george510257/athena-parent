@@ -60,7 +60,7 @@ public class WechatUserServiceAdapter implements IOAuth2UserServiceAdapter {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         WechatUserInfoRequest request = this.convertRequest(userRequest);
-        WechatUserInfoResponse response = wechatHelper.getUserInfo(request);
+        WechatUserInfoResponse response = wechatHelper.getWechatUserInfo(request);
         return convertUser(response, userRequest.getAccessToken().getScopes());
     }
 

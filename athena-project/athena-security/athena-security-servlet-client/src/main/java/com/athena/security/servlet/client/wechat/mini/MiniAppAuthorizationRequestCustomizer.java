@@ -23,7 +23,6 @@ public class MiniAppAuthorizationRequestCustomizer implements IAuthorizationRequ
     @Resource
     private WechatProperties wechatProperties;
 
-
     /**
      * 测试是否支持指定的注册标识
      *
