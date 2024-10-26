@@ -82,8 +82,8 @@ public class WorkAuthorizationCodeTokenResponseClientAdapter implements IAuthori
     private Map<String, Object> convertAdditionalParameters(WorkAccessTokenResponse response, String code) {
         Map<String, Object> additionalParameters = new HashMap<>();
         additionalParameters.put("code", code);
-        additionalParameters.put("errcode", response.getErrCode());
-        additionalParameters.put("errmsg", response.getErrMsg());
+        additionalParameters.put("errcode", response.getErrcode());
+        additionalParameters.put("errmsg", response.getErrmsg());
         return additionalParameters;
     }
 

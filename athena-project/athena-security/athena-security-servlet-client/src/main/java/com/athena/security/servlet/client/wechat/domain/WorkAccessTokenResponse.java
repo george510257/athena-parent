@@ -15,13 +15,11 @@ public class WorkAccessTokenResponse implements Serializable {
     /**
      * 错误码
      */
-    @JsonProperty("errcode")
-    private Integer errCode;
+    private Integer errcode;
     /**
      * 错误消息
      */
-    @JsonProperty("errmsg")
-    private String errMsg;
+    private String errmsg;
     /**
      * 访问令牌
      */

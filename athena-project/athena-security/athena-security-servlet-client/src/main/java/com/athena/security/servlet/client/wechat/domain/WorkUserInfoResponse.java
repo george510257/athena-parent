@@ -15,7 +15,7 @@ public class WorkUserInfoResponse implements Serializable {
     /**
      * 返回码
      */
-    private String errcode;
+    private Integer errcode;
     /**
      * 对返回码的文本描述内容
      */

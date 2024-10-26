@@ -73,6 +73,24 @@ public class WechatHelper {
     }
 
     /**
+     * 小程序登录
+     *
+     * @param request 请求
+     * @return 小程序登录
+     */
+    public MiniAppLoginResponse getMiniAppLogin(MiniAppLoginRequest request) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getMiniApp().getTokenUri())
+                .queryParam("appid", request.getAppId())
+                .queryParam("secret", request.getSecret())
+                .queryParam("js_code", request.getJsCode())
+                .queryParam("grant_type", request.getGrantType())
+                .build().toUri();
+        RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
+        return restTemplate.exchange(requestEntity, MiniAppLoginResponse.class).getBody();
+    }
+
+    /**
      * 获取微信访问令牌
      *
      * @param request 请求
