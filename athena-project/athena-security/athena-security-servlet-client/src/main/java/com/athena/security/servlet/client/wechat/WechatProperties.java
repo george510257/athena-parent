@@ -19,10 +19,6 @@ import java.util.List;
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.wechat")
 public class WechatProperties extends BaseProperties {
     /**
-     * 语言
-     */
-    private String lang = "zh_CN";
-    /**
      * 公众号
      */
     private Mp mp = new Mp();
@@ -107,6 +103,10 @@ public class WechatProperties extends BaseProperties {
          * 作用域
          */
         private List<String> scopes = List.of("snsapi_login");
+        /**
+         * 语言
+         */
+        private String lang = "zh_CN";
     }
 
     /**

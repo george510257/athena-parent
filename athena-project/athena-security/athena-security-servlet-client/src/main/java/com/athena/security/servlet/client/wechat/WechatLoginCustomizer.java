@@ -164,7 +164,7 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
         WechatUserInfoRequest request = new WechatUserInfoRequest();
         request.setAccessToken(userRequest.getAccessToken().getTokenValue());
         request.setOpenid(StrUtil.toString(userRequest.getAdditionalParameters().get("openid")));
-        request.setLang(wechatProperties.getLang());
+        request.setLang(wechatProperties.getOpen().getLang());
         return request;
     }
 
