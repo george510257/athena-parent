@@ -21,10 +21,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -141,13 +138,8 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
      * @return 附加参数
      */
     private Map<String, Object> convertAdditionalParameters(FeishuUserAccessTokenResponse response) {
-        Map<String, Object> additionalParameters = BeanUtil.beanToMap(response);
-        // 移除不需要的参数
-        additionalParameters.remove("accessToken");
-        additionalParameters.remove("tokenType");
-        additionalParameters.remove("expiresIn");
-        additionalParameters.remove("refreshToken");
-        additionalParameters.remove("scope");
+        Map<String, Object> additionalParameters = new HashMap<>();
+        additionalParameters.put("refreshTokenExpiresIn", response.getRefreshTokenExpiresIn());
         return additionalParameters;
     }
 
