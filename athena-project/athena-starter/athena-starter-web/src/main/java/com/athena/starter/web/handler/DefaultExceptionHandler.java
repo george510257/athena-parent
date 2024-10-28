@@ -28,7 +28,9 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(ResultException.class)
     @ResponseStatus(HttpStatus.OK)
     public Result<?> resultExceptionHandler(ResultException e) {
+        // 记录异常日志
         log.error(e.getMessage(), e);
+        // 返回异常结果
         return ResultStatus.FAIL.toResult().setCode(e.getCode()).setMessage(e.getMessage());
     }
 
@@ -41,7 +43,9 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.OK)
     public Result<?> runtimeExceptionHandler(RuntimeException e) {
+        // 记录异常日志
         log.error(e.getMessage(), e);
+        // 返回异常结果
         return ResultStatus.SERVER_ERROR.toResult().setMessage(e.getMessage());
     }
 
@@ -54,7 +58,9 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
     public Result<?> exceptionHandler(Exception e) {
+        // 记录异常日志
         log.error(e.getMessage(), e);
+        // 返回异常结果
         return ResultStatus.SERVER_ERROR.toResult().setMessage(e.getMessage());
     }
 }

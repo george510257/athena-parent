@@ -42,49 +42,26 @@ public class XxlJobConfig {
     @Bean
     @ConditionalOnMissingBean
     public XxlJobExecutor xxlJobExecutor() {
+        // 创建执行器
         XxlJobExecutor executor = new XxlJobSpringExecutor();
         // 定时任务中心地址
         executor.setAdminAddresses(getAdminAddresses());
         // 执行器AppName
-        executor.setAppname(getAppName());
+        executor.setAppname(Optional.ofNullable(xxlJobProperties.getAppName()).orElse(SpringUtil.getApplicationName()));
         // 执行器注册地址
-        if (xxlJobProperties.getAddress() != null) {
-            executor.setAddress(xxlJobProperties.getAddress());
-        }
+        Optional.ofNullable(xxlJobProperties.getAddress()).ifPresent(executor::setAddress);
         // 执行器IP
-        if (xxlJobProperties.getIp() != null) {
-            executor.setIp(xxlJobProperties.getIp());
-        }
+        Optional.ofNullable(xxlJobProperties.getIp()).ifPresent(executor::setIp);
         // 执行器端口号
-        if (xxlJobProperties.getPort() != 0) {
-            executor.setPort(xxlJobProperties.getPort());
-        }
+        Optional.ofNullable(xxlJobProperties.getPort()).ifPresent(executor::setPort);
         // 执行器token
-        if (xxlJobProperties.getAccessToken() != null) {
-            executor.setAccessToken(xxlJobProperties.getAccessToken());
-        }
+        Optional.ofNullable(xxlJobProperties.getAccessToken()).ifPresent(executor::setAccessToken);
         // 执行器运行日志文件存储磁盘路径
-        if (xxlJobProperties.getLogPath() != null) {
-            executor.setLogPath(xxlJobProperties.getLogPath());
-        }
+        Optional.ofNullable(xxlJobProperties.getLogPath()).ifPresent(executor::setLogPath);
         // 执行器日志保存天数
-        if (xxlJobProperties.getLogRetentionDays() != 0) {
-            executor.setLogRetentionDays(xxlJobProperties.getLogRetentionDays());
-        }
+        Optional.ofNullable(xxlJobProperties.getLogRetentionDays()).ifPresent(executor::setLogRetentionDays);
+        // 启动执行器
         return executor;
-
-    }
-
-    /**
-     * 获取应用名称
-     *
-     * @return 应用名称
-     */
-    private String getAppName() {
-        if (xxlJobProperties.getAppName() != null) {
-            return xxlJobProperties.getAppName();
-        }
-        return SpringUtil.getApplicationName();
     }
 
     /**

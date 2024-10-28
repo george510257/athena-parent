@@ -40,10 +40,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addFormatters(FormatterRegistry registry) {
+        // 增加GET请求参数中时间类型转换
         DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+        // 设置时间格式
         registrar.setTimeFormatter(DatePattern.NORM_TIME_FORMATTER);
+        // 设置日期格式
         registrar.setDateFormatter(DatePattern.NORM_DATE_FORMATTER);
+        // 设置日期时间格式
         registrar.setDateTimeFormatter(DatePattern.NORM_DATETIME_FORMATTER);
+        // 注册时间格式
         registrar.registerFormatters(registry);
     }
 
@@ -60,6 +65,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         SimpleModule simpleModule = new SimpleModule();
         // Long类型序列化为String
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        // Long类型序列化为String
         simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
         // 创建ObjectMapper
         ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build();
@@ -69,6 +75,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         objectMapper.deactivateDefaultTyping();
         // 添加自定义的Jackson消息转换器
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
+        // 设置默认字符集
         converter.setDefaultCharset(StandardCharsets.UTF_8);
         // 添加到消息转换器列表
         converters.add(converter);

@@ -40,8 +40,11 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
      */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        // 获取忽略的返回类型
         List<String> returnTypeList = webProperties.getResultIgnore().getReturnType();
+        // 获取忽略的转换器类型
         List<String> converterTypeList = webProperties.getResultIgnore().getConverterType();
+        // 判断是否忽略
         if (returnTypeList != null && !returnTypeList.isEmpty()) {
             return !returnTypeList.contains(returnType.getGenericParameterType().getTypeName());
         }

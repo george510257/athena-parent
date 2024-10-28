@@ -44,7 +44,9 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public ServletInputStream getInputStream() throws IOException {
+        // 如果输入流为空
         if (this.inputStream == null) {
+            // 读取字节
             this.inputStream = new RequestBodyInputStream(IoUtil.readBytes(super.getInputStream()));
         }
         return this.inputStream;
@@ -57,7 +59,9 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public String getCharacterEncoding() {
+        // 获取字符编码
         String enc = super.getCharacterEncoding();
+        // 如果字符编码为空
         return (enc != null ? enc : WebUtils.DEFAULT_CHARACTER_ENCODING);
     }
 
@@ -69,7 +73,9 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public BufferedReader getReader() throws IOException {
+        // 如果读取器为空
         if (this.reader == null) {
+            // 读取字符
             this.reader = new BufferedReader(new InputStreamReader(getInputStream(), getCharacterEncoding()));
         }
         return this.reader;

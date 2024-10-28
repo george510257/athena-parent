@@ -25,47 +25,100 @@ import java.util.Optional;
 @UtilityClass
 public class WebUtil {
 
+    /**
+     * 获取请求参数
+     *
+     * @param request 请求
+     * @return 请求参数
+     */
     public MultiValueMap<String, String> getParameterMap(HttpServletRequest request) {
-        return request.getParameterMap()
-                .entrySet()
-                .stream()
-                .collect(LinkedMultiValueMap::new, (map, entry) -> map.put(entry.getKey(), CollUtil.newArrayList(entry.getValue())), LinkedMultiValueMap::putAll);
-
+        // 创建参数映射
+        MultiValueMap<String, String> parameterMap = new LinkedMultiValueMap<>();
+        // 遍历请求参数
+        request.getParameterMap().forEach((key, value) -> parameterMap.put(key, CollUtil.newArrayList(value)));
+        // 返回参数映射
+        return parameterMap;
     }
 
+    /**
+     * 获取请求
+     *
+     * @return 请求
+     */
     public Optional<HttpServletRequest> getRequest() {
+        // 获取请求属性
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        // 如果是Servlet请求属性
         if (requestAttributes instanceof ServletRequestAttributes) {
+            // 返回请求
             return Optional.of(((ServletRequestAttributes) requestAttributes).getRequest());
         }
+        // 返回空
         return Optional.empty();
     }
 
+    /**
+     * 获取响应
+     *
+     * @return 响应
+     */
     public Optional<HttpServletResponse> getResponse() {
+        // 获取请求属性
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        // 如果是Servlet请求属性
         if (requestAttributes instanceof ServletRequestAttributes) {
+            // 返回响应
             return Optional.ofNullable(((ServletRequestAttributes) requestAttributes).getResponse());
         }
+        // 返回空
         return Optional.empty();
     }
 
+    /**
+     * 获取请求参数
+     *
+     * @param request       请求
+     * @param parameterName 参数名称
+     * @return 请求参数
+     */
     public String getParameter(HttpServletRequest request, String parameterName) {
+        // 获取请求参数
         String parameter = WebUtils.findParameterValue(request, parameterName);
+        // 如果请求参数不为空
         if (StrUtil.isNotBlank(parameter)) {
+            // 返回请求参数
             return parameter;
         }
+        // 返回请求体中的参数
         return getParameterByBody(request, parameterName);
     }
 
+    /**
+     * 获取请求体中的参数
+     *
+     * @param request       请求
+     * @param parameterName 参数名称
+     * @return 请求参数
+     */
     public String getParameterByBody(HttpServletRequest request, String parameterName) {
+        // 获取请求体
         String body = JakartaServletUtil.getBody(request);
+        // 如果请求体不为空
         if (StrUtil.isNotBlank(body)) {
+            // 返回请求体中的参数
             return JSONUtil.parseObj(body).getStr(parameterName);
         }
+        // 返回空
         return null;
     }
 
+    /**
+     * 获取会话
+     *
+     * @return 会话
+     */
     public Optional<HttpSession> getSession() {
+        // 返回会话
         return getRequest().map(HttpServletRequest::getSession);
     }
 }

@@ -39,7 +39,7 @@ public class XxlJobProperties extends BaseProperties {
     /**
      * 执行器端口号 (选填)：小于等于1024的端口号需root权限，为空时自动获取；
      */
-    private int port = 9099;
+    private Integer port;
     /**
      * 执行器运行日志文件存储磁盘路径 (选填)：需要对该路径拥有读写权限；为空则使用默认路径；
      */
@@ -47,6 +47,6 @@ public class XxlJobProperties extends BaseProperties {
     /**
      * 执行器日志保存天数 (选填)：值大于3时生效，启用执行器Log文件定期清理功能，否则不生效；
      */
-    private int logRetentionDays = 30;
+    private Integer logRetentionDays = 30;
 
 }
