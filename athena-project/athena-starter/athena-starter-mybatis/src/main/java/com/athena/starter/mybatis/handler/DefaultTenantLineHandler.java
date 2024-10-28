@@ -34,6 +34,7 @@ public class DefaultTenantLineHandler implements TenantLineHandler {
      */
     @Override
     public Expression getTenantId() {
+        // 获取当前租户 ID
         Long tenantId = userHelper.getCurrentUserTenantId().orElse(BaseConstants.DEFAULT_TENANT_ID);
         return new LongValue(tenantId);
     }
@@ -46,6 +47,7 @@ public class DefaultTenantLineHandler implements TenantLineHandler {
      */
     @Override
     public boolean ignoreTable(String tableName) {
+        // 忽略租户字段的表
         return mybatisProperties.getIgnoreTenantTable().contains(tableName);
     }
 }

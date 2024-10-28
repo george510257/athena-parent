@@ -24,10 +24,18 @@ import java.util.List;
 public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         C extends IConverter<V, E>, M extends IMapper<E>>
         extends ServiceImpl<M, E> implements IService<V> {
-
+    /**
+     * 转换器
+     */
     @Autowired
     protected C converter;
 
+    /**
+     * 插入
+     *
+     * @param vo VO 对象
+     * @return VO 对象
+     */
     @Override
     public V insert(V vo) {
         E entity = converter.convert(vo);
@@ -35,6 +43,12 @@ public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         return converter.reverse(entity);
     }
 
+    /**
+     * 更新
+     *
+     * @param vo VO 对象
+     * @return VO 对象
+     */
     @Override
     public V update(V vo) {
         E entity = converter.convert(vo);
@@ -42,26 +56,56 @@ public abstract class BaseService<V extends BaseVo, E extends BaseEntity,
         return converter.reverse(entity);
     }
 
+    /**
+     * 删除
+     *
+     * @param id ID 主键
+     * @return 是否成功
+     */
     @Override
     public Boolean delete(Long id) {
         return removeById(id);
     }
 
+    /**
+     * 获取
+     *
+     * @param id ID 主键
+     * @return VO 对象
+     */
     @Override
     public V get(Long id) {
         return converter.reverse(getById(id));
     }
 
+    /**
+     * 列表
+     *
+     * @param vo VO 对象
+     * @return VO 对象列表
+     */
     @Override
     public List<V> list(V vo) {
         return converter.reverseList(list(new QueryWrapper<>(converter.convert(vo))));
     }
 
+    /**
+     * 分页
+     *
+     * @param pageRequest 分页请求
+     * @return 分页响应
+     */
     @Override
     public PageResponse<V> page(PageRequest<V> pageRequest) {
         return converter.reversePage(baseMapper.selectPage(converter.convertPage(pageRequest)));
     }
 
+    /**
+     * 批量插入
+     *
+     * @param vs VO列表
+     * @return 是否成功
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean saveBatch(List<V> vs) {
