@@ -27,6 +27,16 @@ public class WechatHelper {
     private WechatProperties wechatProperties;
 
     /**
+     * @return
+     */
+    private RestTemplate getRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        //
+        restTemplate.getMessageConverters().add(new WechatHttpMessageConverter());
+        return restTemplate;
+    }
+
+    /**
      * 获取小程序访问令牌
      *
      * @param appId     小程序 ID
@@ -73,22 +83,12 @@ public class WechatHelper {
     }
 
     /**
-     * @return
-     */
-    private RestTemplate getRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        //
-        restTemplate.getMessageConverters().add(new WechatHttpMessageConverter());
-        return restTemplate;
-    }
-
-    /**
      * 小程序登录
      *
      * @param request 请求
      * @return 小程序登录
      */
-    public MiniAppLoginResponse getMiniAppLogin(MiniAppLoginRequest request) {
+    public MiniAppUserInfoResponse getMiniAppUserInfo(MiniAppUserInfoRequest request) {
         RestTemplate restTemplate = getRestTemplate();
         URI uri = UriComponentsBuilder.fromUriString(wechatProperties.getMiniApp().getTokenUri())
                 .queryParam("appid", request.getAppId())
@@ -97,7 +97,7 @@ public class WechatHelper {
                 .queryParam("grant_type", request.getGrantType())
                 .build().toUri();
         RequestEntity<?> requestEntity = RequestEntity.get(uri).build();
-        return restTemplate.exchange(requestEntity, MiniAppLoginResponse.class).getBody();
+        return restTemplate.exchange(requestEntity, MiniAppUserInfoResponse.class).getBody();
     }
 
     /**

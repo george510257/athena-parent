@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author george
  */
 @Data
-public class MiniAppLoginResponse implements Serializable {
+public class MiniAppUserInfoResponse implements Serializable {
     /**
      * 会话密钥
      */

@@ -4,8 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.athena.security.servlet.client.delegate.IOAuth2LoginCustomizer;
 import com.athena.security.servlet.client.wechat.domain.MiniAppAccessTokenResponse;
-import com.athena.security.servlet.client.wechat.domain.MiniAppLoginRequest;
-import com.athena.security.servlet.client.wechat.domain.MiniAppLoginResponse;
+import com.athena.security.servlet.client.wechat.domain.MiniAppUserInfoRequest;
+import com.athena.security.servlet.client.wechat.domain.MiniAppUserInfoResponse;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
@@ -124,9 +124,9 @@ public class MiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        MiniAppLoginRequest request = convertMiniAppLoginRequest(userRequest);
-        MiniAppLoginResponse response = wechatHelper.getMiniAppLogin(request);
-        return convertMiniAppLoginResponse(response, userRequest.getAccessToken().getScopes());
+        MiniAppUserInfoRequest request = convertUserInfoRequest(userRequest);
+        MiniAppUserInfoResponse response = wechatHelper.getMiniAppUserInfo(request);
+        return convertUserInfoResponse(response, userRequest.getAccessToken().getScopes());
     }
 
     /**
@@ -135,8 +135,8 @@ public class MiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param userRequest 用户请求
      * @return 小程序登录请求
      */
-    private MiniAppLoginRequest convertMiniAppLoginRequest(OAuth2UserRequest userRequest) {
-        MiniAppLoginRequest request = new MiniAppLoginRequest();
+    private MiniAppUserInfoRequest convertUserInfoRequest(OAuth2UserRequest userRequest) {
+        MiniAppUserInfoRequest request = new MiniAppUserInfoRequest();
         request.setAppId(userRequest.getClientRegistration().getClientId());
         request.setSecret(userRequest.getClientRegistration().getClientSecret());
         request.setJsCode(StrUtil.toString(userRequest.getAdditionalParameters().get("js_code")));
@@ -150,7 +150,7 @@ public class MiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param scopes   权限
      * @return OAuth2 用户
      */
-    private OAuth2User convertMiniAppLoginResponse(MiniAppLoginResponse response, Set<String> scopes) {
+    private OAuth2User convertUserInfoResponse(MiniAppUserInfoResponse response, Set<String> scopes) {
         // 转换为 OAuth2 用户
         Map<String, Object> attributes = BeanUtil.beanToMap(response);
         // 设置权限
