@@ -36,7 +36,7 @@ public class FeishuUserAccessTokenResponse implements Serializable {
      * 刷新令牌有效期
      */
     @JsonProperty("refresh_expires_in")
-    private Integer refreshTokenExpiresIn;
+    private Integer refreshExpiresIn;
     /**
      * 用户授予的权限范围
      */

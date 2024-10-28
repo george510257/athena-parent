@@ -139,7 +139,7 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     private Map<String, Object> convertAdditionalParameters(FeishuUserAccessTokenResponse response) {
         Map<String, Object> additionalParameters = new HashMap<>();
-        additionalParameters.put("refreshTokenExpiresIn", response.getRefreshTokenExpiresIn());
+        additionalParameters.put("refreshExpiresIn", response.getRefreshExpiresIn());
         return additionalParameters;
     }
 
