@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 微信配置属性
@@ -67,7 +67,7 @@ public class WechatProperties extends BaseProperties {
         /**
          * 作用域
          */
-        private List<String> scopes = List.of("snsapi_userinfo");
+        private Set<String> scopes = Set.of("snsapi_userinfo");
     }
 
     /**
@@ -102,7 +102,7 @@ public class WechatProperties extends BaseProperties {
         /**
          * 作用域
          */
-        private List<String> scopes = List.of("snsapi_login");
+        private Set<String> scopes = Set.of("snsapi_login");
         /**
          * 语言
          */
@@ -145,7 +145,7 @@ public class WechatProperties extends BaseProperties {
         /**
          * 作用域
          */
-        private List<String> scopes = List.of("snsapi_base");
+        private Set<String> scopes = Set.of("snsapi_base");
         /**
          * 登录类型 ServiceApp: 服务商模式, CorpApp: 企业自建应用
          */
@@ -193,6 +193,6 @@ public class WechatProperties extends BaseProperties {
         /**
          * 作用域
          */
-        private List<String> scopes = List.of("snsapi_userinfo");
+        private Set<String> scopes = Set.of("snsapi_userinfo");
     }
 }

@@ -97,7 +97,7 @@ public class MiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
     private OAuth2AccessTokenResponse convertResponse(MiniAppAccessTokenResponse response, String code) {
         return OAuth2AccessTokenResponse.withToken(response.getAccessToken())
                 .expiresIn(response.getExpiresIn())
-                .scopes(Set.of("mini_wechat_user"))
+                .scopes(wechatProperties.getOpen().getScopes())
                 .tokenType(OAuth2AccessToken.TokenType.BEARER)
                 .additionalParameters(convertAdditionalParameters(code))
                 .build();

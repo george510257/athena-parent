@@ -101,7 +101,7 @@ public class WorkWechatLoginCustomizer implements IOAuth2LoginCustomizer {
     private OAuth2AccessTokenResponse convertResponse(WorkAccessTokenResponse response, String code) {
         return OAuth2AccessTokenResponse.withToken(response.getAccessToken())
                 .expiresIn(response.getExpiresIn())
-                .scopes(Set.of("work_wechat_user"))
+                .scopes(wechatProperties.getWork().getScopes())
                 .tokenType(OAuth2AccessToken.TokenType.BEARER)
                 .additionalParameters(convertAdditionalParameters(code))
                 .build();

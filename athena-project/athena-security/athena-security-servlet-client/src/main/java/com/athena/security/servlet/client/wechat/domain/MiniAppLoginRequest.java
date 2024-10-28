@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-
 /**
  * 小程序登录请求
  *
