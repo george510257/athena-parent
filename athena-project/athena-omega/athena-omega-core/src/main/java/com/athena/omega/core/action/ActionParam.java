@@ -1,4 +1,4 @@
-package com.athena.omega.core.activation;
+package com.athena.omega.core.action;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,20 +8,19 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * 请求参数
+ * Action参数
  *
- * @param <T> 请求参数类型
  * @author george
  */
 @Data
 @Accessors(chain = true)
-public class RequestParameter<T> implements Serializable {
+public class ActionParam<T> implements Serializable {
     /**
-     * 参数转换器
+     * 转换器
      */
     private Function<T, Object> converter;
     /**
-     * 参数类型
+     * 数据类型
      */
     private Class<T> type;
     /**
@@ -29,15 +28,16 @@ public class RequestParameter<T> implements Serializable {
      */
     private boolean required;
     /**
-     * 描述
-     */
-    private String description;
-    /**
      * 默认值
      */
     private T defaultValue;
     /**
-     * 校验器
+     * 描述
+     */
+    private String description;
+    /**
+     * 校验
      */
     private Predicate<T> validator;
+
 }

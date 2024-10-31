@@ -1,7 +1,5 @@
 package com.athena.omega.core.request;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +10,6 @@ import java.util.Map;
  *
  * @author george
  */
-@Slf4j
 public class RequestRecordManager {
     /**
      * 请求记录

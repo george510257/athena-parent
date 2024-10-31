@@ -1,5 +1,6 @@
 package com.athena.omega.core.request;
 
+import com.athena.omega.core.action.ActionRunnerProcess;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -40,7 +41,7 @@ public class RequestRecord implements Serializable {
     /**
      * 过程
      */
-    private final List<Map<String, Object>> processes = new ArrayList<>();
+    private final List<ActionRunnerProcess> processes = new ArrayList<>();
     /**
      * 缓冲区
      */
@@ -120,6 +121,15 @@ public class RequestRecord implements Serializable {
      * @return 结果
      */
     public boolean hasErrorLog() {
-        return logs.stream().anyMatch(log -> "error".equalsIgnoreCase(log.get("type").toString()));
+        return this.logs.stream().anyMatch(log -> "error".equalsIgnoreCase(log.get("type").toString()));
+    }
+
+    /**
+     * @param process
+     * @return
+     */
+    public RequestRecord addProcess(ActionRunnerProcess process) {
+        this.processes.add(process);
+        return this;
     }
 }
