@@ -53,6 +53,12 @@ public abstract class BaseAction<Request, Response> implements Function<Request,
      */
     protected abstract void buildProcessorDescriptor(ActionProcessorDescriptor<Request, Response> actionProcessorDescriptor);
 
+    /**
+     * 执行
+     *
+     * @param request 请求
+     * @return 响应
+     */
     @Override
     public Response apply(Request request) {
         // 初始化动作执行器

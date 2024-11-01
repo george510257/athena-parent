@@ -8,7 +8,14 @@ spring:
       config:
         group: ${nacos.group:athena}
         namespace: ${nacos.namespace:4dd79b66-6b0d-46ba-8466-2fef2497f5b8}
-  config:
-    import:
-      - optional:nacos:application-${spring.profiles.active:dev}.yml?refresh=true
-      - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yml?refresh=true
+        file-extension: yml
+        shared-configs:
+          - data-id: application.yml
+            group: ${nacos.group:athena}
+            refresh: true
+          - data-id: application-${spring.profiles.active:dev}.yml
+            group: ${nacos.group:athena}
+            refresh: true
+          - data-id: ${spring.application.name}-${spring.profiles.active:dev}.yml
+            group: ${nacos.group:athena}
+            refresh: true
