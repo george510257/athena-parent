@@ -7,14 +7,12 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationCode;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsent;
-import org.springframework.stereotype.Component;
 
 /**
  * 授权jackson模块
  *
  * @author george
  */
-@Component
 public class AuthorizationModule extends SimpleModule {
 
     /**

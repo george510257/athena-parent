@@ -21,9 +21,5 @@
             <groupId>com.athena.starter.web</groupId>
             <artifactId>athena-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.athena.starter.data.redis</groupId>
-            <artifactId>athena-starter-data-redis</artifactId>
-        </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,6 @@
 package com.athena.security.core.jackson2;
 
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import com.athena.starter.data.redis.support.RedisObjectMapperCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
@@ -12,18 +12,20 @@ import org.springframework.security.jackson2.SecurityJackson2Modules;
  */
 @Configuration
 public class SecurityJacksonConfig {
+
     /**
-     * Jackson 配置
+     * Redis对象映射器自定义
      *
-     * @return Jackson2ObjectMapperBuilderCustomizer
+     * @return RedisObjectMapperCustomizer
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer redisObjectMapperBuilderCustomizer() {
-        return builder -> builder
-                .modules(modules -> {
-                    ClassLoader classLoader = SecurityJacksonConfig.class.getClassLoader();
-                    modules.addAll(SecurityJackson2Modules.getModules(classLoader));
-                    modules.add(new CoreSecurityModule());
-                });
+    public RedisObjectMapperCustomizer securityRedisObjectMapperCustomizer() {
+        return objectMapper -> {
+            // 注册Security模块
+            SecurityJackson2Modules.getModules(getClass().getClassLoader())
+                    .forEach(objectMapper::registerModule);
+            // 注册CoreSecurity模块
+            objectMapper.registerModule(new CoreSecurityModule());
+        };
     }
 }
