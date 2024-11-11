@@ -132,7 +132,8 @@ public class InMemoryUserService implements IUserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return USERS.stream()
-                .filter(user -> user.getUsername().equals(username) || user.getMobile().equals(username))
+                // 用户名、手机号、邮箱
+                .filter(user -> user.getUsername().equals(username) || user.getMobile().equals(username) || user.getEmail().equals(username))
                 .findFirst()
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
     }
