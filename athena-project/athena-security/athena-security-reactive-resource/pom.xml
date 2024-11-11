@@ -4,17 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena.security</groupId>
+        <groupId>com.gls.athena.security</groupId>
         <artifactId>athena-security</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.security.reactive.resource</groupId>
+    <groupId>com.gls.athena.security.reactive.resource</groupId>
     <artifactId>athena-security-reactive-resource</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.athena.security.reactive</groupId>
+            <groupId>com.gls.athena.security.reactive</groupId>
             <artifactId>athena-security-reactive</artifactId>
         </dependency>
         <dependency>

@@ -4,29 +4,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena.cloud</groupId>
+        <groupId>com.gls.athena.cloud</groupId>
         <artifactId>athena-cloud</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.cloud.sdk</groupId>
+    <groupId>com.gls.athena.cloud.sdk</groupId>
     <artifactId>athena-cloud-sdk</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.athena.starter.core</groupId>
+            <groupId>com.gls.athena.starter.core</groupId>
             <artifactId>athena-starter-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.starter.excel</groupId>
+            <groupId>com.gls.athena.starter.excel</groupId>
             <artifactId>athena-starter-excel</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.starter.swagger</groupId>
+            <groupId>com.gls.athena.starter.swagger</groupId>
             <artifactId>athena-starter-swagger</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.starter.json</groupId>
+            <groupId>com.gls.athena.starter.json</groupId>
             <artifactId>athena-starter-json</artifactId>
         </dependency>
 

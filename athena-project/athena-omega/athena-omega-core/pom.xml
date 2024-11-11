@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena.omega</groupId>
+        <groupId>com.gls.athena.omega</groupId>
         <artifactId>athena-omega</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.omega.core</groupId>
+    <groupId>com.gls.athena.omega.core</groupId>
     <artifactId>athena-omega-core</artifactId>
 
 

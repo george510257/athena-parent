@@ -4,21 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena.security</groupId>
+        <groupId>com.gls.athena.security</groupId>
         <artifactId>athena-security</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.security.servlet</groupId>
+    <groupId>com.gls.athena.security.servlet</groupId>
     <artifactId>athena-security-servlet</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.athena.security.core</groupId>
+            <groupId>com.gls.athena.security.core</groupId>
             <artifactId>athena-security-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.starter.web</groupId>
+            <groupId>com.gls.athena.starter.web</groupId>
             <artifactId>athena-starter-web</artifactId>
         </dependency>
     </dependencies>

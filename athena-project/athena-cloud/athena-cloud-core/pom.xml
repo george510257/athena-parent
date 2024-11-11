@@ -4,30 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena.cloud</groupId>
+        <groupId>com.gls.athena.cloud</groupId>
         <artifactId>athena-cloud</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.cloud.core</groupId>
+    <groupId>com.gls.athena.cloud.core</groupId>
     <artifactId>athena-cloud-core</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.athena.cloud.sdk</groupId>
+            <groupId>com.gls.athena.cloud.sdk</groupId>
             <artifactId>athena-cloud-sdk</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.athena.starter.web</groupId>
+            <groupId>com.gls.athena.starter.web</groupId>
             <artifactId>athena-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.starter.mybatis</groupId>
+            <groupId>com.gls.athena.starter.mybatis</groupId>
             <artifactId>athena-starter-mybatis</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.starter.data.redis</groupId>
+            <groupId>com.gls.athena.starter.data.redis</groupId>
             <artifactId>athena-starter-data-redis</artifactId>
         </dependency>
 

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena</groupId>
+        <groupId>com.gls.athena</groupId>
         <artifactId>athena-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -16,120 +16,120 @@
         <dependencies>
             <!-- Athena Cloud -->
             <dependency>
-                <groupId>com.athena.cloud.boot</groupId>
+                <groupId>com.gls.athena.cloud.boot</groupId>
                 <artifactId>athena-cloud-boot</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.cloud.core</groupId>
+                <groupId>com.gls.athena.cloud.core</groupId>
                 <artifactId>athena-cloud-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.cloud.sdk</groupId>
+                <groupId>com.gls.athena.cloud.sdk</groupId>
                 <artifactId>athena-cloud-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Athena Common -->
             <dependency>
-                <groupId>com.athena.common.bean</groupId>
+                <groupId>com.gls.athena.common.bean</groupId>
                 <artifactId>athena-common-bean</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.common.core</groupId>
+                <groupId>com.gls.athena.common.core</groupId>
                 <artifactId>athena-common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Athena Starter -->
             <dependency>
-                <groupId>com.athena.starter.aliyun.oss</groupId>
+                <groupId>com.gls.athena.starter.aliyun.oss</groupId>
                 <artifactId>athena-starter-aliyun-oss</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.core</groupId>
+                <groupId>com.gls.athena.starter.core</groupId>
                 <artifactId>athena-starter-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.data.jpa</groupId>
+                <groupId>com.gls.athena.starter.data.jpa</groupId>
                 <artifactId>athena-starter-data-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.data.redis</groupId>
+                <groupId>com.gls.athena.starter.data.redis</groupId>
                 <artifactId>athena-starter-data-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.dynamic.datasource</groupId>
+                <groupId>com.gls.athena.starter.dynamic.datasource</groupId>
                 <artifactId>athena-starter-dynamic-datasource</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.excel</groupId>
+                <groupId>com.gls.athena.starter.excel</groupId>
                 <artifactId>athena-starter-excel</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.json</groupId>
+                <groupId>com.gls.athena.starter.json</groupId>
                 <artifactId>athena-starter-json</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.mybatis</groupId>
+                <groupId>com.gls.athena.starter.mybatis</groupId>
                 <artifactId>athena-starter-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.swagger</groupId>
+                <groupId>com.gls.athena.starter.swagger</groupId>
                 <artifactId>athena-starter-swagger</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.web</groupId>
+                <groupId>com.gls.athena.starter.web</groupId>
                 <artifactId>athena-starter-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.starter.xxl.job</groupId>
+                <groupId>com.gls.athena.starter.xxl.job</groupId>
                 <artifactId>athena-starter-xxl-job</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Athena Security -->
             <dependency>
-                <groupId>com.athena.security.core</groupId>
+                <groupId>com.gls.athena.security.core</groupId>
                 <artifactId>athena-security-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.reactive</groupId>
+                <groupId>com.gls.athena.security.reactive</groupId>
                 <artifactId>athena-security-reactive</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.reactive.resource</groupId>
+                <groupId>com.gls.athena.security.reactive.resource</groupId>
                 <artifactId>athena-security-reactive-resource</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.servlet</groupId>
+                <groupId>com.gls.athena.security.servlet</groupId>
                 <artifactId>athena-security-servlet</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.servlet.authorization</groupId>
+                <groupId>com.gls.athena.security.servlet.authorization</groupId>
                 <artifactId>athena-security-servlet-authorization</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.servlet.client</groupId>
+                <groupId>com.gls.athena.security.servlet.client</groupId>
                 <artifactId>athena-security-servlet-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.athena.security.servlet.resource</groupId>
+                <groupId>com.gls.athena.security.servlet.resource</groupId>
                 <artifactId>athena-security-servlet-resource</artifactId>
                 <version>${project.version}</version>
             </dependency>

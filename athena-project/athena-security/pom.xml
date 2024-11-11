@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.athena</groupId>
+        <groupId>com.gls.athena</groupId>
         <artifactId>athena-project</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.athena.security</groupId>
+    <groupId>com.gls.athena.security</groupId>
     <artifactId>athena-security</artifactId>
     <packaging>pom</packaging>
     <modules>
@@ -28,7 +28,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.athena.common.core</groupId>
+            <groupId>com.gls.athena.common.core</groupId>
             <artifactId>athena-common-core</artifactId>
         </dependency>
     </dependencies>
