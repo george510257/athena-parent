@@ -12,3 +12,8 @@ spring:
     import:
       - optional:nacos:application-${spring.profiles.active:dev}.yml?refresh=true
       - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yml?refresh=true
+logging:
+  level:
+    root: info
+    org.springframework: trace
+    com.athena: debug
