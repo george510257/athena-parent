@@ -25,6 +25,7 @@
         <module>athena-starter-web</module>
         <module>athena-starter-xxl-job</module>
         <module>athena-starter-feishu</module>
+        <module>athena-starter-log</module>
     </modules>
 
     <dependencies>
