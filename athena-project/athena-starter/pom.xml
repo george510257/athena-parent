@@ -13,19 +13,19 @@
     <artifactId>athena-starter</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>athena-starter-core</module>
         <module>athena-starter-aliyun-oss</module>
+        <module>athena-starter-core</module>
         <module>athena-starter-data-jpa</module>
         <module>athena-starter-data-redis</module>
         <module>athena-starter-dynamic-datasource</module>
         <module>athena-starter-excel</module>
+        <module>athena-starter-feishu</module>
         <module>athena-starter-json</module>
+        <module>athena-starter-log</module>
         <module>athena-starter-mybatis</module>
         <module>athena-starter-swagger</module>
         <module>athena-starter-web</module>
         <module>athena-starter-xxl-job</module>
-        <module>athena-starter-feishu</module>
-        <module>athena-starter-log</module>
     </modules>
 
     <dependencies>
