@@ -29,11 +29,13 @@ public class MethodLogAspect {
         String methodName = point.getSignature().getName();
         log.debug("[类名]:{},[方法]:{}", className, methodName);
         Object[] args = point.getArgs();
+        log.debug("方法参数：{}", args);
         Date startTime = new Date();
         log.info("方法开始时间：{}", startTime);
         try {
             Object result = point.proceed();
             log.info("方法执行结果：{}", result);
+            log.info("方法执行时间：{}ms", System.currentTimeMillis() - startTime.getTime());
             publisher.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime));
             return result;
         } catch (Throwable throwable) {
