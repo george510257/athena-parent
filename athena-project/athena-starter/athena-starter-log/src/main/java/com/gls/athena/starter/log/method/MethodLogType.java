@@ -1,4 +1,4 @@
-package com.gls.athena.starter.log.event;
+package com.gls.athena.starter.log.method;
 
 /**
  * @author george

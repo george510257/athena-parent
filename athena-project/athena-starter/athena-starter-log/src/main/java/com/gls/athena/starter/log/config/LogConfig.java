@@ -1,6 +1,6 @@
 package com.gls.athena.starter.log.config;
 
-import com.gls.athena.starter.log.event.MethodLogEventListener;
+import com.gls.athena.starter.log.method.MethodLogEventListener;
 import com.gls.athena.starter.log.support.DefaultMethodLogEventListener;
 import com.gls.athena.starter.log.support.KafkaMethodLogEventListener;
 import jakarta.annotation.Resource;

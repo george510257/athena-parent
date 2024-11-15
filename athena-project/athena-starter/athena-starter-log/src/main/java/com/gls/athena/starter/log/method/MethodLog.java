@@ -1,4 +1,4 @@
-package com.gls.athena.starter.log.aspect;
+package com.gls.athena.starter.log.method;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,5 @@
-package com.gls.athena.starter.log.event;
+package com.gls.athena.starter.log.method;
 
-import com.gls.athena.starter.log.aspect.MethodLog;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

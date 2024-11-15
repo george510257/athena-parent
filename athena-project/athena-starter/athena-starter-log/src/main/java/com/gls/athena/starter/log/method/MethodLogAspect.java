@@ -1,6 +1,7 @@
-package com.gls.athena.starter.log.aspect;
+package com.gls.athena.starter.log.method;
 
-import com.gls.athena.starter.log.event.MethodLogEvent;
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,14 +23,15 @@ import java.util.Date;
 public class MethodLogAspect {
     @Resource
     private ApplicationEventPublisher publisher;
-
+    @Resource
+    private Tracer tracer;
 
 
     @Around("@annotation(methodLog)")
     public Object around(ProceedingJoinPoint point, MethodLog methodLog) throws Throwable {
         String className = point.getTarget().getClass().getName();
         String methodName = point.getSignature().getName();
-        String traceId = this.getTraceId(point);
+        String traceId = this.getTraceId();
         log.debug("[类名]:{},[方法]:{}", className, methodName);
         Object[] args = point.getArgs();
         log.debug("方法参数：{}", args);
@@ -39,17 +41,20 @@ public class MethodLogAspect {
             Object result = point.proceed();
             log.info("方法执行结果：{}", result);
             log.info("方法执行时间：{}ms", System.currentTimeMillis() - startTime.getTime());
-            publisher.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime,traceId));
+            publisher.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime, traceId));
             return result;
         } catch (Throwable throwable) {
             log.error("方法执行异常：{}", throwable.getMessage(), throwable);
-            publisher.publishEvent(MethodLogEvent.ofError(this, methodLog, className, methodName, args, throwable, startTime,traceId));
+            publisher.publishEvent(MethodLogEvent.ofError(this, methodLog, className, methodName, args, throwable, startTime, traceId));
             throw throwable;
         }
     }
 
-    private String getTraceId(ProceedingJoinPoint point) {
-        // 如果是web请求，从MDC中获取traceId
-        String traceId =
+    private String getTraceId() {
+        Span span = tracer.currentSpan();
+        if (span != null) {
+            return span.context().traceId();
+        }
+        return "";
     }
 }
