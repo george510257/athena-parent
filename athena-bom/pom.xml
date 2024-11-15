@@ -78,6 +78,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.gls.athena.starter.log</groupId>
+                <artifactId>athena-starter-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.gls.athena.starter.mybatis</groupId>
                 <artifactId>athena-starter-mybatis</artifactId>
                 <version>${project.version}</version>

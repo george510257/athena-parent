@@ -1,7 +1,6 @@
 package com.gls.athena.starter.core.async;
 
 import jakarta.annotation.Resource;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -31,7 +30,6 @@ public class AsyncConfig implements AsyncConfigurer {
      * @return Executor 异步线程池
      */
     @Bean
-    @ConditionalOnMissingBean
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();

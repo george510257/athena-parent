@@ -30,6 +30,10 @@
             <groupId>com.gls.athena.starter.data.redis</groupId>
             <artifactId>athena-starter-data-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.gls.athena.starter.log</groupId>
+            <artifactId>athena-starter-log</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>
