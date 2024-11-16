@@ -1,9 +1,9 @@
 package com.gls.athena.starter.log.config;
 
+import cn.hutool.json.JSONUtil;
 import com.gls.athena.starter.log.method.MethodLogEventListener;
-import com.gls.athena.starter.log.support.DefaultMethodLogEventListener;
-import com.gls.athena.starter.log.support.KafkaMethodLogEventListener;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,14 +17,13 @@ import org.springframework.kafka.core.KafkaTemplate;
  *
  * @author george
  */
+@Slf4j
 @Configuration
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties(LogProperties.class)
 public class LogConfig {
     @Resource
     private LogProperties logProperties;
-    @Resource
-    private ObjectProvider<KafkaTemplate<String, String>> kafkaTemplateObjectProvider;
 
     /**
      * 方法日志事件监听器
@@ -33,10 +32,12 @@ public class LogConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-    public MethodLogEventListener methodLogEventListener() {
-        if (logProperties.isKafkaEnable() && kafkaTemplateObjectProvider.getIfAvailable() != null) {
-            return new KafkaMethodLogEventListener(kafkaTemplateObjectProvider.getIfAvailable(), logProperties.getKafkaTopic());
-        }
-        return new DefaultMethodLogEventListener();
+    public MethodLogEventListener methodLogEventListener(ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate) {
+        return event -> {
+            log.info("MethodLogEvent: {}", JSONUtil.toJsonStr(event));
+            if (logProperties.isKafkaEnable()) {
+                kafkaTemplate.ifAvailable(template -> template.send(logProperties.getKafkaTopic(), JSONUtil.toJsonStr(event)));
+            }
+        };
     }
 }
