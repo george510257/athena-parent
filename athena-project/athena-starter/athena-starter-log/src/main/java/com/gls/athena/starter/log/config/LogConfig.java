@@ -22,12 +22,16 @@ import org.springframework.kafka.core.KafkaTemplate;
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties(LogProperties.class)
 public class LogConfig {
+    /**
+     * 日志配置
+     */
     @Resource
     private LogProperties logProperties;
 
     /**
      * 方法日志事件监听器
      *
+     * @param kafkaTemplate kafka模板
      * @return 方法日志事件监听器
      */
     @Bean
@@ -35,9 +39,12 @@ public class LogConfig {
     public MethodLogEventListener methodLogEventListener(ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate) {
         return event -> {
             log.info("MethodLogEvent: {}", JSONUtil.toJsonStr(event));
-            if (logProperties.isKafkaEnable()) {
-                kafkaTemplate.ifAvailable(template -> template.send(logProperties.getKafkaTopic(), JSONUtil.toJsonStr(event)));
-            }
+            kafkaTemplate.ifAvailable(template -> {
+                if (logProperties.isKafkaEnable()) {
+                    template.send(logProperties.getKafkaTopic(), JSONUtil.toJsonStr(event));
+                    log.info("MethodLogEvent send to kafka: {}", JSONUtil.toJsonStr(event));
+                }
+            });
         };
     }
 }

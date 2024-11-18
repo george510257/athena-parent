@@ -21,12 +21,25 @@ import java.util.Date;
 @Slf4j
 @Component
 public class MethodLogAspect {
+    /**
+     * 事件发布器
+     */
     @Resource
     private ApplicationEventPublisher publisher;
+    /**
+     * 跟踪器
+     */
     @Resource
     private Tracer tracer;
 
-
+    /**
+     * 环绕通知
+     *
+     * @param point     切点
+     * @param methodLog 方法日志注解
+     * @return 方法执行结果
+     * @throws Throwable 异常
+     */
     @Around("@annotation(methodLog)")
     public Object around(ProceedingJoinPoint point, MethodLog methodLog) throws Throwable {
         String className = point.getTarget().getClass().getName();
@@ -50,6 +63,11 @@ public class MethodLogAspect {
         }
     }
 
+    /**
+     * 获取traceId
+     *
+     * @return traceId
+     */
     private String getTraceId() {
         Span span = tracer.currentSpan();
         if (span != null) {
