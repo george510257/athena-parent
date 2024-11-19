@@ -12,7 +12,7 @@ import org.springframework.util.ReflectionUtils;
  * @author george
  */
 @Component
-public class MethodLogManager {
+public class MethodManager {
     /**
      * 事件发布器
      */
