@@ -1,9 +1,9 @@
 package com.gls.athena.starter.data.jpa.support;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.gls.athena.common.bean.security.IUserHelper;
 import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.starter.data.jpa.base.BaseEntity;
-import jakarta.annotation.Resource;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +20,6 @@ import java.util.Date;
 @Component
 public class DefaultEntityListener {
     /**
-     * 用户帮助类
-     */
-    @Resource
-    private IUserHelper userHelper;
-
-    /**
      * 新增前操作
      *
      * @param entity 实体
@@ -33,6 +27,7 @@ public class DefaultEntityListener {
      */
     @PrePersist
     public <E extends BaseEntity> void prePersist(E entity) {
+        IUserHelper userHelper = SpringUtil.getBean(IUserHelper.class);
         log.info("prePersist entity: {}", entity);
         Long userId = userHelper.getCurrentUserId().orElse(BaseConstants.DEFAULT_USER_ID);
         String userRealName = userHelper.getCurrentUserRealName().orElse(BaseConstants.DEFAULT_USER_USERNAME);
@@ -56,6 +51,7 @@ public class DefaultEntityListener {
      */
     @PreUpdate
     public <E extends BaseEntity> void preUpdate(E entity) {
+        IUserHelper userHelper = SpringUtil.getBean(IUserHelper.class);
         log.info("preUpdate entity: {}", entity);
         Long userId = userHelper.getCurrentUserId().orElse(BaseConstants.DEFAULT_USER_ID);
         String userRealName = userHelper.getCurrentUserRealName().orElse(BaseConstants.DEFAULT_USER_USERNAME);

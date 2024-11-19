@@ -1,9 +1,9 @@
 package com.gls.athena.starter.mybatis.handler;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.gls.athena.common.bean.security.IUserHelper;
 import com.gls.athena.common.core.constant.BaseConstants;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
@@ -20,18 +20,13 @@ import java.util.Date;
 public class BaseEntityHandler implements MetaObjectHandler {
 
     /**
-     * 用户帮助类
-     */
-    @Resource
-    private IUserHelper userHelper;
-
-    /**
      * 插入填充
      *
      * @param metaObject 元对象
      */
     @Override
     public void insertFill(MetaObject metaObject) {
+        IUserHelper userHelper = SpringUtil.getBean(IUserHelper.class);
         // 打印日志
         log.info("insertFill metaObject: {}", metaObject);
         // 获取当前用户 ID
@@ -57,6 +52,7 @@ public class BaseEntityHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
+        IUserHelper userHelper = SpringUtil.getBean(IUserHelper.class);
         // 打印日志
         log.info("updateFill metaObject: {}", metaObject);
         // 获取当前用户 ID

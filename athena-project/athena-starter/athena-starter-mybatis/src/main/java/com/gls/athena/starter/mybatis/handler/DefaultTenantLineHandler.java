@@ -1,5 +1,6 @@
 package com.gls.athena.starter.mybatis.handler;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.gls.athena.common.bean.security.IUserHelper;
 import com.gls.athena.common.core.constant.BaseConstants;
@@ -21,11 +22,6 @@ public class DefaultTenantLineHandler implements TenantLineHandler {
      */
     @Resource
     private MybatisProperties mybatisProperties;
-    /**
-     * 用户帮助类
-     */
-    @Resource
-    private IUserHelper userHelper;
 
     /**
      * 获取租户ID
@@ -34,6 +30,7 @@ public class DefaultTenantLineHandler implements TenantLineHandler {
      */
     @Override
     public Expression getTenantId() {
+        IUserHelper userHelper = SpringUtil.getBean(IUserHelper.class);
         // 获取当前租户 ID
         Long tenantId = userHelper.getCurrentUserTenantId().orElse(BaseConstants.DEFAULT_TENANT_ID);
         return new LongValue(tenantId);
