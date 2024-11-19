@@ -55,7 +55,7 @@ public class MethodLogEvent extends ApplicationEvent {
     /**
      * 方法日志类型
      */
-    private final MethodLogType methodLogType;
+    private final MethodLogType type;
     /**
      * 跟踪ID
      */
@@ -64,19 +64,19 @@ public class MethodLogEvent extends ApplicationEvent {
     /**
      * 构造方法
      *
-     * @param source        源
-     * @param methodLog     方法日志
-     * @param className     类名
-     * @param methodName    方法名
-     * @param args          参数
-     * @param result        结果
-     * @param startTime     开始时间
-     * @param endTime       结束时间
-     * @param throwable     异常
-     * @param methodLogType 方法日志类型
-     * @param traceId       跟踪ID
+     * @param source     源
+     * @param methodLog  方法日志
+     * @param className  类名
+     * @param methodName 方法名
+     * @param args       参数
+     * @param result     结果
+     * @param startTime  开始时间
+     * @param endTime    结束时间
+     * @param throwable  异常
+     * @param type       方法日志类型
+     * @param traceId    跟踪ID
      */
-    private MethodLogEvent(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType methodLogType, String traceId) {
+    private MethodLogEvent(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
         super(source);
         this.code = methodLog.code();
         this.name = methodLog.name();
@@ -88,7 +88,7 @@ public class MethodLogEvent extends ApplicationEvent {
         this.startTime = startTime;
         this.endTime = endTime;
         this.throwable = throwable;
-        this.methodLogType = methodLogType;
+        this.type = type;
         this.traceId = traceId;
     }
 
