@@ -36,7 +36,7 @@ public class MethodLogManager {
             ReflectionUtils.doWithMethods(beanClass, method -> {
                 if (method.isAnnotationPresent(MethodLog.class)) {
                     MethodLog methodLog = method.getAnnotation(MethodLog.class);
-                    String className = beanClass.getName();
+                    String className = method.getDeclaringClass().getName();
                     String methodName = method.getName();
                     publisher.publishEvent(new MethodEvent(this, methodLog, className, methodName));
                 }
