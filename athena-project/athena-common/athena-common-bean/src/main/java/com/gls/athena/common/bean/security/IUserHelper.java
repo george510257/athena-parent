@@ -3,6 +3,7 @@ package com.gls.athena.common.bean.security;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeUtil;
 import com.gls.athena.common.bean.base.ITreeNodeParser;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
@@ -25,13 +26,12 @@ public interface IUserHelper {
      */
     static IUserHelper withDefaults() {
         return () -> {
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            // 普通用户
-            if (principal instanceof User user) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof User user) {
                 return Optional.of(user);
             }
             // token用户
-            if (principal instanceof OAuth2AuthenticatedPrincipal oauth2Principal) {
+            if (authentication != null && authentication.getPrincipal() instanceof OAuth2AuthenticatedPrincipal oauth2Principal) {
                 return Optional.of(toUser(oauth2Principal));
             }
             return Optional.empty();
