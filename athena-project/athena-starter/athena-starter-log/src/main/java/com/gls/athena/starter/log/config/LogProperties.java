@@ -20,6 +20,14 @@ public class LogProperties extends BaseProperties {
      */
     private String kafkaTopic = "athena-log";
     /**
+     * 添加日志key
+     */
+    private String kafkaAddLogKey = "addLog";
+    /**
+     * 添加方法key
+     */
+    private String kafkaAddMethodKey = "addMethod";
+    /**
      * 是否开启kafka
      */
     private boolean kafkaEnable = false;
