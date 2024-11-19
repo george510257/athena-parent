@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.io.Serializable;
+
 /**
  * 日志配置
  *
@@ -16,19 +18,30 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".log")
 public class LogProperties extends BaseProperties {
     /**
-     * kafka topic
+     * kafka配置
      */
-    private String kafkaTopic = "athena-log";
+    private Kafka kafka = new Kafka();
+
     /**
-     * 添加日志key
+     * kafka配置
      */
-    private String kafkaAddLogKey = "addLog";
-    /**
-     * 添加方法key
-     */
-    private String kafkaAddMethodKey = "addMethod";
-    /**
-     * 是否开启kafka
-     */
-    private boolean kafkaEnable = false;
+    @Data
+    public static class Kafka implements Serializable {
+        /**
+         * 主题
+         */
+        private String topic = "athena-log";
+        /**
+         * 日志key
+         */
+        private String logKey = "log";
+        /**
+         * 方法key
+         */
+        private String methodKey = "method";
+        /**
+         * 是否启用
+         */
+        private boolean enable = false;
+    }
 }

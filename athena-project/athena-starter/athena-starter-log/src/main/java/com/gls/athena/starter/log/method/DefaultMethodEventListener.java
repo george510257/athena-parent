@@ -15,7 +15,7 @@ public class DefaultMethodEventListener implements MethodEventListener {
     /**
      * 日志配置
      */
-    private final LogProperties logProperties;
+    private final LogProperties.Kafka kafka;
     /**
      * kafka模板
      */
@@ -24,21 +24,21 @@ public class DefaultMethodEventListener implements MethodEventListener {
     /**
      * 构造方法
      *
-     * @param logProperties 日志配置
+     * @param kafka         日志配置
      * @param kafkaTemplate kafka模板
      */
-    public DefaultMethodEventListener(LogProperties logProperties, KafkaTemplate<String, String> kafkaTemplate) {
-        this.logProperties = logProperties;
+    public DefaultMethodEventListener(LogProperties.Kafka kafka, KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafka = kafka;
         this.kafkaTemplate = kafkaTemplate;
     }
 
     /**
      * 构造方法
      *
-     * @param logProperties 日志配置
+     * @param kafka 日志配置
      */
-    public DefaultMethodEventListener(LogProperties logProperties) {
-        this(logProperties, null);
+    public DefaultMethodEventListener(LogProperties.Kafka kafka) {
+        this(kafka, null);
     }
 
     /**
@@ -49,12 +49,12 @@ public class DefaultMethodEventListener implements MethodEventListener {
     @Override
     public void onMethodEvent(MethodEvent event) {
         log.info("MethodEvent: {}", JSONUtil.toJsonStr(event));
-        if (logProperties.isKafkaEnable() && kafkaTemplate != null) {
-            String key = logProperties.getKafkaAddMethodKey();
+        if (kafka.isEnable() && kafkaTemplate != null) {
+            String key = kafka.getMethodKey();
             if (event instanceof MethodLogEvent) {
-                key = logProperties.getKafkaAddLogKey();
+                key = kafka.getLogKey();
             }
-            kafkaTemplate.send(logProperties.getKafkaTopic(), key, JSONUtil.toJsonStr(event));
+            kafkaTemplate.send(kafka.getTopic(), key, JSONUtil.toJsonStr(event));
             log.info("MethodEvent send to kafka: {}", JSONUtil.toJsonStr(event));
         }
     }

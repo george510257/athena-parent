@@ -32,9 +32,9 @@ public class LogConfig {
     @Bean
     @ConditionalOnMissingBean
     public MethodEventListener methodEventListener(LogProperties logProperties, ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate) {
-        if (logProperties.isKafkaEnable()) {
-            return new DefaultMethodEventListener(logProperties, kafkaTemplate.getIfAvailable());
+        if (logProperties.getKafka().isEnable()) {
+            return new DefaultMethodEventListener(logProperties.getKafka(), kafkaTemplate.getIfAvailable());
         }
-        return new DefaultMethodEventListener(logProperties);
+        return new DefaultMethodEventListener(logProperties.getKafka());
     }
 }
