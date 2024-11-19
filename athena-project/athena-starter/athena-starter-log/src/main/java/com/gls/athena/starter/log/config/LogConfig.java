@@ -1,7 +1,7 @@
 package com.gls.athena.starter.log.config;
 
-import com.gls.athena.starter.log.method.DefaultMethodLogListener;
-import com.gls.athena.starter.log.method.MethodLogListener;
+import com.gls.athena.starter.log.method.DefaultMethodEventListener;
+import com.gls.athena.starter.log.method.MethodEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,10 +31,10 @@ public class LogConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-    public MethodLogListener methodLogConsumer(LogProperties logProperties, ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate) {
+    public MethodEventListener methodLogConsumer(LogProperties logProperties, ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate) {
         if (logProperties.isKafkaEnable()) {
-            return new DefaultMethodLogListener(logProperties, kafkaTemplate.getIfAvailable());
+            return new DefaultMethodEventListener(logProperties, kafkaTemplate.getIfAvailable());
         }
-        return new DefaultMethodLogListener(logProperties);
+        return new DefaultMethodEventListener(logProperties);
     }
 }

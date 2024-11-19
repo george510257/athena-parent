@@ -8,15 +8,7 @@ import org.springframework.scheduling.annotation.Async;
  *
  * @author george
  */
-public interface MethodLogListener {
-    /**
-     * 方法日志事件监听
-     *
-     * @param event 方法日志事件
-     */
-    @Async
-    @EventListener(MethodLogEvent.class)
-    void onMethodLogEvent(MethodLogEvent event);
+public interface MethodEventListener {
 
     /**
      * 方法事件监听

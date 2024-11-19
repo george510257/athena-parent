@@ -1,7 +1,6 @@
 package com.gls.athena.starter.log.method;
 
 import lombok.Getter;
-import org.springframework.context.ApplicationEvent;
 
 import java.util.Date;
 
@@ -11,27 +10,7 @@ import java.util.Date;
  * @author george
  */
 @Getter
-public class MethodLogEvent extends ApplicationEvent {
-    /**
-     * 编码
-     */
-    private final String code;
-    /**
-     * 名称
-     */
-    private final String name;
-    /**
-     * 描述
-     */
-    private final String description;
-    /**
-     * 类名
-     */
-    private final String className;
-    /**
-     * 方法名
-     */
-    private final String methodName;
+public class MethodLogEvent extends MethodEvent {
     /**
      * 参数
      */
@@ -77,12 +56,7 @@ public class MethodLogEvent extends ApplicationEvent {
      * @param traceId    跟踪ID
      */
     private MethodLogEvent(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
-        super(source);
-        this.code = methodLog.code();
-        this.name = methodLog.name();
-        this.description = methodLog.description();
-        this.className = className;
-        this.methodName = methodName;
+        super(source, methodLog, className, methodName);
         this.args = args;
         this.result = result;
         this.startTime = startTime;

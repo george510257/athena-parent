@@ -11,7 +11,7 @@ import org.springframework.kafka.core.KafkaTemplate;
  * @author george
  */
 @Slf4j
-public class DefaultMethodLogListener implements MethodLogListener {
+public class DefaultMethodEventListener implements MethodEventListener {
     /**
      * 日志配置
      */
@@ -27,7 +27,7 @@ public class DefaultMethodLogListener implements MethodLogListener {
      * @param logProperties 日志配置
      * @param kafkaTemplate kafka模板
      */
-    public DefaultMethodLogListener(LogProperties logProperties, KafkaTemplate<String, String> kafkaTemplate) {
+    public DefaultMethodEventListener(LogProperties logProperties, KafkaTemplate<String, String> kafkaTemplate) {
         this.logProperties = logProperties;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -37,24 +37,24 @@ public class DefaultMethodLogListener implements MethodLogListener {
      *
      * @param logProperties 日志配置
      */
-    public DefaultMethodLogListener(LogProperties logProperties) {
+    public DefaultMethodEventListener(LogProperties logProperties) {
         this(logProperties, null);
     }
 
-    @Override
-    public void onMethodLogEvent(MethodLogEvent event) {
-        log.info("MethodLogEvent: {}", JSONUtil.toJsonStr(event));
-        if (logProperties.isKafkaEnable() && kafkaTemplate != null) {
-            kafkaTemplate.send(logProperties.getKafkaTopic(), logProperties.getKafkaAddLogKey(), JSONUtil.toJsonStr(event));
-            log.info("MethodLogEvent send to kafka: {}", JSONUtil.toJsonStr(event));
-        }
-    }
-
+    /**
+     * 方法事件监听
+     *
+     * @param event 方法事件
+     */
     @Override
     public void onMethodEvent(MethodEvent event) {
         log.info("MethodEvent: {}", JSONUtil.toJsonStr(event));
         if (logProperties.isKafkaEnable() && kafkaTemplate != null) {
-            kafkaTemplate.send(logProperties.getKafkaTopic(), logProperties.getKafkaAddMethodKey(), JSONUtil.toJsonStr(event));
+            String key = logProperties.getKafkaAddMethodKey();
+            if (event instanceof MethodLogEvent) {
+                key = logProperties.getKafkaAddLogKey();
+            }
+            kafkaTemplate.send(logProperties.getKafkaTopic(), key, JSONUtil.toJsonStr(event));
             log.info("MethodEvent send to kafka: {}", JSONUtil.toJsonStr(event));
         }
     }
