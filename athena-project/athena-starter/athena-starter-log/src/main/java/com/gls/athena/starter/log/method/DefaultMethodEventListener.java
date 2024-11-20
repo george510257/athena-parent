@@ -48,14 +48,14 @@ public class DefaultMethodEventListener implements MethodEventListener {
      */
     @Override
     public void onMethodEvent(MethodEvent event) {
-        log.info("MethodEvent: {}", JSONUtil.toJsonStr(event));
+        String message = JSONUtil.toJsonStr(event);
+        log.info("MethodEvent: {}", message);
         if (kafka.isEnable() && kafkaTemplate != null) {
             String key = kafka.getMethodKey();
             if (event instanceof MethodLogEvent) {
                 key = kafka.getMethodLogKey();
             }
-            kafkaTemplate.send(kafka.getTopic(), key, JSONUtil.toJsonStr(event));
-            log.info("MethodEvent send to kafka: {}", JSONUtil.toJsonStr(event));
+            kafkaTemplate.send(kafka.getTopic(), key, message);
         }
     }
 
