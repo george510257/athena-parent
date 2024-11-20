@@ -1,9 +1,11 @@
 package com.gls.athena.starter.log.method;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import lombok.Getter;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 方法日志事件
@@ -15,7 +17,7 @@ public class MethodLogEvent extends MethodEvent {
     /**
      * 参数
      */
-    private final Object[] args;
+    private final List<Object> args;
     /**
      * 结果
      */
@@ -63,7 +65,7 @@ public class MethodLogEvent extends MethodEvent {
      */
     private MethodLogEvent(Object source, MethodLog methodLog, String applicationName, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
         super(source, methodLog, applicationName, className, methodName);
-        this.args = args;
+        this.args = CollUtil.newArrayList(args);
         this.result = result;
         this.startTime = startTime;
         this.endTime = endTime;
