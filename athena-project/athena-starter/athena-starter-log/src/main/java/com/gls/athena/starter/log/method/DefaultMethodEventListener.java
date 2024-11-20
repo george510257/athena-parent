@@ -52,7 +52,7 @@ public class DefaultMethodEventListener implements MethodEventListener {
         if (kafka.isEnable() && kafkaTemplate != null) {
             String key = kafka.getMethodKey();
             if (event instanceof MethodLogEvent) {
-                key = kafka.getLogKey();
+                key = kafka.getMethodLogKey();
             }
             kafkaTemplate.send(kafka.getTopic(), key, JSONUtil.toJsonStr(event));
             log.info("MethodEvent send to kafka: {}", JSONUtil.toJsonStr(event));
