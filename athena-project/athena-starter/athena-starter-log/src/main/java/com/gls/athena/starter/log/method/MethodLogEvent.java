@@ -1,5 +1,6 @@
 package com.gls.athena.starter.log.method;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import lombok.Getter;
 
 import java.util.Date;
@@ -28,9 +29,13 @@ public class MethodLogEvent extends MethodEvent {
      */
     private final Date endTime;
     /**
-     * 异常
+     * 错误信息
      */
-    private final Throwable throwable;
+    private final String errorMessage;
+    /**
+     * 异常堆栈
+     */
+    private final String throwable;
     /**
      * 方法日志类型
      */
@@ -62,9 +67,15 @@ public class MethodLogEvent extends MethodEvent {
         this.result = result;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.throwable = throwable;
         this.type = type;
         this.traceId = traceId;
+        if (type == MethodLogType.ERROR && throwable != null) {
+            this.errorMessage = ExceptionUtil.getMessage(throwable);
+            this.throwable = ExceptionUtil.stacktraceToString(throwable);
+        } else {
+            this.errorMessage = null;
+            this.throwable = null;
+        }
     }
 
     /**
