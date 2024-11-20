@@ -70,7 +70,7 @@ public class MethodLogEvent extends MethodEvent {
         this.type = type;
         this.traceId = traceId;
         if (type == MethodLogType.ERROR && throwable != null) {
-            this.errorMessage = ExceptionUtil.getMessage(throwable);
+            this.errorMessage = throwable.getMessage();
             this.throwable = ExceptionUtil.stacktraceToString(throwable);
         } else {
             this.errorMessage = null;
