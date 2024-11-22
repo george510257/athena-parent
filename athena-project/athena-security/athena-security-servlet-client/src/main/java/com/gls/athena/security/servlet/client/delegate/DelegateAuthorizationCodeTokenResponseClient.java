@@ -1,6 +1,5 @@
 package com.gls.athena.security.servlet.client.delegate;
 
-import com.gls.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
@@ -26,11 +25,6 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
      */
     @Resource
     private ObjectProvider<IAuthorizationCodeTokenResponseClientAdapter> adapters;
-    /**
-     * 默认 OAuth2 客户端属性映射器
-     */
-    @Resource
-    private DefaultOAuth2ClientPropertiesMapper mapper;
 
     /**
      * 获取访问令牌响应
@@ -40,12 +34,10 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
      */
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
-        // 获取注册标识
-        String registrationId = authorizationCodeGrantRequest.getClientRegistration().getRegistrationId();
         // 获取提供者
-        String provider = mapper.getProvider(registrationId);
+        String providerId = authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get("providerId").toString();
         // 获取适配器
-        return adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
+        return adapters.stream().filter(adapter -> adapter.test(providerId)).findFirst()
                 .map(adapter -> adapter.getTokenResponse(authorizationCodeGrantRequest))
                 .orElseGet(() -> DEFAULT.getTokenResponse(authorizationCodeGrantRequest));
     }

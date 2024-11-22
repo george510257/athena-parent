@@ -1,6 +1,5 @@
 package com.gls.athena.security.servlet.client.delegate;
 
-import com.gls.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -38,23 +37,21 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      */
     private final ObjectProvider<IAuthorizationRequestCustomizer> customizers;
     /**
-     * 默认 OAuth2 客户端属性映射器
+     * 客户端注册库
      */
-    private final DefaultOAuth2ClientPropertiesMapper mapper;
+    private final ClientRegistrationRepository clientRegistrationRepository;
 
     /**
      * 构造函数
      *
      * @param clientRegistrationRepository 客户端注册库
      * @param customizers                  定制器
-     * @param mapper                       映射器
      */
     public DelegateAuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository,
-                                                ObjectProvider<IAuthorizationRequestCustomizer> customizers,
-                                                DefaultOAuth2ClientPropertiesMapper mapper) {
+                                                ObjectProvider<IAuthorizationRequestCustomizer> customizers) {
+        this.clientRegistrationRepository = clientRegistrationRepository;
         this.resolver = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, AUTHORIZATION_REQUEST_BASE_URI);
         this.customizers = customizers;
-        this.mapper = mapper;
     }
 
     /**
@@ -112,7 +109,8 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      */
     private void customizerResolver(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, String clientRegistrationId) {
         // 获取提供者
-        String provider = mapper.getProvider(clientRegistrationId);
+        String provider = clientRegistrationRepository.findByRegistrationId(clientRegistrationId)
+                .getProviderDetails().getConfigurationMetadata().get("providerId").toString();
         // 自定义 OAuth2 授权请求器
         customizers.stream()
                 .filter(customizer -> customizer.test(provider))

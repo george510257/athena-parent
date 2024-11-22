@@ -3,7 +3,6 @@ package com.gls.athena.security.servlet.client.delegate;
 import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.gls.athena.security.servlet.client.social.ISocialUserService;
 import com.gls.athena.security.servlet.client.social.SocialUser;
-import com.gls.athena.security.servlet.client.support.DefaultOAuth2ClientPropertiesMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.ObjectProvider;
@@ -39,11 +38,6 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
     @Resource
     private ObjectProvider<IOAuth2UserServiceAdapter> adapters;
     /**
-     * 默认 OAuth2 客户端属性映射器
-     */
-    @Resource
-    private DefaultOAuth2ClientPropertiesMapper mapper;
-    /**
      * 会话
      */
     @Resource
@@ -61,7 +55,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 获取注册 ID
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // 获取提供者
-        String provider = mapper.getProvider(registrationId);
+        String provider = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get("providerId").toString();
         // 加载用户
         OAuth2User oauth2User = adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
                 .map(adapter -> adapter.loadUser(userRequest))

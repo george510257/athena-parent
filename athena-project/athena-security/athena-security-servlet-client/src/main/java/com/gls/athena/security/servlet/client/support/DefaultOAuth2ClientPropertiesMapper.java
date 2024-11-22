@@ -1,5 +1,6 @@
 package com.gls.athena.security.servlet.client.support;
 
+import cn.hutool.core.map.MapUtil;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
@@ -12,6 +13,7 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -64,8 +66,10 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * @return 客户端注册信息
      */
     private ClientRegistration getClientRegistration(String registrationId, OAuth2ClientProperties.Registration registration) {
+        // 获取提供者ID
+        String providerId = getProvider(registrationId);
         // 获取构建器
-        ClientRegistration.Builder builder = getBuilderByProvider(registrationId);
+        ClientRegistration.Builder builder = getBuilderByProvider(registrationId, providerId);
         // 映射属性
         PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
         map.from(registrationId).to(builder::registrationId);
@@ -80,6 +84,8 @@ public class DefaultOAuth2ClientPropertiesMapper {
         map.from(registration::getRedirectUri).to(builder::redirectUri);
         map.from(registration::getScope).as(StringUtils::toStringArray).to(builder::scope);
         map.from(registration::getClientName).to(builder::clientName);
+        map.from(MapUtil.builder(new HashMap<String, Object>(1)).put("providerId", providerId).build())
+                .to(builder::providerConfigurationMetadata);
         return builder.build();
     }
 
@@ -87,11 +93,10 @@ public class DefaultOAuth2ClientPropertiesMapper {
      * 获取构建器
      *
      * @param registrationId 注册ID
+     * @param providerId     提供者ID
      * @return 构建器
      */
-    private ClientRegistration.Builder getBuilderByProvider(String registrationId) {
-        // 获取提供者ID
-        String providerId = getProvider(registrationId);
+    private ClientRegistration.Builder getBuilderByProvider(String registrationId, String providerId) {
         // 获取构建器 - 从提供者属性
         ClientRegistration.Builder builder = getBuilderByProperties(registrationId, providerId);
         if (builder == null) {
