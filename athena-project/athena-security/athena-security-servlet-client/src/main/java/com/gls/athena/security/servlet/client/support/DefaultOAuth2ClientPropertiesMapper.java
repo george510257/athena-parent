@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.client.support;
 
 import cn.hutool.core.map.MapUtil;
+import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
@@ -84,7 +85,7 @@ public class DefaultOAuth2ClientPropertiesMapper {
         map.from(registration::getRedirectUri).to(builder::redirectUri);
         map.from(registration::getScope).as(StringUtils::toStringArray).to(builder::scope);
         map.from(registration::getClientName).to(builder::clientName);
-        map.from(MapUtil.builder(new HashMap<String, Object>(1)).put("providerId", providerId).build())
+        map.from(MapUtil.builder(new HashMap<String, Object>(1)).put(ClientSecurityConstants.PROVIDER_ID, providerId).build())
                 .to(builder::providerConfigurationMetadata);
         return builder.build();
     }

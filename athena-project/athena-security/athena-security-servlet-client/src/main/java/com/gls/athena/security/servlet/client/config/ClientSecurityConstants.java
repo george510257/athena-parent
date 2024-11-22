@@ -18,5 +18,10 @@ public interface ClientSecurityConstants {
      * 企业微信accessToken缓存名
      */
     String WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME = "work_wechat:access_token";
+    /**
+     * 社交登录提供者 ID
+     */
+    String PROVIDER_ID = "providerId";
+
 }
 

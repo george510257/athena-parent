@@ -55,7 +55,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 获取注册 ID
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // 获取提供者
-        String provider = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get("providerId").toString();
+        String provider = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get(ClientSecurityConstants.PROVIDER_ID).toString();
         // 加载用户
         OAuth2User oauth2User = adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
                 .map(adapter -> adapter.loadUser(userRequest))

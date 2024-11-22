@@ -1,5 +1,6 @@
 package com.gls.athena.security.servlet.client.delegate;
 
+import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
@@ -35,7 +36,7 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         // 获取提供者
-        String providerId = authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get("providerId").toString();
+        String providerId = authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get(ClientSecurityConstants.PROVIDER_ID).toString();
         // 获取适配器
         return adapters.stream().filter(adapter -> adapter.test(providerId)).findFirst()
                 .map(adapter -> adapter.getTokenResponse(authorizationCodeGrantRequest))

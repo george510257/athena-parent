@@ -1,5 +1,6 @@
 package com.gls.athena.security.servlet.client.delegate;
 
+import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -110,7 +111,7 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
     private void customizerResolver(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, String clientRegistrationId) {
         // 获取提供者
         String provider = clientRegistrationRepository.findByRegistrationId(clientRegistrationId)
-                .getProviderDetails().getConfigurationMetadata().get("providerId").toString();
+                .getProviderDetails().getConfigurationMetadata().get(ClientSecurityConstants.PROVIDER_ID).toString();
         // 自定义 OAuth2 授权请求器
         customizers.stream()
                 .filter(customizer -> customizer.test(provider))
