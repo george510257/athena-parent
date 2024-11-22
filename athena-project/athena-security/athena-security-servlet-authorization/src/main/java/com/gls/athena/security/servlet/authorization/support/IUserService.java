@@ -4,6 +4,7 @@ import com.gls.athena.common.bean.security.IUser;
 import com.gls.athena.common.bean.security.IUserHelper;
 import com.gls.athena.common.bean.security.User;
 import com.gls.athena.security.servlet.client.social.SocialUser;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +27,11 @@ public interface IUserService extends UserDetailsManager, UserDetailsPasswordSer
      */
     @Override
     default Optional<? extends IUser<?, ?, ?>> getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return Optional.empty();
+        }
+        Object principal = authentication.getPrincipal();
         // 社交用户
         if (principal instanceof SocialUser socialUser) {
             return getUserByUsername(socialUser.getUsername());
