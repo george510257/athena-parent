@@ -16,3 +16,6 @@ logging:
   level:
     org.springframework: trace
     com.athena: trace
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

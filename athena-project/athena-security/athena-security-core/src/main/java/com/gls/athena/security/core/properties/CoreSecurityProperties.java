@@ -22,7 +22,7 @@ public class CoreSecurityProperties extends BaseProperties {
     /**
      * 忽略的 URL
      */
-    private String[] ignoreUrls = new String[]{"/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico", "/actuator/**", "/error"};
+    private String[] ignoreUrls = new String[]{"/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico", "/actuator/**", "/error", "/v3/api-docs"};
     /**
      * rest登录配置
      */
