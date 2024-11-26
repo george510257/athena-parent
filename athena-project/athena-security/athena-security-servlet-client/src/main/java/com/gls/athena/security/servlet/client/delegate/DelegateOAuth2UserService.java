@@ -63,7 +63,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 转换为社交用户
         SocialUser socialUser = convetToSocialUser(oauth2User, registrationId);
         // 未绑定
-        if (!socialUser.getBindStatus()) {
+        if (!socialUser.isBindStatus()) {
             // 设置社交用户
             session.setAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY, socialUser);
             // 抛出异常
@@ -85,7 +85,6 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         if (socialUser == null) {
             socialUser = new SocialUser();
             socialUser.setProviderId(registrationId);
-            socialUser.setBindStatus(false);
             socialUser.setAttributes(oauth2User.getAttributes());
             socialUser.setAuthorities(new HashSet<>(oauth2User.getAuthorities()));
             socialUser.setName(oauth2User.getName());

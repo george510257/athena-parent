@@ -40,6 +40,6 @@ public class SocialUser extends BaseVo implements OAuth2User {
     /**
      * 绑定状态 true 已绑定 false 未绑定
      */
-    private Boolean bindStatus;
+    private boolean bindStatus;
 
 }
