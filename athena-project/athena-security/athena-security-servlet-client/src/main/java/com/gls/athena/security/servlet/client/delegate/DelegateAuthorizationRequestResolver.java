@@ -1,5 +1,6 @@
 package com.gls.athena.security.servlet.client.delegate;
 
+import cn.hutool.core.map.MapUtil;
 import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectProvider;
@@ -9,6 +10,8 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * 委托授权请求解析器
@@ -109,9 +112,10 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      * @param clientRegistrationId 客户端注册标识
      */
     private void customizerResolver(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, String clientRegistrationId) {
+        Map<String, Object> metadata = clientRegistrationRepository.findByRegistrationId(clientRegistrationId)
+                .getProviderDetails().getConfigurationMetadata();
         // 获取提供者
-        String provider = clientRegistrationRepository.findByRegistrationId(clientRegistrationId)
-                .getProviderDetails().getConfigurationMetadata().get(ClientSecurityConstants.PROVIDER_ID).toString();
+        String provider = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
         // 自定义 OAuth2 授权请求器
         customizers.stream()
                 .filter(customizer -> customizer.test(provider))

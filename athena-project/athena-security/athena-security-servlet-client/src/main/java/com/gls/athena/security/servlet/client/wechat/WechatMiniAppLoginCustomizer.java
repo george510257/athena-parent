@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @author george
  */
 @Component
-public class MiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
+public class WechatMiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
 
     /**
      * 测试是否支持

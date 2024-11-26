@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.client.wechat;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.gls.athena.security.servlet.client.delegate.IOAuth2LoginCustomizer;
 import com.gls.athena.security.servlet.client.wechat.domain.WechatAccessTokenRequest;
@@ -159,8 +160,8 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
      * @return 微信用户信息请求
      */
     private WechatUserInfoRequest convertUserInfoRequest(OAuth2UserRequest userRequest) {
-        String lang = userRequest.getClientRegistration().getProviderDetails()
-                .getConfigurationMetadata().getOrDefault("lang", "zh_CN").toString();
+        Map<String, Object> metadata = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
+        String lang = MapUtil.getStr(metadata, "lang", "zh_CN");
         WechatUserInfoRequest request = new WechatUserInfoRequest();
         request.setAccessToken(userRequest.getAccessToken().getTokenValue());
         request.setOpenid(StrUtil.toString(userRequest.getAdditionalParameters().get("openid")));

@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.client.wechat;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.gls.athena.security.servlet.client.delegate.IOAuth2LoginCustomizer;
 import com.gls.athena.security.servlet.client.wechat.domain.*;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  * @author george
  */
 @Component
-public class WorkWechatLoginCustomizer implements IOAuth2LoginCustomizer {
+public class WechatWorkLoginCustomizer implements IOAuth2LoginCustomizer {
 
     /**
      * 测试是否支持指定的注册标识
@@ -120,8 +121,8 @@ public class WorkWechatLoginCustomizer implements IOAuth2LoginCustomizer {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         WorkUserLoginRequest request = convertUserLoginRequest(userRequest);
-        String userLoginUri = userRequest.getClientRegistration().getProviderDetails()
-                .getConfigurationMetadata().get(WechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME).toString();
+        Map<String, Object> metadata = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
+        String userLoginUri = MapUtil.getStr(metadata, WechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME);
         WorkUserLoginResponse response = WechatHelper.getWorkUserLogin(request, userLoginUri);
         if (StrUtil.isBlank(response.getUserid())) {
             throw new OAuth2AuthenticationException("获取企业微信用户登录身份失败");

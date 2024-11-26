@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.client.feishu;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.gls.athena.security.servlet.client.delegate.IOAuth2LoginCustomizer;
 import com.gls.athena.security.servlet.client.feishu.domian.FeishuUserAccessTokenRequest;
@@ -76,7 +77,8 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
         // 获取客户端密钥
         String clientSecret = authorizationGrantRequest.getClientRegistration().getClientSecret();
         // 获取客户端请求uri
-        String appAccessTokenUri = authorizationGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get(FeishuConstants.APP_ACCESS_TOKEN_URL_NAME).toString();
+        Map<String, Object> metadata = authorizationGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
+        String appAccessTokenUri = MapUtil.getStr(metadata, FeishuConstants.APP_ACCESS_TOKEN_URL_NAME);
         // 获取应用访问令牌
         String appAccessToken = FeishuHelper.getAppAccessToken(clientId, clientSecret, appAccessTokenUri);
         // 获取用户访问令牌地址
