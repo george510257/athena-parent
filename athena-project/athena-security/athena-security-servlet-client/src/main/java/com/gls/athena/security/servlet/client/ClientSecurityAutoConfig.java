@@ -1,6 +1,5 @@
 package com.gls.athena.security.servlet.client;
 
-import com.gls.athena.security.servlet.client.feishu.FeishuProperties;
 import com.gls.athena.security.servlet.client.wechat.WechatProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +12,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan
-@EnableConfigurationProperties({FeishuProperties.class, WechatProperties.class})
+@EnableConfigurationProperties({WechatProperties.class})
 public class ClientSecurityAutoConfig {
 }
