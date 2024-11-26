@@ -7,7 +7,6 @@ import com.gls.athena.security.servlet.client.wechat.domain.WechatAccessTokenReq
 import com.gls.athena.security.servlet.client.wechat.domain.WechatAccessTokenResponse;
 import com.gls.athena.security.servlet.client.wechat.domain.WechatUserInfoRequest;
 import com.gls.athena.security.servlet.client.wechat.domain.WechatUserInfoResponse;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,16 +30,6 @@ import java.util.stream.Collectors;
  */
 @Component
 public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
-    /**
-     * 微信配置属性
-     */
-    @Resource
-    private WechatProperties wechatProperties;
-    /**
-     * 微信助手
-     */
-    @Resource
-    private WechatHelper wechatHelper;
 
     /**
      * 测试是否支持指定的注册标识
@@ -50,8 +39,7 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public boolean test(String registrationId) {
-        return wechatProperties.getMp().getRegistrationId().equals(registrationId)
-                || wechatProperties.getOpen().getRegistrationId().equals(registrationId);
+        return WechatConstants.OPEN_PROVIDER_ID.equals(registrationId) || WechatConstants.MP_PROVIDER_ID.equals(registrationId);
     }
 
     /**
@@ -81,8 +69,13 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
+        // 获取令牌请求
         WechatAccessTokenRequest request = convertAccessTokenRequest(authorizationGrantRequest);
-        WechatAccessTokenResponse response = wechatHelper.getWechatAccessToken(request);
+        // 获取令牌请求 URI
+        String accessTokenUri = authorizationGrantRequest.getClientRegistration().getProviderDetails().getTokenUri();
+        // 获取令牌响应
+        WechatAccessTokenResponse response = WechatHelper.getWechatAccessToken(request, accessTokenUri);
+        // 转换令牌响应
         return convertAccessTokenResponse(response);
     }
 
@@ -149,8 +142,13 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        // 转换请求
         WechatUserInfoRequest request = convertUserInfoRequest(userRequest);
-        WechatUserInfoResponse response = wechatHelper.getWechatUserInfo(request);
+        // 获取用户信息 URI
+        String userInfoUri = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
+        // 获取用户信息响应
+        WechatUserInfoResponse response = WechatHelper.getWechatUserInfo(request, userInfoUri);
+        // 转换用户
         return convertUserInfoResponse(response, userRequest.getAccessToken().getScopes());
     }
 
@@ -161,10 +159,12 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
      * @return 微信用户信息请求
      */
     private WechatUserInfoRequest convertUserInfoRequest(OAuth2UserRequest userRequest) {
+        String lang = userRequest.getClientRegistration().getProviderDetails()
+                .getConfigurationMetadata().getOrDefault("lang", "zh_CN").toString();
         WechatUserInfoRequest request = new WechatUserInfoRequest();
         request.setAccessToken(userRequest.getAccessToken().getTokenValue());
         request.setOpenid(StrUtil.toString(userRequest.getAdditionalParameters().get("openid")));
-        request.setLang(wechatProperties.getOpen().getLang());
+        request.setLang(lang);
         return request;
     }
 
