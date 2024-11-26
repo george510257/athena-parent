@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.client.wechat;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.gls.athena.security.servlet.client.delegate.IOAuth2LoginCustomizer;
 import com.gls.athena.security.servlet.client.wechat.domain.MiniAppAccessTokenResponse;
@@ -10,9 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -50,7 +53,7 @@ public class WechatMiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param request 请求
      */
     @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, ClientRegistration clientRegistration) {
         // 小程序 OAuth2 授权请求参数处理
         builder.parameters(parameters -> {
             Map<String, Object> result = new HashMap<>(2);
@@ -121,10 +124,14 @@ public class WechatMiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+
         MiniAppUserInfoRequest request = convertUserInfoRequest(userRequest);
-        String userInfoUri = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
-        MiniAppUserInfoResponse response = WechatHelper.getMiniAppUserInfo(request, userInfoUri);
-        return convertUserInfoResponse(response, userRequest.getAccessToken().getScopes());
+        // 获取用户信息地址
+        ClientRegistration.ProviderDetails.UserInfoEndpoint userInfoEndpoint = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint();
+        // 获取令牌
+        OAuth2AccessToken accessToken = userRequest.getAccessToken();
+        MiniAppUserInfoResponse response = WechatHelper.getMiniAppUserInfo(request, userInfoEndpoint.getUri());
+        return convertUserInfoResponse(response, accessToken.getScopes(), userInfoEndpoint.getUserNameAttributeName());
     }
 
     /**
@@ -148,14 +155,17 @@ public class WechatMiniAppLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param scopes   权限
      * @return OAuth2 用户
      */
-    private OAuth2User convertUserInfoResponse(MiniAppUserInfoResponse response, Set<String> scopes) {
+    private OAuth2User convertUserInfoResponse(MiniAppUserInfoResponse response, Set<String> scopes, String nameAttributeKey) {
         // 转换为 OAuth2 用户
         Map<String, Object> attributes = BeanUtil.beanToMap(response);
+        if (MapUtil.getStr(attributes, nameAttributeKey, null) == null) {
+            throw new OAuth2AuthenticationException(new OAuth2Error("wechat_mini_app_user_info_error", "获取小程序用户信息失败", null));
+        }
         // 设置权限
         Set<GrantedAuthority> authorities = scopes.stream()
                 .map(scope -> new SimpleGrantedAuthority("SCOPE_" + scope))
                 .collect(Collectors.toSet());
         // 返回用户
-        return new DefaultOAuth2User(authorities, attributes, "unionid");
+        return new DefaultOAuth2User(authorities, attributes, nameAttributeKey);
     }
 }

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -50,17 +51,18 @@ public class WechatWorkLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param request 请求
      */
     @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, ClientRegistration clientRegistration) {
+        Map<String, Object> metadata = clientRegistration.getProviderDetails().getConfigurationMetadata();
         // 企业微信 OAuth2 授权请求参数处理
         builder.parameters(parameters -> {
             // 企业微信 OAuth2 授权请求参数处理
             Map<String, Object> map = new HashMap<>(6);
-//            map.put("login_type", wechatProperties.getWork().getLoginType());
+            map.put("login_type", MapUtil.getStr(metadata, "login_type"));
             map.put("appId", parameters.get(OAuth2ParameterNames.CLIENT_ID));
-//            map.put("agentid", wechatProperties.getWork().getAgentId());
+            map.put("agentid", MapUtil.getStr(metadata, "agentid"));
             map.put("redirect_uri", parameters.get(OAuth2ParameterNames.REDIRECT_URI));
             map.put("state", parameters.get(OAuth2ParameterNames.STATE));
-//            map.put("lang", wechatProperties.getWork().getLang());
+            map.put("lang", MapUtil.getStr(metadata, "lang"));
             parameters.clear();
             parameters.putAll(map);
         });

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -50,7 +51,7 @@ public class WechatLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param request 请求
      */
     @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, ClientRegistration clientRegistration) {
         // 微信 OAuth2 授权请求参数处理
         builder.authorizationRequestUri(uriBuilder -> {
             // 构建 URI

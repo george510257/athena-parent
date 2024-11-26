@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -50,7 +51,7 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param request 请求
      */
     @Override
-    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request) {
+    public void accept(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, ClientRegistration clientRegistration) {
         // 飞书 OAuth2 授权请求参数处理
         builder.authorizationRequestUri(uriBuilder -> {
             // 获取 URI
@@ -149,10 +150,14 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        String accessToken = userRequest.getAccessToken().getTokenValue();
-        String uri = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
-        FeishuUserInfoResponse response = FeishuHelper.getUserInfo(accessToken, uri);
-        return convertUser(response, userRequest.getAccessToken().getScopes());
+        // 获取用户信息地址
+        ClientRegistration.ProviderDetails.UserInfoEndpoint userInfoEndpoint = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint();
+        // 获取令牌
+        OAuth2AccessToken accessToken = userRequest.getAccessToken();
+        // 获取用户信息
+        FeishuUserInfoResponse response = FeishuHelper.getUserInfo(accessToken.getTokenValue(), userInfoEndpoint.getUri());
+        // 转换用户
+        return convertUser(response, accessToken.getScopes(), userInfoEndpoint.getUserNameAttributeName());
     }
 
     /**
@@ -162,7 +167,7 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
      * @param scopes   权限
      * @return OAuth2 用户
      */
-    private OAuth2User convertUser(FeishuUserInfoResponse response, Set<String> scopes) {
+    private OAuth2User convertUser(FeishuUserInfoResponse response, Set<String> scopes, String nameAttributeKey) {
         // 转换为 OAuth2 用户
         Map<String, Object> attributes = BeanUtil.beanToMap(response);
         // 设置权限
@@ -170,6 +175,6 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
                 .map(scope -> new SimpleGrantedAuthority("SCOPE_" + scope))
                 .collect(Collectors.toSet());
         // 返回用户
-        return new DefaultOAuth2User(authorities, attributes, "openId");
+        return new DefaultOAuth2User(authorities, attributes, nameAttributeKey);
     }
 }

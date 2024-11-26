@@ -1,6 +1,6 @@
 package com.gls.athena.security.servlet.client.support;
 
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.AuthenticationMethod;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
@@ -20,13 +19,12 @@ import java.util.stream.Collectors;
  *
  * @author george
  */
-@Component
+@RequiredArgsConstructor
 public class DefaultOAuth2ClientPropertiesMapper {
     /**
      * OAuth2客户端属性
      */
-    @Resource
-    private OAuth2ClientProperties properties;
+    private final OAuth2ClientProperties properties;
 
     /**
      * 获取客户端注册信息Map

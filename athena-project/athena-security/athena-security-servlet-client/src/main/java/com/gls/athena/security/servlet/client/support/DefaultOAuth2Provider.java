@@ -109,7 +109,7 @@ public enum DefaultOAuth2Provider {
             builder.authorizationUri("https://open.feishu.cn/open-apis/authen/v1/authorize");
             builder.tokenUri("https://open.feishu.cn/open-apis/authen/v1/oidc/access_token");
             builder.userInfoUri("https://open.feishu.cn/open-apis/authen/v1/user_info");
-            builder.userNameAttributeName("union_id");
+            builder.userNameAttributeName("unionId");
             builder.clientName("飞书");
             Map<String, Object> metadata = new HashMap<>();
             metadata.put(FeishuConstants.APP_ACCESS_TOKEN_URL_NAME, "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal");

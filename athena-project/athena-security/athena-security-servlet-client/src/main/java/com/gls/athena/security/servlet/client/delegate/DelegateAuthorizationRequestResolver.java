@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
@@ -112,15 +113,15 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
      * @param clientRegistrationId 客户端注册标识
      */
     private void customizerResolver(OAuth2AuthorizationRequest.Builder builder, HttpServletRequest request, String clientRegistrationId) {
-        Map<String, Object> metadata = clientRegistrationRepository.findByRegistrationId(clientRegistrationId)
-                .getProviderDetails().getConfigurationMetadata();
+        ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId(clientRegistrationId);
+        Map<String, Object> metadata = clientRegistration.getProviderDetails().getConfigurationMetadata();
         // 获取提供者
         String provider = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
         // 自定义 OAuth2 授权请求器
         customizers.stream()
                 .filter(customizer -> customizer.test(provider))
                 .findFirst()
-                .ifPresent(customizer -> customizer.accept(builder, request));
+                .ifPresent(customizer -> customizer.accept(builder, request, clientRegistration));
     }
 
 }
