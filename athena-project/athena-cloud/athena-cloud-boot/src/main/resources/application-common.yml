@@ -12,10 +12,16 @@ spring:
     import:
       - optional:nacos:application-${spring.profiles.active:dev}.yml?refresh=true
       - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yml?refresh=true
+
 logging:
   level:
     org.springframework: trace
     com.athena: trace
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

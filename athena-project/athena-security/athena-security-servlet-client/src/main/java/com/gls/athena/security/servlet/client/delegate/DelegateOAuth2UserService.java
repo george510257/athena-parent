@@ -1,5 +1,6 @@
 package com.gls.athena.security.servlet.client.delegate;
 
+import cn.hutool.core.map.MapUtil;
 import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.gls.athena.security.servlet.client.social.ISocialUserService;
 import com.gls.athena.security.servlet.client.social.SocialUser;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * 委托 OAuth2 用户信息服务
@@ -55,7 +57,8 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 获取注册 ID
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // 获取提供者
-        String provider = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata().get(ClientSecurityConstants.PROVIDER_ID).toString();
+        Map<String, Object> metadata = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
+        String provider = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
         // 加载用户
         OAuth2User oauth2User = adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
                 .map(adapter -> adapter.loadUser(userRequest))
@@ -63,7 +66,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 转换为社交用户
         SocialUser socialUser = convetToSocialUser(oauth2User, registrationId);
         // 未绑定
-        if (!socialUser.getBindStatus()) {
+        if (!socialUser.isBindStatus()) {
             // 设置社交用户
             session.setAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY, socialUser);
             // 抛出异常
@@ -85,7 +88,6 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         if (socialUser == null) {
             socialUser = new SocialUser();
             socialUser.setProviderId(registrationId);
-            socialUser.setBindStatus(false);
             socialUser.setAttributes(oauth2User.getAttributes());
             socialUser.setAuthorities(new HashSet<>(oauth2User.getAuthorities()));
             socialUser.setName(oauth2User.getName());

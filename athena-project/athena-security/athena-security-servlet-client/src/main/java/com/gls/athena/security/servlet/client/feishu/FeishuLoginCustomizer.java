@@ -1,12 +1,12 @@
 package com.gls.athena.security.servlet.client.feishu;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.gls.athena.security.servlet.client.delegate.IOAuth2LoginCustomizer;
 import com.gls.athena.security.servlet.client.feishu.domian.FeishuUserAccessTokenRequest;
 import com.gls.athena.security.servlet.client.feishu.domian.FeishuUserAccessTokenResponse;
 import com.gls.athena.security.servlet.client.feishu.domian.FeishuUserInfoResponse;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,25 +33,14 @@ import java.util.stream.Collectors;
 public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
 
     /**
-     * 飞书属性配置
-     */
-    @Resource
-    private FeishuProperties feishuProperties;
-    /**
-     * 飞书助手
-     */
-    @Resource
-    private FeishuHelper feishuHelper;
-
-    /**
      * 测试是否支持指定的注册标识
      *
-     * @param registrationId 注册标识
+     * @param providerId 提供者标识
      * @return 是否支持
      */
     @Override
-    public boolean test(String registrationId) {
-        return feishuProperties.getRegistrationId().equals(registrationId);
+    public boolean test(String providerId) {
+        return FeishuConstants.PROVIDER_ID.equals(providerId);
     }
 
     /**
@@ -83,11 +72,19 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
         // 获取用户访问令牌
         FeishuUserAccessTokenRequest request = convertAccessTokenRequest(authorizationGrantRequest);
-        // 获取客户端标识
+        // 获取客户端id
         String clientId = authorizationGrantRequest.getClientRegistration().getClientId();
+        // 获取客户端密钥
         String clientSecret = authorizationGrantRequest.getClientRegistration().getClientSecret();
+        // 获取客户端请求uri
+        Map<String, Object> metadata = authorizationGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
+        String appAccessTokenUri = MapUtil.getStr(metadata, FeishuConstants.APP_ACCESS_TOKEN_URL_NAME);
+        // 获取应用访问令牌
+        String appAccessToken = FeishuHelper.getAppAccessToken(clientId, clientSecret, appAccessTokenUri);
+        // 获取用户访问令牌地址
+        String uri = authorizationGrantRequest.getClientRegistration().getProviderDetails().getTokenUri();
         // 获取用户访问令牌响应
-        FeishuUserAccessTokenResponse response = feishuHelper.getUserAccessToken(request, clientId, clientSecret);
+        FeishuUserAccessTokenResponse response = FeishuHelper.getUserAccessToken(request, uri, appAccessToken);
         // 转换响应
         return convertAccessTokenResponse(response);
     }
@@ -153,7 +150,8 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         String accessToken = userRequest.getAccessToken().getTokenValue();
-        FeishuUserInfoResponse response = feishuHelper.getUserInfo(accessToken);
+        String uri = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
+        FeishuUserInfoResponse response = FeishuHelper.getUserInfo(accessToken, uri);
         return convertUser(response, userRequest.getAccessToken().getScopes());
     }
 
