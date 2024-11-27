@@ -5,7 +5,7 @@ import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class SocialUserBindListener implements ApplicationListener<AuthenticationSuccessEvent> {
+public class SocialUserBindListener {
     @Resource
     private ISocialUserService socialUserService;
     @Resource
     private HttpSession session;
 
-    @Override
+    @EventListener(AuthenticationSuccessEvent.class)
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         log.info("社交用户绑定监听器");
         Authentication authentication = event.getAuthentication();
