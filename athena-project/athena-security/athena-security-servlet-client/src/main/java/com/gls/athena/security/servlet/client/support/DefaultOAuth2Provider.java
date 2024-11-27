@@ -1,6 +1,8 @@
 package com.gls.athena.security.servlet.client.support;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
+import com.gls.athena.security.servlet.client.config.ClientSecurityProperties;
 import com.gls.athena.security.servlet.client.feishu.FeishuConstants;
 import com.gls.athena.security.servlet.client.wechat.WechatConstants;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -23,6 +25,7 @@ public enum DefaultOAuth2Provider {
     WECHAT_OPEN {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
+            ClientSecurityProperties properties = SpringUtil.getBean(ClientSecurityProperties.class);
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
             builder.scope(Set.of("snsapi_login"));
             builder.authorizationUri("https://open.weixin.qq.com/connect/qrconnect");
@@ -32,7 +35,7 @@ public enum DefaultOAuth2Provider {
             builder.clientName("微信开放平台");
             Map<String, Object> metadata = new HashMap<>();
             metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_OPEN_PROVIDER_ID);
-            metadata.put("lang", "zh_CN");
+            metadata.put("lang", properties.getWechatOpen().getLang());
             builder.providerConfigurationMetadata(metadata);
             return builder;
         }
@@ -43,6 +46,7 @@ public enum DefaultOAuth2Provider {
     WECHAT_MP {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
+            ClientSecurityProperties properties = SpringUtil.getBean(ClientSecurityProperties.class);
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
             builder.scope(Set.of("snsapi_userinfo"));
             builder.authorizationUri("https://open.weixin.qq.com/connect/oauth2/authorize");
@@ -52,7 +56,7 @@ public enum DefaultOAuth2Provider {
             builder.clientName("微信公众号");
             Map<String, Object> metadata = new HashMap<>();
             metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_MP_PROVIDER_ID);
-            metadata.put("lang", "zh_CN");
+            metadata.put("lang", properties.getWechatMp().getLang());
             builder.providerConfigurationMetadata(metadata);
             return builder;
         }
@@ -82,6 +86,7 @@ public enum DefaultOAuth2Provider {
     WECHAT_WORK {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
+            ClientSecurityProperties properties = SpringUtil.getBean(ClientSecurityProperties.class);
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
             builder.scope(Set.of("snsapi_base"));
             builder.authorizationUri("https://login.work.weixin.qq.com/wwlogin/sso/login");
@@ -92,9 +97,9 @@ public enum DefaultOAuth2Provider {
             Map<String, Object> metadata = new HashMap<>();
             metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_WORK_PROVIDER_ID);
             metadata.put(WechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME, "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo");
-            metadata.put("loginType", "CorpApp");
-            metadata.put("agentId", "1000002");
-            metadata.put("lang", "zh");
+            metadata.put("loginType", properties.getWechatWork().getLoginType().getValue());
+            metadata.put("agentId", properties.getWechatWork().getAgentId());
+            metadata.put("lang", properties.getWechatWork().getLang());
             builder.providerConfigurationMetadata(metadata);
             return builder;
         }

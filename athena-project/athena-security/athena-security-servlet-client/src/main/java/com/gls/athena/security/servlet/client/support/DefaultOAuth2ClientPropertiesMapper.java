@@ -1,5 +1,6 @@
 package com.gls.athena.security.servlet.client.support;
 
+import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -135,7 +137,11 @@ public class DefaultOAuth2ClientPropertiesMapper {
     private ClientRegistration.Builder getBuilderByCommon(String registrationId, String providerId) {
         try {
             CommonOAuth2Provider commonProvider = CommonOAuth2Provider.valueOf(providerId.toUpperCase());
-            return commonProvider.getBuilder(registrationId);
+            ClientRegistration.Builder builder = commonProvider.getBuilder(registrationId);
+            Map<String, Object> metadata = new HashMap<>(1);
+            metadata.put(ClientSecurityConstants.PROVIDER_ID, providerId);
+            builder.providerConfigurationMetadata(metadata);
+            return builder;
         } catch (Exception e) {
             return null;
         }
