@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author George
  */
 @Data
-public class MiniAppAccessTokenResponse implements Serializable {
+public class MiniAccessTokenResponse implements Serializable {
     /**
      * 应用访问令牌
      */

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author george
  */
 @Data
-public class MiniAppAccessTokenRequest implements Serializable {
+public class MiniAccessTokenRequest implements Serializable {
     /**
      * 应用标识
      */

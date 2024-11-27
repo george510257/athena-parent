@@ -31,7 +31,7 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("openid");
             builder.clientName("微信开放平台");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.OPEN_PROVIDER_ID);
+            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_OPEN_PROVIDER_ID);
             metadata.put("lang", "zh_CN");
             builder.providerConfigurationMetadata(metadata);
             return builder;
@@ -51,7 +51,7 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("openid");
             builder.clientName("微信公众号");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.MP_PROVIDER_ID);
+            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_MP_PROVIDER_ID);
             metadata.put("lang", "zh_CN");
             builder.providerConfigurationMetadata(metadata);
             return builder;
@@ -60,18 +60,18 @@ public enum DefaultOAuth2Provider {
     /**
      * 微信小程序
      */
-    WECHAT_MINI_APP {
+    WECHAT_MINI {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId) {
             ClientRegistration.Builder builder = getBuilder(registrationId, ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
             builder.scope(Set.of("snsapi_userinfo"));
-            builder.authorizationUri("/login/oauth2/code/wechat_mini_app");
+            builder.authorizationUri("/login/oauth2/code/wechat_mini");
             builder.tokenUri("https://api.weixin.qq.com/cgi-bin/token");
             builder.userInfoUri("https://api.weixin.qq.com/sns/jscode2session");
             builder.userNameAttributeName("openid");
             builder.clientName("微信小程序");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.MINI_APP_PROVIDER_ID);
+            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_MINI_PROVIDER_ID);
             builder.providerConfigurationMetadata(metadata);
             return builder;
         }
@@ -90,7 +90,7 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("id");
             builder.clientName("企业微信");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WORK_PROVIDER_ID);
+            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_WORK_PROVIDER_ID);
             metadata.put(WechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME, "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo");
             metadata.put("loginType", "CorpApp");
             metadata.put("agentId", "1000002");

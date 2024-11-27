@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author george
  */
 @Data
-public class MiniAppUserInfoRequest implements Serializable {
+public class MiniUserInfoRequest implements Serializable {
     /**
      * 小程序 appId
      */

@@ -41,7 +41,7 @@ public class WechatWorkLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public boolean test(String registrationId) {
-        return WechatConstants.WORK_PROVIDER_ID.equals(registrationId);
+        return WechatConstants.WECHAT_WORK_PROVIDER_ID.equals(registrationId);
     }
 
     /**
