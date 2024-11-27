@@ -1,8 +1,6 @@
 package com.gls.athena.security.servlet.client.social;
 
-import com.gls.athena.common.bean.base.BaseVo;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -15,8 +13,7 @@ import java.util.Set;
  * @author george
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class SocialUser extends BaseVo implements OAuth2User {
+public class SocialUser implements OAuth2User {
     /**
      * 权限
      */
