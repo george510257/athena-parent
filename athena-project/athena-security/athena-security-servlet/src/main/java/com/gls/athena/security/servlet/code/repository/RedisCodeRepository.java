@@ -15,7 +15,7 @@ public class RedisCodeRepository implements ICodeRepository {
     /**
      * 缓存名称
      */
-    private static final String CACHE_NAME = "verification-code";
+    private static final String CACHE_NAME = "code";
 
     /**
      * 保存验证码
