@@ -76,14 +76,18 @@ public interface IUser<R extends IRole<P>, P extends IPermission, O extends IOrg
      *
      * @return 角色
      */
-    R getRole();
+    default R getRole() {
+        return this.getRoles().stream().filter(IRole::getDefaultRole).findFirst().orElse(null);
+    }
 
     /**
      * 获取当前组织机构
      *
      * @return 组织机构
      */
-    O getOrganization();
+    default O getOrganization() {
+        return this.getOrganizations().stream().filter(IOrganization::getDefaultOrganization).findFirst().orElse(null);
+    }
 
     /**
      * 获取角色列表

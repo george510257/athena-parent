@@ -70,16 +70,6 @@ public class User extends BaseVo implements IUser<Role, Permission, Organization
     @Schema(title = "时区", description = "时区")
     private String timeZone;
     /**
-     * 当前角色
-     */
-    @Schema(title = "当前角色", description = "当前角色")
-    private Role role;
-    /**
-     * 当前组织
-     */
-    @Schema(title = "当前组织", description = "当前组织")
-    private Organization organization;
-    /**
      * 角色列表
      */
     @Schema(title = "角色列表", description = "角色列表")

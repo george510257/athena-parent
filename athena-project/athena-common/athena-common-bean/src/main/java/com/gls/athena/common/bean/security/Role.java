@@ -51,6 +51,11 @@ public class Role extends BaseVo implements IRole<Permission> {
     @Schema(title = "排序", description = "排序")
     private Integer sort;
     /**
+     * 默认角色 0否 1是
+     */
+    @Schema(title = "默认角色", description = "默认角色")
+    private Boolean defaultRole;
+    /**
      * 权限列表
      */
     @Schema(title = "权限列表", description = "权限列表")

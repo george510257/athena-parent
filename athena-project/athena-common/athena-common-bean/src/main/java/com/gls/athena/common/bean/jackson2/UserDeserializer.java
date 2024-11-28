@@ -56,10 +56,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
         String timeZone = node.get("timeZone").asText();
 
-        Role role = mapper.convertValue(node.get("role"), Role.class);
-
-        Organization organization = mapper.convertValue(node.get("organization"), Organization.class);
-
         List<Role> roles = mapper.convertValue(node.get("roles"), new TypeReference<>() {
         });
 
@@ -78,8 +74,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
         user.setLanguage(language);
         user.setLocale(locale);
         user.setTimeZone(timeZone);
-        user.setRole(role);
-        user.setOrganization(organization);
         user.setRoles(roles);
         user.setOrganizations(organizations);
         JacksonUtil.deserializeBaseVo(mapper, node, user);

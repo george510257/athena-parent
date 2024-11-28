@@ -9,4 +9,10 @@ import com.gls.athena.common.bean.base.ITreeNode;
  * @author george
  */
 public interface IOrganization extends ITreeNode, IDomain {
+    /**
+     * 是否默认组织
+     *
+     * @return 是否默认组织
+     */
+    Boolean getDefaultOrganization();
 }

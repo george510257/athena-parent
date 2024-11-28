@@ -24,6 +24,13 @@ public interface IRole<P extends IPermission> extends GrantedAuthority, ITreeNod
     }
 
     /**
+     * 是否默认角色
+     *
+     * @return 是否默认角色
+     */
+    Boolean getDefaultRole();
+
+    /**
      * 获取权限列表
      *
      * @return 权限列表

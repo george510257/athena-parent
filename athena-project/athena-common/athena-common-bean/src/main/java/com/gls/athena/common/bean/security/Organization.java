@@ -45,4 +45,10 @@ public class Organization extends BaseVo implements IOrganization {
      */
     @Schema(title = "排序", description = "排序")
     private Integer sort;
+
+    /**
+     * 默认组织 0否 1是
+     */
+    @Schema(title = "默认组织", description = "默认组织")
+    private Boolean defaultOrganization;
 }

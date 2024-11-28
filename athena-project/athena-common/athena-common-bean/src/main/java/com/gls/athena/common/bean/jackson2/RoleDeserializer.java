@@ -45,6 +45,8 @@ public class RoleDeserializer extends JsonDeserializer<Role> {
 
         Integer sort = node.get("sort").asInt();
 
+        Boolean defaultRole = node.get("defaultRole").asBoolean();
+
         List<Permission> permissions = mapper.convertValue(node.get("permissions"), new TypeReference<>() {
         });
 
@@ -56,6 +58,7 @@ public class RoleDeserializer extends JsonDeserializer<Role> {
         role.setType(type);
         role.setParentId(parentId);
         role.setSort(sort);
+        role.setDefaultRole(defaultRole);
         role.setPermissions(permissions);
         JacksonUtil.deserializeBaseVo(mapper, node, role);
         return role;

@@ -56,8 +56,6 @@ public interface IUserHelper {
         user.setLanguage(oauth2Principal.getAttribute("language"));
         user.setLocale(oauth2Principal.getAttribute("locale"));
         user.setTimeZone(oauth2Principal.getAttribute("timeZone"));
-        user.setRole(oauth2Principal.getAttribute("role"));
-        user.setOrganization(oauth2Principal.getAttribute("organization"));
         user.setRoles(oauth2Principal.getAttribute("roles"));
         user.setOrganizations(oauth2Principal.getAttribute("organizations"));
         user.setId(oauth2Principal.getAttribute("id"));
