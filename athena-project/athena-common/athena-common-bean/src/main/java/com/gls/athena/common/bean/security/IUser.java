@@ -1,5 +1,6 @@
 package com.gls.athena.common.bean.security;
 
+import cn.hutool.core.collection.CollUtil;
 import com.gls.athena.common.bean.base.IDomain;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -77,6 +78,9 @@ public interface IUser<R extends IRole<P>, P extends IPermission, O extends IOrg
      * @return 角色
      */
     default R getRole() {
+        if (CollUtil.isEmpty(this.getRoles())) {
+            return null;
+        }
         return this.getRoles().stream().filter(IRole::getDefaultRole).findFirst().orElse(null);
     }
 
@@ -86,6 +90,9 @@ public interface IUser<R extends IRole<P>, P extends IPermission, O extends IOrg
      * @return 组织机构
      */
     default O getOrganization() {
+        if (CollUtil.isEmpty(this.getOrganizations())) {
+            return null;
+        }
         return this.getOrganizations().stream().filter(IOrganization::getDefaultOrganization).findFirst().orElse(null);
     }
 
