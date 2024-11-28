@@ -10,7 +10,6 @@ public interface ClientSecurityConstants {
      * 社交用户会话键
      */
     String SOCIAL_USER_SESSION_KEY = "SOCIAL_USER";
-
     /**
      * 社交登录提供者 ID
      */

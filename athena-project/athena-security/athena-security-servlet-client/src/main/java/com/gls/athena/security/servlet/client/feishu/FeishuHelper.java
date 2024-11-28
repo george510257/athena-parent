@@ -18,6 +18,11 @@ import java.util.concurrent.TimeUnit;
 @UtilityClass
 public class FeishuHelper {
     /**
+     * 飞书应用访问令牌缓存名称
+     */
+    private static final String APP_ACCESS_TOKEN_CACHE_NAME = "feishu:app_access_token";
+
+    /**
      * 获取应用访问令牌
      *
      * @param clientId          客户端ID
@@ -27,7 +32,7 @@ public class FeishuHelper {
      */
     public String getAppAccessToken(String clientId, String clientSecret, String appAccessTokenUri) {
         // 从缓存中获取应用访问令牌
-        FeishuAppAccessTokenResponse response = RedisUtil.getCacheValue(FeishuConstants.APP_ACCESS_TOKEN_CACHE_NAME, clientId, FeishuAppAccessTokenResponse.class);
+        FeishuAppAccessTokenResponse response = RedisUtil.getCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, clientId, FeishuAppAccessTokenResponse.class);
         if (response != null) {
             return response.getAppAccessToken();
         }
@@ -39,7 +44,7 @@ public class FeishuHelper {
         response = getAppAccessToken(request, appAccessTokenUri);
         // 缓存应用访问令牌
         if (response != null) {
-            RedisUtil.setCacheValue(FeishuConstants.APP_ACCESS_TOKEN_CACHE_NAME, clientId, response, response.getExpire(), TimeUnit.SECONDS);
+            RedisUtil.setCacheValue(APP_ACCESS_TOKEN_CACHE_NAME, clientId, response, response.getExpire(), TimeUnit.SECONDS);
             return response.getAppAccessToken();
         }
         // 返回空

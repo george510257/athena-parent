@@ -7,10 +7,6 @@ package com.gls.athena.security.servlet.client.feishu;
  */
 public interface FeishuConstants {
     /**
-     * 飞书应用访问令牌缓存名称
-     */
-    String APP_ACCESS_TOKEN_CACHE_NAME = "feishu:app_access_token";
-    /**
      * 飞书社交登录提供者 ID
      */
     String PROVIDER_ID = "feishu";

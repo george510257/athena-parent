@@ -19,17 +19,9 @@ public interface WechatConstants {
      */
     String WECHAT_MINI_PROVIDER_ID = "wechat_mini";
     /**
-     * 微信小程序accessToken缓存名
-     */
-    String WECHAT_MINI_ACCESS_TOKEN_CACHE_NAME = "wechat_mini:access_token";
-    /**
      * 企业微信ID
      */
     String WECHAT_WORK_PROVIDER_ID = "wechat_work";
-    /**
-     * 企业微信accessToken缓存名
-     */
-    String WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME = "wechat_work:access_token";
     /**
      * 企业微信appAccessToken URI 名称
      */

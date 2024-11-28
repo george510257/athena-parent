@@ -17,6 +17,14 @@ import java.util.concurrent.TimeUnit;
  */
 @UtilityClass
 public class WechatHelper {
+    /**
+     * 微信小程序accessToken缓存名
+     */
+    private static final String WECHAT_MINI_ACCESS_TOKEN_CACHE_NAME = "wechat_mini:access_token";
+    /**
+     * 企业微信accessToken缓存名
+     */
+    private static final String WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME = "wechat_work:access_token";
 
     /**
      * 获取 RestTemplate
@@ -39,7 +47,7 @@ public class WechatHelper {
      */
     public MiniAccessTokenResponse getMiniAccessToken(String appId, String appSecret, String appAccessTokenUri) {
         // 从缓存中获取小程序访问令牌
-        MiniAccessTokenResponse response = RedisUtil.getCacheValue(WechatConstants.WECHAT_MINI_ACCESS_TOKEN_CACHE_NAME, appId, MiniAccessTokenResponse.class);
+        MiniAccessTokenResponse response = RedisUtil.getCacheValue(WECHAT_MINI_ACCESS_TOKEN_CACHE_NAME, appId, MiniAccessTokenResponse.class);
         if (response != null) {
             return response;
         }
@@ -52,7 +60,7 @@ public class WechatHelper {
         response = getMiniAccessToken(request, appAccessTokenUri);
         // 缓存小程序访问令牌
         if (response != null) {
-            RedisUtil.setCacheValue(WechatConstants.WECHAT_MINI_ACCESS_TOKEN_CACHE_NAME, appId, response, response.getExpiresIn(), TimeUnit.SECONDS);
+            RedisUtil.setCacheValue(WECHAT_MINI_ACCESS_TOKEN_CACHE_NAME, appId, response, response.getExpiresIn(), TimeUnit.SECONDS);
             return response;
         }
         // 返回空
@@ -137,7 +145,7 @@ public class WechatHelper {
      * @return 企业微信访问令牌
      */
     public WorkAccessTokenResponse getWorkAccessToken(String corpid, String corpsecret, String accessTokenUri) {
-        WorkAccessTokenResponse response = RedisUtil.getCacheValue(WechatConstants.WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME, corpid, WorkAccessTokenResponse.class);
+        WorkAccessTokenResponse response = RedisUtil.getCacheValue(WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME, corpid, WorkAccessTokenResponse.class);
         if (response != null) {
             return response;
         }
@@ -146,7 +154,7 @@ public class WechatHelper {
         request.setCorpsecret(corpsecret);
         response = getWorkAccessToken(request, accessTokenUri);
         if (response != null) {
-            RedisUtil.setCacheValue(WechatConstants.WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME, corpid, response, response.getExpiresIn(), TimeUnit.SECONDS);
+            RedisUtil.setCacheValue(WECHAT_WORK_ACCESS_TOKEN_CACHE_NAME, corpid, response, response.getExpiresIn(), TimeUnit.SECONDS);
             return response;
         }
         return null;
