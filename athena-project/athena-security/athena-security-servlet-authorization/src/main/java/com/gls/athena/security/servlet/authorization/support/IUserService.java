@@ -34,7 +34,7 @@ public interface IUserService extends UserDetailsManager, UserDetailsPasswordSer
         Object principal = authentication.getPrincipal();
         // 社交用户
         if (principal instanceof SocialUser socialUser) {
-            return getUserByUsername(socialUser.getUsername());
+            return Optional.of(socialUser.getUser());
         }
         // 用户
         if (principal instanceof User user) {

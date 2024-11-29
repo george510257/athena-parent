@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.client.social;
 
 import com.gls.athena.common.bean.base.BaseVo;
+import com.gls.athena.common.bean.security.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,9 +35,9 @@ public class SocialUser extends BaseVo implements OAuth2User {
      */
     private String providerId;
     /**
-     * 用户名 用户唯一标识(系统用户)
+     * 系统用户
      */
-    private String username;
+    private User user;
     /**
      * 绑定状态 true 已绑定 false 未绑定
      */

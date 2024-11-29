@@ -1,6 +1,7 @@
 package com.gls.athena.security.servlet.authorization.support;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.gls.athena.common.bean.security.User;
 import com.gls.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -78,9 +79,9 @@ public class DefaultOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
      * @return OAuth2认证主体
      */
     private OAuth2AuthenticatedPrincipal convertToPrincipal(SocialUser socialUser) {
-        String username = socialUser.getUsername();
-        return new DefaultOAuth2AuthenticatedPrincipal(username,
-                BeanUtil.beanToMap(userDetailsService.loadUserByUsername(username)),
-                new ArrayList<>(socialUser.getAuthorities()));
+        User user = socialUser.getUser();
+        return new DefaultOAuth2AuthenticatedPrincipal(user.getUsername(),
+                BeanUtil.beanToMap(user),
+                new ArrayList<>(user.getAuthorities()));
     }
 }

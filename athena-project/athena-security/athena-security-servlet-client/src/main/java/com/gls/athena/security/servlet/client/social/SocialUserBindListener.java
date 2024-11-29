@@ -33,7 +33,7 @@ public class SocialUserBindListener {
             SocialUser socialUser = (SocialUser) session.getAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY);
             if (socialUser != null) {
                 // 绑定社交用户
-                socialUser.setUsername(user.getUsername());
+                socialUser.setUser(user);
                 socialUser.setBindStatus(true);
                 socialUserService.saveSocialUser(socialUser);
                 session.removeAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY);

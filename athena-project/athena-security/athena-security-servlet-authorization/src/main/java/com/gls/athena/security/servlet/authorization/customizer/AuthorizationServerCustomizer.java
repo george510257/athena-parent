@@ -9,7 +9,6 @@ import com.gls.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -211,9 +210,7 @@ public class AuthorizationServerCustomizer implements Customizer<OAuth2Authoriza
         assert authentication != null;
         Object principal = authentication.getPrincipal();
         if (principal instanceof SocialUser socialUser) {
-            String username = socialUser.getUsername();
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            return new OidcUserInfo(BeanUtil.beanToMap(userDetails));
+            return new OidcUserInfo(BeanUtil.beanToMap(socialUser.getUser()));
         }
         return new OidcUserInfo(BeanUtil.beanToMap(principal));
     }
