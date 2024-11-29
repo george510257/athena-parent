@@ -10,11 +10,11 @@ public interface ISocialUserService {
     /**
      * 根据社交平台id和社交平台用户id查询社交用户
      *
-     * @param providerId 社交平台id
-     * @param name       社交平台用户id
+     * @param registrationId 社交平台应用id
+     * @param name           社交平台用户id
      * @return 社交用户
      */
-    SocialUser loadSocialUser(String providerId, String name);
+    SocialUser loadSocialUser(String registrationId, String name);
 
     /**
      * 保存社交用户
@@ -22,12 +22,4 @@ public interface ISocialUserService {
      * @param socialUser 社交用户
      */
     void saveSocialUser(SocialUser socialUser);
-
-    /**
-     * 删除社交用户
-     *
-     * @param providerId 社交平台id
-     * @param name       社交平台用户id
-     */
-    void removeSocialUser(String providerId, String name);
 }

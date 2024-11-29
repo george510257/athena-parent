@@ -31,9 +31,9 @@ public class SocialUser extends BaseVo implements OAuth2User {
      */
     private String name;
     /**
-     * 社交平台id
+     * 社交平台应用id
      */
-    private String providerId;
+    private String registrationId;
     /**
      * 系统用户
      */

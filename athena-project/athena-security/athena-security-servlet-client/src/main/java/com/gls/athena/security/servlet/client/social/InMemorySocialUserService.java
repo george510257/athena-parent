@@ -18,14 +18,14 @@ public class InMemorySocialUserService implements ISocialUserService {
     /**
      * 根据社交平台id和社交平台用户id查询社交用户
      *
-     * @param providerId 社交平台id
-     * @param name       社交平台用户id
+     * @param registrationId 社交平台应用id
+     * @param name           社交平台用户id
      * @return 社交用户
      */
     @Override
-    public SocialUser loadSocialUser(String providerId, String name) {
+    public SocialUser loadSocialUser(String registrationId, String name) {
         return USERS.stream()
-                .filter(user -> user.getProviderId().equals(providerId) && user.getName().equals(name))
+                .filter(user -> user.getRegistrationId().equals(registrationId) && user.getName().equals(name))
                 .findFirst()
                 .orElse(null);
     }
@@ -37,18 +37,7 @@ public class InMemorySocialUserService implements ISocialUserService {
      */
     @Override
     public void saveSocialUser(SocialUser socialUser) {
-        removeSocialUser(socialUser.getProviderId(), socialUser.getName());
+        USERS.removeIf(user -> user.getRegistrationId().equals(socialUser.getRegistrationId()) && user.getName().equals(socialUser.getName()));
         USERS.add(socialUser);
-    }
-
-    /**
-     * 删除社交用户
-     *
-     * @param providerId 社交平台id
-     * @param name       社交平台用户id
-     */
-    @Override
-    public void removeSocialUser(String providerId, String name) {
-        USERS.removeIf(user -> user.getProviderId().equals(providerId) && user.getName().equals(name));
     }
 }
