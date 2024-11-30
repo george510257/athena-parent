@@ -6,7 +6,6 @@ import com.gls.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -32,11 +31,6 @@ public class DefaultOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
      */
     @Resource
     private OAuth2AuthorizationService authorizationService;
-    /**
-     * 用户详情服务
-     */
-    @Resource
-    private UserDetailsService userDetailsService;
 
     /**
      * 不透明令牌解释

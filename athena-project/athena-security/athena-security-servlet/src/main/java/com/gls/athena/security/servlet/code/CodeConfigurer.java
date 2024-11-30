@@ -50,8 +50,7 @@ public final class CodeConfigurer<H extends HttpSecurityBuilder<H>>
     /**
      * 配置
      *
-     * @param builder
-     * @throws Exception
+     * @param builder 构建器
      */
     @Override
     public void configure(H builder) throws Exception {

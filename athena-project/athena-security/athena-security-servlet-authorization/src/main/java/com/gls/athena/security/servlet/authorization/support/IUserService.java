@@ -7,7 +7,6 @@ import com.gls.athena.security.servlet.client.social.SocialUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.provisioning.UserDetailsManager;
 
@@ -48,17 +47,4 @@ public interface IUserService extends UserDetailsManager, UserDetailsPasswordSer
         return Optional.empty();
     }
 
-    /**
-     * 根据用户名获取用户
-     *
-     * @param username 用户名
-     * @return 用户
-     */
-    default Optional<User> getUserByUsername(String username) {
-        try {
-            return Optional.of((User) loadUserByUsername(username));
-        } catch (UsernameNotFoundException e) {
-            return Optional.empty();
-        }
-    }
 }

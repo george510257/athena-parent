@@ -60,7 +60,9 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         Map<String, Object> metadata = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
         String provider = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
         // 加载用户
-        OAuth2User oauth2User = adapters.stream().filter(adapter -> adapter.test(provider)).findFirst()
+        OAuth2User oauth2User = adapters.stream()
+                .filter(adapter -> adapter.test(provider))
+                .findFirst()
                 .map(adapter -> adapter.loadUser(userRequest))
                 .orElseGet(() -> DEFAULT.loadUser(userRequest));
         // 转换为社交用户

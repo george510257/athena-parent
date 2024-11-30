@@ -42,7 +42,9 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
         // 获取提供者
         String providerId = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
         // 获取适配器
-        return adapters.stream().filter(adapter -> adapter.test(providerId)).findFirst()
+        return adapters.stream()
+                .filter(adapter -> adapter.test(providerId))
+                .findFirst()
                 .map(adapter -> adapter.getTokenResponse(authorizationCodeGrantRequest))
                 .orElseGet(() -> DEFAULT.getTokenResponse(authorizationCodeGrantRequest));
     }
