@@ -1,12 +1,14 @@
 package com.gls.athena.starter.web.support;
 
 import cn.hutool.core.io.IoUtil;
+import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.springframework.web.util.WebUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -15,17 +17,13 @@ import java.io.InputStreamReader;
  *
  * @author george
  */
+@Slf4j
 public class RequestBodyWrapper extends HttpServletRequestWrapper {
 
     /**
-     * 输入流
+     * 请求体
      */
-    private ServletInputStream inputStream;
-
-    /**
-     * 读取器
-     */
-    private BufferedReader reader;
+    private final String body;
 
     /**
      * 构造函数
@@ -34,6 +32,22 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     public RequestBodyWrapper(HttpServletRequest request) {
         super(request);
+        this.body = getBodyString(request);
+    }
+
+    /**
+     * 获取请求体字符串
+     *
+     * @param request 请求
+     * @return 请求体字符串
+     */
+    private String getBodyString(HttpServletRequest request) {
+        try {
+            return IoUtil.read(request.getInputStream(), getCharacterEncoding());
+        } catch (IOException e) {
+            log.error("获取请求体失败", e);
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -44,25 +58,30 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        // 如果输入流为空
-        if (this.inputStream == null) {
-            // 读取字节
-            this.inputStream = new RequestBodyInputStream(IoUtil.readBytes(super.getInputStream()));
-        }
-        return this.inputStream;
-    }
+        // 字节数组输入流
+        final ByteArrayInputStream inputStream = new ByteArrayInputStream(body.getBytes());
+        // 返回输入流
+        return new ServletInputStream() {
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
 
-    /**
-     * 获取字符编码
-     *
-     * @return 字符编码
-     */
-    @Override
-    public String getCharacterEncoding() {
-        // 获取字符编码
-        String enc = super.getCharacterEncoding();
-        // 如果字符编码为空
-        return (enc != null ? enc : WebUtils.DEFAULT_CHARACTER_ENCODING);
+            @Override
+            public boolean isReady() {
+                return true;
+            }
+
+            @Override
+            public void setReadListener(ReadListener listener) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public int read() {
+                return inputStream.read();
+            }
+        };
     }
 
     /**
@@ -73,11 +92,7 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public BufferedReader getReader() throws IOException {
-        // 如果读取器为空
-        if (this.reader == null) {
-            // 读取字符
-            this.reader = new BufferedReader(new InputStreamReader(getInputStream(), getCharacterEncoding()));
-        }
-        return this.reader;
+        // 返回读取器
+        return new BufferedReader(new InputStreamReader(getInputStream(), getCharacterEncoding()));
     }
 }
