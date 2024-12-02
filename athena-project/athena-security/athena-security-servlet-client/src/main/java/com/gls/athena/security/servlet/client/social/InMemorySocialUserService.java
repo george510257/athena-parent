@@ -34,10 +34,12 @@ public class InMemorySocialUserService implements ISocialUserService {
      * 保存社交用户
      *
      * @param socialUser 社交用户
+     * @return
      */
     @Override
-    public void saveSocialUser(SocialUser socialUser) {
+    public SocialUser saveSocialUser(SocialUser socialUser) {
         USERS.removeIf(user -> user.getRegistrationId().equals(socialUser.getRegistrationId()) && user.getName().equals(socialUser.getName()));
         USERS.add(socialUser);
+        return socialUser;
     }
 }

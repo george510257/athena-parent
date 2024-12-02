@@ -93,7 +93,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
             socialUser.setAttributes(oauth2User.getAttributes());
             socialUser.setAuthorities(new HashSet<>(oauth2User.getAuthorities()));
             socialUser.setName(oauth2User.getName());
-            socialUserService.saveSocialUser(socialUser);
+            socialUser = socialUserService.saveSocialUser(socialUser);
         }
         return socialUser;
     }

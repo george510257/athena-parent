@@ -20,6 +20,7 @@ public interface ISocialUserService {
      * 保存社交用户
      *
      * @param socialUser 社交用户
+     * @return
      */
-    void saveSocialUser(SocialUser socialUser);
+    SocialUser saveSocialUser(SocialUser socialUser);
 }
