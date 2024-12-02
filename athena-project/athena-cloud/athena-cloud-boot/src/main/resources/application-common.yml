@@ -15,13 +15,17 @@ spring:
 
 logging:
   level:
-    root: debug
+    org.springframework: debug
+    com.gls.athena: debug
+  file:
+    name: ./logs/${spring.application.name}.log
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
