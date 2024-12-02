@@ -15,8 +15,8 @@ spring:
 
 logging:
   level:
-    org.springframework: trace
-    com.athena: trace
+    org.springframework: debug
+    com.athena: debug
 management:
   endpoints:
     web:
