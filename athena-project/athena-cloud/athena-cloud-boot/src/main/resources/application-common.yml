@@ -15,8 +15,8 @@ spring:
 
 logging:
   level:
-    org.springframework: debug
-    com.athena: debug
+    root: debug
+
 management:
   endpoints:
     web:
