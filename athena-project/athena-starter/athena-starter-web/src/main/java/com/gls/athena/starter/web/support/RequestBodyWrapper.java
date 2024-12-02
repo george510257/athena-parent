@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -43,7 +44,8 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
         super(request);
         this.body = getBodyString(request);
         // 解析请求体
-        if (request.getContentType().contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
+        if (request.getContentType() != null
+                && request.getContentType().contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
             parseFormData(body);
         }
     }
@@ -57,8 +59,8 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
         String[] params = body.split("&");
         for (String param : params) {
             String[] keyValue = param.split("=");
-            String key = keyValue[0];
-            String value = keyValue[1];
+            String key = decode(keyValue[0]);
+            String value = decode(keyValue[1]);
             if (parameterMap.containsKey(key)) {
                 String[] values = parameterMap.get(key);
                 String[] newValues = new String[values.length + 1];
@@ -68,6 +70,21 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
             } else {
                 parameterMap.put(key, new String[]{value});
             }
+        }
+    }
+
+    /**
+     * 解码
+     *
+     * @param value 值
+     * @return 解码后的值
+     */
+    private String decode(String value) {
+        try {
+            return URLDecoder.decode(value, getCharacterEncoding());
+        } catch (Exception e) {
+            log.error("解码失败", e);
+            return value;
         }
     }
 
