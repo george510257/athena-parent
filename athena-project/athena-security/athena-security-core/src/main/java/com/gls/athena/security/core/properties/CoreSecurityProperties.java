@@ -44,7 +44,7 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 登录处理 URL
          */
-        private String loginProcessingUrl = "/api/restLogin";
+        private String loginProcessingUrl = "/rest/Login";
         /**
          * 用户名参数名
          */
