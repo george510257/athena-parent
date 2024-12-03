@@ -19,6 +19,8 @@ logging:
     com.gls.athena: debug
   file:
     name: ./logs/${spring.application.name}.log
+  pattern:
+    dateformat: "yyyy-MM-dd HH:mm:ss.SSS"
 
 management:
   endpoints:

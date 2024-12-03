@@ -104,7 +104,7 @@ public class WebUtil {
         // 获取请求体
         String body = JakartaServletUtil.getBody(request);
         // 如果请求体不为空
-        if (StrUtil.isNotBlank(body)) {
+        if (StrUtil.isNotBlank(body) && JSONUtil.isTypeJSON(body)) {
             // 返回请求体中的参数
             return JSONUtil.parseObj(body).getStr(parameterName);
         }
