@@ -1,8 +1,8 @@
 package com.gls.athena.security.servlet.authorization.config;
 
 import com.gls.athena.security.servlet.authorization.customizer.AuthorizationServerCustomizer;
+import com.gls.athena.security.servlet.captcha.CaptchaConfigurer;
 import com.gls.athena.security.servlet.client.customizer.OAuth2LoginCustomizer;
-import com.gls.athena.security.servlet.code.CodeConfigurer;
 import com.gls.athena.security.servlet.customizer.*;
 import com.gls.athena.security.servlet.rest.RestConfigurer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -56,7 +56,7 @@ public class AuthorizationSecurityConfig {
      *
      * @param http                            Http安全
      * @param restCustomizer                  REST自定义器
-     * @param codeCustomizer                  验证码自定义器
+     * @param captchaCustomizer               验证码自定义器
      * @param authorizeHttpRequestsCustomizer 请求授权自定义器
      * @param oauth2LoginCustomizer           OAuth2登录自定义器
      * @param resourceServerCustomizer        OAuth2资源服务器自定义器
@@ -68,7 +68,7 @@ public class AuthorizationSecurityConfig {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
                                                           RestCustomizer restCustomizer,
-                                                          CodeCustomizer codeCustomizer,
+                                                          CaptchaCustomizer captchaCustomizer,
                                                           AuthorizeHttpRequestsCustomizer authorizeHttpRequestsCustomizer,
                                                           OAuth2LoginCustomizer oauth2LoginCustomizer,
                                                           ResourceServerCustomizer resourceServerCustomizer,
@@ -76,7 +76,7 @@ public class AuthorizationSecurityConfig {
         // REST 登录
         http.with(new RestConfigurer<>(), restCustomizer);
         // 验证码
-        http.with(new CodeConfigurer<>(), codeCustomizer);
+        http.with(new CaptchaConfigurer<>(), captchaCustomizer);
         // OAuth2 登录
         http.oauth2Login(oauth2LoginCustomizer);
         // 资源服务器

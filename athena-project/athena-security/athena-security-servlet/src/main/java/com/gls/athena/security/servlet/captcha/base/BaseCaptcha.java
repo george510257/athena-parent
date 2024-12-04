@@ -1,4 +1,4 @@
-package com.gls.athena.security.servlet.code.base;
+package com.gls.athena.security.servlet.captcha.base;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  * @author george
  */
 @Data
-public abstract class BaseCode implements Serializable {
+public abstract class BaseCaptcha implements Serializable {
     /**
      * 验证码
      */

@@ -94,7 +94,7 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 验证码参数名
          */
-        private String codeParameterName = "smsCode";
+        private String codeParameterName = "smsCaptcha";
         /**
          * 手机号参数名
          */
@@ -102,7 +102,7 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 获取短信验证码url
          */
-        private String url = "/code/sms";
+        private String url = "/captcha/sms";
         /**
          * 需要校验验证码的url
          */
@@ -141,7 +141,7 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 验证码参数名
          */
-        private String codeParameterName = "imageCode";
+        private String codeParameterName = "imageCaptcha";
         /**
          * 验证码key参数名
          */
@@ -149,7 +149,7 @@ public class CoreSecurityProperties extends BaseProperties {
         /**
          * 获取图形验证码url
          */
-        private String url = "/code/image";
+        private String url = "/captcha/image";
         /**
          * 需要校验验证码的url
          */

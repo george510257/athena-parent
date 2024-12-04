@@ -1,9 +1,9 @@
-package com.gls.athena.security.servlet.code.image;
+package com.gls.athena.security.servlet.captcha.image;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
-import com.gls.athena.security.servlet.code.base.ICodeGenerator;
+import com.gls.athena.security.servlet.captcha.base.ICaptchaGenerator;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Setter
 @Accessors(chain = true)
-public class ImageCodeGenerator implements ICodeGenerator<ImageCode> {
+public class ImageCaptchaGenerator implements ICaptchaGenerator<ImageCaptcha> {
     /**
      * 验证码长度
      */
@@ -46,14 +46,14 @@ public class ImageCodeGenerator implements ICodeGenerator<ImageCode> {
      * @return 验证码
      */
     @Override
-    public ImageCode generate() {
+    public ImageCaptcha generate() {
         // 创建线段干扰的验证码
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(width, height, length, lineCount, fontSize);
         // 创建图片验证码
-        ImageCode imageCode = new ImageCode();
-        imageCode.setCode(lineCaptcha.getCode());
-        imageCode.setImage(lineCaptcha.getImage());
-        imageCode.setExpireTime(DateUtil.offsetSecond(DateUtil.date(), expireIn).toJdkDate());
-        return imageCode;
+        ImageCaptcha imageCaptcha = new ImageCaptcha();
+        imageCaptcha.setCode(lineCaptcha.getCode());
+        imageCaptcha.setImage(lineCaptcha.getImage());
+        imageCaptcha.setExpireTime(DateUtil.offsetSecond(DateUtil.date(), expireIn).toJdkDate());
+        return imageCaptcha;
     }
 }

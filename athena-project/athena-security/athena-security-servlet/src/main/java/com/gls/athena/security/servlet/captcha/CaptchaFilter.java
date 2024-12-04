@@ -1,6 +1,6 @@
-package com.gls.athena.security.servlet.code;
+package com.gls.athena.security.servlet.captcha;
 
-import com.gls.athena.security.servlet.code.base.BaseCodeProvider;
+import com.gls.athena.security.servlet.captcha.base.BaseCaptchaProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.io.IOException;
 @Slf4j
 @Setter
 @Accessors(chain = true)
-public class CodeFilter extends OncePerRequestFilter {
+public class CaptchaFilter extends OncePerRequestFilter {
     /**
      * 认证失败处理器
      */
@@ -30,7 +30,7 @@ public class CodeFilter extends OncePerRequestFilter {
     /**
      * 验证码管理器
      */
-    private CodeManager codeManager;
+    private CaptchaManager captchaManager;
 
     /**
      * 过滤器逻辑
@@ -44,7 +44,7 @@ public class CodeFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        BaseCodeProvider<?> provider = codeManager.getProvider(servletWebRequest);
+        BaseCaptchaProvider<?> provider = captchaManager.getProvider(servletWebRequest);
         // 无需校验验证码
         if (provider == null) {
             filterChain.doFilter(request, response);
@@ -60,7 +60,7 @@ public class CodeFilter extends OncePerRequestFilter {
             provider.verify(servletWebRequest);
             // 继续执行过滤器链
             filterChain.doFilter(request, response);
-        } catch (CodeAuthenticationException e) {
+        } catch (CaptchaAuthenticationException e) {
             log.error("验证码校验失败", e);
             // 校验失败处理
             authenticationFailureHandler.onAuthenticationFailure(request, response, e);

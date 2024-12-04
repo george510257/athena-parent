@@ -1,7 +1,7 @@
-package com.gls.athena.security.servlet.code.base;
+package com.gls.athena.security.servlet.captcha.base;
 
-import com.gls.athena.security.servlet.code.CodeAuthenticationException;
-import com.gls.athena.security.servlet.code.repository.ICodeRepository;
+import com.gls.athena.security.servlet.captcha.CaptchaAuthenticationException;
+import com.gls.athena.security.servlet.captcha.repository.ICaptchaRepository;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -9,24 +9,24 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 验证码提供器
  *
- * @param <Code> 验证码类型
+ * @param <Captcha> 验证码类型
  * @author george
  */
 @Setter
 @Accessors(chain = true)
-public abstract class BaseCodeProvider<Code extends BaseCode> {
+public abstract class BaseCaptchaProvider<Captcha extends BaseCaptcha> {
     /**
      * 验证码存储器
      */
-    private ICodeRepository repository;
+    private ICaptchaRepository repository;
     /**
      * 验证码生成器
      */
-    private ICodeGenerator<Code> generator;
+    private ICaptchaGenerator<Captcha> generator;
     /**
      * 验证码发送器
      */
-    private ICodeSender<Code> sender;
+    private ICaptchaSender<Captcha> sender;
 
     /**
      * 发送验证码
@@ -37,11 +37,11 @@ public abstract class BaseCodeProvider<Code extends BaseCode> {
         // 获取接收目标
         String target = getTarget(request);
         // 生成验证码
-        Code code = generator.generate();
+        Captcha captcha = generator.generate();
         // 保存验证码
-        repository.save(target, code);
+        repository.save(target, captcha);
         // 发送验证码
-        sender.send(target, code, request.getResponse());
+        sender.send(target, captcha, request.getResponse());
     }
 
     /**
@@ -54,18 +54,18 @@ public abstract class BaseCodeProvider<Code extends BaseCode> {
         String target = getTarget(request);
         String code = getCode(request);
         // 获取验证码
-        BaseCode baseCode = repository.get(target);
+        BaseCaptcha baseCaptcha = repository.get(target);
         // 验证码不存在或已过期
-        if (baseCode == null) {
-            throw new CodeAuthenticationException("验证码不存在或已过期");
+        if (baseCaptcha == null) {
+            throw new CaptchaAuthenticationException("验证码不存在或已过期");
         }
         // 验证码正确且未过期
-        if (baseCode.getCode().equals(code)
-                && baseCode.getExpireTime().getTime() > System.currentTimeMillis()) {
+        if (baseCaptcha.getCode().equals(code)
+                && baseCaptcha.getExpireTime().getTime() > System.currentTimeMillis()) {
             repository.remove(target);
         } else {
             // 验证码错误
-            throw new CodeAuthenticationException("验证码错误");
+            throw new CaptchaAuthenticationException("验证码错误");
         }
     }
 

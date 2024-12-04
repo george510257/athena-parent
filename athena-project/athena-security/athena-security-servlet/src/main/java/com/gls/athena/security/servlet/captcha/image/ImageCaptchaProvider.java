@@ -1,8 +1,8 @@
-package com.gls.athena.security.servlet.code.sms;
+package com.gls.athena.security.servlet.captcha.image;
 
 import cn.hutool.core.util.StrUtil;
-import com.gls.athena.security.servlet.code.CodeAuthenticationException;
-import com.gls.athena.security.servlet.code.base.BaseCodeProvider;
+import com.gls.athena.security.servlet.captcha.CaptchaAuthenticationException;
+import com.gls.athena.security.servlet.captcha.base.BaseCaptchaProvider;
 import com.gls.athena.starter.web.util.WebUtil;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,25 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 短信验证码提供器
+ * 图片验证码提供器
  *
  * @author george
  */
 @Setter
 @Accessors(chain = true)
-public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
+public class ImageCaptchaProvider extends BaseCaptchaProvider<ImageCaptcha> {
     /**
      * 验证码参数名
      */
-    private String codeParameterName = "smsCode";
+    private String codeParameterName = "imageCaptcha";
     /**
-     * 手机号参数名
+     * 验证码key参数名
      */
-    private String targetParameterName = "mobile";
+    private String targetParameterName = "uuid";
     /**
-     * 获取短信验证码url
+     * 获取图形验证码url
      */
-    private String url = "/code/sms";
+    private String url = "/captcha/image";
     /**
      * 需要校验验证码的url
      */
@@ -41,6 +41,10 @@ public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
      * 登录处理 URL
      */
     private String loginProcessingUrl = "/login";
+    /**
+     * 用户名参数名
+     */
+    private String usernameParameter = "username";
     /**
      * oauth2 token url
      */
@@ -66,8 +70,8 @@ public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
      */
     @Override
     public boolean isVerifyRequest(ServletWebRequest request) {
-        // 判断是否是短信登录
-        if (isSmsLogin(request)) {
+        // 判断是否密码登录
+        if (isPasswordLogin(request)) {
             return true;
         }
         AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -75,31 +79,31 @@ public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
     }
 
     /**
-     * 是否短信登录
+     * 是否密码登录
      *
      * @param request 请求
-     * @return 是否短信登录
+     * @return 是否密码登录
      */
-    protected boolean isSmsLogin(ServletWebRequest request) {
-        // 判断是否是短信登录
+    protected boolean isPasswordLogin(ServletWebRequest request) {
         String requestURI = request.getRequest().getRequestURI();
+        // 判断是否密码登录
         if (StrUtil.containsIgnoreCase(requestURI, loginProcessingUrl)) {
-            String mobile = WebUtil.getParameter(request.getRequest(), targetParameterName);
-            return StrUtil.isNotBlank(mobile);
+            String username = WebUtil.getParameter(request.getRequest(), usernameParameter);
+            return StrUtil.isNotBlank(username);
         }
-        // 判断是否是短信登录
+        // 判断是否密码登录
         if (StrUtil.containsIgnoreCase(requestURI, oauth2TokenUrl)) {
             String grantType = WebUtil.getParameter(request.getRequest(), OAuth2ParameterNames.GRANT_TYPE);
-            return StrUtil.containsIgnoreCase(grantType, "sms");
+            return StrUtil.containsIgnoreCase(grantType, "password");
         }
         return false;
     }
 
     /**
-     * 获取目标
+     * 获取接收目标
      *
      * @param request 请求
-     * @return 目标
+     * @return 接收目标
      */
     @Override
     public String getTarget(ServletWebRequest request) {
@@ -107,7 +111,7 @@ public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
         if (StrUtil.isNotBlank(target)) {
             return target;
         }
-        throw new CodeAuthenticationException("参数不能为空 parameterName: " + targetParameterName);
+        throw new CaptchaAuthenticationException("参数不能为空 parameterName: " + targetParameterName);
     }
 
     /**
@@ -122,7 +126,7 @@ public class SmsCodeProvider extends BaseCodeProvider<SmsCode> {
         if (StrUtil.isNotBlank(code)) {
             return code;
         }
-        throw new CodeAuthenticationException("参数不能为空 parameterName: " + codeParameterName);
+        throw new CaptchaAuthenticationException("参数不能为空 parameterName: " + codeParameterName);
     }
 
 }

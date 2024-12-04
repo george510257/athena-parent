@@ -1,7 +1,7 @@
-package com.gls.athena.security.servlet.code.repository;
+package com.gls.athena.security.servlet.captcha.repository;
 
 import cn.hutool.core.date.DateUtil;
-import com.gls.athena.security.servlet.code.base.BaseCode;
+import com.gls.athena.security.servlet.captcha.base.BaseCaptcha;
 import com.gls.athena.starter.data.redis.support.RedisUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -11,21 +11,21 @@ import java.util.concurrent.TimeUnit;
  *
  * @author george
  */
-public class RedisCodeRepository implements ICodeRepository {
+public class RedisCaptchaRepository implements ICaptchaRepository {
     /**
      * 缓存名称
      */
-    private static final String CACHE_NAME = "code";
+    private static final String CACHE_NAME = "captcha";
 
     /**
      * 保存验证码
      *
-     * @param key  验证码标识
-     * @param code 验证码
+     * @param key     验证码标识
+     * @param captcha 验证码
      */
     @Override
-    public void save(String key, BaseCode code) {
-        RedisUtil.setCacheValue(buildKey(key), code, DateUtil.betweenMs(DateUtil.date(), code.getExpireTime()), TimeUnit.MILLISECONDS);
+    public void save(String key, BaseCaptcha captcha) {
+        RedisUtil.setCacheValue(buildKey(key), captcha, DateUtil.betweenMs(DateUtil.date(), captcha.getExpireTime()), TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -35,8 +35,8 @@ public class RedisCodeRepository implements ICodeRepository {
      * @return 验证码
      */
     @Override
-    public BaseCode get(String key) {
-        return RedisUtil.getCacheValue(buildKey(key), BaseCode.class);
+    public BaseCaptcha get(String key) {
+        return RedisUtil.getCacheValue(buildKey(key), BaseCaptcha.class);
     }
 
     /**

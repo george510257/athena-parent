@@ -1,7 +1,7 @@
-package com.gls.athena.security.servlet.code.image;
+package com.gls.athena.security.servlet.captcha.image;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gls.athena.security.servlet.code.base.BaseCode;
+import com.gls.athena.security.servlet.captcha.base.BaseCaptcha;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ImageCode extends BaseCode {
+public class ImageCaptcha extends BaseCaptcha {
     /**
      * 图片
      */
