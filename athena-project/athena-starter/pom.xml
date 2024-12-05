@@ -26,6 +26,7 @@
         <module>athena-starter-swagger</module>
         <module>athena-starter-web</module>
         <module>athena-starter-xxl-job</module>
+        <module>athena-starter-sms</module>
     </modules>
 
     <dependencies>
