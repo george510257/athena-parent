@@ -78,7 +78,7 @@ public class CaptchaCustomizer implements Customizer<CaptchaConfigurer<HttpSecur
      * @param rest               REST配置
      */
     private void smsCaptchaProviderCustomizer(SmsCaptchaProvider smsCaptchaProvider, CoreSecurityProperties.Rest rest) {
-        CoreSecurityProperties.Sms sms = coreSecurityProperties.getCode().getSms();
+        CoreSecurityProperties.Sms sms = coreSecurityProperties.getCaptcha().getSms();
         smsCaptchaProvider
                 .setCodeParameterName(sms.getCodeParameterName())
                 .setTargetParameterName(sms.getTargetParameterName())
@@ -97,7 +97,7 @@ public class CaptchaCustomizer implements Customizer<CaptchaConfigurer<HttpSecur
      * @param rest                 REST配置
      */
     private void imageCaptchaProviderCustomizer(ImageCaptchaProvider imageCaptchaProvider, CoreSecurityProperties.Rest rest) {
-        CoreSecurityProperties.Image image = coreSecurityProperties.getCode().getImage();
+        CoreSecurityProperties.Image image = coreSecurityProperties.getCaptcha().getImage();
         imageCaptchaProvider
                 .setCodeParameterName(image.getCodeParameterName())
                 .setTargetParameterName(image.getTargetParameterName())

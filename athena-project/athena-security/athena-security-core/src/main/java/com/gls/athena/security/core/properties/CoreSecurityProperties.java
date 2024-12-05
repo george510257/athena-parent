@@ -30,7 +30,7 @@ public class CoreSecurityProperties extends BaseProperties {
     /**
      * 验证码配置
      */
-    private Code code = new Code();
+    private Captcha captcha = new Captcha();
 
     /**
      * rest登录配置
@@ -64,7 +64,7 @@ public class CoreSecurityProperties extends BaseProperties {
      * 验证码配置
      */
     @Data
-    public static class Code implements Serializable {
+    public static class Captcha implements Serializable {
 
         /**
          * 短信验证码配置
