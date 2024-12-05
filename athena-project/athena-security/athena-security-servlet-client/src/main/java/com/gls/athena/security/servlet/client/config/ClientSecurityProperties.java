@@ -8,6 +8,8 @@ import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 客户端安全属性配置
@@ -26,15 +28,15 @@ public class ClientSecurityProperties extends BaseProperties {
     /**
      * 微信配置
      */
-    private WechatMp wechatMp = new WechatMp();
+    private Map<String, WechatMp> wechatMp = new HashMap<>();
     /**
      * 微信开放平台
      */
-    private WechatOpen wechatOpen = new WechatOpen();
+    private Map<String, WechatOpen> wechatOpen = new HashMap<>();
     /**
      * 企业微信
      */
-    private WechatWork wechatWork = new WechatWork();
+    private Map<String, WechatWork> wechatWork = new HashMap<>();
 
     /**
      * 客户端注册信息库
