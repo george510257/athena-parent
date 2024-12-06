@@ -6,7 +6,7 @@ import com.gls.athena.common.bean.result.ResultStatus;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaSender;
 import com.gls.athena.starter.sms.sender.SmsSender;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +19,7 @@ import java.util.Map;
  * @author george
  */
 @Slf4j
-@Setter
+@Data
 @Accessors(chain = true)
 public class SmsCaptchaSender implements ICaptchaSender<SmsCaptcha> {
     /**

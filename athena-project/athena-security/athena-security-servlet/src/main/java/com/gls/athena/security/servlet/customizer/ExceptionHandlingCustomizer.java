@@ -1,6 +1,6 @@
 package com.gls.athena.security.servlet.customizer;
 
-import com.gls.athena.security.core.properties.CoreSecurityProperties;
+import com.gls.athena.security.servlet.rest.RestProperties;
 import jakarta.annotation.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
@@ -23,10 +23,10 @@ import java.util.Set;
 public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandlingConfigurer<HttpSecurity>> {
 
     /**
-     * 核心安全属性配置
+     * rest 安全属性配置
      */
     @Resource
-    private CoreSecurityProperties coreSecurityProperties;
+    private RestProperties restProperties;
 
     /**
      * 自定义
@@ -36,7 +36,7 @@ public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandling
     @Override
     public void customize(ExceptionHandlingConfigurer<HttpSecurity> configurer) {
         // 配置登录入口点
-        AuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(coreSecurityProperties.getRest().getLoginPage());
+        AuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(restProperties.getLoginPage());
         // 创建请求匹配器
         RequestMatcher requestMatcher = createRequestMatcher();
         // 配置异常处理 - 登录入口点

@@ -3,7 +3,7 @@ package com.gls.athena.security.servlet.captcha.sms;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaGenerator;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  *
  * @author george
  */
-@Setter
+@Data
 @Accessors(chain = true)
 public class SmsCaptchaGenerator implements ICaptchaGenerator<SmsCaptcha> {
     /**

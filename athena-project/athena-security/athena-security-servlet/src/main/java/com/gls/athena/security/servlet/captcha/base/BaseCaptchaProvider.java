@@ -2,7 +2,7 @@ package com.gls.athena.security.servlet.captcha.base;
 
 import com.gls.athena.security.servlet.captcha.CaptchaAuthenticationException;
 import com.gls.athena.security.servlet.captcha.repository.ICaptchaRepository;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -12,7 +12,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * @param <Captcha> 验证码类型
  * @author george
  */
-@Setter
+@Data
 @Accessors(chain = true)
 public abstract class BaseCaptchaProvider<Captcha extends BaseCaptcha> {
     /**

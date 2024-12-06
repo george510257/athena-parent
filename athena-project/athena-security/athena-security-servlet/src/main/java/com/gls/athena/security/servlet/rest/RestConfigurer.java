@@ -1,6 +1,9 @@
 package com.gls.athena.security.servlet.rest;
 
 import cn.hutool.extra.spring.SpringUtil;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
@@ -20,9 +23,11 @@ import java.util.function.Consumer;
  * @param <H> HTTP 安全构建器
  * @author george
  */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
         AbstractAuthenticationFilterConfigurer<H, RestConfigurer<H>, RestAuthenticationFilter> {
-
     /**
      * 认证转换器
      */
@@ -31,6 +36,10 @@ public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
      * 认证提供者
      */
     private final List<AuthenticationProvider> authenticationProviders = new ArrayList<>();
+    /**
+     * REST 属性配置
+     */
+    private RestProperties restProperties = new RestProperties();
     /**
      * 认证转换器消费者
      */
@@ -83,28 +92,6 @@ public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
     }
 
     /**
-     * 自定义认证转换器
-     *
-     * @param authenticationConvertersConsumer 认证转换器消费者
-     * @return REST 配置器
-     */
-    public RestConfigurer<H> authenticationConverters(Consumer<List<AuthenticationConverter>> authenticationConvertersConsumer) {
-        this.authenticationConvertersConsumer = authenticationConvertersConsumer;
-        return this;
-    }
-
-    /**
-     * 自定义认证提供者
-     *
-     * @param authenticationProvidersConsumer 认证提供者消费者
-     * @return REST 配置器
-     */
-    public RestConfigurer<H> authenticationProviders(Consumer<List<AuthenticationProvider>> authenticationProvidersConsumer) {
-        this.authenticationProvidersConsumer = authenticationProvidersConsumer;
-        return this;
-    }
-
-    /**
      * 设置登录处理 URL
      *
      * @param loginProcessingUrl 登录处理 URL
@@ -150,8 +137,11 @@ public final class RestConfigurer<H extends HttpSecurityBuilder<H>> extends
      */
     private List<AuthenticationConverter> createDefaultAuthenticationConverters() {
         List<AuthenticationConverter> authenticationConverters = new ArrayList<>();
-        authenticationConverters.add(new MobileAuthenticationConverter());
-        authenticationConverters.add(new UsernamePasswordAuthenticationConverter());
+        authenticationConverters.add(new MobileAuthenticationConverter()
+                .setMobileParameter(restProperties.getMobileParameter()));
+        authenticationConverters.add(new UsernamePasswordAuthenticationConverter()
+                .setUsernameParameter(restProperties.getUsernameParameter())
+                .setPasswordParameter(restProperties.getPasswordParameter()));
         return authenticationConverters;
     }
 

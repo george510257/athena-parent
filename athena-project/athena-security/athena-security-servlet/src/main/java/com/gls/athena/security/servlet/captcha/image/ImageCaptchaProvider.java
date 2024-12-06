@@ -4,7 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.gls.athena.security.servlet.captcha.CaptchaAuthenticationException;
 import com.gls.athena.security.servlet.captcha.base.BaseCaptchaProvider;
 import com.gls.athena.starter.web.util.WebUtil;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.util.AntPathMatcher;
@@ -18,8 +19,9 @@ import java.util.List;
  *
  * @author george
  */
-@Setter
+@Data
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class ImageCaptchaProvider extends BaseCaptchaProvider<ImageCaptcha> {
     /**
      * 验证码参数名

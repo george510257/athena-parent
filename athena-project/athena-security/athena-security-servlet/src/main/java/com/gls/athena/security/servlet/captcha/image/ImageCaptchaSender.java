@@ -3,7 +3,8 @@ package com.gls.athena.security.servlet.captcha.image;
 import com.gls.athena.security.servlet.captcha.CaptchaAuthenticationException;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaSender;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -13,7 +14,8 @@ import java.io.IOException;
  *
  * @author george
  */
-@Slf4j
+@Data
+@Accessors(chain = true)
 public class ImageCaptchaSender implements ICaptchaSender<ImageCaptcha> {
     /**
      * 发送图片验证码

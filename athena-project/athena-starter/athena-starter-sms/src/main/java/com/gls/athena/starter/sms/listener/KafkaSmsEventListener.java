@@ -38,9 +38,9 @@ public class KafkaSmsEventListener implements SmsEventListener {
      */
     @Override
     public void onSmsEvent(SmsEvent event) {
-        log.info("SmsEvent: {}", event);
         Map<String, Object> message = BeanUtil.beanToMap(event);
         message.put("applicationName", applicationName);
+        log.info("SmsEvent: {}", message);
         String key = smsProperties.getKafka().getKey();
         String topic = smsProperties.getKafka().getTopic();
         kafkaTemplate.send(topic, key, JSONUtil.toJsonStr(message));

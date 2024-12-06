@@ -2,7 +2,8 @@ package com.gls.athena.security.servlet.rest;
 
 import com.gls.athena.starter.web.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Setter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 
@@ -11,7 +12,8 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
  *
  * @author george
  */
-@Setter
+@Data
+@Accessors(chain = true)
 public class MobileAuthenticationConverter implements AuthenticationConverter {
     /**
      * 手机号参数

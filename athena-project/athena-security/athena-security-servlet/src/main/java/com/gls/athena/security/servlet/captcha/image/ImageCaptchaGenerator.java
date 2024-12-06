@@ -4,7 +4,7 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaGenerator;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  *
  * @author george
  */
-@Setter
+@Data
 @Accessors(chain = true)
 public class ImageCaptchaGenerator implements ICaptchaGenerator<ImageCaptcha> {
     /**

@@ -46,6 +46,10 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
      * 验证码管理器
      */
     private Customizer<List<BaseCaptchaProvider<?>>> providersCustomizer = Customizer.withDefaults();
+    /**
+     * 验证码配置
+     */
+    private CaptchaProperties captchaProperties = new CaptchaProperties();
 
     /**
      * 配置
@@ -73,15 +77,55 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
      */
     private List<BaseCaptchaProvider<?>> createDefaultProviders() {
         List<BaseCaptchaProvider<?>> providers = new ArrayList<>();
-        providers.add(new ImageCaptchaProvider()
-                .setRepository(captchaRepository)
-                .setGenerator(new ImageCaptchaGenerator())
-                .setSender(new ImageCaptchaSender()));
-        providers.add(new SmsCaptchaProvider()
-                .setRepository(captchaRepository)
-                .setGenerator(new SmsCaptchaGenerator())
-                .setSender(new SmsCaptchaSender()));
+        providers.add(createImageCaptchaProvider());
+        providers.add(createSmsCaptchaProvider());
         return providers;
+    }
+
+    /**
+     * 创建短信验证码提供器
+     *
+     * @return 短信验证码提供器
+     */
+    private BaseCaptchaProvider<?> createSmsCaptchaProvider() {
+        return new SmsCaptchaProvider()
+                .setCodeParameterName(captchaProperties.getSms().getCodeParameterName())
+                .setTargetParameterName(captchaProperties.getSms().getTargetParameterName())
+                .setUrl(captchaProperties.getSms().getUrl())
+                .setUrls(captchaProperties.getSms().getUrls())
+                .setLoginProcessingUrl(captchaProperties.getSms().getLoginProcessingUrl())
+                .setOauth2TokenUrl(captchaProperties.getSms().getOauth2TokenUrl())
+                .setRepository(captchaRepository)
+                .setGenerator(new SmsCaptchaGenerator()
+                        .setLength(captchaProperties.getSms().getLength())
+                        .setExpireIn(captchaProperties.getSms().getExpireIn()))
+                .setSender(new SmsCaptchaSender()
+                        .setTemplateCode(captchaProperties.getSms().getTemplateCode()));
+    }
+
+    /**
+     * 创建图形验证码提供器
+     *
+     * @return 图形验证码提供器
+     */
+    private BaseCaptchaProvider<?> createImageCaptchaProvider() {
+        return new ImageCaptchaProvider()
+                .setCodeParameterName(captchaProperties.getImage().getCodeParameterName())
+                .setTargetParameterName(captchaProperties.getImage().getTargetParameterName())
+                .setUrl(captchaProperties.getImage().getUrl())
+                .setUrls(captchaProperties.getImage().getUrls())
+                .setLoginProcessingUrl(captchaProperties.getImage().getLoginProcessingUrl())
+                .setOauth2TokenUrl(captchaProperties.getImage().getOauth2TokenUrl())
+                .setUsernameParameter(captchaProperties.getImage().getUsernameParameter())
+                .setRepository(captchaRepository)
+                .setGenerator(new ImageCaptchaGenerator()
+                        .setLength(captchaProperties.getImage().getLength())
+                        .setExpireIn(captchaProperties.getImage().getExpireIn())
+                        .setWidth(captchaProperties.getImage().getWidth())
+                        .setHeight(captchaProperties.getImage().getHeight())
+                        .setLineCount(captchaProperties.getImage().getLineCount())
+                        .setFontSize(captchaProperties.getImage().getFontSize()))
+                .setSender(new ImageCaptchaSender());
     }
 
 }

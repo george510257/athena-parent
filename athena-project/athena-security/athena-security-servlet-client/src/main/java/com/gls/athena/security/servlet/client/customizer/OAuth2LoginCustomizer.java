@@ -1,9 +1,9 @@
 package com.gls.athena.security.servlet.client.customizer;
 
-import com.gls.athena.security.core.properties.CoreSecurityProperties;
 import com.gls.athena.security.servlet.client.delegate.DelegateAuthorizationCodeTokenResponseClient;
 import com.gls.athena.security.servlet.client.delegate.DelegateAuthorizationRequestResolver;
 import com.gls.athena.security.servlet.client.delegate.DelegateOAuth2UserService;
+import com.gls.athena.security.servlet.rest.RestProperties;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<HttpSecurity>> {
 
     @Resource
-    private CoreSecurityProperties coreSecurityProperties;
+    private RestProperties restProperties;
     /**
      * 委托授权请求解析器
      */
@@ -44,7 +44,7 @@ public class OAuth2LoginCustomizer implements Customizer<OAuth2LoginConfigurer<H
     @Override
     public void customize(OAuth2LoginConfigurer<HttpSecurity> configurer) {
         // 登录页面
-        configurer.loginPage(coreSecurityProperties.getRest().getLoginPage());
+        configurer.loginPage(restProperties.getLoginPage());
         // 授权端点自定义器
         configurer.authorizationEndpoint(this::authorizationEndpoint);
         // 重定向端点自定义器
