@@ -1,5 +1,6 @@
 package com.gls.athena.starter.log.support;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.gls.athena.starter.log.config.LogProperties;
 import com.gls.athena.starter.log.method.MethodEvent;
@@ -8,6 +9,8 @@ import com.gls.athena.starter.log.method.MethodLogEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
+
+import java.util.Map;
 
 /**
  * 方法日志消费者
@@ -25,6 +28,10 @@ public class KafkaMethodEventListener implements MethodEventListener {
      * kafka模板
      */
     private final KafkaTemplate<String, String> kafkaTemplate;
+    /**
+     * 应用名称
+     */
+    private final String applicationName;
 
     /**
      * 方法事件监听
@@ -33,14 +40,15 @@ public class KafkaMethodEventListener implements MethodEventListener {
      */
     @Override
     public void onMethodEvent(MethodEvent event) {
-        String message = JSONUtil.toJsonStr(event);
+        Map<String, Object> message = BeanUtil.beanToMap(event);
+        message.put("applicationName", applicationName);
         LogProperties.Kafka kafka = logProperties.getKafka();
         log.info("MethodEvent: {}", message);
         String key = kafka.getMethodKey();
         if (event instanceof MethodLogEvent) {
             key = kafka.getMethodLogKey();
         }
-        kafkaTemplate.send(kafka.getTopic(), key, message);
+        kafkaTemplate.send(kafka.getTopic(), key, JSONUtil.toJsonStr(message));
     }
 
 }

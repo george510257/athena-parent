@@ -2,12 +2,15 @@ package com.gls.athena.starter.log.config;
 
 import cn.hutool.json.JSONUtil;
 import com.gls.athena.starter.log.method.MethodEventListener;
+import com.gls.athena.starter.log.support.KafkaMethodEventListener;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.kafka.core.KafkaTemplate;
 
 /**
  * 日志配置
@@ -15,9 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @author george
  */
 @Slf4j
-@Configuration
-@EnableAspectJAutoProxy
-@EnableConfigurationProperties(LogProperties.class)
+@AutoConfiguration
 public class LogConfig {
 
     /**
@@ -31,4 +32,39 @@ public class LogConfig {
         return event -> log.info("MethodEvent: {}", JSONUtil.toJsonStr(event));
     }
 
+    /**
+     * 日志 kafka 配置
+     *
+     * @author george
+     */
+
+    @AutoConfiguration
+    @ConditionalOnClass(KafkaTemplate.class)
+    public static class LogKafkaConfig {
+        /**
+         * 应用名称
+         */
+        @Value("${spring.application.name}")
+        private String applicationName;
+        /**
+         * 日志配置
+         */
+        @Resource
+        private LogProperties logProperties;
+        /**
+         * kafka模板
+         */
+        @Resource
+        private KafkaTemplate<String, String> kafkaTemplate;
+
+        /**
+         * kafka方法事件监听器
+         *
+         * @return MethodEventListener kafka方法事件监听器
+         */
+        @Bean
+        public MethodEventListener methodEventListener() {
+            return new KafkaMethodEventListener(logProperties, kafkaTemplate, applicationName);
+        }
+    }
 }

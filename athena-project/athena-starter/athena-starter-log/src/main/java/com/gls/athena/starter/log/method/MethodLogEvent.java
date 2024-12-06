@@ -50,21 +50,20 @@ public class MethodLogEvent extends MethodEvent {
     /**
      * 构造方法
      *
-     * @param source          源
-     * @param methodLog       方法日志
-     * @param applicationName 应用名称
-     * @param className       类名
-     * @param methodName      方法名
-     * @param args            参数
-     * @param result          结果
-     * @param startTime       开始时间
-     * @param endTime         结束时间
-     * @param throwable       异常
-     * @param type            方法日志类型
-     * @param traceId         跟踪ID
+     * @param source     源
+     * @param methodLog  方法日志
+     * @param className  类名
+     * @param methodName 方法名
+     * @param args       参数
+     * @param result     结果
+     * @param startTime  开始时间
+     * @param endTime    结束时间
+     * @param throwable  异常
+     * @param type       方法日志类型
+     * @param traceId    跟踪ID
      */
-    private MethodLogEvent(Object source, MethodLog methodLog, String applicationName, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
-        super(source, methodLog, applicationName, className, methodName);
+    private MethodLogEvent(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
+        super(source, methodLog, className, methodName);
         this.args = CollUtil.newArrayList(args);
         this.result = result;
         this.startTime = startTime;
@@ -83,36 +82,34 @@ public class MethodLogEvent extends MethodEvent {
     /**
      * 创建正常方法日志事件
      *
-     * @param source          源
-     * @param methodLog       方法日志
-     * @param applicationName 应用名称
-     * @param className       类名
-     * @param methodName      方法名
-     * @param args            参数
-     * @param result          结果
-     * @param startTime       开始时间
-     * @param traceId         跟踪ID
+     * @param source     源
+     * @param methodLog  方法日志
+     * @param className  类名
+     * @param methodName 方法名
+     * @param args       参数
+     * @param result     结果
+     * @param startTime  开始时间
+     * @param traceId    跟踪ID
      * @return 方法日志事件
      */
-    public static MethodLogEvent ofNormal(Object source, MethodLog methodLog, String applicationName, String className, String methodName, Object[] args, Object result, Date startTime, String traceId) {
-        return new MethodLogEvent(source, methodLog, applicationName, className, methodName, args, result, startTime, new Date(), null, MethodLogType.NORMAL, traceId);
+    public static MethodLogEvent ofNormal(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, String traceId) {
+        return new MethodLogEvent(source, methodLog, className, methodName, args, result, startTime, new Date(), null, MethodLogType.NORMAL, traceId);
     }
 
     /**
      * 创建异常方法日志事件
      *
-     * @param source          源
-     * @param methodLog       方法日志
-     * @param applicationName 应用名称
-     * @param className       类名
-     * @param methodName      方法名
-     * @param args            参数
-     * @param throwable       异常
-     * @param startTime       开始时间
-     * @param traceId         跟踪ID
+     * @param source     源
+     * @param methodLog  方法日志
+     * @param className  类名
+     * @param methodName 方法名
+     * @param args       参数
+     * @param throwable  异常
+     * @param startTime  开始时间
+     * @param traceId    跟踪ID
      * @return 方法日志事件
      */
-    public static MethodLogEvent ofError(Object source, MethodLog methodLog, String applicationName, String className, String methodName, Object[] args, Throwable throwable, Date startTime, String traceId) {
-        return new MethodLogEvent(source, methodLog, applicationName, className, methodName, args, null, startTime, new Date(), throwable, MethodLogType.ERROR, traceId);
+    public static MethodLogEvent ofError(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Throwable throwable, Date startTime, String traceId) {
+        return new MethodLogEvent(source, methodLog, className, methodName, args, null, startTime, new Date(), throwable, MethodLogType.ERROR, traceId);
     }
 }

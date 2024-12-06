@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -32,11 +31,6 @@ public class MethodLogAspect {
      */
     @Resource
     private Tracer tracer;
-    /**
-     * 应用名称
-     */
-    @Value("${spring.application.name}")
-    private String applicationName;
 
     /**
      * 环绕通知
@@ -60,11 +54,11 @@ public class MethodLogAspect {
             Object result = point.proceed();
             log.debug("方法执行结果：{}", result);
             log.debug("方法执行时间：{}ms", System.currentTimeMillis() - startTime.getTime());
-            publisher.publishEvent(MethodLogEvent.ofNormal(this, methodLog, applicationName, className, methodName, args, result, startTime, traceId));
+            publisher.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime, traceId));
             return result;
         } catch (Throwable throwable) {
             log.error("方法执行异常：{}", throwable.getMessage(), throwable);
-            publisher.publishEvent(MethodLogEvent.ofError(this, methodLog, applicationName, className, methodName, args, throwable, startTime, traceId));
+            publisher.publishEvent(MethodLogEvent.ofError(this, methodLog, className, methodName, args, throwable, startTime, traceId));
             throw throwable;
         }
     }

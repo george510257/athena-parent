@@ -23,10 +23,6 @@ public class MethodEvent extends ApplicationEvent {
      */
     private final String description;
     /**
-     * 应用名称
-     */
-    private final String applicationName;
-    /**
      * 类名
      */
     private final String className;
@@ -43,12 +39,11 @@ public class MethodEvent extends ApplicationEvent {
      * @param className  类名
      * @param methodName 方法名
      */
-    public MethodEvent(Object source, MethodLog methodLog, String applicationName, String className, String methodName) {
+    public MethodEvent(Object source, MethodLog methodLog, String className, String methodName) {
         super(source);
         this.code = methodLog.code();
         this.name = methodLog.name();
         this.description = methodLog.description();
-        this.applicationName = applicationName;
         this.className = className;
         this.methodName = methodName;
     }

@@ -44,7 +44,7 @@ public class MethodManager {
                     MethodLog methodLog = method.getAnnotation(MethodLog.class);
                     String className = method.getDeclaringClass().getName();
                     String methodName = method.getName();
-                    publisher.publishEvent(new MethodEvent(this, methodLog, applicationName, className, methodName));
+                    publisher.publishEvent(new MethodEvent(this, methodLog, className, methodName));
                 }
             });
         }
