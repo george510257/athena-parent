@@ -1,15 +1,13 @@
 package com.gls.athena.starter.log.config;
 
-import com.gls.athena.starter.log.method.DefaultMethodEventListener;
+import cn.hutool.json.JSONUtil;
 import com.gls.athena.starter.log.method.MethodEventListener;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.kafka.core.KafkaTemplate;
 
 /**
  * 日志配置
@@ -23,18 +21,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 public class LogConfig {
 
     /**
-     * 方法日志消费者
+     * 方法事件监听器
      *
-     * @param logProperties 日志配置
-     * @param kafkaTemplate kafka模板
-     * @return 方法日志消费者
+     * @return MethodEventListener 方法事件监听器
      */
     @Bean
-    @ConditionalOnMissingBean
-    public MethodEventListener methodEventListener(LogProperties logProperties, ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate) {
-        if (logProperties.getKafka().isEnable()) {
-            return new DefaultMethodEventListener(logProperties.getKafka(), kafkaTemplate.getIfAvailable());
-        }
-        return new DefaultMethodEventListener(logProperties.getKafka());
+    @ConditionalOnMissingBean(MethodEventListener.class)
+    public MethodEventListener methodEventListener() {
+        return event -> log.info("MethodEvent: {}", JSONUtil.toJsonStr(event));
     }
+
 }

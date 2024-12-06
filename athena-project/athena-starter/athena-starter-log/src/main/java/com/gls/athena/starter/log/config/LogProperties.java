@@ -39,9 +39,5 @@ public class LogProperties extends BaseProperties {
          * 方法key
          */
         private String methodKey = "method";
-        /**
-         * 是否启用
-         */
-        private boolean enable = false;
     }
 }
