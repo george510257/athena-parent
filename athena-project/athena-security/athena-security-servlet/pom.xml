@@ -21,5 +21,9 @@
             <groupId>com.gls.athena.starter.web</groupId>
             <artifactId>athena-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.gls.athena.starter.sms</groupId>
+            <artifactId>athena-starter-sms</artifactId>
+        </dependency>
     </dependencies>
 </project>
