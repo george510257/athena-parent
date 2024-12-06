@@ -1,5 +1,7 @@
 package com.gls.athena.starter.sms;
 
+import com.gls.athena.starter.sms.config.SmsProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,5 +12,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan
+@EnableConfigurationProperties(SmsProperties.class)
 public class SmsAutoConfig {
 }
