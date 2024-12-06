@@ -1,5 +1,6 @@
 package com.gls.athena.starter.log.method;
 
+import cn.hutool.extra.spring.SpringUtil;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import jakarta.annotation.Resource;
@@ -7,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -21,11 +21,7 @@ import java.util.Date;
 @Slf4j
 @Component
 public class MethodLogAspect {
-    /**
-     * 事件发布器
-     */
-    @Resource
-    private ApplicationEventPublisher publisher;
+
     /**
      * 跟踪器
      */
@@ -54,11 +50,11 @@ public class MethodLogAspect {
             Object result = point.proceed();
             log.debug("方法执行结果：{}", result);
             log.debug("方法执行时间：{}ms", System.currentTimeMillis() - startTime.getTime());
-            publisher.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime, traceId));
+            SpringUtil.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime, traceId));
             return result;
         } catch (Throwable throwable) {
             log.error("方法执行异常：{}", throwable.getMessage(), throwable);
-            publisher.publishEvent(MethodLogEvent.ofError(this, methodLog, className, methodName, args, throwable, startTime, traceId));
+            SpringUtil.publishEvent(MethodLogEvent.ofError(this, methodLog, className, methodName, args, throwable, startTime, traceId));
             throw throwable;
         }
     }

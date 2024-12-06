@@ -1,8 +1,7 @@
 package com.gls.athena.starter.log.method;
 
-import jakarta.annotation.Resource;
+import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -13,11 +12,6 @@ import org.springframework.util.ReflectionUtils;
  */
 @Component
 public class MethodManager {
-    /**
-     * 事件发布器
-     */
-    @Resource
-    private ApplicationEventPublisher publisher;
 
     /**
      * 方法日志事件监听
@@ -38,7 +32,7 @@ public class MethodManager {
                     MethodLog methodLog = method.getAnnotation(MethodLog.class);
                     String className = method.getDeclaringClass().getName();
                     String methodName = method.getName();
-                    publisher.publishEvent(new MethodEvent(this, methodLog, className, methodName));
+                    SpringUtil.publishEvent(new MethodEvent(this, methodLog, className, methodName));
                 }
             });
         }
