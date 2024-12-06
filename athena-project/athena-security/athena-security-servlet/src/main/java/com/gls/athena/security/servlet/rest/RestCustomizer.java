@@ -1,7 +1,5 @@
-package com.gls.athena.security.servlet.customizer;
+package com.gls.athena.security.servlet.rest;
 
-import com.gls.athena.security.servlet.rest.RestConfigurer;
-import com.gls.athena.security.servlet.rest.RestProperties;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

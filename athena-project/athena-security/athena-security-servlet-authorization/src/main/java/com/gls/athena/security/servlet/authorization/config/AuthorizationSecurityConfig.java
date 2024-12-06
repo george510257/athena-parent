@@ -2,9 +2,14 @@ package com.gls.athena.security.servlet.authorization.config;
 
 import com.gls.athena.security.servlet.authorization.customizer.AuthorizationServerCustomizer;
 import com.gls.athena.security.servlet.captcha.CaptchaConfigurer;
+import com.gls.athena.security.servlet.captcha.CaptchaCustomizer;
 import com.gls.athena.security.servlet.client.customizer.OAuth2LoginCustomizer;
-import com.gls.athena.security.servlet.customizer.*;
+import com.gls.athena.security.servlet.customizer.AuthorizeHttpRequestsCustomizer;
+import com.gls.athena.security.servlet.customizer.CsrfCustomizer;
+import com.gls.athena.security.servlet.customizer.ExceptionHandlingCustomizer;
+import com.gls.athena.security.servlet.customizer.ResourceServerCustomizer;
 import com.gls.athena.security.servlet.rest.RestConfigurer;
+import com.gls.athena.security.servlet.rest.RestCustomizer;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

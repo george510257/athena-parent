@@ -1,7 +1,5 @@
-package com.gls.athena.security.servlet.customizer;
+package com.gls.athena.security.servlet.captcha;
 
-import com.gls.athena.security.servlet.captcha.CaptchaConfigurer;
-import com.gls.athena.security.servlet.captcha.CaptchaProperties;
 import com.gls.athena.security.servlet.captcha.repository.ICaptchaRepository;
 import jakarta.annotation.Resource;
 import org.springframework.security.config.Customizer;
