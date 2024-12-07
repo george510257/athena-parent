@@ -62,7 +62,7 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
         }
         this.providersCustomizer.customize(providers);
         // 添加验证码过滤器
-        CaptchaFilter captchaFilter = new CaptchaFilter(authenticationFailureHandler, new CaptchaProviderManager(providers));
+        CaptchaFilter captchaFilter = new CaptchaFilter(authenticationFailureHandler, providers);
         builder.addFilterBefore(postProcess(captchaFilter), UsernamePasswordAuthenticationFilter.class);
     }
 

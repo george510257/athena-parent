@@ -11,6 +11,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 验证码过滤器
@@ -27,7 +28,7 @@ public class CaptchaFilter extends OncePerRequestFilter {
     /**
      * 验证码管理器
      */
-    private final CaptchaProviderManager captchaProviderManager;
+    private final List<CaptchaProvider<?>> providers;
 
     /**
      * 过滤器逻辑
@@ -41,7 +42,7 @@ public class CaptchaFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        CaptchaProvider<?> provider = captchaProviderManager.getProvider(servletWebRequest);
+        CaptchaProvider<?> provider = getProvider(servletWebRequest);
         // 无需校验验证码
         if (provider == null) {
             filterChain.doFilter(request, response);
@@ -62,6 +63,13 @@ public class CaptchaFilter extends OncePerRequestFilter {
             // 校验失败处理
             authenticationFailureHandler.onAuthenticationFailure(request, response, e);
         }
+    }
+
+    private CaptchaProvider<?> getProvider(ServletWebRequest request) {
+        return providers.stream()
+                .filter(provider -> provider.support(request))
+                .findFirst()
+                .orElse(null);
     }
 
 }
