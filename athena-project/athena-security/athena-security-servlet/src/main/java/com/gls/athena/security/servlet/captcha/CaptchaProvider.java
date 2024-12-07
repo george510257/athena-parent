@@ -128,7 +128,7 @@ public class CaptchaProvider<Captcha extends BaseCaptcha> {
      * @param request 请求
      * @return 是否是校验请求
      */
-    public boolean isVerifyRequest(ServletWebRequest request) {
+    private boolean isVerifyRequest(ServletWebRequest request) {
         if (isLogin(request)) {
             return true;
         }
@@ -136,6 +136,12 @@ public class CaptchaProvider<Captcha extends BaseCaptcha> {
         return urls.stream().anyMatch(url -> pathMatcher.match(url, request.getRequest().getRequestURI()));
     }
 
+    /**
+     * 是否登录
+     *
+     * @param request 请求
+     * @return 是否登录
+     */
     private boolean isLogin(ServletWebRequest request) {
         String requestURI = request.getRequest().getRequestURI();
         if (requestURI.contains(loginProcessingUrl)) {
@@ -155,7 +161,7 @@ public class CaptchaProvider<Captcha extends BaseCaptcha> {
      * @param request 请求
      * @return 接收目标
      */
-    public String getTarget(ServletWebRequest request) {
+    private String getTarget(ServletWebRequest request) {
         return WebUtil.getParameter(request.getRequest(), targetParameterName);
     }
 
@@ -165,7 +171,7 @@ public class CaptchaProvider<Captcha extends BaseCaptcha> {
      * @param request 请求
      * @return 验证码
      */
-    public String getCode(ServletWebRequest request) {
+    private String getCode(ServletWebRequest request) {
         return WebUtil.getParameter(request.getRequest(), codeParameterName);
     }
 

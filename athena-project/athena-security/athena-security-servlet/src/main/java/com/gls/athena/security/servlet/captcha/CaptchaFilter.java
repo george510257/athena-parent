@@ -65,6 +65,12 @@ public class CaptchaFilter extends OncePerRequestFilter {
         }
     }
 
+    /**
+     * 获取验证码提供器
+     *
+     * @param request 请求
+     * @return 验证码提供器
+     */
     private CaptchaProvider<?> getProvider(ServletWebRequest request) {
         return providers.stream()
                 .filter(provider -> provider.support(request))
