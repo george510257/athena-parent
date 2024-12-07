@@ -4,41 +4,39 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.date.DateUtil;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaGenerator;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 图片验证码生成器
  *
  * @author george
  */
-@Data
-@Accessors(chain = true)
+@RequiredArgsConstructor
 public class ImageCaptchaGenerator implements ICaptchaGenerator<ImageCaptcha> {
     /**
      * 验证码长度
      */
-    private int length = 6;
+    private final int length;
     /**
      * 过期时间
      */
-    private int expireIn = 600;
+    private final int expireIn;
     /**
      * 图形验证码宽度
      */
-    private int width = 100;
+    private final int width;
     /**
      * 图形验证码高度
      */
-    private int height = 30;
+    private final int height;
     /**
      * 图形验证码干扰线数量
      */
-    private int lineCount = 150;
+    private final int lineCount;
     /**
      * 图形验证码字体大小
      */
-    private float fontSize = 0.75f;
+    private final float fontSize;
 
     /**
      * 生成验证码

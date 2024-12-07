@@ -126,9 +126,5 @@ public class CaptchaProperties extends BaseProperties {
          * oauth2 token url
          */
         private String oauth2TokenUrl = "/oauth2/token";
-        /**
-         * 用户名参数名
-         */
-        private String usernameParameter = "username";
     }
 }

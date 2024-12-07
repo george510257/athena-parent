@@ -1,12 +1,10 @@
 package com.gls.athena.security.servlet.captcha;
 
-import com.gls.athena.security.servlet.captcha.base.BaseCaptchaProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -20,17 +18,16 @@ import java.io.IOException;
  * @author george
  */
 @Slf4j
-@Setter
-@Accessors(chain = true)
+@RequiredArgsConstructor
 public class CaptchaFilter extends OncePerRequestFilter {
     /**
      * 认证失败处理器
      */
-    private AuthenticationFailureHandler authenticationFailureHandler;
+    private final AuthenticationFailureHandler authenticationFailureHandler;
     /**
      * 验证码管理器
      */
-    private CaptchaManager captchaManager;
+    private final CaptchaProviderManager captchaProviderManager;
 
     /**
      * 过滤器逻辑
@@ -44,7 +41,7 @@ public class CaptchaFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
-        BaseCaptchaProvider<?> provider = captchaManager.getProvider(servletWebRequest);
+        CaptchaProvider<?> provider = captchaProviderManager.getProvider(servletWebRequest);
         // 无需校验验证码
         if (provider == null) {
             filterChain.doFilter(request, response);

@@ -3,25 +3,23 @@ package com.gls.athena.security.servlet.captcha.sms;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaGenerator;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 短信验证码生成器
  *
  * @author george
  */
-@Data
-@Accessors(chain = true)
+@RequiredArgsConstructor
 public class SmsCaptchaGenerator implements ICaptchaGenerator<SmsCaptcha> {
     /**
      * 验证码长度
      */
-    private int length = 6;
+    private final int length;
     /**
      * 过期时间
      */
-    private int expireIn = 600;
+    private final int expireIn;
 
     /**
      * 生成验证码

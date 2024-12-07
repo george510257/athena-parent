@@ -6,8 +6,7 @@ import com.gls.athena.common.bean.result.ResultStatus;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaSender;
 import com.gls.athena.starter.sms.sender.SmsSender;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -19,13 +18,12 @@ import java.util.Map;
  * @author george
  */
 @Slf4j
-@Data
-@Accessors(chain = true)
+@RequiredArgsConstructor
 public class SmsCaptchaSender implements ICaptchaSender<SmsCaptcha> {
     /**
      * 短信模板编号
      */
-    private String templateCode = "SMS_MOBILE_CODE";
+    private final String templateCode;
 
     /**
      * 发送短信验证码

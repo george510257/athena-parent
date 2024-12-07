@@ -1,6 +1,5 @@
 package com.gls.athena.security.servlet.captcha;
 
-import com.gls.athena.security.servlet.captcha.base.BaseCaptchaProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -12,12 +11,12 @@ import java.util.List;
  * @author george
  */
 @RequiredArgsConstructor
-public class CaptchaManager {
+public class CaptchaProviderManager {
 
     /**
      * 验证码提供器列表
      */
-    private final List<BaseCaptchaProvider<?>> providers;
+    private final List<CaptchaProvider<?>> providers;
 
     /**
      * 获取验证码提供器
@@ -25,7 +24,7 @@ public class CaptchaManager {
      * @param request 请求
      * @return 验证码提供器
      */
-    public BaseCaptchaProvider<?> getProvider(ServletWebRequest request) {
+    public CaptchaProvider<?> getProvider(ServletWebRequest request) {
         return providers.stream()
                 .filter(provider -> provider.support(request))
                 .findFirst()

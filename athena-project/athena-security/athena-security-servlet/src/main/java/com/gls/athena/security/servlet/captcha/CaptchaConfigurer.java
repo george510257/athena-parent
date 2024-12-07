@@ -1,13 +1,10 @@
 package com.gls.athena.security.servlet.captcha;
 
-import com.gls.athena.security.servlet.captcha.base.BaseCaptchaProvider;
 import com.gls.athena.security.servlet.captcha.image.ImageCaptchaGenerator;
-import com.gls.athena.security.servlet.captcha.image.ImageCaptchaProvider;
 import com.gls.athena.security.servlet.captcha.image.ImageCaptchaSender;
 import com.gls.athena.security.servlet.captcha.repository.ICaptchaRepository;
 import com.gls.athena.security.servlet.captcha.repository.RedisCaptchaRepository;
 import com.gls.athena.security.servlet.captcha.sms.SmsCaptchaGenerator;
-import com.gls.athena.security.servlet.captcha.sms.SmsCaptchaProvider;
 import com.gls.athena.security.servlet.captcha.sms.SmsCaptchaSender;
 import com.gls.athena.security.servlet.handler.DefaultAuthenticationFailureHandler;
 import lombok.Setter;
@@ -41,11 +38,11 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
     /**
      * 验证码管理器
      */
-    private List<BaseCaptchaProvider<?>> providers = new ArrayList<>();
+    private List<CaptchaProvider<?>> providers = new ArrayList<>();
     /**
      * 验证码管理器
      */
-    private Customizer<List<BaseCaptchaProvider<?>>> providersCustomizer = Customizer.withDefaults();
+    private Customizer<List<CaptchaProvider<?>>> providersCustomizer = Customizer.withDefaults();
     /**
      * 验证码配置
      */
@@ -58,15 +55,14 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
      */
     @Override
     public void configure(H builder) throws Exception {
-        CaptchaFilter captchaFilter = new CaptchaFilter();
-        captchaFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         // 创建默认的验证码提供器
-        List<BaseCaptchaProvider<?>> providers = createDefaultProviders();
+        List<CaptchaProvider<?>> providers = createDefaultProviders();
         if (!this.providers.isEmpty()) {
             providers.addAll(0, this.providers);
         }
         this.providersCustomizer.customize(providers);
-        captchaFilter.setCaptchaManager(new CaptchaManager(providers));
+        // 添加验证码过滤器
+        CaptchaFilter captchaFilter = new CaptchaFilter(authenticationFailureHandler, new CaptchaProviderManager(providers));
         builder.addFilterBefore(postProcess(captchaFilter), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -75,8 +71,8 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
      *
      * @return 验证码提供器列表
      */
-    private List<BaseCaptchaProvider<?>> createDefaultProviders() {
-        List<BaseCaptchaProvider<?>> providers = new ArrayList<>();
+    private List<CaptchaProvider<?>> createDefaultProviders() {
+        List<CaptchaProvider<?>> providers = new ArrayList<>();
         providers.add(createImageCaptchaProvider());
         providers.add(createSmsCaptchaProvider());
         return providers;
@@ -87,20 +83,12 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
      *
      * @return 短信验证码提供器
      */
-    private BaseCaptchaProvider<?> createSmsCaptchaProvider() {
-        return new SmsCaptchaProvider()
-                .setCodeParameterName(captchaProperties.getSms().getCodeParameterName())
-                .setTargetParameterName(captchaProperties.getSms().getTargetParameterName())
-                .setUrl(captchaProperties.getSms().getUrl())
-                .setUrls(captchaProperties.getSms().getUrls())
-                .setLoginProcessingUrl(captchaProperties.getSms().getLoginProcessingUrl())
-                .setOauth2TokenUrl(captchaProperties.getSms().getOauth2TokenUrl())
-                .setRepository(captchaRepository)
-                .setGenerator(new SmsCaptchaGenerator()
-                        .setLength(captchaProperties.getSms().getLength())
-                        .setExpireIn(captchaProperties.getSms().getExpireIn()))
-                .setSender(new SmsCaptchaSender()
-                        .setTemplateCode(captchaProperties.getSms().getTemplateCode()));
+    private CaptchaProvider<?> createSmsCaptchaProvider() {
+        CaptchaProperties.Sms sms = captchaProperties.getSms();
+        SmsCaptchaGenerator smsCaptchaGenerator = new SmsCaptchaGenerator(sms.getLength(), sms.getExpireIn());
+        SmsCaptchaSender smsCaptchaSender = new SmsCaptchaSender(sms.getTemplateCode());
+        return new CaptchaProvider<>(captchaRepository, smsCaptchaGenerator, smsCaptchaSender,
+                sms.getCodeParameterName(), sms.getTargetParameterName(), sms.getUrl(), sms.getUrls(), sms.getLoginProcessingUrl(), sms.getOauth2TokenUrl());
     }
 
     /**
@@ -108,24 +96,12 @@ public final class CaptchaConfigurer<H extends HttpSecurityBuilder<H>>
      *
      * @return 图形验证码提供器
      */
-    private BaseCaptchaProvider<?> createImageCaptchaProvider() {
-        return new ImageCaptchaProvider()
-                .setCodeParameterName(captchaProperties.getImage().getCodeParameterName())
-                .setTargetParameterName(captchaProperties.getImage().getTargetParameterName())
-                .setUrl(captchaProperties.getImage().getUrl())
-                .setUrls(captchaProperties.getImage().getUrls())
-                .setLoginProcessingUrl(captchaProperties.getImage().getLoginProcessingUrl())
-                .setOauth2TokenUrl(captchaProperties.getImage().getOauth2TokenUrl())
-                .setUsernameParameter(captchaProperties.getImage().getUsernameParameter())
-                .setRepository(captchaRepository)
-                .setGenerator(new ImageCaptchaGenerator()
-                        .setLength(captchaProperties.getImage().getLength())
-                        .setExpireIn(captchaProperties.getImage().getExpireIn())
-                        .setWidth(captchaProperties.getImage().getWidth())
-                        .setHeight(captchaProperties.getImage().getHeight())
-                        .setLineCount(captchaProperties.getImage().getLineCount())
-                        .setFontSize(captchaProperties.getImage().getFontSize()))
-                .setSender(new ImageCaptchaSender());
+    private CaptchaProvider<?> createImageCaptchaProvider() {
+        CaptchaProperties.Image image = captchaProperties.getImage();
+        ImageCaptchaGenerator imageCaptchaGenerator = new ImageCaptchaGenerator(image.getLength(), image.getExpireIn(), image.getWidth(), image.getHeight(), image.getLineCount(), image.getFontSize());
+        ImageCaptchaSender imageCaptchaSender = new ImageCaptchaSender();
+        return new CaptchaProvider<>(captchaRepository, imageCaptchaGenerator, imageCaptchaSender,
+                image.getCodeParameterName(), image.getTargetParameterName(), image.getUrl(), image.getUrls(), image.getLoginProcessingUrl(), image.getOauth2TokenUrl());
     }
 
 }
