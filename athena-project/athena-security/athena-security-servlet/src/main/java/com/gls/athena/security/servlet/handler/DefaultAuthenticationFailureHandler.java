@@ -45,6 +45,7 @@ public class DefaultAuthenticationFailureHandler implements AuthenticationFailur
             message = exception.getMessage();
         }
         // 输出异常信息
+        log.error(message, exception);
         Result<String> result = ResultStatus.PARAM_ERROR.toResult(message);
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.setContentType("application/json;charset=UTF-8");

@@ -58,7 +58,7 @@ public class SmsConfig {
          * @return SmsEventListener kafka短信事件监听器
          */
         @Bean
-        public SmsEventListener smsEventListener() {
+        public SmsEventListener kafkaSmsEventListener() {
             return new KafkaSmsEventListener(smsProperties, kafkaTemplate, applicationName);
         }
     }
