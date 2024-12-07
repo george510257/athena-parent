@@ -1,6 +1,7 @@
 package com.gls.athena.starter.web.support;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.CharsetUtil;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -96,7 +97,7 @@ public class RequestBodyWrapper extends HttpServletRequestWrapper {
      */
     private String getBodyString(HttpServletRequest request) {
         try {
-            return IoUtil.read(request.getInputStream(), getCharacterEncoding());
+            return IoUtil.read(request.getInputStream(), CharsetUtil.charset(getCharacterEncoding()));
         } catch (IOException e) {
             log.error("获取请求体失败", e);
             throw new RuntimeException(e);
