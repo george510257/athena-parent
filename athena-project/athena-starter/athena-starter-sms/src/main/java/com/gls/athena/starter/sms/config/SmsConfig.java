@@ -2,7 +2,6 @@ package com.gls.athena.starter.sms.config;
 
 import com.gls.athena.starter.sms.listener.KafkaSmsEventListener;
 import com.gls.athena.starter.sms.listener.SmsEventListener;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -37,28 +36,20 @@ public class SmsConfig {
     @ConditionalOnClass(KafkaTemplate.class)
     public static class SmsKafkaConfig {
         /**
-         * kafka模板
-         */
-        @Resource
-        private KafkaTemplate<String, String> kafkaTemplate;
-        /**
          * 应用名称
          */
         @Value("${spring.application.name}")
         private String applicationName;
-        /**
-         * 短信配置
-         */
-        @Resource
-        private SmsProperties smsProperties;
 
         /**
          * kafka短信事件监听器
          *
+         * @param smsProperties 短信配置
+         * @param kafkaTemplate kafka模板
          * @return SmsEventListener kafka短信事件监听器
          */
         @Bean
-        public SmsEventListener kafkaSmsEventListener() {
+        public SmsEventListener kafkaSmsEventListener(SmsProperties smsProperties, KafkaTemplate<String, String> kafkaTemplate) {
             return new KafkaSmsEventListener(smsProperties, kafkaTemplate, applicationName);
         }
     }

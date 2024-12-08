@@ -3,7 +3,6 @@ package com.gls.athena.starter.log.config;
 import cn.hutool.json.JSONUtil;
 import com.gls.athena.starter.log.method.MethodEventListener;
 import com.gls.athena.starter.log.support.KafkaMethodEventListener;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -46,24 +45,16 @@ public class LogConfig {
          */
         @Value("${spring.application.name}")
         private String applicationName;
-        /**
-         * 日志配置
-         */
-        @Resource
-        private LogProperties logProperties;
-        /**
-         * kafka模板
-         */
-        @Resource
-        private KafkaTemplate<String, String> kafkaTemplate;
 
         /**
          * kafka方法事件监听器
          *
+         * @param logProperties 日志配置
+         * @param kafkaTemplate kafka模板
          * @return MethodEventListener kafka方法事件监听器
          */
         @Bean
-        public MethodEventListener kafkaMethodEventListener() {
+        public MethodEventListener kafkaMethodEventListener(LogProperties logProperties, KafkaTemplate<String, String> kafkaTemplate) {
             return new KafkaMethodEventListener(logProperties, kafkaTemplate, applicationName);
         }
     }
