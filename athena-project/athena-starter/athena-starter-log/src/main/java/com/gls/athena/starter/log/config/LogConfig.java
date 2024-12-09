@@ -54,7 +54,7 @@ public class LogConfig {
          * @return MethodEventListener kafka方法事件监听器
          */
         @Bean
-        public MethodEventListener kafkaMethodEventListener(LogProperties logProperties, KafkaTemplate<String, String> kafkaTemplate) {
+        public MethodEventListener kafkaMethodEventListener(LogProperties logProperties, KafkaTemplate<String, Object> kafkaTemplate) {
             return new KafkaMethodEventListener(logProperties, kafkaTemplate, applicationName);
         }
     }
