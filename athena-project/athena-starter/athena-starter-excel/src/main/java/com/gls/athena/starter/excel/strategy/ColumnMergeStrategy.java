@@ -25,11 +25,25 @@ public class ColumnMergeStrategy extends AbstractMergeStrategy {
      */
     private final List<Integer> columnIndexes;
 
+    /**
+     * 构造方法
+     *
+     * @param columnIndexes 合并列索引
+     * @param ignoreValues  忽略的值
+     */
     public ColumnMergeStrategy(List<Integer> columnIndexes, Object... ignoreValues) {
         this.columnIndexes = columnIndexes;
         this.ignoreValues = CollUtil.newArrayList(ignoreValues);
     }
 
+    /**
+     * 合并单元格
+     *
+     * @param sheet            当前表格
+     * @param cell             当前单元格
+     * @param head             当前单元格的表头
+     * @param relativeRowIndex 相对行索引
+     */
     @Override
     protected void merge(Sheet sheet, Cell cell, Head head, Integer relativeRowIndex) {
         // 获取当前单元格的行索引和列索引
@@ -44,6 +58,14 @@ public class ColumnMergeStrategy extends AbstractMergeStrategy {
         }
     }
 
+    /**
+     * 合并单元格
+     *
+     * @param sheet       当前表格
+     * @param cell        当前单元格
+     * @param rowIndex    当前行索引
+     * @param columnIndex 当前列索引
+     */
     private void mergeCell(Sheet sheet, Cell cell, int rowIndex, int columnIndex) {
         // 获取上一行的单元格
         Cell preCell = sheet.getRow(rowIndex - 1).getCell(columnIndex);
@@ -62,6 +84,12 @@ public class ColumnMergeStrategy extends AbstractMergeStrategy {
         }
     }
 
+    /**
+     * 移除合并单元格
+     *
+     * @param sheet 当前表格
+     * @param cell  单元格
+     */
     private void removeMergedRegion(Sheet sheet, Cell cell) {
         List<CellRangeAddress> list = sheet.getMergedRegions();
         for (int i = 0; i < list.size(); i++) {

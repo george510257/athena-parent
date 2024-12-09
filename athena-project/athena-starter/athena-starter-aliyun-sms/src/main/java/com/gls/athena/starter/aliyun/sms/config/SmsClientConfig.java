@@ -13,6 +13,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SmsClientConfig {
 
+    /**
+     * 短信客户端
+     *
+     * @param smsClientProperties 短信客户端配置
+     * @return 短信客户端
+     * @throws Exception 异常
+     */
     @Bean
     public Client smsClient(SmsClientProperties smsClientProperties) throws Exception {
         Config config = new Config()

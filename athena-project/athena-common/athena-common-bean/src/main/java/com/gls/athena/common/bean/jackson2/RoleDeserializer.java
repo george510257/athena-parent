@@ -32,24 +32,23 @@ public class RoleDeserializer extends JsonDeserializer<Role> {
         ObjectMapper mapper = (ObjectMapper) parser.getCodec();
         // 获取JsonNode
         JsonNode node = mapper.readTree(parser);
-
+        // 名称
         String name = node.get("name").asText();
-
+        // 编码
         String code = node.get("code").asText();
-
+        // 描述
         String description = node.get("description").asText();
-
+        // 类型
         String type = node.get("type").asText();
-
+        // 父角色ID
         Long parentId = node.get("parentId").asLong();
-
+        // 排序
         Integer sort = node.get("sort").asInt();
-
+        // 是否默认角色
         Boolean defaultRole = node.get("defaultRole").asBoolean();
-
+        // 权限列表
         List<Permission> permissions = mapper.convertValue(node.get("permissions"), new TypeReference<>() {
         });
-
         // 创建Role对象
         Role role = new Role();
         role.setName(name);

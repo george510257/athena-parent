@@ -28,6 +28,11 @@ public class BaseExcelWriterBuilderCustomizer<B extends AbstractExcelWriterParam
      */
     private final ExcelParameter excelParameter;
 
+    /**
+     * 定制
+     *
+     * @param builder 定制对象
+     */
     @Override
     public void customize(B builder) {
         // 表头

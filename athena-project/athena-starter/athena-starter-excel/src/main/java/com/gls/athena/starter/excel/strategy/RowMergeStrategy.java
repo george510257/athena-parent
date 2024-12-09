@@ -25,11 +25,25 @@ public class RowMergeStrategy extends AbstractMergeStrategy {
      */
     private final List<Object> rowValues;
 
+    /**
+     * 构造方法
+     *
+     * @param columnIndex 列索引
+     * @param rowValues   行的值
+     */
     public RowMergeStrategy(Integer columnIndex, Object... rowValues) {
         this.columnIndex = columnIndex;
         this.rowValues = CollUtil.newArrayList(rowValues);
     }
 
+    /**
+     * 合并单元格
+     *
+     * @param sheet            当前页
+     * @param cell             当前单元格
+     * @param head             表头
+     * @param relativeRowIndex 相对行索引
+     */
     @Override
     protected void merge(Sheet sheet, Cell cell, Head head, Integer relativeRowIndex) {
         // 获取当前单元格的行索引和列索引

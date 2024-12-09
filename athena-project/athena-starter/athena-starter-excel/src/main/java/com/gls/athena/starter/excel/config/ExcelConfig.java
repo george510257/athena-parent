@@ -21,10 +21,15 @@ import java.util.List;
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class ExcelConfig {
-
+    /**
+     * 请求映射处理适配器
+     */
     @Resource
     private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
 
+    /**
+     * Excel配置
+     */
     @PostConstruct
     public void init() {
         // 添加参数解析器

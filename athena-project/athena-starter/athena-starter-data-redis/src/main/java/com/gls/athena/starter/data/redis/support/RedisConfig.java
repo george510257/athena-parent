@@ -13,10 +13,14 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  */
 @Configuration
 public class RedisConfig {
-
+    /**
+     * RedisTemplate 对象
+     */
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
-
+    /**
+     * JSON序列化器
+     */
     @Resource
     private RedisSerializer<Object> jsonRedisSerializer;
 

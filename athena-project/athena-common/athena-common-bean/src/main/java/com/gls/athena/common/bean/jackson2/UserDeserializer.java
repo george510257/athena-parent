@@ -35,30 +35,30 @@ public class UserDeserializer extends JsonDeserializer<User> {
         // 获取JsonNode
         JsonNode node = mapper.readTree(parser);
 
-        // 获取JsonNode中的字段值
+        // 用户名
         String username = node.get("username").asText();
-
+        // 密码
         String password = node.get("password").asText();
-
+        // 手机号
         String mobile = node.get("mobile").asText();
-
+        // 邮箱
         String email = node.get("email").asText();
-
+        // 真实姓名
         String realName = node.get("realName").asText();
-
+        // 昵称
         String nickName = node.get("nickName").asText();
-
+        // 头像
         String avatar = node.get("avatar").asText();
-
+        // 语言
         String language = node.get("language").asText();
-
+        // 区域
         String locale = node.get("locale").asText();
-
+        // 时区
         String timeZone = node.get("timeZone").asText();
-
+        // 角色列表
         List<Role> roles = mapper.convertValue(node.get("roles"), new TypeReference<>() {
         });
-
+        // 组织列表
         List<Organization> organizations = mapper.convertValue(node.get("organizations"), new TypeReference<>() {
         });
 
