@@ -13,8 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun.sms.client")
-public class SmsClientProperties extends BaseProperties {
+@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun.sms")
+public class AliyunSmsProperties extends BaseProperties {
     /**
      * accessKeyId
      */

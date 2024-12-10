@@ -11,21 +11,21 @@ import org.springframework.context.annotation.Configuration;
  * @author george
  */
 @Configuration
-public class SmsClientConfig {
+public class AliyunSmsConfig {
 
     /**
      * 短信客户端
      *
-     * @param smsClientProperties 短信客户端配置
+     * @param aliyunSmsProperties 短信客户端配置
      * @return 短信客户端
      * @throws Exception 异常
      */
     @Bean
-    public Client smsClient(SmsClientProperties smsClientProperties) throws Exception {
+    public Client aliyunSmsClient(AliyunSmsProperties aliyunSmsProperties) throws Exception {
         Config config = new Config()
-                .setAccessKeyId(smsClientProperties.getAccessKeyId())
-                .setAccessKeySecret(smsClientProperties.getAccessKeySecret())
-                .setEndpoint(smsClientProperties.getEndpoint());
+                .setAccessKeyId(aliyunSmsProperties.getAccessKeyId())
+                .setAccessKeySecret(aliyunSmsProperties.getAccessKeySecret())
+                .setEndpoint(aliyunSmsProperties.getEndpoint());
         return new Client(config);
     }
 }

@@ -12,7 +12,7 @@ import lombok.experimental.UtilityClass;
  * @author george
  */
 @UtilityClass
-public class SmsHelper {
+public class AliyunSmsHelper {
 
     /**
      * 发送短信
@@ -26,17 +26,15 @@ public class SmsHelper {
     public Boolean send(String phone, String templateCode, String templateParam) throws Exception {
         // 创建发送短信的请求
         // 发送短信
-        SendSmsRequest sendSmsRequest = new SendSmsRequest()
+        SendSmsRequest request = new SendSmsRequest()
                 .setPhoneNumbers(phone)
                 .setTemplateCode(templateCode)
                 .setTemplateParam(templateParam);
+        // 获取短信客户端
+        Client client = SpringUtil.getBean(Client.class);
         // 发送短信
-        SendSmsResponse sendSmsResponse = SpringUtil.getBean(Client.class).sendSms(sendSmsRequest);
-        // 如果发送不成功抛出异常
-        if (!sendSmsResponse.getBody().getCode().equals("OK")) {
-            throw new Exception(sendSmsResponse.getBody().getMessage());
-        }
-        // 如果发送成功返回 true
-        return true;
+        SendSmsResponse response = client.sendSms(request);
+        // 如果发送失败返回
+        return "OK".equals(response.getBody().getCode());
     }
 }
