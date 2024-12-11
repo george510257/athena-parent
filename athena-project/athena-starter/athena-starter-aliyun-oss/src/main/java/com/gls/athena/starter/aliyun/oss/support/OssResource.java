@@ -1,8 +1,8 @@
 package com.gls.athena.starter.aliyun.oss.support;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.aliyun.oss.OSS;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.WritableResource;
 
@@ -29,26 +29,13 @@ public class OssResource implements WritableResource {
      * 对象键
      */
     private final String objectKey;
-    /**
-     * oss
-     */
-    private final OSS oss;
-    /**
-     * oss任务执行器
-     */
-    private final ExecutorService ossTaskExecutor;
-    /**
-     * bean工厂
-     */
-    private final ConfigurableListableBeanFactory beanFactory;
 
     /**
      * 构造函数
      *
-     * @param location    位置
-     * @param beanFactory bean工厂
+     * @param location 位置
      */
-    public OssResource(String location, ConfigurableListableBeanFactory beanFactory) {
+    public OssResource(String location) {
         this.location = URI.create(location);
         this.bucketName = this.location.getAuthority();
         if (StrUtil.isEmpty(this.location.getPath())) {
@@ -56,9 +43,6 @@ public class OssResource implements WritableResource {
         } else {
             this.objectKey = this.location.getPath().substring(1);
         }
-        this.oss = beanFactory.getBean(OSS.class);
-        this.ossTaskExecutor = beanFactory.getBean(ExecutorService.class);
-        this.beanFactory = beanFactory;
     }
 
     /**
@@ -75,9 +59,12 @@ public class OssResource implements WritableResource {
         // 创建管道流
         final PipedInputStream inputStream = new PipedInputStream();
         final PipedOutputStream outputStream = new PipedOutputStream(inputStream);
+        // 获取oss任务执行器
+        ExecutorService ossTaskExecutor = SpringUtil.getBean(ExecutorService.class);
         ossTaskExecutor.submit(() -> {
             try {
                 // 上传文件
+                OSS oss = SpringUtil.getBean(OSS.class);
                 oss.putObject(bucketName, objectKey, inputStream);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -104,6 +91,7 @@ public class OssResource implements WritableResource {
     @Override
     public boolean exists() {
         // 判断是否是存储空间
+        OSS oss = SpringUtil.getBean(OSS.class);
         if (isBucket()) {
             // 存储空间是否存在
             return oss.doesBucketExist(bucketName);
@@ -162,6 +150,7 @@ public class OssResource implements WritableResource {
             return 0;
         }
         // 获取对象元数据
+        OSS oss = SpringUtil.getBean(OSS.class);
         return oss.getObjectMetadata(bucketName, objectKey).getContentLength();
     }
 
@@ -178,6 +167,7 @@ public class OssResource implements WritableResource {
             return 0;
         }
         // 获取对象元数据
+        OSS oss = SpringUtil.getBean(OSS.class);
         return oss.getObjectMetadata(bucketName, objectKey).getLastModified().getTime();
     }
 
@@ -191,7 +181,7 @@ public class OssResource implements WritableResource {
     @Override
     public Resource createRelative(String relativePath) throws IOException {
         // 创建oss资源
-        return new OssResource(relativePath, beanFactory);
+        return new OssResource(relativePath);
     }
 
     /**
@@ -233,6 +223,7 @@ public class OssResource implements WritableResource {
             throw new IllegalStateException("无法打开输入流到存储空间: '" + this.location + "'");
         }
         // 获取对象
+        OSS oss = SpringUtil.getBean(OSS.class);
         return oss.getObject(bucketName, objectKey).getObjectContent();
     }
 }

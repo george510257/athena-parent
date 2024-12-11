@@ -1,8 +1,5 @@
 package com.gls.athena.starter.aliyun.oss.support;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ProtocolResolver;
@@ -15,26 +12,11 @@ import org.springframework.core.io.ResourceLoader;
  * @author george
  */
 public class OssProtocolResolver
-        implements ProtocolResolver, BeanFactoryPostProcessor, ResourceLoaderAware {
+        implements ProtocolResolver, ResourceLoaderAware {
     /**
      * 协议
      */
     public static final String PROTOCOL = "oss://";
-    /**
-     * bean工厂
-     */
-    private ConfigurableListableBeanFactory beanFactory;
-
-    /**
-     * 设置资源加载器
-     *
-     * @param beanFactory bean工厂
-     * @throws BeansException bean异常
-     */
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
-    }
 
     /**
      * 设置资源加载器
@@ -67,6 +49,6 @@ public class OssProtocolResolver
             return null;
         }
         // 返回oss资源
-        return new OssResource(location, beanFactory);
+        return new OssResource(location);
     }
 }
