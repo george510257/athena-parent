@@ -1,9 +1,7 @@
 package com.gls.athena.starter.aliyun.oss.support;
 
-import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.model.OSSObject;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.WritableResource;
@@ -11,6 +9,7 @@ import org.springframework.core.io.WritableResource;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
 
 /**
  * oss资源
@@ -35,6 +34,10 @@ public class OssResource implements WritableResource {
      */
     private final OSS oss;
     /**
+     * oss任务执行器
+     */
+    private final ExecutorService ossTaskExecutor;
+    /**
      * bean工厂
      */
     private final ConfigurableListableBeanFactory beanFactory;
@@ -47,9 +50,14 @@ public class OssResource implements WritableResource {
      */
     public OssResource(String location, ConfigurableListableBeanFactory beanFactory) {
         this.location = URI.create(location);
-        this.bucketName = this.location.getHost();
-        this.objectKey = this.location.getPath();
+        this.bucketName = this.location.getAuthority();
+        if (StrUtil.isEmpty(this.location.getPath())) {
+            this.objectKey = "";
+        } else {
+            this.objectKey = this.location.getPath().substring(1);
+        }
         this.oss = beanFactory.getBean(OSS.class);
+        this.ossTaskExecutor = beanFactory.getBean(ExecutorService.class);
         this.beanFactory = beanFactory;
     }
 
@@ -61,14 +69,20 @@ public class OssResource implements WritableResource {
      */
     @Override
     public OutputStream getOutputStream() throws IOException {
-        if (isBucket()) {
-            throw new IOException("无法写入存储空间");
+        if (exists()) {
+            throw new IOException("文件已存在");
         }
-        OSSObject ossObject = oss.getObject(bucketName, objectKey);
-        InputStream inputStream = ossObject.getObjectContent();
-        // 读取输入流
-        PipedOutputStream outputStream = new PipedOutputStream();
-        IoUtil.copy(inputStream, outputStream);
+        // 创建管道流
+        final PipedInputStream inputStream = new PipedInputStream();
+        final PipedOutputStream outputStream = new PipedOutputStream(inputStream);
+        ossTaskExecutor.submit(() -> {
+            try {
+                // 上传文件
+                oss.putObject(bucketName, objectKey, inputStream);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         return outputStream;
     }
 
@@ -78,6 +92,7 @@ public class OssResource implements WritableResource {
      * @return 是否是存储空间
      */
     private boolean isBucket() {
+        // 判断对象键是否为空
         return StrUtil.isEmpty(objectKey);
     }
 
@@ -88,20 +103,25 @@ public class OssResource implements WritableResource {
      */
     @Override
     public boolean exists() {
+        // 判断是否是存储空间
         if (isBucket()) {
+            // 存储空间是否存在
             return oss.doesBucketExist(bucketName);
         } else {
+            // 对象是否存在
             return oss.doesObjectExist(bucketName, objectKey);
         }
     }
 
     /**
-     * 是否可写
+     * 获取URL
      *
-     * @return 是否可写
+     * @return URL
+     * @throws IOException IO异常
      */
     @Override
     public URL getURL() throws IOException {
+        // 返回URL
         return this.location.toURL();
     }
 
@@ -113,6 +133,7 @@ public class OssResource implements WritableResource {
      */
     @Override
     public URI getURI() throws IOException {
+        // 返回位置
         return this.location;
     }
 
@@ -124,8 +145,8 @@ public class OssResource implements WritableResource {
      */
     @Override
     public File getFile() throws IOException {
-        throw new UnsupportedOperationException(
-                getDescription() + " cannot be resolved to absolute file path");
+        // 抛出异常
+        throw new UnsupportedOperationException(getDescription() + " 无法解析为绝对文件路径");
     }
 
     /**
@@ -136,9 +157,11 @@ public class OssResource implements WritableResource {
      */
     @Override
     public long contentLength() throws IOException {
+        // 判断是否是存储空间
         if (isBucket()) {
             return 0;
         }
+        // 获取对象元数据
         return oss.getObjectMetadata(bucketName, objectKey).getContentLength();
     }
 
@@ -150,9 +173,11 @@ public class OssResource implements WritableResource {
      */
     @Override
     public long lastModified() throws IOException {
+        // 判断是否是存储空间
         if (isBucket()) {
             return 0;
         }
+        // 获取对象元数据
         return oss.getObjectMetadata(bucketName, objectKey).getLastModified().getTime();
     }
 
@@ -165,6 +190,7 @@ public class OssResource implements WritableResource {
      */
     @Override
     public Resource createRelative(String relativePath) throws IOException {
+        // 创建oss资源
         return new OssResource(relativePath, beanFactory);
     }
 
@@ -175,6 +201,7 @@ public class OssResource implements WritableResource {
      */
     @Override
     public String getFilename() {
+        // 返回存储空间名称或对象键
         return isBucket() ? bucketName : objectKey;
     }
 
@@ -185,6 +212,7 @@ public class OssResource implements WritableResource {
      */
     @Override
     public String getDescription() {
+        // 返回位置
         return this.location.toString();
     }
 
@@ -196,10 +224,15 @@ public class OssResource implements WritableResource {
      */
     @Override
     public InputStream getInputStream() throws IOException {
-        if (isBucket()) {
-            throw new IllegalStateException(
-                    "Cannot open an input stream to a bucket: '" + this.location + "'");
+        // 判断是否存在
+        if (exists()) {
+            throw new FileNotFoundException("文件不存在");
         }
+        // 判断是否是存储空间
+        if (isBucket()) {
+            throw new IllegalStateException("无法打开输入流到存储空间: '" + this.location + "'");
+        }
+        // 获取对象
         return oss.getObject(bucketName, objectKey).getObjectContent();
     }
 }
