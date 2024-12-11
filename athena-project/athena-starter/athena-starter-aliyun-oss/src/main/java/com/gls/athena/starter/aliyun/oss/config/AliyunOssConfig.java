@@ -2,6 +2,7 @@ package com.gls.athena.starter.aliyun.oss.config;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.gls.athena.starter.aliyun.core.config.AliyunCoreProperties;
 import com.gls.athena.starter.aliyun.oss.endpoint.OssEndpoint;
 import com.gls.athena.starter.aliyun.oss.support.OssProtocolResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -24,15 +25,15 @@ public class AliyunOssConfig {
     @Bean
     @ConditionalOnMissingBean
     public OSS aliyunOssClient(AliyunOssProperties properties) {
-        if (AliyunOssProperties.AuthType.AS_AK.equals(properties.getAuthType())) {
+        if (AliyunCoreProperties.AuthMode.AS_AK.equals(properties.getAuthMode())) {
             return new OSSClientBuilder().build(properties.getEndpoint(),
                     properties.getAccessKeyId(), properties.getAccessKeySecret(), properties.getConfig());
         }
-        if (AliyunOssProperties.AuthType.STS.equals(properties.getAuthType())) {
+        if (AliyunCoreProperties.AuthMode.STS.equals(properties.getAuthMode())) {
             return new OSSClientBuilder().build(properties.getEndpoint(),
                     properties.getAccessKeyId(), properties.getAccessKeySecret(), properties.getSecurityToken(), properties.getConfig());
         }
-        throw new IllegalArgumentException("Unknown auth type: " + properties.getAuthType());
+        throw new IllegalArgumentException("Unknown auth type: " + properties.getAuthMode());
     }
 
     /**

@@ -5,6 +5,7 @@ import com.gls.athena.common.core.constant.BaseProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class AliyunCoreProperties extends BaseProperties {
     /**
      * 客户端配置
      */
+    @NestedConfigurationProperty
     private Map<String, Client> clients = new HashMap<>();
 
     /**
@@ -40,13 +42,15 @@ public class AliyunCoreProperties extends BaseProperties {
 
     /**
      * 客户端配置
+     *
+     * @author george
      */
     @Data
     public static class Client implements Serializable {
         /**
          * 认证模式
          */
-        private AuthMode authMode = AuthMode.AS_AK;
+        private AliyunCoreProperties.AuthMode authMode = AliyunCoreProperties.AuthMode.AS_AK;
         /**
          * 区域ID
          */
@@ -63,5 +67,6 @@ public class AliyunCoreProperties extends BaseProperties {
          * 安全令牌
          */
         private String securityToken;
+
     }
 }

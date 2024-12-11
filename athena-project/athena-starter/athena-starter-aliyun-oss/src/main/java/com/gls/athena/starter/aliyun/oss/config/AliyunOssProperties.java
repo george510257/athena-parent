@@ -2,7 +2,7 @@ package com.gls.athena.starter.aliyun.oss.config;
 
 import com.aliyun.oss.ClientBuilderConfiguration;
 import com.gls.athena.common.core.constant.BaseConstants;
-import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.starter.aliyun.core.config.AliyunCoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,11 +16,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun.oss")
-public class AliyunOssProperties extends BaseProperties {
-    /**
-     * 授权类型
-     */
-    private AuthType authType = AuthType.AS_AK;
+public class AliyunOssProperties extends AliyunCoreProperties.Client {
     /**
      * 阿里云OSS服务的Endpoint
      */
@@ -34,34 +30,9 @@ public class AliyunOssProperties extends BaseProperties {
      */
     private String pathPrefix;
     /**
-     * 访问密钥ID
-     */
-    private String accessKeyId;
-    /**
-     * 访问密钥
-     */
-    private String accessKeySecret;
-    /**
-     * SecurityToken
-     */
-    private String securityToken;
-    /**
      * 配置
      */
     @NestedConfigurationProperty
     private ClientBuilderConfiguration config = new ClientBuilderConfiguration();
 
-    /**
-     * 授权类型
-     */
-    public enum AuthType {
-        /**
-         * AS_AK
-         */
-        AS_AK,
-        /**
-         * STS
-         */
-        STS
-    }
 }
