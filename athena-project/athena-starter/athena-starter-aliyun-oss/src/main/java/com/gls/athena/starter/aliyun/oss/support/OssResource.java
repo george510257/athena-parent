@@ -13,6 +13,14 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * oss资源
+ * <p>
+ * 实现{@link WritableResource}接口 用于读取和写入阿里云对象存储服务（OSS）中的对象
+ * </p>
+ * <p>
+ * 例如：
+ * <li>oss://bucketName/objectKey</li>
+ * <li>oss://bucketName</li>
+ * </p>
  *
  * @author george
  */
