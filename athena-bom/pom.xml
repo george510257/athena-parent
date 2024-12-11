@@ -43,8 +43,18 @@
             </dependency>
             <!-- Athena Starter -->
             <dependency>
+                <groupId>com.gls.athena.starter.aliyun.core</groupId>
+                <artifactId>athena-starter-aliyun-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.gls.athena.starter.aliyun.oss</groupId>
                 <artifactId>athena-starter-aliyun-oss</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gls.athena.starter.aliyun.sms</groupId>
+                <artifactId>athena-starter-aliyun-sms</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
