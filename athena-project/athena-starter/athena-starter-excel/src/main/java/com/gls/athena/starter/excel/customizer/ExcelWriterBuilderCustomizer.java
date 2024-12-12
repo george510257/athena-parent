@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
  *
  * @author george
  */
-public class ExcelWriterBuilderCustomizer extends BaseExcelWriterBuilderCustomizer<ExcelWriterBuilder> {
+public class ExcelWriterBuilderCustomizer extends ExcelWriterParameterBuilderCustomizer<ExcelWriterBuilder> {
 
     /**
      * Excel响应

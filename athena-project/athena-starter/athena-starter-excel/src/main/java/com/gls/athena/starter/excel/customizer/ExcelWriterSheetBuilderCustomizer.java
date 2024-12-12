@@ -8,7 +8,7 @@ import com.gls.athena.starter.excel.annotation.ExcelSheet;
  *
  * @author george
  */
-public class ExcelWriterSheetBuilderCustomizer extends BaseExcelWriterBuilderCustomizer<ExcelWriterSheetBuilder> {
+public class ExcelWriterSheetBuilderCustomizer extends ExcelWriterParameterBuilderCustomizer<ExcelWriterSheetBuilder> {
     /**
      * ExcelSheet
      */

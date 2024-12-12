@@ -21,7 +21,7 @@ import java.util.Locale;
  * @author george
  */
 @Data
-public class BaseExcelWriterBuilderCustomizer<B extends AbstractExcelWriterParameterBuilder<B, ?>> implements ICustomizer<B> {
+public class ExcelWriterParameterBuilderCustomizer<B extends AbstractExcelWriterParameterBuilder<B, ?>> implements ICustomizer<B> {
 
     /**
      * Excel参数
