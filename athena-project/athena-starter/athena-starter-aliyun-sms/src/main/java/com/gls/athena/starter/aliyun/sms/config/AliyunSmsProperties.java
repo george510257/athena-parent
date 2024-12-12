@@ -1,7 +1,7 @@
 package com.gls.athena.starter.aliyun.sms.config;
 
-import com.gls.athena.common.core.constant.BaseProperties;
 import com.gls.athena.common.core.constant.IConstants;
+import com.gls.athena.starter.aliyun.core.config.AliyunCoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,17 +14,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".aliyun.sms")
-public class AliyunSmsProperties extends BaseProperties {
+public class AliyunSmsProperties extends AliyunCoreProperties.Client {
     /**
-     * accessKeyId
+     * 签名名称
      */
-    private String accessKeyId;
-    /**
-     * accessKeySecret
-     */
-    private String accessKeySecret;
-    /**
-     * endpoint
-     */
-    private String endpoint;
+    private String signName;
 }
