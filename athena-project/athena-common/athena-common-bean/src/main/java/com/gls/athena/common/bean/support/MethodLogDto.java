@@ -1,4 +1,4 @@
-package com.gls.athena.starter.log.support;
+package com.gls.athena.common.bean.support;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

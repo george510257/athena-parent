@@ -1,14 +1,12 @@
 package com.gls.athena.starter.sms.listener;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONUtil;
+import com.gls.athena.common.bean.support.SmsDto;
 import com.gls.athena.starter.sms.config.SmsProperties;
 import com.gls.athena.starter.sms.event.SmsEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
-
-import java.util.Map;
 
 /**
  * 短信事件监听器
@@ -25,7 +23,7 @@ public class KafkaSmsEventListener implements ISmsEventListener {
     /**
      * kafka模板
      */
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     /**
      * 应用名称
      */
@@ -38,11 +36,23 @@ public class KafkaSmsEventListener implements ISmsEventListener {
      */
     @Override
     public void onSmsEvent(SmsEvent event) {
-        Map<String, Object> message = BeanUtil.beanToMap(event);
-        message.put("applicationName", applicationName);
-        log.info("SmsEvent: {}", message);
+        SmsDto smsDto = covert(event);
+        log.info("SmsEvent: {}", smsDto);
         String key = smsProperties.getKafka().getKey();
         String topic = smsProperties.getKafka().getTopic();
-        kafkaTemplate.send(topic, key, JSONUtil.toJsonStr(message));
+        kafkaTemplate.send(topic, key, smsDto);
+    }
+
+    /**
+     * 转换
+     *
+     * @param event 短信事件
+     * @return SmsDto 短信数据传输对象
+     */
+    private SmsDto covert(SmsEvent event) {
+        SmsDto smsDto = new SmsDto();
+        BeanUtil.copyProperties(event, smsDto);
+        smsDto.setApplicationName(applicationName);
+        return smsDto;
     }
 }

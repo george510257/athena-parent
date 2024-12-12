@@ -49,7 +49,7 @@ public class SmsConfig {
          * @return ISmsEventListener kafka短信事件监听器
          */
         @Bean
-        public ISmsEventListener kafkaSmsEventListener(SmsProperties smsProperties, KafkaTemplate<String, String> kafkaTemplate) {
+        public ISmsEventListener kafkaSmsEventListener(SmsProperties smsProperties, KafkaTemplate<String, Object> kafkaTemplate) {
             return new KafkaSmsEventListener(smsProperties, kafkaTemplate, applicationName);
         }
     }
