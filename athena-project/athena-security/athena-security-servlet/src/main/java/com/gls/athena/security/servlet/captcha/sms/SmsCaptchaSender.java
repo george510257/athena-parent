@@ -4,7 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.gls.athena.common.bean.result.Result;
 import com.gls.athena.common.bean.result.ResultStatus;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaSender;
-import com.gls.athena.starter.sms.sender.SmsSender;
+import com.gls.athena.starter.sms.support.SmsSender;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

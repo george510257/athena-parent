@@ -1,4 +1,4 @@
-package com.gls.athena.starter.sms.sender;
+package com.gls.athena.starter.sms.support;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.gls.athena.starter.sms.event.SmsEvent;

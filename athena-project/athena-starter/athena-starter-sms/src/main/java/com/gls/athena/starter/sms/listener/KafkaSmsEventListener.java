@@ -1,9 +1,9 @@
 package com.gls.athena.starter.sms.listener;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.gls.athena.common.bean.support.SmsDto;
 import com.gls.athena.starter.sms.config.SmsProperties;
 import com.gls.athena.starter.sms.event.SmsEvent;
+import com.gls.athena.starter.sms.support.SmsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
