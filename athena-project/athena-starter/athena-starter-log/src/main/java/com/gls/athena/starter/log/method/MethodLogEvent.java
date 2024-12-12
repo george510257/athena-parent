@@ -1,11 +1,10 @@
 package com.gls.athena.starter.log.method;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import lombok.Getter;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 方法日志事件
@@ -17,7 +16,7 @@ public class MethodLogEvent extends MethodEvent {
     /**
      * 参数
      */
-    private final List<Object> args;
+    private final Map<String, Object> args;
     /**
      * 结果
      */
@@ -62,9 +61,9 @@ public class MethodLogEvent extends MethodEvent {
      * @param type       方法日志类型
      * @param traceId    跟踪ID
      */
-    private MethodLogEvent(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
+    private MethodLogEvent(Object source, MethodLog methodLog, String className, String methodName, Map<String, Object> args, Object result, Date startTime, Date endTime, Throwable throwable, MethodLogType type, String traceId) {
         super(source, methodLog, className, methodName);
-        this.args = CollUtil.newArrayList(args);
+        this.args = args;
         this.result = result;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -92,7 +91,7 @@ public class MethodLogEvent extends MethodEvent {
      * @param traceId    跟踪ID
      * @return 方法日志事件
      */
-    public static MethodLogEvent ofNormal(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Object result, Date startTime, String traceId) {
+    public static MethodLogEvent ofNormal(Object source, MethodLog methodLog, String className, String methodName, Map<String, Object> args, Object result, Date startTime, String traceId) {
         return new MethodLogEvent(source, methodLog, className, methodName, args, result, startTime, new Date(), null, MethodLogType.NORMAL, traceId);
     }
 
@@ -109,7 +108,7 @@ public class MethodLogEvent extends MethodEvent {
      * @param traceId    跟踪ID
      * @return 方法日志事件
      */
-    public static MethodLogEvent ofError(Object source, MethodLog methodLog, String className, String methodName, Object[] args, Throwable throwable, Date startTime, String traceId) {
+    public static MethodLogEvent ofError(Object source, MethodLog methodLog, String className, String methodName, Map<String, Object> args, Throwable throwable, Date startTime, String traceId) {
         return new MethodLogEvent(source, methodLog, className, methodName, args, null, startTime, new Date(), throwable, MethodLogType.ERROR, traceId);
     }
 }

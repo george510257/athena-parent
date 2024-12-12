@@ -1,6 +1,5 @@
 package com.gls.athena.starter.log.support;
 
-import com.gls.athena.common.bean.support.MethodLogDto;
 import com.gls.athena.starter.log.config.LogProperties;
 import com.gls.athena.starter.log.method.IMethodEventListener;
 import com.gls.athena.starter.log.method.MethodEvent;

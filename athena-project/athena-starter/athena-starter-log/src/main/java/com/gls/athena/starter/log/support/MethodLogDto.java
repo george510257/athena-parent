@@ -1,11 +1,11 @@
-package com.gls.athena.common.bean.support;
+package com.gls.athena.starter.log.support;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 方法日志DTO
@@ -42,7 +42,7 @@ public class MethodLogDto implements Serializable {
     /**
      * 参数
      */
-    private List<Object> args;
+    private Map<String, Object> args;
     /**
      * 结果
      */
