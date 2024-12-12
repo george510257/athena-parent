@@ -34,7 +34,7 @@ public class LogProperties extends BaseProperties {
         /**
          * 日志key
          */
-        private String methodLogKey = "methodLog";
+        private String methodLogKey = "log";
         /**
          * 方法key
          */
