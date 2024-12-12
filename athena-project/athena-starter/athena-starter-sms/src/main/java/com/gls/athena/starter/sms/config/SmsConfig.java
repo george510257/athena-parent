@@ -1,7 +1,7 @@
 package com.gls.athena.starter.sms.config;
 
+import com.gls.athena.starter.sms.listener.ISmsEventListener;
 import com.gls.athena.starter.sms.listener.KafkaSmsEventListener;
-import com.gls.athena.starter.sms.listener.SmsEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -21,11 +21,11 @@ public class SmsConfig {
     /**
      * 短信事件监听器
      *
-     * @return SmsEventListener 短信事件监听器
+     * @return ISmsEventListener 短信事件监听器
      */
     @Bean
-    @ConditionalOnMissingBean(SmsEventListener.class)
-    public SmsEventListener smsEventListener() {
+    @ConditionalOnMissingBean(ISmsEventListener.class)
+    public ISmsEventListener smsEventListener() {
         return event -> log.info("SmsEvent: {}", event);
     }
 
@@ -46,10 +46,10 @@ public class SmsConfig {
          *
          * @param smsProperties 短信配置
          * @param kafkaTemplate kafka模板
-         * @return SmsEventListener kafka短信事件监听器
+         * @return ISmsEventListener kafka短信事件监听器
          */
         @Bean
-        public SmsEventListener kafkaSmsEventListener(SmsProperties smsProperties, KafkaTemplate<String, String> kafkaTemplate) {
+        public ISmsEventListener kafkaSmsEventListener(SmsProperties smsProperties, KafkaTemplate<String, String> kafkaTemplate) {
             return new KafkaSmsEventListener(smsProperties, kafkaTemplate, applicationName);
         }
     }

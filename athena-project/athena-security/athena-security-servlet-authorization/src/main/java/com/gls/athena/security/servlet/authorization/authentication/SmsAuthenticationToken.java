@@ -1,6 +1,6 @@
 package com.gls.athena.security.servlet.authorization.authentication;
 
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import lombok.Getter;
 import org.springframework.security.core.Authentication;
 
@@ -29,7 +29,7 @@ public class SmsAuthenticationToken extends BaseAuthenticationToken {
      * @param mobile               手机号
      */
     public SmsAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String mobile) {
-        super(AuthorizationConstants.SMS, clientPrincipal, additionalParameters, scopes);
+        super(IAuthorizationConstants.SMS, clientPrincipal, additionalParameters, scopes);
         this.mobile = mobile;
     }
 }

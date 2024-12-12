@@ -1,8 +1,8 @@
 package com.gls.athena.starter.log.support;
 
 import com.gls.athena.starter.log.config.LogProperties;
+import com.gls.athena.starter.log.method.IMethodEventListener;
 import com.gls.athena.starter.log.method.MethodEvent;
-import com.gls.athena.starter.log.method.MethodEventListener;
 import com.gls.athena.starter.log.method.MethodLogEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class KafkaMethodEventListener implements MethodEventListener {
+public class KafkaMethodEventListener implements IMethodEventListener {
     /**
      * 日志配置
      */

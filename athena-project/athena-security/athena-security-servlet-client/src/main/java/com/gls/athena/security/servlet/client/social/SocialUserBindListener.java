@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.client.social;
 
 import com.gls.athena.common.bean.security.User;
-import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
+import com.gls.athena.security.servlet.client.config.IClientConstants;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +30,13 @@ public class SocialUserBindListener {
         Authentication authentication = event.getAuthentication();
         if (authentication instanceof UsernamePasswordAuthenticationToken) {
             User user = (User) authentication.getPrincipal();
-            SocialUser socialUser = (SocialUser) session.getAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY);
+            SocialUser socialUser = (SocialUser) session.getAttribute(IClientConstants.SOCIAL_USER_SESSION_KEY);
             if (socialUser != null) {
                 // 绑定社交用户
                 socialUser.setUser(user);
                 socialUser.setBindStatus(true);
                 socialUserService.saveSocialUser(socialUser);
-                session.removeAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY);
+                session.removeAttribute(IClientConstants.SOCIAL_USER_SESSION_KEY);
                 log.info("社交用户绑定成功");
             }
         }

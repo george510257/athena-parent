@@ -1,7 +1,7 @@
 package com.gls.athena.starter.sms.config;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".sms")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".sms")
 public class SmsProperties extends BaseProperties {
     /**
      * kafka配置

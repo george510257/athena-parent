@@ -1,7 +1,7 @@
 package com.gls.athena.starter.log.config;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".log")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".log")
 public class LogProperties extends BaseProperties {
     /**
      * kafka配置

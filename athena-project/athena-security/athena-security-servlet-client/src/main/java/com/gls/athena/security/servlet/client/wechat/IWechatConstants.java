@@ -5,7 +5,7 @@ package com.gls.athena.security.servlet.client.wechat;
  *
  * @author george
  */
-public interface WechatConstants {
+public interface IWechatConstants {
     /**
      * 微信开放平台ID
      */

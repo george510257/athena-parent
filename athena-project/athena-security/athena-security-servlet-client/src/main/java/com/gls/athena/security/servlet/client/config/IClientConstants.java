@@ -5,7 +5,7 @@ package com.gls.athena.security.servlet.client.config;
  *
  * @author george
  */
-public interface ClientSecurityConstants {
+public interface IClientConstants {
     /**
      * 社交用户会话键
      */

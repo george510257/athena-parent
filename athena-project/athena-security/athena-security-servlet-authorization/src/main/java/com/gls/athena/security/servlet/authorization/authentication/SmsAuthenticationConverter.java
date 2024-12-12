@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.authorization.authentication;
 
 import cn.hutool.core.util.StrUtil;
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import com.gls.athena.security.servlet.authorization.util.AuthenticationUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -31,13 +31,13 @@ public class SmsAuthenticationConverter extends BaseAuthenticationConverter {
     @Override
     protected Authentication convert(MultiValueMap<String, String> parameterMap, Authentication clientPrincipal, Set<String> scopes) {
         // 手机号 (REQUIRED)
-        String mobile = parameterMap.getFirst(AuthorizationConstants.MOBILE);
-        if (StrUtil.isBlank(mobile) || parameterMap.get(AuthorizationConstants.MOBILE).size() != 1) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, AuthorizationConstants.MOBILE, AuthorizationConstants.ERROR_URI);
+        String mobile = parameterMap.getFirst(IAuthorizationConstants.MOBILE);
+        if (StrUtil.isBlank(mobile) || parameterMap.get(IAuthorizationConstants.MOBILE).size() != 1) {
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, IAuthorizationConstants.MOBILE, IAuthorizationConstants.ERROR_URI);
         }
         // 额外参数
         Map<String, Object> additionalParameters = parameterMap.entrySet().stream()
-                .filter(entry -> !List.of(OAuth2ParameterNames.GRANT_TYPE, AuthorizationConstants.MOBILE, OAuth2ParameterNames.SCOPE)
+                .filter(entry -> !List.of(OAuth2ParameterNames.GRANT_TYPE, IAuthorizationConstants.MOBILE, OAuth2ParameterNames.SCOPE)
                         .contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().size() > 1 ? entry.getValue() : entry.getValue().getFirst()));
         // 返回 SmsOAuth2AuthenticationToken 对象
@@ -52,6 +52,6 @@ public class SmsAuthenticationConverter extends BaseAuthenticationConverter {
      */
     @Override
     public boolean support(String grantType) {
-        return AuthorizationConstants.SMS.getValue().equals(grantType);
+        return IAuthorizationConstants.SMS.getValue().equals(grantType);
     }
 }

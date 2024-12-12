@@ -7,7 +7,7 @@ import com.gls.athena.common.core.base.IFeign;
 import com.gls.athena.common.core.base.IService;
 import com.gls.athena.starter.excel.annotation.ExcelRequest;
 import com.gls.athena.starter.excel.annotation.ExcelResponse;
-import com.gls.athena.starter.web.config.WebConstants;
+import com.gls.athena.starter.web.config.IWebConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -42,7 +42,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "新增", description = "新增")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public Vo insert(@RequestBody @Validated Vo vo) {
         return service.insert(vo);
     }
@@ -55,7 +55,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "更新", description = "更新")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public Vo update(@RequestBody @Validated Vo vo) {
         return service.update(vo);
     }
@@ -68,7 +68,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "删除", description = "删除")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public Boolean delete(@PathVariable Long id) {
         return service.delete(id);
     }
@@ -81,7 +81,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "查询", description = "查询")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public Vo get(@PathVariable Long id) {
         return service.get(id);
     }
@@ -94,7 +94,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "列表查询", description = "列表查询")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public List<Vo> list(@RequestBody @Validated Vo vo) {
         return service.list(vo);
     }
@@ -107,7 +107,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "分页查询", description = "分页查询")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public PageResponse<Vo> page(@RequestBody @Validated PageRequest<Vo> pageRequest) {
         return service.page(pageRequest);
     }
@@ -120,7 +120,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Override
     @Operation(summary = "批量保存", description = "批量保存")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public Boolean saveBatch(@RequestBody @Validated List<Vo> vos) {
         return service.saveBatch(vos);
     }
@@ -133,7 +133,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Operation(summary = "导入", description = "导入")
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     public Boolean importExcel(@ExcelRequest List<Vo> vos) {
         return service.saveBatch(vos);
     }
@@ -146,7 +146,7 @@ public abstract class BaseController<Vo extends BaseVo, S extends IService<Vo>> 
      */
     @Operation(summary = "导出", description = "导出")
     @PostMapping(value = "/export")
-    @Parameter(name = WebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = WebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
+    @Parameter(name = IWebConstants.CLIENT_TYPE, in = ParameterIn.HEADER, example = IWebConstants.CLIENT_TYPE_WEB, description = "客户端类型(WEB：统一返回Result和PageResponse对象)")
     @ExcelResponse(filename = "导出数据")
     public List<Vo> exportExcel(@RequestBody @Validated Vo vo) {
         return service.list(vo);

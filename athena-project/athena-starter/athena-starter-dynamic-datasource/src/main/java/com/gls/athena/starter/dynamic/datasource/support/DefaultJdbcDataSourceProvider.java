@@ -3,7 +3,7 @@ package com.gls.athena.starter.dynamic.datasource.support;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.provider.AbstractJdbcDataSourceProvider;
-import com.gls.athena.common.core.constant.BaseConstants;
+import com.gls.athena.common.core.constant.IConstants;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 
 import java.sql.ResultSet;
@@ -62,7 +62,7 @@ public class DefaultJdbcDataSourceProvider extends AbstractJdbcDataSourceProvide
         property.setUsername(dataSourceProperties.getUsername());
         property.setPassword(dataSourceProperties.getPassword());
         property.setLazy(true);
-        dataSourcePropertiesMap.put(BaseConstants.DEFAULT_DATASOURCE_NAME, property);
+        dataSourcePropertiesMap.put(IConstants.DEFAULT_DATASOURCE_NAME, property);
         return dataSourcePropertiesMap;
     }
 

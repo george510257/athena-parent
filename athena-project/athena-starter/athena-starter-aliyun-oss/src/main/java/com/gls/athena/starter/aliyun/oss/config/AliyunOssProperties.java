@@ -1,7 +1,7 @@
 package com.gls.athena.starter.aliyun.oss.config;
 
 import com.aliyun.oss.ClientBuilderConfiguration;
-import com.gls.athena.common.core.constant.BaseConstants;
+import com.gls.athena.common.core.constant.IConstants;
 import com.gls.athena.starter.aliyun.core.config.AliyunCoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun.oss")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".aliyun.oss")
 public class AliyunOssProperties extends AliyunCoreProperties.Client {
     /**
      * 阿里云OSS服务的Endpoint

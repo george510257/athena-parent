@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Async;
  *
  * @author george
  */
-public interface SmsEventListener {
+public interface ISmsEventListener {
 
     /**
      * 短信事件监听

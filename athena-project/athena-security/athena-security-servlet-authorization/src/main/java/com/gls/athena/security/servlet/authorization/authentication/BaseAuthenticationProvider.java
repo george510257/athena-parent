@@ -1,6 +1,6 @@
 package com.gls.athena.security.servlet.authorization.authentication;
 
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import com.gls.athena.security.servlet.authorization.util.AuthenticationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -147,13 +147,13 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
         if (scopes.contains(OidcScopes.OPENID)) {
             // @formatter:off
             OAuth2TokenContext tokenContext = tokenContextBuilder
-                    .tokenType(AuthorizationConstants.ID_TOKEN_TOKEN_TYPE)
+                    .tokenType(IAuthorizationConstants.ID_TOKEN_TOKEN_TYPE)
                     .authorization(authorizationBuilder.build())
                     .build();
             // @formatter:on
             OAuth2Token generatedIdToken = this.tokenGenerator.generate(tokenContext);
             if (!(generatedIdToken instanceof Jwt)) {
-                AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the ID token.", AuthorizationConstants.ERROR_URI);
+                AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the ID token.", IAuthorizationConstants.ERROR_URI);
             }
 
             if (log.isTraceEnabled()) {
@@ -183,7 +183,7 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
             OAuth2Token generatedRefreshToken = this.tokenGenerator.generate(tokenContext);
             if (generatedRefreshToken != null) {
                 if (!(generatedRefreshToken instanceof OAuth2RefreshToken)) {
-                    AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate a valid refresh token.", AuthorizationConstants.ERROR_URI);
+                    AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate a valid refresh token.", IAuthorizationConstants.ERROR_URI);
                 }
 
                 if (log.isTraceEnabled()) {
@@ -209,7 +209,7 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
         OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
         OAuth2Token generatedAccessToken = this.tokenGenerator.generate(tokenContext);
         if (generatedAccessToken == null) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the access token.", AuthorizationConstants.ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the access token.", IAuthorizationConstants.ERROR_URI);
         }
 
         if (log.isTraceEnabled()) {

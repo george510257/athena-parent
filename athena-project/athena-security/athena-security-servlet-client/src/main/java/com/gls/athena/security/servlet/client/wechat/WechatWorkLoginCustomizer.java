@@ -41,7 +41,7 @@ public class WechatWorkLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public boolean test(String registrationId) {
-        return WechatConstants.WECHAT_WORK_PROVIDER_ID.equals(registrationId);
+        return IWechatConstants.WECHAT_WORK_PROVIDER_ID.equals(registrationId);
     }
 
     /**
@@ -124,7 +124,7 @@ public class WechatWorkLoginCustomizer implements IOAuth2LoginCustomizer {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         WorkUserLoginRequest request = convertUserLoginRequest(userRequest);
         Map<String, Object> metadata = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
-        String userLoginUri = MapUtil.getStr(metadata, WechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME);
+        String userLoginUri = MapUtil.getStr(metadata, IWechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME);
         WorkUserLoginResponse response = WechatHelper.getWorkUserLogin(request, userLoginUri);
         if (StrUtil.isBlank(response.getUserid())) {
             throw new OAuth2AuthenticationException("获取企业微信用户登录身份失败");

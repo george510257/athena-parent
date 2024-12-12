@@ -1,7 +1,7 @@
 package com.gls.athena.starter.core.async;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,16 +13,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".thread.pool.task")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".thread.pool.task")
 public class ThreadPoolTaskProperties extends BaseProperties {
     /**
      * 核心线程数
      */
-    private Integer corePoolSize = BaseConstants.CPU_NUM;
+    private Integer corePoolSize = IConstants.CPU_NUM;
     /**
      * 最大线程数
      */
-    private Integer maxPoolSize = BaseConstants.CPU_NUM * 2;
+    private Integer maxPoolSize = IConstants.CPU_NUM * 2;
     /**
      * 队列容量
      */

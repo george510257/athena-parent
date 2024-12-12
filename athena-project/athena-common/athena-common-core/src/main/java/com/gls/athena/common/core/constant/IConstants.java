@@ -5,7 +5,7 @@ package com.gls.athena.common.core.constant;
  *
  * @author george
  */
-public interface BaseConstants {
+public interface IConstants {
     /**
      * 基础属性前缀
      */

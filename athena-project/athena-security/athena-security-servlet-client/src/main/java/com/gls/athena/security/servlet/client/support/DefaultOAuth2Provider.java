@@ -1,10 +1,10 @@
 package com.gls.athena.security.servlet.client.support;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
 import com.gls.athena.security.servlet.client.config.ClientSecurityProperties;
-import com.gls.athena.security.servlet.client.feishu.FeishuConstants;
-import com.gls.athena.security.servlet.client.wechat.WechatConstants;
+import com.gls.athena.security.servlet.client.config.IClientConstants;
+import com.gls.athena.security.servlet.client.feishu.IFeishuConstants;
+import com.gls.athena.security.servlet.client.wechat.IWechatConstants;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -36,7 +36,7 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("openid");
             builder.clientName("微信开放平台");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_OPEN_PROVIDER_ID);
+            metadata.put(IClientConstants.PROVIDER_ID, IWechatConstants.WECHAT_OPEN_PROVIDER_ID);
             metadata.put("lang", wechatOpen.getLang());
             builder.providerConfigurationMetadata(metadata);
             return builder;
@@ -59,7 +59,7 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("openid");
             builder.clientName("微信公众号");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_MP_PROVIDER_ID);
+            metadata.put(IClientConstants.PROVIDER_ID, IWechatConstants.WECHAT_MP_PROVIDER_ID);
             metadata.put("lang", wechatMp.getLang());
             builder.providerConfigurationMetadata(metadata);
             return builder;
@@ -79,7 +79,7 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("openid");
             builder.clientName("微信小程序");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_MINI_PROVIDER_ID);
+            metadata.put(IClientConstants.PROVIDER_ID, IWechatConstants.WECHAT_MINI_PROVIDER_ID);
             builder.providerConfigurationMetadata(metadata);
             return builder;
         }
@@ -101,8 +101,8 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("id");
             builder.clientName("企业微信");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, WechatConstants.WECHAT_WORK_PROVIDER_ID);
-            metadata.put(WechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME, "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo");
+            metadata.put(IClientConstants.PROVIDER_ID, IWechatConstants.WECHAT_WORK_PROVIDER_ID);
+            metadata.put(IWechatConstants.WECHAT_WORK_USER_LOGIN_URI_NAME, "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo");
             metadata.put("loginType", wechatWork.getLoginType().getValue());
             metadata.put("agentId", wechatWork.getAgentId());
             metadata.put("lang", wechatWork.getLang());
@@ -123,8 +123,8 @@ public enum DefaultOAuth2Provider {
             builder.userNameAttributeName("unionId");
             builder.clientName("飞书");
             Map<String, Object> metadata = new HashMap<>();
-            metadata.put(FeishuConstants.APP_ACCESS_TOKEN_URL_NAME, "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal");
-            metadata.put(ClientSecurityConstants.PROVIDER_ID, FeishuConstants.PROVIDER_ID);
+            metadata.put(IFeishuConstants.APP_ACCESS_TOKEN_URL_NAME, "https://open.feishu.cn/open-apis/auth/v3/app_access_token/internal");
+            metadata.put(IClientConstants.PROVIDER_ID, IFeishuConstants.PROVIDER_ID);
             builder.providerConfigurationMetadata(metadata);
             return builder;
         }

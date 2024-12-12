@@ -41,7 +41,7 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public boolean test(String providerId) {
-        return FeishuConstants.PROVIDER_ID.equals(providerId);
+        return IFeishuConstants.PROVIDER_ID.equals(providerId);
     }
 
     /**
@@ -79,7 +79,7 @@ public class FeishuLoginCustomizer implements IOAuth2LoginCustomizer {
         String clientSecret = authorizationGrantRequest.getClientRegistration().getClientSecret();
         // 获取客户端请求uri
         Map<String, Object> metadata = authorizationGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
-        String appAccessTokenUri = MapUtil.getStr(metadata, FeishuConstants.APP_ACCESS_TOKEN_URL_NAME);
+        String appAccessTokenUri = MapUtil.getStr(metadata, IFeishuConstants.APP_ACCESS_TOKEN_URL_NAME);
         // 获取应用访问令牌
         String appAccessToken = FeishuHelper.getAppAccessToken(clientId, clientSecret, appAccessTokenUri);
         // 获取用户访问令牌地址

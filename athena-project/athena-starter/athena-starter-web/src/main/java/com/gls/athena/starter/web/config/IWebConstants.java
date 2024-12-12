@@ -5,7 +5,7 @@ package com.gls.athena.starter.web.config;
  *
  * @author george
  */
-public interface WebConstants {
+public interface IWebConstants {
     /**
      * 客户端类型
      */

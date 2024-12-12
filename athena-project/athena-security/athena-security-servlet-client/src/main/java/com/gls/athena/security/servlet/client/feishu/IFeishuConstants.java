@@ -5,7 +5,7 @@ package com.gls.athena.security.servlet.client.feishu;
  *
  * @author george
  */
-public interface FeishuConstants {
+public interface IFeishuConstants {
     /**
      * 飞书社交登录提供者 ID
      */

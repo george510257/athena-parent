@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class KafkaSmsEventListener implements SmsEventListener {
+public class KafkaSmsEventListener implements ISmsEventListener {
     /**
      * 短信配置
      */

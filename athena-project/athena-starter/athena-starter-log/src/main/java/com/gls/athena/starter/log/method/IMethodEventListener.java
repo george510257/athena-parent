@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Async;
  *
  * @author george
  */
-public interface MethodEventListener {
+public interface IMethodEventListener {
 
     /**
      * 方法事件监听

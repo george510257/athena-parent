@@ -2,8 +2,8 @@ package com.gls.athena.starter.web.handler;
 
 import com.gls.athena.common.bean.result.Result;
 import com.gls.athena.common.bean.result.ResultStatus;
-import com.gls.athena.common.core.constant.BaseConstants;
-import com.gls.athena.starter.web.config.WebConstants;
+import com.gls.athena.common.core.constant.IConstants;
+import com.gls.athena.starter.web.config.IWebConstants;
 import com.gls.athena.starter.web.config.WebProperties;
 import jakarta.annotation.Resource;
 import org.springframework.core.MethodParameter;
@@ -22,7 +22,7 @@ import java.util.Objects;
  *
  * @author george
  */
-@RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)
+@RestControllerAdvice(basePackages = IConstants.BASE_PACKAGE_PREFIX)
 public class ResultHandler implements ResponseBodyAdvice<Object> {
 
     /**
@@ -68,7 +68,7 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // 判断客户端类型 是否是feign调用
-        if (Objects.equals(request.getHeaders().getFirst(WebConstants.CLIENT_TYPE), WebConstants.CLIENT_TYPE_FEIGN)) {
+        if (Objects.equals(request.getHeaders().getFirst(IWebConstants.CLIENT_TYPE), IWebConstants.CLIENT_TYPE_FEIGN)) {
             return body;
         }
         // 如果返回值是字符串

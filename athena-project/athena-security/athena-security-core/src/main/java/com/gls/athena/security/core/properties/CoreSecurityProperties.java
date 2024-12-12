@@ -1,7 +1,7 @@
 package com.gls.athena.security.core.properties;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".security")
 public class CoreSecurityProperties extends BaseProperties {
     /**
      * 忽略的 URL

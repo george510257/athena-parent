@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.authorization.authentication;
 
 import cn.hutool.core.util.StrUtil;
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import com.gls.athena.security.servlet.authorization.util.AuthenticationUtil;
 import com.gls.athena.starter.web.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,12 +40,12 @@ public abstract class BaseAuthenticationConverter implements AuthenticationConve
         // 获取客户端主体
         Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
         if (clientPrincipal == null) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ErrorCodes.INVALID_CLIENT, AuthorizationConstants.ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ErrorCodes.INVALID_CLIENT, IAuthorizationConstants.ERROR_URI);
         }
         // 获取请求的范围
         String scope = parameterMap.getFirst(OAuth2ParameterNames.SCOPE);
         if (StrUtil.isNotBlank(scope) && parameterMap.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.SCOPE, AuthorizationConstants.ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.SCOPE, IAuthorizationConstants.ERROR_URI);
         }
         // 请求的范围
         Set<String> scopes = new HashSet<>(StrUtil.split(scope, ' '));

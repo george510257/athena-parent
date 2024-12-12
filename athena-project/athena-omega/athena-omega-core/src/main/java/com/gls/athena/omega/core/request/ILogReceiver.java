@@ -6,7 +6,7 @@ package com.gls.athena.omega.core.request;
  * @author george
  */
 @FunctionalInterface
-public interface LogReceiver {
+public interface ILogReceiver {
 
     /**
      * 接收日志

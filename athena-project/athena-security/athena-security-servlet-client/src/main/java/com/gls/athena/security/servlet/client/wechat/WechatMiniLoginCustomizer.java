@@ -43,7 +43,7 @@ public class WechatMiniLoginCustomizer implements IOAuth2LoginCustomizer {
      */
     @Override
     public boolean test(String registrationId) {
-        return WechatConstants.WECHAT_MINI_PROVIDER_ID.equals(registrationId);
+        return IWechatConstants.WECHAT_MINI_PROVIDER_ID.equals(registrationId);
     }
 
     /**

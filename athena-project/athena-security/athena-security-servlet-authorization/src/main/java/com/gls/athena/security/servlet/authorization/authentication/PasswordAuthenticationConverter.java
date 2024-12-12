@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.authorization.authentication;
 
 import cn.hutool.core.util.StrUtil;
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import com.gls.athena.security.servlet.authorization.util.AuthenticationUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -33,12 +33,12 @@ public class PasswordAuthenticationConverter extends BaseAuthenticationConverter
         // 用户名 (REQUIRED)
         String username = parameterMap.getFirst(OAuth2ParameterNames.USERNAME);
         if (StrUtil.isBlank(username) || parameterMap.get(OAuth2ParameterNames.USERNAME).size() != 1) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME, AuthorizationConstants.ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME, IAuthorizationConstants.ERROR_URI);
         }
         // 密码 (REQUIRED)
         String password = parameterMap.getFirst(OAuth2ParameterNames.PASSWORD);
         if (StrUtil.isBlank(password) || parameterMap.get(OAuth2ParameterNames.PASSWORD).size() != 1) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD, AuthorizationConstants.ERROR_URI);
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD, IAuthorizationConstants.ERROR_URI);
         }
         // 额外参数
         Map<String, Object> additionalParameters = parameterMap.entrySet().stream()
@@ -57,6 +57,6 @@ public class PasswordAuthenticationConverter extends BaseAuthenticationConverter
      */
     @Override
     public boolean support(String grantType) {
-        return AuthorizationConstants.PASSWORD.getValue().equals(grantType);
+        return IAuthorizationConstants.PASSWORD.getValue().equals(grantType);
     }
 }

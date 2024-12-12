@@ -1,7 +1,7 @@
 package com.gls.athena.starter.aliyun.core.config;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".aliyun")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".aliyun")
 public class AliyunCoreProperties extends BaseProperties {
     /**
      * 客户端配置

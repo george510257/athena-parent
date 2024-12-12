@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.client.delegate;
 
 import cn.hutool.core.map.MapUtil;
-import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
+import com.gls.athena.security.servlet.client.config.IClientConstants;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
@@ -40,7 +40,7 @@ public class DelegateAuthorizationCodeTokenResponseClient implements OAuth2Acces
     public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest) {
         Map<String, Object> metadata = authorizationCodeGrantRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
         // 获取提供者
-        String providerId = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
+        String providerId = MapUtil.getStr(metadata, IClientConstants.PROVIDER_ID);
         // 获取适配器
         return adapters.stream()
                 .filter(adapter -> adapter.test(providerId))

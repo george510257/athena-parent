@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
  *
  * @author george
  */
-public interface AuthorizationConstants {
+public interface IAuthorizationConstants {
     /**
      * 密码授权
      */

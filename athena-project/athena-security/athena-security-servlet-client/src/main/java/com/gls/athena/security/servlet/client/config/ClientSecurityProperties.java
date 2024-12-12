@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.client.config;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".security.client")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".security.client")
 public class ClientSecurityProperties extends BaseProperties {
     /**
      * 客户端注册信息库类型

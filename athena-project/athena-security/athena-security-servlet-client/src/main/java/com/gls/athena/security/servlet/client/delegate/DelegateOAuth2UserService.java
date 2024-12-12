@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.client.delegate;
 
 import cn.hutool.core.map.MapUtil;
-import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
+import com.gls.athena.security.servlet.client.config.IClientConstants;
 import com.gls.athena.security.servlet.client.social.ISocialUserService;
 import com.gls.athena.security.servlet.client.social.SocialUser;
 import jakarta.annotation.Resource;
@@ -58,7 +58,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // 获取提供者
         Map<String, Object> metadata = userRequest.getClientRegistration().getProviderDetails().getConfigurationMetadata();
-        String provider = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
+        String provider = MapUtil.getStr(metadata, IClientConstants.PROVIDER_ID);
         // 加载用户
         OAuth2User oauth2User = adapters.stream()
                 .filter(adapter -> adapter.test(provider))
@@ -70,7 +70,7 @@ public class DelegateOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         // 未绑定
         if (!socialUser.isBindStatus()) {
             // 设置社交用户
-            session.setAttribute(ClientSecurityConstants.SOCIAL_USER_SESSION_KEY, socialUser);
+            session.setAttribute(IClientConstants.SOCIAL_USER_SESSION_KEY, socialUser);
             // 抛出异常
             throw new OAuth2AuthenticationException(new OAuth2Error("social_user_not_bind", "社交用户未绑定", null));
         }

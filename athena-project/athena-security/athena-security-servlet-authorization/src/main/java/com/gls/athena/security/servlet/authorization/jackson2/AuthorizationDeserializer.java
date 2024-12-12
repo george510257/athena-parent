@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
@@ -57,7 +57,7 @@ public class AuthorizationDeserializer extends JsonDeserializer<OAuth2Authorizat
         // 构建OAuth2Authorization对象
         OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(RegisteredClient.withId(registeredClientId)
                         .clientId("test-client-id")
-                        .authorizationGrantType(AuthorizationConstants.PASSWORD)
+                        .authorizationGrantType(IAuthorizationConstants.PASSWORD)
                         .build())
                 .id(id)
                 .principalName(principalName)

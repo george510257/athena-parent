@@ -3,7 +3,7 @@ package com.gls.athena.starter.web.handler;
 import com.gls.athena.common.bean.result.Result;
 import com.gls.athena.common.bean.result.ResultException;
 import com.gls.athena.common.bean.result.ResultStatus;
-import com.gls.athena.common.core.constant.BaseConstants;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author george
  */
 @Slf4j
-@RestControllerAdvice(basePackages = BaseConstants.BASE_PACKAGE_PREFIX)
+@RestControllerAdvice(basePackages = IConstants.BASE_PACKAGE_PREFIX)
 public class DefaultExceptionHandler {
 
     /**

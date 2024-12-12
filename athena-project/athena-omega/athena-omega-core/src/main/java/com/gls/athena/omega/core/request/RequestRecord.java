@@ -113,7 +113,7 @@ public class RequestRecord implements Serializable {
     /**
      * 日志接收器
      */
-    private LogReceiver logReceiver;
+    private ILogReceiver logReceiver;
 
     /**
      * 是否有错误日志

@@ -3,7 +3,7 @@ package com.gls.athena.starter.mybatis.handler;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.gls.athena.common.bean.security.IUserHelper;
-import com.gls.athena.common.core.constant.BaseConstants;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
@@ -30,9 +30,9 @@ public class BaseEntityHandler implements MetaObjectHandler {
         // 打印日志
         log.info("insertFill metaObject: {}", metaObject);
         // 获取当前用户 ID
-        Long userId = userHelper.getCurrentUserId().orElse(BaseConstants.DEFAULT_USER_ID);
+        Long userId = userHelper.getCurrentUserId().orElse(IConstants.DEFAULT_USER_ID);
         // 获取当前用户昵称
-        String userName = userHelper.getCurrentUserNickName().orElse(BaseConstants.DEFAULT_USER_USERNAME);
+        String userName = userHelper.getCurrentUserNickName().orElse(IConstants.DEFAULT_USER_USERNAME);
         // 获取当前时间
         Date now = new Date();
         // 严格插入填充
@@ -56,9 +56,9 @@ public class BaseEntityHandler implements MetaObjectHandler {
         // 打印日志
         log.info("updateFill metaObject: {}", metaObject);
         // 获取当前用户 ID
-        Long userId = userHelper.getCurrentUserId().orElse(BaseConstants.DEFAULT_USER_ID);
+        Long userId = userHelper.getCurrentUserId().orElse(IConstants.DEFAULT_USER_ID);
         // 获取当前用户昵称
-        String userName = userHelper.getCurrentUserNickName().orElse(BaseConstants.DEFAULT_USER_USERNAME);
+        String userName = userHelper.getCurrentUserNickName().orElse(IConstants.DEFAULT_USER_USERNAME);
         // 获取当前时间
         Date now = new Date();
         // 严格更新填充

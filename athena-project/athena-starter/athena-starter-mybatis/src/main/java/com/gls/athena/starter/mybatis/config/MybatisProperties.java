@@ -1,8 +1,8 @@
 package com.gls.athena.starter.mybatis.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".mybatis.tenant")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".mybatis.tenant")
 public class MybatisProperties extends BaseProperties {
 
     /**

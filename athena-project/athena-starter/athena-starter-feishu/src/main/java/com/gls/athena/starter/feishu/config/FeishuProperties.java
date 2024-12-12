@@ -1,7 +1,7 @@
 package com.gls.athena.starter.feishu.config;
 
-import com.gls.athena.common.core.constant.BaseConstants;
 import com.gls.athena.common.core.constant.BaseProperties;
+import com.gls.athena.common.core.constant.IConstants;
 import com.lark.oapi.core.enums.AppType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = BaseConstants.BASE_PROPERTIES_PREFIX + ".feishu")
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".feishu")
 public class FeishuProperties extends BaseProperties {
     /**
      * 应用appid

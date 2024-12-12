@@ -1,7 +1,7 @@
 package com.gls.athena.security.servlet.client.delegate;
 
 import cn.hutool.core.map.MapUtil;
-import com.gls.athena.security.servlet.client.config.ClientSecurityConstants;
+import com.gls.athena.security.servlet.client.config.IClientConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -116,7 +116,7 @@ public class DelegateAuthorizationRequestResolver implements OAuth2Authorization
         ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId(clientRegistrationId);
         Map<String, Object> metadata = clientRegistration.getProviderDetails().getConfigurationMetadata();
         // 获取提供者
-        String provider = MapUtil.getStr(metadata, ClientSecurityConstants.PROVIDER_ID);
+        String provider = MapUtil.getStr(metadata, IClientConstants.PROVIDER_ID);
         // 自定义 OAuth2 授权请求器
         customizers.stream()
                 .filter(customizer -> customizer.test(provider))

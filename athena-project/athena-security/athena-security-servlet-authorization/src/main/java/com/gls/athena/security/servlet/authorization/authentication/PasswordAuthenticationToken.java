@@ -1,6 +1,6 @@
 package com.gls.athena.security.servlet.authorization.authentication;
 
-import com.gls.athena.security.servlet.authorization.config.AuthorizationConstants;
+import com.gls.athena.security.servlet.authorization.config.IAuthorizationConstants;
 import lombok.Getter;
 import org.springframework.security.core.Authentication;
 
@@ -33,7 +33,7 @@ public class PasswordAuthenticationToken extends BaseAuthenticationToken {
      * @param password             密码
      */
     public PasswordAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters, Set<String> scopes, String username, String password) {
-        super(AuthorizationConstants.PASSWORD, clientPrincipal, additionalParameters, scopes);
+        super(IAuthorizationConstants.PASSWORD, clientPrincipal, additionalParameters, scopes);
         this.username = username;
         this.password = password;
     }
