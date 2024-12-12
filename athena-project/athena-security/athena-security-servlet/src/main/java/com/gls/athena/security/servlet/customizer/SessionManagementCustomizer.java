@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
  * @author george
  */
 @Component
-public class SessionManagementCustomizer implements Customizer<SessionManagementConfigurer<HttpSecurity>> {
+public class SessionManagementCustomizer
+        implements Customizer<SessionManagementConfigurer<HttpSecurity>> {
     /**
      * 自定义
      *

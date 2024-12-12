@@ -105,70 +105,14 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
                 .attribute(Principal.class.getName(), usernamePasswordAuthenticationToken);
 
         // ----- Access token -----
-        OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
-        OAuth2Token generatedAccessToken = this.tokenGenerator.generate(tokenContext);
-        if (generatedAccessToken == null) {
-            AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the access token.", AuthorizationConstants.ERROR_URI);
-        }
-
-        if (log.isTraceEnabled()) {
-            log.trace("Generated access token");
-        }
-
-        OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
-                generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
-                generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
-        if (generatedAccessToken instanceof ClaimAccessor) {
-            authorizationBuilder.token(accessToken, (metadata) ->
-                    metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, ((ClaimAccessor) generatedAccessToken).getClaims()));
-        } else {
-            authorizationBuilder.accessToken(accessToken);
-        }
+        OAuth2AccessToken accessToken = getOAuth2AccessToken(tokenContextBuilder, authorizationBuilder);
 
         // ----- Refresh token -----
-        OAuth2RefreshToken refreshToken = null;
-        if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
-            tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
-            OAuth2Token generatedRefreshToken = this.tokenGenerator.generate(tokenContext);
-            if (generatedRefreshToken != null) {
-                if (!(generatedRefreshToken instanceof OAuth2RefreshToken)) {
-                    AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate a valid refresh token.", AuthorizationConstants.ERROR_URI);
-                }
-
-                if (log.isTraceEnabled()) {
-                    log.trace("Generated refresh token");
-                }
-
-                refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
-                authorizationBuilder.refreshToken(refreshToken);
-            }
-        }
+        OAuth2RefreshToken refreshToken = getOAuth2RefreshToken(registeredClient, tokenContextBuilder, authorizationBuilder);
 
         // ----- ID token -----
-        OidcIdToken idToken;
-        if (scopes.contains(OidcScopes.OPENID)) {
-            // @formatter:off
-            tokenContext = tokenContextBuilder
-                    .tokenType(AuthorizationConstants.ID_TOKEN_TOKEN_TYPE)
-                    .authorization(authorizationBuilder.build())
-                    .build();
-            // @formatter:on
-            OAuth2Token generatedIdToken = this.tokenGenerator.generate(tokenContext);
-            if (!(generatedIdToken instanceof Jwt)) {
-                AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the ID token.", AuthorizationConstants.ERROR_URI);
-            }
+        OidcIdToken idToken = getOidcIdToken(scopes, tokenContextBuilder, authorizationBuilder);
 
-            if (log.isTraceEnabled()) {
-                log.trace("Generated id token");
-            }
-
-            idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
-                    generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
-            authorizationBuilder.token(idToken, (metadata) ->
-                    metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, idToken.getClaims()));
-        } else {
-            idToken = null;
-        }
         OAuth2Authorization authorization = authorizationBuilder.build();
 
         this.authorizationService.save(authorization);
@@ -189,6 +133,99 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
 
         return new OAuth2AccessTokenAuthenticationToken(
                 registeredClient, clientPrincipal, accessToken, refreshToken, additionalParameters);
+    }
+
+    /**
+     * 支持的认证类型
+     *
+     * @param scopes               认证类型
+     * @param tokenContextBuilder  令牌上下文构建器
+     * @param authorizationBuilder 授权构建器
+     * @return OIDC ID 令牌
+     */
+    private OidcIdToken getOidcIdToken(Set<String> scopes, DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
+        if (scopes.contains(OidcScopes.OPENID)) {
+            // @formatter:off
+            OAuth2TokenContext tokenContext = tokenContextBuilder
+                    .tokenType(AuthorizationConstants.ID_TOKEN_TOKEN_TYPE)
+                    .authorization(authorizationBuilder.build())
+                    .build();
+            // @formatter:on
+            OAuth2Token generatedIdToken = this.tokenGenerator.generate(tokenContext);
+            if (!(generatedIdToken instanceof Jwt)) {
+                AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the ID token.", AuthorizationConstants.ERROR_URI);
+            }
+
+            if (log.isTraceEnabled()) {
+                log.trace("Generated id token");
+            }
+
+            OidcIdToken idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
+                    generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
+            authorizationBuilder.token(idToken, (metadata) ->
+                    metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, idToken.getClaims()));
+            return idToken;
+        }
+        return null;
+    }
+
+    /**
+     * 获取 OAuth2 刷新令牌
+     *
+     * @param registeredClient     注册客户端
+     * @param tokenContextBuilder  令牌上下文构建器
+     * @param authorizationBuilder 授权构建器
+     * @return OAuth2 刷新令牌
+     */
+    private OAuth2RefreshToken getOAuth2RefreshToken(RegisteredClient registeredClient, DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
+        if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
+            OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
+            OAuth2Token generatedRefreshToken = this.tokenGenerator.generate(tokenContext);
+            if (generatedRefreshToken != null) {
+                if (!(generatedRefreshToken instanceof OAuth2RefreshToken)) {
+                    AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate a valid refresh token.", AuthorizationConstants.ERROR_URI);
+                }
+
+                if (log.isTraceEnabled()) {
+                    log.trace("Generated refresh token");
+                }
+
+                OAuth2RefreshToken refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
+                authorizationBuilder.refreshToken(refreshToken);
+                return refreshToken;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取 OAuth2 访问令牌
+     *
+     * @param tokenContextBuilder  令牌上下文构建器
+     * @param authorizationBuilder 授权构建器
+     * @return OAuth2 访问令牌
+     */
+    private OAuth2AccessToken getOAuth2AccessToken(DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
+        OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
+        OAuth2Token generatedAccessToken = this.tokenGenerator.generate(tokenContext);
+        if (generatedAccessToken == null) {
+            AuthenticationUtil.throwError(OAuth2ErrorCodes.SERVER_ERROR, "The token generator failed to generate the access token.", AuthorizationConstants.ERROR_URI);
+        }
+
+        if (log.isTraceEnabled()) {
+            log.trace("Generated access token");
+        }
+
+        OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
+                generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
+                generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
+        if (generatedAccessToken instanceof ClaimAccessor) {
+            authorizationBuilder.token(accessToken, (metadata) ->
+                    metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, ((ClaimAccessor) generatedAccessToken).getClaims()));
+        } else {
+            authorizationBuilder.accessToken(accessToken);
+        }
+        return accessToken;
     }
 
     /**

@@ -20,7 +20,8 @@ import java.util.Set;
  * @author george
  */
 @Component
-public class ExceptionHandlingCustomizer implements Customizer<ExceptionHandlingConfigurer<HttpSecurity>> {
+public class ExceptionHandlingCustomizer
+        implements Customizer<ExceptionHandlingConfigurer<HttpSecurity>> {
 
     /**
      * rest 安全属性配置

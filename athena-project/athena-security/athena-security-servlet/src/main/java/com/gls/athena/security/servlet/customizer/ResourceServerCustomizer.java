@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
  * @author george
  */
 @Component
-public class ResourceServerCustomizer implements Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> {
+public class ResourceServerCustomizer
+        implements Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> {
 
     /**
      * 自定义

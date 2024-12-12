@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
  * @author george
  */
 @Component
-public class CsrfCustomizer implements Customizer<CsrfConfigurer<HttpSecurity>> {
+public class CsrfCustomizer
+        implements Customizer<CsrfConfigurer<HttpSecurity>> {
     /**
      * 自定义
      *

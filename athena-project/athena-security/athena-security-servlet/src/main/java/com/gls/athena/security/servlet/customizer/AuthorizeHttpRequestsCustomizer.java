@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
  * @author george
  */
 @Component
-public class AuthorizeHttpRequestsCustomizer implements Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> {
+public class AuthorizeHttpRequestsCustomizer
+        implements Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> {
 
     /**
      * 核心安全属性配置
