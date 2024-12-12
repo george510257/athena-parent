@@ -105,10 +105,10 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
                 .attribute(Principal.class.getName(), usernamePasswordAuthenticationToken);
 
         // ----- Access token -----
-        OAuth2AccessToken accessToken = getOAuth2AccessToken(tokenContextBuilder, authorizationBuilder);
+        OAuth2AccessToken accessToken = getAccessToken(tokenContextBuilder, authorizationBuilder);
 
         // ----- Refresh token -----
-        OAuth2RefreshToken refreshToken = getOAuth2RefreshToken(registeredClient, tokenContextBuilder, authorizationBuilder);
+        OAuth2RefreshToken refreshToken = getRefreshToken(registeredClient, tokenContextBuilder, authorizationBuilder);
 
         // ----- ID token -----
         OidcIdToken idToken = getOidcIdToken(scopes, tokenContextBuilder, authorizationBuilder);
@@ -177,7 +177,7 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
      * @param authorizationBuilder 授权构建器
      * @return OAuth2 刷新令牌
      */
-    private OAuth2RefreshToken getOAuth2RefreshToken(RegisteredClient registeredClient, DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
+    private OAuth2RefreshToken getRefreshToken(RegisteredClient registeredClient, DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
         if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
             OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
             OAuth2Token generatedRefreshToken = this.tokenGenerator.generate(tokenContext);
@@ -205,7 +205,7 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
      * @param authorizationBuilder 授权构建器
      * @return OAuth2 访问令牌
      */
-    private OAuth2AccessToken getOAuth2AccessToken(DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
+    private OAuth2AccessToken getAccessToken(DefaultOAuth2TokenContext.Builder tokenContextBuilder, OAuth2Authorization.Builder authorizationBuilder) {
         OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
         OAuth2Token generatedAccessToken = this.tokenGenerator.generate(tokenContext);
         if (generatedAccessToken == null) {
