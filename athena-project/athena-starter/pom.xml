@@ -29,6 +29,7 @@
         <module>athena-starter-swagger</module>
         <module>athena-starter-web</module>
         <module>athena-starter-xxl-job</module>
+        <module>athena-starter-amap</module>
     </modules>
 
     <dependencies>

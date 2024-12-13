@@ -67,6 +67,26 @@ public class AliyunCoreProperties extends BaseProperties {
          * 安全令牌
          */
         private String securityToken;
+        /**
+         * 会话时长
+         */
+        private Long durationSeconds;
+        /**
+         * 策略
+         */
+        private String policy;
+        /**
+         * 外部ID
+         */
+        private String externalId;
+        /**
+         * 角色ARN
+         */
+        private String roleArn;
+        /**
+         * 角色会话名称
+         */
+        private String roleSessionName;
 
     }
 }
