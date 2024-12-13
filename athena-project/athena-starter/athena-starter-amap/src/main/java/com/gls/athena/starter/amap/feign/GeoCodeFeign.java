@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  * @author george
  */
-@FeignClient(name = "amap", contextId = "geocode", path = "/geocode", url = "${amap.url}")
+@FeignClient(name = "amap", contextId = "geocode", path = "/geocode", url = "${athena.amap.url}")
 public interface GeoCodeFeign {
     /**
      * 地理编码
