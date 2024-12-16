@@ -36,7 +36,6 @@ public class LogConfig {
      *
      * @author george
      */
-
     @AutoConfiguration
     @ConditionalOnClass(KafkaTemplate.class)
     public static class LogKafkaConfig {

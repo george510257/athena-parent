@@ -51,14 +51,23 @@ public class RoleDeserializer extends JsonDeserializer<Role> {
         });
         // 创建Role对象
         Role role = new Role();
+        // 设置名称
         role.setName(name);
+        // 设置编码
         role.setCode(code);
+        // 设置描述
         role.setDescription(description);
+        // 设置类型
         role.setType(type);
+        // 设置父角色ID
         role.setParentId(parentId);
+        // 设置排序
         role.setSort(sort);
+        // 设置是否默认角色
         role.setDefaultRole(defaultRole);
+        // 设置权限列表
         role.setPermissions(permissions);
+        // 设置基础实体字段值
         JacksonUtil.deserializeBaseVo(mapper, node, role);
         return role;
     }

@@ -16,35 +16,37 @@ import java.util.Date;
 public class JacksonUtil {
 
     /**
-     * 序列化基础实体
+     * 反序列化基础实体
      *
-     * @param mapper ObjectMapper
-     * @param node   JsonNode
-     * @param baseVo 基础实体
+     * @param mapper ObjectMapper用于JSON解析
+     * @param node   JsonNode包含要解析的数据
+     * @param baseVo 基础实体对象，将从JsonNode中获取数据并设置到该对象中
      */
     public void deserializeBaseVo(ObjectMapper mapper, JsonNode node, BaseVo baseVo) {
-        // 获取JsonNode中的字段值
-        // 主键
+        // 从JsonNode中提取字段值并分配给BaseVo对象相应的属性
+
+        // 提取主键ID
         Long id = node.get("id").asLong();
-        // 租户ID
+        // 提取租户ID
         Long tenantId = node.get("tenantId").asLong();
-        // 版本号
+        // 提取版本号
         Integer version = node.get("version").asInt();
-        // 删除标记
+        // 提取删除标记
         Boolean deleted = node.get("deleted").asBoolean();
-        // 创建人ID
+        // 提取创建人ID
         Long createUserId = node.get("createUserId").asLong();
-        // 创建人姓名
+        // 提取创建人姓名
         String createUserName = node.get("createUserName").asText();
-        // 创建时间
+        // 提取创建时间
         Date createTime = mapper.convertValue(node.get("createTime"), Date.class);
-        // 更新人ID
+        // 提取更新人ID
         Long updateUserId = node.get("updateUserId").asLong();
-        // 更新人姓名
+        // 提取更新人姓名
         String updateUserName = node.get("updateUserName").asText();
-        // 更新时间
+        // 提取更新时间
         Date updateTime = mapper.convertValue(node.get("updateTime"), Date.class);
-        // 设置基础实体字段值
+
+        // 将提取的值设置到BaseVo对象的各个字段
         baseVo.setId(id);
         baseVo.setTenantId(tenantId);
         baseVo.setVersion(version);

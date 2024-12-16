@@ -23,8 +23,8 @@ public class UserDeserializer extends JsonDeserializer<User> {
     /**
      * 将JSON内容反序列化为User对象
      *
-     * @param parser  JSON解析器
-     * @param context 上下文
+     * @param parser  JsonParser JSON解析器
+     * @param context DeserializationContext 上下文
      * @return User 用户对象
      * @throws IOException IO异常
      */
