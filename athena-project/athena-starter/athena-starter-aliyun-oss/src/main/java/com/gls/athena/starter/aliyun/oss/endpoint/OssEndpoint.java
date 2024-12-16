@@ -1,6 +1,7 @@
 package com.gls.athena.starter.aliyun.oss.endpoint;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.Bucket;
 import jakarta.annotation.Resource;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
@@ -29,15 +30,15 @@ public class OssEndpoint {
      */
     @ReadOperation
     public Map<String, Object> invoke() {
-        Map<String, Object> result = new HashMap();
+        Map<String, Object> result = new HashMap<>();
         applicationContext.getBeansOfType(OSSClient.class)
                 .forEach((beanName, client) -> {
-                    Map<String, Object> ossProperties = new HashMap();
+                    Map<String, Object> ossProperties = new HashMap<>();
                     ossProperties.put("beanName", beanName);
                     ossProperties.put("endpoint", client.getEndpoint().toString());
                     ossProperties.put("clientConfiguration", client.getClientConfiguration());
                     ossProperties.put("credentials", client.getCredentialsProvider().getCredentials());
-                    ossProperties.put("bucketList", client.listBuckets().stream().map(bucket -> bucket.getName()).toArray());
+                    ossProperties.put("bucketList", client.listBuckets().stream().map(Bucket::getName).toArray());
                     result.put(beanName, ossProperties);
                 });
         return result;
