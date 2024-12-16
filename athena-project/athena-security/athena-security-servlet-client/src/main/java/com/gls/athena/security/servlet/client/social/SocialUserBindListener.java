@@ -19,11 +19,22 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class SocialUserBindListener {
+    /**
+     * 社交用户服务
+     */
     @Resource
     private ISocialUserService socialUserService;
+    /**
+     * 会话
+     */
     @Resource
     private HttpSession session;
 
+    /**
+     * 绑定社交用户
+     *
+     * @param event 认证成功事件
+     */
     @EventListener(AuthenticationSuccessEvent.class)
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         log.info("社交用户绑定监听器");
