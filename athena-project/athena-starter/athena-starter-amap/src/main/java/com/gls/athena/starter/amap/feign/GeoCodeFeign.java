@@ -2,8 +2,8 @@ package com.gls.athena.starter.amap.feign;
 
 import com.gls.athena.starter.amap.domain.GeoRequest;
 import com.gls.athena.starter.amap.domain.GeoResponse;
-import com.gls.athena.starter.amap.domain.RegeoRequest;
-import com.gls.athena.starter.amap.domain.RegeoResponse;
+import com.gls.athena.starter.amap.domain.ReGeoRequest;
+import com.gls.athena.starter.amap.domain.ReGeoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,5 +31,5 @@ public interface GeoCodeFeign {
      * @return 逆地理编码响应
      */
     @GetMapping("/regeo")
-    RegeoResponse regeoCode(@SpringQueryMap RegeoRequest request);
+    ReGeoResponse reGeoCode(@SpringQueryMap ReGeoRequest request);
 }

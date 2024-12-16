@@ -13,10 +13,12 @@ import java.io.Serializable;
 public abstract class BaseResponse implements Serializable {
     /**
      * 返回结果状态值
+     * 返回值为 0 或 1，0 表示请求失败；1 表示请求成功。
      */
     private Integer status;
     /**
      * 返回状态说明
+     * 当 status 为 0 时，info 会返回具体错误原因，否则返回“OK”。详情可以参阅 info 状态表
      */
     private String info;
 }
