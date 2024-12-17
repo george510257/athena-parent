@@ -106,6 +106,11 @@ public class DefaultAuthConfig {
         return new InMemoryRegisteredClientRepository(messagingClient);
     }
 
+    /**
+     * 社交用户服务
+     *
+     * @return 社交用户服务
+     */
     @Bean
     @ConditionalOnMissingBean
     public ISocialUserService socialUserService() {
