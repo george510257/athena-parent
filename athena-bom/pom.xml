@@ -98,8 +98,8 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.gls.athena.starter.sms</groupId>
-                <artifactId>athena-starter-sms</artifactId>
+                <groupId>com.gls.athena.starter.message</groupId>
+                <artifactId>athena-starter-message</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

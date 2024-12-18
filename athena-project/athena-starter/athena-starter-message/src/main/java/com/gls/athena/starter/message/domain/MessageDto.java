@@ -8,6 +8,8 @@ import java.util.Map;
 
 /**
  * 消息传输对象
+ *
+ * @author george
  */
 @Data
 @Accessors(chain = true)

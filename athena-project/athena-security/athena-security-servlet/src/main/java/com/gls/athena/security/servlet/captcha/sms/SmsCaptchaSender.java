@@ -4,7 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.gls.athena.common.bean.result.Result;
 import com.gls.athena.common.bean.result.ResultStatus;
 import com.gls.athena.security.servlet.captcha.base.ICaptchaSender;
-import com.gls.athena.starter.sms.support.SmsSender;
+import com.gls.athena.starter.message.support.MessageUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class SmsCaptchaSender implements ICaptchaSender<SmsCaptcha> {
         Map<String, Object> params = new HashMap<>();
         params.put("code", smsCaptcha.getCode());
         params.put("mobile", target);
-        SmsSender.send(this, target, templateCode, params);
+        MessageUtil.sendSms(target, templateCode, params);
         Result<String> result = ResultStatus.SUCCESS.toResult("短信验证码发送成功");
         try {
             response.setContentType("application/json;charset=UTF-8");

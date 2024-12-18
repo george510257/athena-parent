@@ -1,4 +1,4 @@
-package com.gls.athena.starter.sms.config;
+package com.gls.athena.starter.message.config;
 
 import com.gls.athena.common.core.constant.BaseProperties;
 import com.gls.athena.common.core.constant.IConstants;
@@ -9,14 +9,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.io.Serializable;
 
 /**
- * 短信配置
+ * 消息配置
  *
  * @author george
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".sms")
-public class SmsProperties extends BaseProperties {
+@ConfigurationProperties(prefix = IConstants.BASE_PROPERTIES_PREFIX + ".message")
+public class MessageProperties extends BaseProperties {
     /**
      * kafka配置
      */
@@ -30,10 +30,6 @@ public class SmsProperties extends BaseProperties {
         /**
          * 主题
          */
-        private String topic = "athena-sms";
-        /**
-         * key
-         */
-        private String key = "sms";
+        private String topic = "athena-message";
     }
 }
