@@ -1,4 +1,4 @@
-package com.gls.athena.starter.log.method;
+package com.gls.athena.starter.log.domain;
 
 /**
  * @author george

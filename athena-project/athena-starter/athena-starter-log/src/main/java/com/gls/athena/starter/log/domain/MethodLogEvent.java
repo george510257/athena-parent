@@ -1,44 +1,21 @@
-package com.gls.athena.starter.log.support;
+package com.gls.athena.starter.log.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
 /**
- * 方法日志DTO
+ * 方法日志事件
  *
  * @author george
  */
 @Data
 @Accessors(chain = true)
-public class MethodLogDto implements Serializable {
-    /**
-     * 编码
-     */
-    private String code;
-    /**
-     * 名称
-     */
-    private String name;
-    /**
-     * 描述
-     */
-    private String description;
-    /**
-     * 应用名称
-     */
-    private String applicationName;
-    /**
-     * 类名
-     */
-    private String className;
-    /**
-     * 方法名
-     */
-    private String methodName;
+@EqualsAndHashCode(callSuper = true)
+public class MethodLogEvent extends MethodEvent {
     /**
      * 参数
      */
@@ -56,20 +33,19 @@ public class MethodLogDto implements Serializable {
      */
     private Date endTime;
     /**
-     * 异常
+     * 错误信息
      */
     private String errorMessage;
     /**
-     * 异常
+     * 异常堆栈
      */
     private String throwable;
     /**
      * 方法日志类型
      */
-    private String type;
+    private MethodLogType type;
     /**
      * 跟踪ID
      */
     private String traceId;
-
 }

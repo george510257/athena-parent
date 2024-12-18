@@ -1,5 +1,6 @@
 package com.gls.athena.starter.log.method;
 
+import com.gls.athena.starter.log.domain.MethodEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 

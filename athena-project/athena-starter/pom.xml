@@ -30,6 +30,7 @@
         <module>athena-starter-web</module>
         <module>athena-starter-xxl-job</module>
         <module>athena-starter-amap</module>
+        <module>athena-starter-message</module>
     </modules>
 
     <dependencies>

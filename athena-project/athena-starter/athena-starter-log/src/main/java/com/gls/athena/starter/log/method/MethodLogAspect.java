@@ -1,6 +1,9 @@
 package com.gls.athena.starter.log.method;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.gls.athena.starter.log.domain.MethodLogEvent;
+import com.gls.athena.starter.log.domain.MethodLogType;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import jakarta.annotation.Resource;
@@ -43,6 +46,7 @@ public class MethodLogAspect {
     public Object around(ProceedingJoinPoint point, MethodLog methodLog) throws Throwable {
         String className = point.getTarget().getClass().getName();
         String methodName = point.getSignature().getName();
+        String applicationName = SpringUtil.getApplicationName();
         String traceId = this.getTraceId();
         log.debug("[类名]:{},[方法]:{}", className, methodName);
         Map<String, Object> args = getMethodArgs(point);
@@ -53,11 +57,36 @@ public class MethodLogAspect {
             Object result = point.proceed();
             log.debug("方法执行结果：{}", result);
             log.debug("方法执行时间：{}ms", System.currentTimeMillis() - startTime.getTime());
-            SpringUtil.publishEvent(MethodLogEvent.ofNormal(this, methodLog, className, methodName, args, result, startTime, traceId));
+            SpringUtil.publishEvent(new MethodLogEvent()
+                    .setArgs(args)
+                    .setResult(result)
+                    .setStartTime(startTime)
+                    .setEndTime(new Date())
+                    .setType(MethodLogType.NORMAL)
+                    .setTraceId(traceId)
+                    .setCode(methodLog.code())
+                    .setName(methodLog.name())
+                    .setDescription(methodLog.description())
+                    .setApplicationName(applicationName)
+                    .setClassName(className)
+                    .setMethodName(methodName));
             return result;
         } catch (Throwable throwable) {
             log.error("方法执行异常：{}", throwable.getMessage(), throwable);
-            SpringUtil.publishEvent(MethodLogEvent.ofError(this, methodLog, className, methodName, args, throwable, startTime, traceId));
+            SpringUtil.publishEvent(new MethodLogEvent()
+                    .setArgs(args)
+                    .setStartTime(startTime)
+                    .setEndTime(new Date())
+                    .setType(MethodLogType.ERROR)
+                    .setTraceId(traceId)
+                    .setErrorMessage(throwable.getMessage())
+                    .setThrowable(ExceptionUtil.stacktraceToString(throwable))
+                    .setCode(methodLog.code())
+                    .setName(methodLog.name())
+                    .setDescription(methodLog.description())
+                    .setApplicationName(applicationName)
+                    .setClassName(className)
+                    .setMethodName(methodName));
             throw throwable;
         }
     }

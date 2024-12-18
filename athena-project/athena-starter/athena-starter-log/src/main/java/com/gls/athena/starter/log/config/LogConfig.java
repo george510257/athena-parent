@@ -2,9 +2,8 @@ package com.gls.athena.starter.log.config;
 
 import cn.hutool.json.JSONUtil;
 import com.gls.athena.starter.log.method.IMethodEventListener;
-import com.gls.athena.starter.log.support.KafkaMethodEventListener;
+import com.gls.athena.starter.log.method.KafkaMethodEventListener;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -39,11 +38,6 @@ public class LogConfig {
     @AutoConfiguration
     @ConditionalOnClass(KafkaTemplate.class)
     public static class LogKafkaConfig {
-        /**
-         * 应用名称
-         */
-        @Value("${spring.application.name}")
-        private String applicationName;
 
         /**
          * kafka方法事件监听器
@@ -54,7 +48,7 @@ public class LogConfig {
          */
         @Bean
         public IMethodEventListener kafkaMethodEventListener(LogProperties logProperties, KafkaTemplate<String, Object> kafkaTemplate) {
-            return new KafkaMethodEventListener(logProperties, kafkaTemplate, applicationName);
+            return new KafkaMethodEventListener(logProperties, kafkaTemplate);
         }
     }
 }
