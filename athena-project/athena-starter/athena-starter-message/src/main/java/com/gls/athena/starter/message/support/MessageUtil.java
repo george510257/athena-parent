@@ -9,6 +9,8 @@ import java.util.Map;
 
 /**
  * 消息发送者
+ *
+ * @author george
  */
 @UtilityClass
 public class MessageUtil {

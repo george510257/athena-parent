@@ -6,6 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 
+/**
+ * kafka消息事件监听器
+ *
+ * @author george
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class KafkaMessageEventListener implements IMessageEventListener {

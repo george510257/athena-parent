@@ -2,6 +2,8 @@ package com.gls.athena.starter.message.domain;
 
 /**
  * 消息类型
+ *
+ * @author george
  */
 public enum MessageType {
     /**

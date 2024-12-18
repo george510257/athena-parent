@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Async;
 
 /**
  * 消息事件监听器
+ *
+ * @author george
  */
 public interface IMessageEventListener {
 

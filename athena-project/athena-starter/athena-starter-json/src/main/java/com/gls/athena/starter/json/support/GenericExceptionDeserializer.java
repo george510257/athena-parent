@@ -55,7 +55,8 @@ public class GenericExceptionDeserializer<T extends Exception> extends JsonDeser
         try {
             // Use reflection to create an instance of the exception with the message
             T exception = (T) Class.forName(node.get("type").asText()).getConstructor(String.class).newInstance(message);
-            exception.setStackTrace(stackTrace);  // Set the deserialized stack trace
+            // Set the deserialized stack trace
+            exception.setStackTrace(stackTrace);
             return exception;
         } catch (Exception e) {
             throw new RuntimeException("Error during exception deserialization", e);
