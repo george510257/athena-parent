@@ -36,7 +36,6 @@ public class KafkaMethodEventListener implements IMethodEventListener {
         kafkaTemplate.send(logProperties.getKafka().getTopic(), key, methodDto);
     }
 
-
     /**
      * 获取kafka key
      *
