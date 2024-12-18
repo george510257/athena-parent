@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-public class MethodEvent implements Serializable {
+public class MethodDto implements Serializable {
     /**
      * 编码
      */

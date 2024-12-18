@@ -2,7 +2,7 @@ package com.gls.athena.starter.log.method;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.gls.athena.starter.log.domain.MethodLogEvent;
+import com.gls.athena.starter.log.domain.MethodLogDto;
 import com.gls.athena.starter.log.domain.MethodLogType;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
@@ -57,7 +57,7 @@ public class MethodLogAspect {
             Object result = point.proceed();
             log.debug("方法执行结果：{}", result);
             log.debug("方法执行时间：{}ms", System.currentTimeMillis() - startTime.getTime());
-            SpringUtil.publishEvent(new MethodLogEvent()
+            SpringUtil.publishEvent(new MethodLogDto()
                     .setArgs(args)
                     .setResult(result)
                     .setStartTime(startTime)
@@ -73,7 +73,7 @@ public class MethodLogAspect {
             return result;
         } catch (Throwable throwable) {
             log.error("方法执行异常：{}", throwable.getMessage(), throwable);
-            SpringUtil.publishEvent(new MethodLogEvent()
+            SpringUtil.publishEvent(new MethodLogDto()
                     .setArgs(args)
                     .setStartTime(startTime)
                     .setEndTime(new Date())

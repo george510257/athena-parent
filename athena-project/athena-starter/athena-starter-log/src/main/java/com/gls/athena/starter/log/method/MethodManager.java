@@ -1,7 +1,7 @@
 package com.gls.athena.starter.log.method;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.gls.athena.starter.log.domain.MethodEvent;
+import com.gls.athena.starter.log.domain.MethodDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -33,7 +33,7 @@ public class MethodManager {
                     MethodLog methodLog = method.getAnnotation(MethodLog.class);
                     String className = method.getDeclaringClass().getName();
                     String methodName = method.getName();
-                    SpringUtil.publishEvent(new MethodEvent()
+                    SpringUtil.publishEvent(new MethodDto()
                             .setCode(methodLog.code())
                             .setName(methodLog.name())
                             .setDescription(methodLog.description())

@@ -15,7 +15,7 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class MethodLogEvent extends MethodEvent {
+public class MethodLogDto extends MethodDto {
     /**
      * 参数
      */

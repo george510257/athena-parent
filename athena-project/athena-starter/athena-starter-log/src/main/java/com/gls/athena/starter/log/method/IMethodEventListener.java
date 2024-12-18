@@ -1,6 +1,6 @@
 package com.gls.athena.starter.log.method;
 
-import com.gls.athena.starter.log.domain.MethodEvent;
+import com.gls.athena.starter.log.domain.MethodDto;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 
@@ -14,10 +14,10 @@ public interface IMethodEventListener {
     /**
      * 方法事件监听
      *
-     * @param event 方法事件
+     * @param methodDto 方法事件
      */
     @Async
-    @EventListener(MethodEvent.class)
-    void onMethodEvent(MethodEvent event);
+    @EventListener(MethodDto.class)
+    void onMethodEvent(MethodDto methodDto);
 
 }

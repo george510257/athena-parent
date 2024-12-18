@@ -1,8 +1,8 @@
 package com.gls.athena.starter.log.method;
 
 import com.gls.athena.starter.log.config.LogProperties;
-import com.gls.athena.starter.log.domain.MethodEvent;
-import com.gls.athena.starter.log.domain.MethodLogEvent;
+import com.gls.athena.starter.log.domain.MethodDto;
+import com.gls.athena.starter.log.domain.MethodLogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -27,24 +27,24 @@ public class KafkaMethodEventListener implements IMethodEventListener {
     /**
      * 方法事件监听
      *
-     * @param event 方法事件
+     * @param methodDto 方法事件
      */
     @Override
-    public void onMethodEvent(MethodEvent event) {
-        String key = getKafkaKey(event);
-        log.info("发送方法日志: {}", event);
-        kafkaTemplate.send(logProperties.getKafka().getTopic(), key, event);
+    public void onMethodEvent(MethodDto methodDto) {
+        String key = getKafkaKey(methodDto);
+        log.info("发送方法日志: {}", methodDto);
+        kafkaTemplate.send(logProperties.getKafka().getTopic(), key, methodDto);
     }
 
 
     /**
      * 获取kafka key
      *
-     * @param event 方法事件
+     * @param methodDto 方法事件
      * @return kafka key
      */
-    private String getKafkaKey(MethodEvent event) {
-        if (event instanceof MethodLogEvent) {
+    private String getKafkaKey(MethodDto methodDto) {
+        if (methodDto instanceof MethodLogDto) {
             return logProperties.getKafka().getMethodLogKey();
         }
         return logProperties.getKafka().getMethodKey();
