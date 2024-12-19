@@ -15,8 +15,12 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class GeoResponse extends BaseResponse {
-
+    /**
+     * 返回结果数目
+     */
     private String count;
-
+    /**
+     * 地理编码信息列表
+     */
     private List<GeoCode> geocodes = new ArrayList<>();
 }

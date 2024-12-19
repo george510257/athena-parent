@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 /**
  * 道路信息
+ *
+ * @author george
  */
 @Data
 public class Road implements Serializable {

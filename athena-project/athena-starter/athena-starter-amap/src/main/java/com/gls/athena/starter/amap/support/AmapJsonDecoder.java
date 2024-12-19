@@ -11,6 +11,11 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.stream.Collectors;
 
+/**
+ * 高德地图 JSON 解码器
+ *
+ * @author george
+ */
 public class AmapJsonDecoder implements Decoder {
 
     private final ObjectMapper objectMapper = new ObjectMapper();

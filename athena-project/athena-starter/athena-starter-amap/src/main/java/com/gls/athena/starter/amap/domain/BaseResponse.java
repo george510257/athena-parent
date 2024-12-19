@@ -12,8 +12,17 @@ import java.io.Serializable;
  */
 @Data
 public abstract class BaseResponse implements Serializable {
+    /**
+     * 返回结果状态值
+     */
     private String status;
+    /**
+     * 返回状态说明
+     */
     private String info;
+    /**
+     * 返回状态说明编码
+     */
     @JsonProperty("infocode")
     private String infoCode;
 }

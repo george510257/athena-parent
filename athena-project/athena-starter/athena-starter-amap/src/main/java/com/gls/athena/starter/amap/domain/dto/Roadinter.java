@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 /**
  * 道路交叉口
+ *
+ * @author george
  */
 @Data
 public class Roadinter implements Serializable {
