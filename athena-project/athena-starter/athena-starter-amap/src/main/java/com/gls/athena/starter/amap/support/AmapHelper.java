@@ -5,6 +5,8 @@ import com.gls.athena.starter.amap.domain.GeoRequest;
 import com.gls.athena.starter.amap.domain.GeoResponse;
 import com.gls.athena.starter.amap.domain.ReGeoRequest;
 import com.gls.athena.starter.amap.domain.ReGeoResponse;
+import com.gls.athena.starter.amap.domain.dto.GeoCode;
+import com.gls.athena.starter.amap.domain.dto.ReGeoCode;
 import com.gls.athena.starter.amap.feign.GeoCodeFeign;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -36,7 +38,7 @@ public class AmapHelper {
      * @param city    城市
      * @return 地理编码信息
      */
-    public List<GeoResponse.GeoCode> getGeoCode(String address, String city) {
+    public List<GeoCode> getGeoCode(String address, String city) {
         String key = amapProperties.getKey();
         GeoRequest request = new GeoRequest();
         request.setKey(key);
@@ -52,7 +54,7 @@ public class AmapHelper {
      * @param location 经纬度
      * @return 逆地理编码信息
      */
-    public ReGeoResponse.ReGeoCode getReGeoCode(String location) {
+    public ReGeoCode getReGeoCode(String location) {
         String key = amapProperties.getKey();
         ReGeoRequest request = new ReGeoRequest();
         request.setKey(key);

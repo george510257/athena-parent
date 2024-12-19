@@ -26,5 +26,5 @@ public abstract class BaseResponse implements Serializable {
      * 返回状态码
      */
     @JsonProperty("infocode")
-    private String infoCode;
+    private Integer infoCode;
 }
