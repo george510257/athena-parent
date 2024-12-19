@@ -45,7 +45,7 @@ public class AmapHelper {
         request.setAddress(address);
         request.setCity(city);
         GeoResponse geoResponse = geoCodeFeign.geoCode(request);
-        return geoResponse.getGeoCodes();
+        return geoResponse.getGeocodes();
     }
 
     /**
@@ -60,7 +60,7 @@ public class AmapHelper {
         request.setKey(key);
         request.setLocation(location);
         ReGeoResponse reGeoResponse = geoCodeFeign.reGeoCode(request);
-        return reGeoResponse.getReGeoCode();
+        return reGeoResponse.getRegeocode();
     }
 }
 

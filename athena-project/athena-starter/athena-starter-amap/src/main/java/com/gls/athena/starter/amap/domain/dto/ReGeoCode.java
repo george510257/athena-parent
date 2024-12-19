@@ -12,24 +12,10 @@ import java.util.List;
  */
 @Data
 public class ReGeoCode implements Serializable {
-    /**
-     * 地址元素列表
-     */
-    private AddressComponent addressComponent;
-    /**
-     * 道路信息列表
-     */
-    private List<Road> road;
-    /**
-     * 道路交叉口列表
-     */
+    private List<Road> roads;
     private List<Roadinter> roadinters;
-    /**
-     * 兴趣点信息列表
-     */
-    private List<Poi> pois;
-    /**
-     * Aoi信息列表
-     */
+    private String formatted_address;
+    private AddressComponent addressComponent;
     private List<Aoi> aois;
+    private List<Poi> pois;
 }

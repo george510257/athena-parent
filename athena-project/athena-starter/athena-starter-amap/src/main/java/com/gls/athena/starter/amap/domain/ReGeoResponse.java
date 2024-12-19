@@ -12,9 +12,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ReGeoResponse extends BaseResponse {
-    /**
-     * 逆地理编码列表
-     */
-    private ReGeoCode reGeoCode;
 
+    private ReGeoCode regeocode;
 }

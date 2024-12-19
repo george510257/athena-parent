@@ -11,12 +11,6 @@ import java.io.Serializable;
  */
 @Data
 public class Building implements Serializable {
-    /**
-     * 建筑名称
-     */
     private String name;
-    /**
-     * 类型
-     */
     private String type;
 }

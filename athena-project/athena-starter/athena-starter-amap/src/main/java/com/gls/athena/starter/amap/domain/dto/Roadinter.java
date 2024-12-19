@@ -9,32 +9,11 @@ import java.io.Serializable;
  */
 @Data
 public class Roadinter implements Serializable {
-    /**
-     * 交叉路口到请求坐标的距离
-     */
-    private String distance;
-    /**
-     * 方位
-     */
-    private String direction;
-    /**
-     * 坐标点
-     */
+    private String second_name;
+    private String first_id;
+    private String second_id;
     private String location;
-    /**
-     * 第一条道路 id
-     */
-    private String firstId;
-    /**
-     * 第一条道路名称
-     */
-    private String firstName;
-    /**
-     * 第二条道路 id
-     */
-    private String secondId;
-    /**
-     * 第二条道路名称
-     */
-    private String secondName;
+    private String distance;
+    private String first_name;
+    private String direction;
 }
