@@ -25,7 +25,7 @@ public abstract class BaseRequest implements Serializable {
      * 返回数据格式类型
      * 可选输入内容包括：JSON，XML。设置 JSON 返回结果数据将会以 JSON 结构构成；如果设置 XML 返回结果数据将以 XML 结构构成。
      */
-    private String output;
+    private String output = "JSON";
     /**
      * 回调函数
      * callback 值是用户定义的函数名称，此参数只在 output 参数设置为 JSON 时有效。

@@ -1,5 +1,6 @@
 package com.gls.athena.starter.amap.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,6 +22,7 @@ public class GeoResponse extends BaseResponse {
     /**
      * 地理编码信息列表
      */
+    @JsonProperty("geocodes")
     private List<GeoCode> geoCodes;
 
     /**
@@ -49,6 +51,7 @@ public class GeoResponse extends BaseResponse {
          * 城市编码
          * 例如：010
          */
+        @JsonProperty("citycode")
         private String cityCode;
         /**
          * 地址所在的区
@@ -69,6 +72,7 @@ public class GeoResponse extends BaseResponse {
          * 区域编码
          * 例如：110101
          */
+        @JsonProperty("adcode")
         private String adCode;
         /**
          * 坐标点
