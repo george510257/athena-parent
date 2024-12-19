@@ -3,6 +3,8 @@ package com.gls.athena.starter.amap.support;
 import com.gls.athena.starter.amap.config.AmapProperties;
 import com.gls.athena.starter.amap.domain.GeoRequest;
 import com.gls.athena.starter.amap.domain.GeoResponse;
+import com.gls.athena.starter.amap.domain.ReGeoRequest;
+import com.gls.athena.starter.amap.domain.ReGeoResponse;
 import com.gls.athena.starter.amap.feign.GeoCodeFeign;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -42,6 +44,21 @@ public class AmapHelper {
         request.setCity(city);
         GeoResponse geoResponse = geoCodeFeign.geoCode(request);
         return geoResponse.getGeoCodes();
+    }
+
+    /**
+     * 逆地理编码
+     *
+     * @param location 经纬度
+     * @return 逆地理编码信息
+     */
+    public ReGeoResponse.ReGeoCode getReGeoCode(String location) {
+        String key = amapProperties.getKey();
+        ReGeoRequest request = new ReGeoRequest();
+        request.setKey(key);
+        request.setLocation(location);
+        ReGeoResponse reGeoResponse = geoCodeFeign.reGeoCode(request);
+        return reGeoResponse.getReGeoCode();
     }
 }
 

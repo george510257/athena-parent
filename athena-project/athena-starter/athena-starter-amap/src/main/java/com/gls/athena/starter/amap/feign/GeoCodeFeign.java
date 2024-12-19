@@ -1,5 +1,6 @@
 package com.gls.athena.starter.amap.feign;
 
+import com.gls.athena.starter.amap.config.IAmapConstants;
 import com.gls.athena.starter.amap.domain.GeoRequest;
 import com.gls.athena.starter.amap.domain.GeoResponse;
 import com.gls.athena.starter.amap.domain.ReGeoRequest;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  * @author george
  */
-@FeignClient(name = "amap", contextId = "geocode", path = "/geocode", url = "${athena.amap.url}")
+@FeignClient(name = "amap", contextId = "geocode", path = "/geocode", url = IAmapConstants.URL)
 public interface GeoCodeFeign {
     /**
      * 地理编码

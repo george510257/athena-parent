@@ -1,5 +1,6 @@
 package com.gls.athena.starter.amap.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,4 +22,9 @@ public abstract class BaseResponse implements Serializable {
      * 当 status 为 0 时，info 会返回具体错误原因，否则返回“OK”。详情可以参阅 info 状态表
      */
     private String info;
+    /**
+     * 返回状态码
+     */
+    @JsonProperty("infocode")
+    private String infoCode;
 }
