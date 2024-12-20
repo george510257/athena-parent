@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author george
  */
-public class AmapConfig {
+public class AmapClientConfig {
     /**
      * 高德json解码器
      *
