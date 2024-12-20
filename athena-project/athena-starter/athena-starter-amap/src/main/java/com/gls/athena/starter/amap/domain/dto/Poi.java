@@ -16,13 +16,29 @@ public class Poi implements Serializable {
      */
     private String id;
     /**
+     * poi 点名称
+     */
+    private String name;
+    /**
+     * poi 类型
+     */
+    private String type;
+    /**
+     * 电话
+     */
+    private String tel;
+    /**
      * 方向
      */
     private String direction;
     /**
-     * poi 所在商圈名称
+     * 该 POI 的中心点到请求坐标的距离
      */
-    private BusinessArea businessarea;
+    private String distance;
+    /**
+     * 坐标点
+     */
+    private String location;
     /**
      * poi 地址信息
      */
@@ -32,23 +48,8 @@ public class Poi implements Serializable {
      */
     private String poiweight;
     /**
-     * poi 点名称
+     * poi 所在商圈名称
      */
-    private String name;
-    /**
-     * 坐标点
-     */
-    private String location;
-    /**
-     * 该 POI 的中心点到请求坐标的距离
-     */
-    private String distance;
-    /**
-     * 电话
-     */
-    private String tel;
-    /**
-     * poi 类型
-     */
-    private String type;
+    private String businessarea;
+
 }

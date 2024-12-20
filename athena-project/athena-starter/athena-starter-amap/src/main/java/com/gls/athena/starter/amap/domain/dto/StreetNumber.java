@@ -12,6 +12,10 @@ import java.io.Serializable;
 @Data
 public class StreetNumber implements Serializable {
     /**
+     * 街道名称
+     */
+    private String street;
+    /**
      * 门牌号
      */
     private String number;
@@ -27,8 +31,4 @@ public class StreetNumber implements Serializable {
      * 门牌地址到请求坐标的距离
      */
     private String distance;
-    /**
-     * 街道名称
-     */
-    private String street;
 }

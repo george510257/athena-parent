@@ -1,6 +1,5 @@
 package com.gls.athena.starter.amap.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,8 +21,7 @@ public class ReGeoRequest extends BaseRequest {
      * 以下内容需要 extensions 参数为 all 时才生效。
      * 逆地理编码在进行坐标解析之后不仅可以返回地址描述，也可以返回经纬度附近符合限定要求的 POI 内容（在 extensions 字段值为 all 时才会返回 POI 内容）。设置 POI 类型参数相当于为上述操作限定要求。参数仅支持传入 POI TYPECODE，可以传入多个 POI TYPECODE，相互之间用“|”分隔。获取 POI TYPECODE 可以参考 POI 分类码表。
      */
-    @JsonProperty("poitype")
-    private String poiType;
+    private String poitype;
     /**
      * 搜索半径
      * radius 取值范围：0~3000，默认值：1000。单位：米
@@ -34,14 +32,13 @@ public class ReGeoRequest extends BaseRequest {
      * extensions 参数默认取值是 base，也就是返回基本地址信息；
      * extensions 参数取值为 all 时会返回基本地址信息、附近 POI 内容、道路信息以及道路交叉口信息。
      */
-    private String extensions = "base";
+    private String extensions = "all";
     /**
      * 道路等级
      * 以下内容需要 extensions 参数为 all 时才生效。
      * 可选值：0，1  当 roadlevel=0时，显示所有道路 ； 当 roadlevel=1时，过滤非主干道路，仅输出主干道路数据
      */
-    @JsonProperty("roadlevel")
-    private String roadLevel = "0";
+    private String roadlevel = "0";
     /**
      * 是否优化 POI 返回顺序
      * 以下内容需要 extensions 参数为 all 时才生效。
@@ -50,6 +47,5 @@ public class ReGeoRequest extends BaseRequest {
      * 1：综合大数据分析将居家相关的 POI 内容优先返回，即优化返回结果中 pois 字段的poi 顺序。
      * 2：综合大数据分析将公司相关的 POI 内容优先返回，即优化返回结果中 pois 字段的poi 顺序。
      */
-    @JsonProperty("homeorcorp")
-    private String homeOrCorp = "0";
+    private String homeorcorp = "0";
 }

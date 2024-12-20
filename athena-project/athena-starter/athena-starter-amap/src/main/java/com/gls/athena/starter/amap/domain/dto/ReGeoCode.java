@@ -13,14 +13,6 @@ import java.util.List;
 @Data
 public class ReGeoCode implements Serializable {
     /**
-     * 道路信息列表
-     */
-    private List<Road> roads;
-    /**
-     * 道路交叉口列表
-     */
-    private List<Roadinter> roadinters;
-    /**
      * 商圈信息列表
      */
     private String formatted_address;
@@ -29,11 +21,20 @@ public class ReGeoCode implements Serializable {
      */
     private AddressComponent addressComponent;
     /**
-     * aoi 信息列表
-     */
-    private List<Aoi> aois;
-    /**
      * poi 信息列表
      */
     private List<Poi> pois;
+    /**
+     * 道路信息列表
+     */
+    private List<Road> roads;
+    /**
+     * 道路交叉口列表
+     */
+    private List<Roadinter> roadinters;
+    /**
+     * aoi 信息列表
+     */
+    private List<Aoi> aois;
+
 }

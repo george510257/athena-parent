@@ -10,7 +10,11 @@ import org.springframework.context.annotation.Bean;
  * @author george
  */
 public class AmapConfig {
-
+    /**
+     * 高德json解码器
+     *
+     * @return Decoder
+     */
     @Bean
     public Decoder amapJsonDecoder() {
         return new AmapJsonDecoder();

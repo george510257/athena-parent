@@ -1,6 +1,5 @@
 package com.gls.athena.starter.amap.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -23,6 +22,5 @@ public abstract class BaseResponse implements Serializable {
     /**
      * 返回状态说明编码
      */
-    @JsonProperty("infocode")
-    private String infoCode;
+    private String infocode;
 }
