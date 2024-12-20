@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 高德工具类
+ * 高德客户端
  *
  * @author george
  */
 @Component
-public class AmapHelper {
+public class AmapClient {
     /**
      * 高德配置
      */
