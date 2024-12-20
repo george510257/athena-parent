@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author george
  */
 @Data
-public class GeoCode implements Serializable {
+public class Geocode implements Serializable {
     /**
      * 结构化地址信息
      */

@@ -1,6 +1,6 @@
 package com.gls.athena.starter.amap.domain;
 
-import com.gls.athena.starter.amap.domain.dto.GeoCode;
+import com.gls.athena.starter.amap.domain.dto.Geocode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,5 +22,5 @@ public class GeoResponse extends BaseResponse {
     /**
      * 地理编码信息列表
      */
-    private List<GeoCode> geocodes = new ArrayList<>();
+    private List<Geocode> geocodes = new ArrayList<>();
 }

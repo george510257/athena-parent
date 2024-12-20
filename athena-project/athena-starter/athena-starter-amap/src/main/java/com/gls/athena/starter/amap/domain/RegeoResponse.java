@@ -1,6 +1,6 @@
 package com.gls.athena.starter.amap.domain;
 
-import com.gls.athena.starter.amap.domain.dto.ReGeoCode;
+import com.gls.athena.starter.amap.domain.dto.Regeocode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,9 +11,9 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ReGeoResponse extends BaseResponse {
+public class RegeoResponse extends BaseResponse {
     /**
      * 逆地理编码列表
      */
-    private ReGeoCode regeocode;
+    private Regeocode regeocode;
 }

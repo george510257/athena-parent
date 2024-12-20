@@ -3,8 +3,8 @@ package com.gls.athena.starter.amap.feign;
 import com.gls.athena.starter.amap.config.IAmapConstants;
 import com.gls.athena.starter.amap.domain.GeoRequest;
 import com.gls.athena.starter.amap.domain.GeoResponse;
-import com.gls.athena.starter.amap.domain.ReGeoRequest;
-import com.gls.athena.starter.amap.domain.ReGeoResponse;
+import com.gls.athena.starter.amap.domain.RegeoRequest;
+import com.gls.athena.starter.amap.domain.RegeoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author george
  */
 @FeignClient(name = "amap", contextId = "geocode", path = "/geocode", url = IAmapConstants.URL)
-public interface GeoCodeFeign {
+public interface GeocodeFeign {
     /**
      * 地理编码
      *
@@ -23,7 +23,7 @@ public interface GeoCodeFeign {
      * @return 地理编码响应
      */
     @GetMapping("/geo")
-    GeoResponse geoCode(@SpringQueryMap GeoRequest request);
+    GeoResponse geo(@SpringQueryMap GeoRequest request);
 
     /**
      * 逆地理编码
@@ -32,5 +32,5 @@ public interface GeoCodeFeign {
      * @return 逆地理编码响应
      */
     @GetMapping("/regeo")
-    ReGeoResponse reGeoCode(@SpringQueryMap ReGeoRequest request);
+    RegeoResponse regeo(@SpringQueryMap RegeoRequest request);
 }

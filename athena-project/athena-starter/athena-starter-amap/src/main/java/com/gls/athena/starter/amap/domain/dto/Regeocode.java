@@ -11,7 +11,7 @@ import java.util.List;
  * @author george
  */
 @Data
-public class ReGeoCode implements Serializable {
+public class Regeocode implements Serializable {
     /**
      * 商圈信息列表
      */

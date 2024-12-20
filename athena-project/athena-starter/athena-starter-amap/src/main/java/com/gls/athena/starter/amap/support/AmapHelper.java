@@ -3,11 +3,11 @@ package com.gls.athena.starter.amap.support;
 import com.gls.athena.starter.amap.config.AmapProperties;
 import com.gls.athena.starter.amap.domain.GeoRequest;
 import com.gls.athena.starter.amap.domain.GeoResponse;
-import com.gls.athena.starter.amap.domain.ReGeoRequest;
-import com.gls.athena.starter.amap.domain.ReGeoResponse;
-import com.gls.athena.starter.amap.domain.dto.GeoCode;
-import com.gls.athena.starter.amap.domain.dto.ReGeoCode;
-import com.gls.athena.starter.amap.feign.GeoCodeFeign;
+import com.gls.athena.starter.amap.domain.RegeoRequest;
+import com.gls.athena.starter.amap.domain.RegeoResponse;
+import com.gls.athena.starter.amap.domain.dto.Geocode;
+import com.gls.athena.starter.amap.domain.dto.Regeocode;
+import com.gls.athena.starter.amap.feign.GeocodeFeign;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class AmapHelper {
      * 地理编码feign
      */
     @Resource
-    private GeoCodeFeign geoCodeFeign;
+    private GeocodeFeign geoCodeFeign;
 
     /**
      * 地理编码
@@ -38,13 +38,13 @@ public class AmapHelper {
      * @param city    城市
      * @return 地理编码信息
      */
-    public List<GeoCode> getGeoCode(String address, String city) {
+    public List<Geocode> getGeocodes(String address, String city) {
         String key = amapProperties.getKey();
         GeoRequest request = new GeoRequest();
         request.setKey(key);
         request.setAddress(address);
         request.setCity(city);
-        GeoResponse geoResponse = geoCodeFeign.geoCode(request);
+        GeoResponse geoResponse = geoCodeFeign.geo(request);
         return geoResponse.getGeocodes();
     }
 
@@ -54,12 +54,12 @@ public class AmapHelper {
      * @param location 经纬度
      * @return 逆地理编码信息
      */
-    public ReGeoCode getReGeoCode(String location) {
+    public Regeocode getRegeocode(String location) {
         String key = amapProperties.getKey();
-        ReGeoRequest request = new ReGeoRequest();
+        RegeoRequest request = new RegeoRequest();
         request.setKey(key);
         request.setLocation(location);
-        ReGeoResponse reGeoResponse = geoCodeFeign.reGeoCode(request);
+        RegeoResponse reGeoResponse = geoCodeFeign.regeo(request);
         return reGeoResponse.getRegeocode();
     }
 }
