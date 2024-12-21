@@ -42,10 +42,10 @@ public class Step implements Serializable {
     /**
      * 步行辅助动作
      */
-    private String assistantAction;
+    private String assistant_action;
     /**
      * 这段路是否存在特殊的方式
      */
-    private String walkType;
+    private String walk_type;
 
 }
